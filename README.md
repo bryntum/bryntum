@@ -1,47 +1,105 @@
 ![Bryntum](./Github-header.png)
 
-# What's Bryntum?
+# Bryntum
 
-<a href="//bryntum.com">Bryntum</a> is a Swedish software company creating advanced JavaScript UI components for enterprise-grade web applications. Founded by a team of passionate web developers, Bryntum specializes in providing cutting-edge scheduling, resource management, and data visualization solutions for modern front-end frameworks. Learn more about our products below:
+<a href="https://bryntum.com">Bryntum</a> builds high-performance JavaScript UI components for enterprise web
+applications: data grids, schedulers, Gantt charts, calendars and Kanban boards. They are written in plain
+JavaScript and CSS, and come with wrappers for React, Angular and Vue.
 
-* <a href="//bryntum.com/products/grid">Grid</a>
-* <a href="//bryntum.com/products/scheduler">Scheduler</a>
-* <a href="//bryntum.com/products/scheduler-pro">Scheduler Pro</a>
-* <a href="//bryntum.com/products/gantt">Gantt</a>
-* <a href="//bryntum.com/products/calendar">Calendar</a>
-* <a href="//bryntum.com/products/taskboard">Kanban Task Board</a>
+This repository is two things:
 
-## Bryntum support repo
-This repo is an issues-only repository for the Bryntum JS library. If you find a bug, have suggestions for improvements, or want to request a new feature, please visit our official **[Bryntum Forum](https://forum.bryntum.com/)**. Here’s what to do:
+* **The source of the Bryntum community edition**, under the MIT license
+* **The issue tracker** for all Bryntum products
 
-1. **Search the Forum**  
-   - Before posting, see if your issue or suggestion has already been discussed.
+## Community edition
 
-2. **Create a New Topic**  
-   - If you can’t find an existing thread, create a new one.  
-   - Provide a clear and concise title that summarizes your bug or feature request.
+The community edition is the free, open-source tier of the Bryntum components. It holds the core features of:
 
-3. **Provide Details**  
-   - **For Bug Reports**:  
-     - Steps to reproduce the issue  
-     - The version of Bryntum library and browser/environment  
-     - Code snippets or test cases (if possible)  
-   - **For Feature Requests**:  
-     - A brief description of the feature  
-     - A use case or example showing its benefits
+* <a href="https://bryntum.com/products/grid">Grid</a>
+* <a href="https://bryntum.com/products/scheduler">Scheduler</a>
+* <a href="https://bryntum.com/products/gantt">Gantt</a>
+* <a href="https://bryntum.com/products/calendar">Calendar</a>
+* <a href="https://bryntum.com/products/taskboard">Kanban Task Board</a>
 
-4. **Engage with the Community**  
-   - Check back often to respond to any follow-up questions from Bryntum’s team or other community members. 
+Advanced features are part of the commercial Business and Enterprise editions.
+
+See the product pages above for what each edition includes.
+
+### About this repository
+
+The code here is a copy of the community edition. It is built from Bryntum's internal repository every night,
+**after the nightly test run passes**. Each nightly commit lists the changes merged that day.
+
+| Folder | Contents |
+|---|---|
+| `lib/` | Source code of each product, as ES modules (`lib/Core`, `lib/Grid`, ...) |
+| `build/` | Compiled theme CSS and Font Awesome, used by the examples |
+| `resources/` | Fonts and icons |
+| `examples-grid/`, `examples-gantt/`, `examples-taskboard/` | Demos per product, including the framework demos |
+
+### Running the examples
+
+The demos load the sources from `lib/` directly, with no build step. Serve the repository root with any static
+web server, for example:
+
+```bash
+npx http-server -c-1 .
+```
+
+Then open `http://localhost:8080/examples-grid/` to browse the Grid demos. Opening the HTML files straight from
+disk does not work, because browsers block ES module imports over `file://`.
+
+### Framework demos
+
+The React, Angular and Vue demos are in `examples-*/frameworks/`. They install the community packages from npm:
+
+```bash
+cd examples-grid/frameworks/react-vite/basic
+npm install
+npm run dev
+```
+
+The framework demos run the latest **published** npm packages, while the plain JavaScript demos run the
+**nightly** sources in `lib/`, so the two can differ slightly between releases.
+
+### npm packages
+
+The community edition is on npm:
+
+| Package | Description |
+|---|---|
+| `@bryntum/grid-community` | Grid |
+| `@bryntum/grid-react-community`, `-angular-community`, `-vue-community` | Grid framework wrappers |
+| `@bryntum/scheduler-community` | Scheduler |
+| `@bryntum/gantt-community` | Gantt |
+| `@bryntum/calendar-community` | Calendar |
+| `@bryntum/taskboard-community` | Kanban Task Board |
+
+```bash
+npm install @bryntum/grid-community
+```
+
+## Reporting issues
+
+Found a bug or have a feature request? Search the
+[existing issues](https://github.com/bryntum/bryntum/issues) first, then open a new one using the
+templates. For bugs, please reproduce the problem in one of our [online demos](https://bryntum.com/examples) or
+include a small test case. Reports with clear steps get fixed sooner.
+
+For questions and help, visit the [Bryntum Forum](https://forum.bryntum.com/).
+
+## Contributing
+
+This repository is a nightly copy, so pull requests cannot be merged here directly yet. If you have a fix, open
+an issue describing it, and include a link to your branch or a patch.
 
 ## License
-The Bryntum JS library is distributed under a commercial license. See Bryntum’s [license terms](//bryntum.com/licensing/) for additional information.
+
+The community edition in this repository is released under the [MIT license](./LICENSE).
+
+The Business and Enterprise editions are commercial products, see the
+[Bryntum license terms](https://bryntum.com/licensing/).
 
 ## Contact
-If you have any questions, feel free to reach out to us through our [Contact form](//bryntum.com/contact).
 
-## Build Statuses
-
-For build statuses for our nightly builds, see our [Build status](//dev.bryntum.com/status) page.
-
-
-_Thank you for using Bryntum! We’re excited to see what you’ll build with our tools._
+Questions about licensing or the commercial editions? Use our [contact form](https://bryntum.com/contact).
