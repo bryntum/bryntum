@@ -357,19 +357,17 @@ an issue describing it, and include a link to your branch or a patch.
 | 📚 **Documentation** | [Docs](https://bryntum.com/docs/) |
 | 🏢 **Licensing and commercial editions** | [Contact us](https://bryntum.com/contact) |
 
-<!--
-  TODO(optional): social links (X, LinkedIn, YouTube).
+<!-- TODO(optional): social links (X, LinkedIn, YouTube). -->
 
-  TODO(trusted-by): "Trusted by" logo strip. Uncomment when the logos and the OK to use them are in hand.
-    - 6-8 customer logos in one row, single colour (mid-grey works on both light and dark GitHub), same height (about 32 px).
-    - Prefer SVG or transparent PNG, in .github/assets/logos/. Or export one strip image with light/dark variants.
-    - Get approval from marketing/legal for each logo.
+### Trusted by
 
 <p align="center">
-  <sub>Trusted by teams at</sub><br>
-  <img alt="Customer logos" src=".github/assets/trusted-by.png" width="80%">
+  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/apple-dark.svg"><img alt="Apple" src=".github/assets/logos/apple.svg" height="60"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/bmw-dark.svg"><img alt="BMW" src=".github/assets/logos/bmw.svg" height="60"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/intel-dark.svg"><img alt="Intel" src=".github/assets/logos/intel.svg" height="60"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/netflix-dark.svg"><img alt="Netflix" src=".github/assets/logos/netflix.svg" height="60"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/samsung-dark.svg"><img alt="Samsung" src=".github/assets/logos/samsung.svg" height="60"></picture>
 </p>
--->
 
 If Bryntum is useful to you, a ⭐ on this repository helps others find it.
 
