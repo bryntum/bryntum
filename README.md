@@ -363,25 +363,21 @@ an issue describing it, and include a link to your branch or a patch.
 
 <table width="100%">
   <tr>
-    <td colspan="2" align="center" valign="middle" width="33%" height="110">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/apple-dark.svg"><img alt="Apple" src=".github/assets/logos/apple.svg" height="64"></picture>
+    <td align="center" valign="middle" width="20%" height="90">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/apple-dark.svg"><img alt="Apple" src=".github/assets/logos/apple.svg" width="32%"></picture>
     </td>
-    <td colspan="2" align="center" valign="middle" width="33%" height="110">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/bmw-dark.svg"><img alt="BMW" src=".github/assets/logos/bmw.svg" height="64"></picture>
+    <td align="center" valign="middle" width="20%" height="90">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/bmw-dark.svg"><img alt="BMW" src=".github/assets/logos/bmw.svg" width="36%"></picture>
     </td>
-    <td colspan="2" align="center" valign="middle" width="33%" height="110">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/intel-dark.svg"><img alt="Intel" src=".github/assets/logos/intel.svg" width="112"></picture>
+    <td align="center" valign="middle" width="20%" height="90">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/intel-dark.svg"><img alt="Intel" src=".github/assets/logos/intel.svg" width="62%"></picture>
     </td>
-  </tr>
-  <tr>
-    <td colspan="1" width="16%"></td>
-    <td colspan="2" align="center" valign="middle" width="33%" height="110">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/netflix-dark.svg"><img alt="Netflix" src=".github/assets/logos/netflix.svg" width="120"></picture>
+    <td align="center" valign="middle" width="20%" height="90">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/netflix-dark.svg"><img alt="Netflix" src=".github/assets/logos/netflix.svg" width="66%"></picture>
     </td>
-    <td colspan="2" align="center" valign="middle" width="33%" height="110">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/samsung-dark.svg"><img alt="Samsung" src=".github/assets/logos/samsung.svg" width="124"></picture>
+    <td align="center" valign="middle" width="20%" height="90">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/samsung-dark.svg"><img alt="Samsung" src=".github/assets/logos/samsung.svg" width="68%"></picture>
     </td>
-    <td colspan="1" width="16%"></td>
   </tr>
 </table>
 
