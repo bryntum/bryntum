@@ -361,25 +361,12 @@ an issue describing it, and include a link to your branch or a patch.
 
 ### Trusted by
 
-<table width="100%">
-  <tr>
-    <td align="center" valign="middle" width="20%" height="90">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/apple-dark.svg"><img alt="Apple" src=".github/assets/logos/apple.svg" width="32%"></picture>
-    </td>
-    <td align="center" valign="middle" width="20%" height="90">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/bmw-dark.svg"><img alt="BMW" src=".github/assets/logos/bmw.svg" width="36%"></picture>
-    </td>
-    <td align="center" valign="middle" width="20%" height="90">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/intel-dark.svg"><img alt="Intel" src=".github/assets/logos/intel.svg" width="62%"></picture>
-    </td>
-    <td align="center" valign="middle" width="20%" height="90">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/netflix-dark.svg"><img alt="Netflix" src=".github/assets/logos/netflix.svg" width="66%"></picture>
-    </td>
-    <td align="center" valign="middle" width="20%" height="90">
-      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/samsung-dark.svg"><img alt="Samsung" src=".github/assets/logos/samsung.svg" width="68%"></picture>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset=".github/assets/trusted-by-dark.svg">
+    <img alt="Trusted by Apple, BMW, Intel, Netflix and Samsung" src=".github/assets/trusted-by.svg" width="100%">
+  </picture>
+</p>
 
 If Bryntum is useful to you, a ⭐ on this repository helps others find it.
 
