@@ -361,13 +361,29 @@ an issue describing it, and include a link to your branch or a patch.
 
 ### Trusted by
 
-<p align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/apple-dark.svg"><img alt="Apple" src=".github/assets/logos/apple.svg" height="60"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/bmw-dark.svg"><img alt="BMW" src=".github/assets/logos/bmw.svg" height="60"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/intel-dark.svg"><img alt="Intel" src=".github/assets/logos/intel.svg" height="60"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/netflix-dark.svg"><img alt="Netflix" src=".github/assets/logos/netflix.svg" height="60"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/samsung-dark.svg"><img alt="Samsung" src=".github/assets/logos/samsung.svg" height="60"></picture>
-</p>
+<table width="100%">
+  <tr>
+    <td colspan="2" align="center" valign="middle" width="33%" height="110">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/apple-dark.svg"><img alt="Apple" src=".github/assets/logos/apple.svg" height="64"></picture>
+    </td>
+    <td colspan="2" align="center" valign="middle" width="33%" height="110">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/bmw-dark.svg"><img alt="BMW" src=".github/assets/logos/bmw.svg" height="64"></picture>
+    </td>
+    <td colspan="2" align="center" valign="middle" width="33%" height="110">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/intel-dark.svg"><img alt="Intel" src=".github/assets/logos/intel.svg" width="112"></picture>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="1" width="16%"></td>
+    <td colspan="2" align="center" valign="middle" width="33%" height="110">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/netflix-dark.svg"><img alt="Netflix" src=".github/assets/logos/netflix.svg" width="120"></picture>
+    </td>
+    <td colspan="2" align="center" valign="middle" width="33%" height="110">
+      <picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/logos/samsung-dark.svg"><img alt="Samsung" src=".github/assets/logos/samsung.svg" width="124"></picture>
+    </td>
+    <td colspan="1" width="16%"></td>
+  </tr>
+</table>
 
 If Bryntum is useful to you, a ⭐ on this repository helps others find it.
 
