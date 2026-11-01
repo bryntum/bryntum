@@ -63,11 +63,11 @@ This repository holds the **free, open-source Community edition** and the **issu
 
 | Product | What it is for | Examples | Docs |
 |:--|:--|:-:|:-:|
-| **Scheduler** | Resource timelines for bookings, shifts and equipment | [Examples](https://bryntum.com/products/scheduler/examples/) | [Docs](https://bryntum.com/docs/) |
-| **Gantt** | Project plans with dependencies and a scheduling engine | [Examples](https://bryntum.com/products/gantt/examples/) | [Docs](https://bryntum.com/docs/) |
-| **Calendar** | Day, week, month and agenda views with drag-drop events | [Examples](https://bryntum.com/products/calendar/examples/) | [Docs](https://bryntum.com/docs/) |
-| **Task Board** | Kanban boards with columns, swimlanes and custom cards | [Examples](https://bryntum.com/products/taskboard/examples/) | [Docs](https://bryntum.com/docs/) |
-| **Grid** | Virtualized data grid for very large datasets | [Examples](https://bryntum.com/products/grid/examples/) | [Docs](https://bryntum.com/docs/) |
+| **Scheduler** | Resource timelines for bookings, shifts and equipment | [Examples](https://bryntum.com/products/scheduler/examples/) | [Docs](https://bryntum.com/products/scheduler/docs/) |
+| **Gantt** | Project plans with dependencies and a scheduling engine | [Examples](https://bryntum.com/products/gantt/examples/) | [Docs](https://bryntum.com/products/gantt/docs/) |
+| **Calendar** | Day, week, month and agenda views with drag-drop events | [Examples](https://bryntum.com/products/calendar/examples/) | [Docs](https://bryntum.com/products/calendar/docs/) |
+| **Task Board** | Kanban boards with columns, swimlanes and custom cards | [Examples](https://bryntum.com/products/taskboard/examples/) | [Docs](https://bryntum.com/products/taskboard/docs/) |
+| **Grid** | Virtualized data grid for very large datasets | [Examples](https://bryntum.com/products/grid/examples/) | [Docs](https://bryntum.com/products/grid/docs/) |
 
 ## Quick start
 
