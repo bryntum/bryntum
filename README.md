@@ -232,8 +232,12 @@ editions use `business` and `enterprise` as the tier.
 | ♿ **Accessible and localized** | Keyboard navigation, ARIA support and many locales. |
 | 🔌 **Bring your own backend** | Load and sync data over REST, or use any data source you like. |
 
+### Themes
+
+Built-in themes, including light and dark, that you can switch at runtime and customize with CSS variables.
+
 <p align="center">
-  <img alt="Bryntum themes: switching between light, dark and other built-in themes" src=".github/assets/theme-changing.gif" width="100%">
+  <img alt="Bryntum themes: switching between light, dark and other built-in themes" src=".github/assets/theme-changing.gif" width="50%">
 </p>
 
 ## Community, Business and Enterprise
