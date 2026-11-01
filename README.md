@@ -1,6 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset=".github/assets/intro-dark.gif">
+    <source media="(prefers-color-scheme: light)" srcset=".github/assets/intro-light.gif">
     <img alt="Bryntum intro" src=".github/assets/intro-light.gif" width="60%">
   </picture>
 </p>
@@ -52,13 +53,13 @@ This repository holds the **free, open-source Community edition** and the **issu
 ## Products
 
 <p align="center">
-  <a href="https://bryntum.com/products/scheduler/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-scheduler-dark.png"><img alt="Bryntum Scheduler" src=".github/assets/card-scheduler-light.png" width="59%"></picture></a>
-  <a href="https://bryntum.com/products/gantt/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-gantt-dark.png"><img alt="Bryntum Gantt" src=".github/assets/card-gantt-light.png" width="39%"></picture></a>
+  <a href="https://bryntum.com/products/scheduler/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-scheduler-dark.png"><source media="(prefers-color-scheme: light)" srcset=".github/assets/card-scheduler-light.png"><img alt="Bryntum Scheduler" src=".github/assets/card-scheduler-light.png" width="59%"></picture></a>
+  <a href="https://bryntum.com/products/gantt/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-gantt-dark.png"><source media="(prefers-color-scheme: light)" srcset=".github/assets/card-gantt-light.png"><img alt="Bryntum Gantt" src=".github/assets/card-gantt-light.png" width="39%"></picture></a>
 </p>
 <p align="center">
-  <a href="https://bryntum.com/products/calendar/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-calendar-dark.png"><img alt="Bryntum Calendar" src=".github/assets/card-calendar-light.png" width="32%"></picture></a>
-  <a href="https://bryntum.com/products/taskboard/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-taskboard-dark.png"><img alt="Bryntum TaskBoard" src=".github/assets/card-taskboard-light.png" width="32%"></picture></a>
-  <a href="https://bryntum.com/products/grid/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-grid-dark.png"><img alt="Bryntum Grid" src=".github/assets/card-grid-light.png" width="32%"></picture></a>
+  <a href="https://bryntum.com/products/calendar/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-calendar-dark.png"><source media="(prefers-color-scheme: light)" srcset=".github/assets/card-calendar-light.png"><img alt="Bryntum Calendar" src=".github/assets/card-calendar-light.png" width="32%"></picture></a>
+  <a href="https://bryntum.com/products/taskboard/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-taskboard-dark.png"><source media="(prefers-color-scheme: light)" srcset=".github/assets/card-taskboard-light.png"><img alt="Bryntum TaskBoard" src=".github/assets/card-taskboard-light.png" width="32%"></picture></a>
+  <a href="https://bryntum.com/products/grid/docs/"><picture><source media="(prefers-color-scheme: dark)" srcset=".github/assets/card-grid-dark.png"><source media="(prefers-color-scheme: light)" srcset=".github/assets/card-grid-light.png"><img alt="Bryntum Grid" src=".github/assets/card-grid-light.png" width="32%"></picture></a>
 </p>
 
 | Product | What it is for | Examples | Docs |
@@ -364,6 +365,7 @@ an issue describing it, and include a link to your branch or a patch.
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset=".github/assets/trusted-by-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset=".github/assets/trusted-by.svg">
     <img alt="Trusted by Apple, BMW, Intel, Netflix and Samsung" src=".github/assets/trusted-by.svg" width="100%">
   </picture>
 </p>
