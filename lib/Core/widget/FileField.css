@@ -1,0 +1,33 @@
+:root, :host {
+    /**
+     * Button background
+     */
+    --b-file-field-button-background : var(--b-primary);
+
+    /**
+     * Button color
+     */
+    --b-file-field-button-color : var(--b-neutral-100);
+}
+
+.b-file-field input[type="file"]{
+    font-family : inherit;
+    /* Style the "No file chosen" text */
+    color : var(--b-label-color);
+
+    &::file-selector-button {
+        padding           : 0.5em 1em;
+        border-radius     : 0.25em;
+        cursor            : pointer;
+        font-weight       : 500;
+        margin-inline-end : 1em;
+        border            : none;
+        font-family       : inherit;
+        background        : var(--b-file-field-button-background);
+        color             : var(--b-file-field-button-color);
+    }
+
+    &::file-selector-button:hover {
+        background : color-mix(in srgb, var(--b-file-field-button-background), #fff 10%);
+    }
+}

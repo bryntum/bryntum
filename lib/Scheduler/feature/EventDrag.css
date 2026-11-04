@@ -1,0 +1,50 @@
+/* @after Scheduler/view/mixin/SchedulerEventRendering.css */
+
+:root, :host {
+    /**
+     * Event drag z-index
+     */
+    --b-event-drag-z-index      : 200;
+
+    /**
+     * Event drag main (unified proxy) z-index
+     */
+    --b-event-drag-main-z-index : 201;
+}
+
+.b-sch-event-wrap {
+    &.b-aborting,
+    &.b-drag-unified-animation {
+        transition : var(--b-sch-event-transition), transform 0.2s, left 0.2s, top 0.2s;
+    }
+
+    &.b-dragging {
+        /*using important to win over z-index set using style for eventLayout "none"*/
+        z-index : var(--b-event-drag-z-index) !important;
+
+        &.b-drag-main {
+            z-index : var(--b-event-drag-main-z-index) !important;
+        }
+    }
+}
+
+.b-event-drag-tooltip .b-tooltip-content > div {
+    display        : flex;
+    flex-direction : column;
+    gap            : 0.5em;
+}
+
+/* Make any .b-icon align nicely with the clocks by default */
+.b-sch-tip-message .b-icon:first-child {
+    margin-inline-end : 0.5em;
+    justify-content   : center;
+
+    color             : var(--b-clock-hand-color);
+    width             : var(--b-clock-size);
+}
+
+/*Need higher specificity than the .b-floating's pointer-events:all to override*!*/
+.b-float-root > .b-tooltip.b-event-drag-tooltip {
+    /*During drag, it must be impossible for the mouse to be over the tip.*/
+    pointer-events : none;
+}

@@ -1,0 +1,35 @@
+:root, :host {
+    /**
+     * DomHelper highlight effect z-index
+     */
+    --b-fx-highlight-z-index : 9999;
+}
+
+/* Used by DomHelper.highlight */
+.b-fx-highlight {
+    animation          : b-anim-fx-highlight 1s ease 0s 1;
+    z-index            : var(--b-fx-highlight-z-index) !important;
+}
+
+@keyframes b-anim-fx-highlight {
+    0%, 100% {
+        filter : none;
+    }
+    50% {
+        filter : drop-shadow(0 0 6px var(--b-primary-50)) drop-shadow(0 0 10px var(--b-primary-50));
+    }
+}
+
+/* Used by DomHelper.scrollBarWidth. Starts (firing animationstart) when a non-rendered document gets rendered */
+.b-scrollbar-measure-element.b-measure-when-rendered {
+    animation : b-anim-measure-when-rendered 1ms;
+}
+
+@keyframes b-anim-measure-when-rendered {
+    from {
+        opacity : .99;
+    }
+    to {
+        opacity : 1;
+    }
+}

@@ -1,0 +1,54 @@
+:root, :host {
+    /**
+     * Badge font size
+     */
+    --b-badge-font-size  : 0.7em;
+
+    /**
+     * Badge height (also used as its min-width and border-radius, to ensure it is round for single digits)
+     */
+    --b-badge-height     : 1.7em;
+
+    /**
+     * Badge background color
+     */
+    --b-badge-background : var(--b-color-red);
+
+    /**
+     * Badge text color
+     */
+    --b-badge-color      : var(--b-neutral-100);
+
+    /**
+     * Badge offset
+     */
+    --b-badge-offset     : -.6em;
+
+    /**
+     * Badge z-index
+     */
+    --b-badge-z-index    : 5;
+}
+
+.b-widget.b-badge {
+    overflow : visible;
+}
+
+.b-badge::after {
+    content           : attr(data-badge);
+    position          : absolute;
+    display           : flex;
+    align-items       : center;
+    justify-content   : center;
+    padding-inline    : 0.3em;
+    z-index           : var(--b-badge-z-index);
+
+    background        : var(--b-badge-background);
+    border-radius     : var(--b-badge-height);
+    color             : var(--b-badge-color);
+    font-size         : var(--b-badge-font-size);
+    height            : var(--b-badge-height);
+    min-width         : var(--b-badge-height);
+    inset-inline-end  : var(--b-badge-offset);
+    inset-block-start : var(--b-badge-offset);
+}

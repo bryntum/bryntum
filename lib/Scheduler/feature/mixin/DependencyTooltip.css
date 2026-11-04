@@ -1,0 +1,20 @@
+:root, :host {
+    /**
+     * Font size for dependency tooltip labels
+     */
+    --b-dependency-tooltip-label-font-size : .8em;
+}
+
+.b-sch-dependency-tooltip,
+.b-sch-dependency-creation-tooltip {
+    --b-tooltip-content-display : grid;
+    --b-tooltip-align-items     : center;
+
+    .b-tooltip-content {
+        grid-template-columns : auto auto auto;
+
+        label {
+            font-size : var(--b-dependency-tooltip-label-font-size);
+        }
+    }
+}

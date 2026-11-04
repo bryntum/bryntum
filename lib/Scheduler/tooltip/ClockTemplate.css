@@ -1,0 +1,78 @@
+:root, :host {
+    /**
+     * Clock size
+     */
+    --b-clock-size       : 1.5em;
+
+    /**
+     * Clock hand width
+     */
+    --b-clock-hand-width : 3;
+}
+
+/* .b-bryntum { */
+    /**
+     * Clock dial background
+     */
+    /*--b-clock-dial-background : var(--b-primary-95);*/
+
+    /**
+     * Clock hand color
+     */
+    /*--b-clock-hand-color      : var(--b-primary-30);*/
+/* } */
+
+.b-sch-clock-wrap {
+    svg {
+        width  : var(--b-clock-size);
+        height : var(--b-clock-size);
+    }
+
+    circle {
+        stroke       : var(--b-clock-hand-color, var(--b-primary-30));
+        stroke-width : var(--b-clock-hand-width);
+        fill         : var(--b-clock-dial-background, var(--b-primary-95));
+    }
+
+    line {
+        stroke           : var(--b-clock-hand-color, var(--b-primary-30));
+        stroke-width     : var(--b-clock-hand-width);
+        transform-origin : center;
+        &.b-hour-hand {
+            rotate : calc(var(--bi-sch-clock-hour, 0) * 30deg);
+        }
+        &.b-minute-hand {
+            rotate : calc(var(--bi-sch-clock-minute, 0) * 6deg);
+        }
+    }
+}
+
+.b-sch-clock-text {
+    white-space : nowrap;
+}
+
+.b-sch-clock-wrap,
+.b-sch-date-wrap {
+    display     : flex;
+    gap         : 0.5em;
+    align-items : center;
+}
+
+.b-sch-date {
+    overflow      : clip;
+
+    background    : color-mix(in srgb, var(--b-primary), transparent 90%);
+    border-radius : .25em;
+}
+
+.b-sch-date-month {
+    font-size     : .6em;
+    background    : color-mix(in srgb, var(--b-primary), transparent 70%);
+    width         : 3em;
+    text-align    : center;
+}
+
+.b-sch-date-date {
+    font-size  : .8em;
+    text-align : center;
+}

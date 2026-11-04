@@ -1,0 +1,1226 @@
+@property --b-task-board-column-gap {
+    syntax        : '<length>';
+    initial-value : 0px;
+    inherits      : true;
+}
+
+:root, :host {
+    /**
+     * Task board column headers z-index
+     */
+    --b-task-board-column-headers-z-index : 3;
+
+    /**
+     * Task board swimlane header z-index
+     */
+    --b-task-board-swimlane-header-z-index : 2;
+
+    /**
+     * Board background
+     */
+    --b-task-board-background                        : var(--b-neutral-98);
+
+    /**
+     * Default text color
+     */
+    --b-task-board-color                             : var(--b-widget-color);
+
+    /**
+     * Default font size
+     */
+    --b-task-board-font-size                         : null;
+
+    /**
+     * Default gap (used as the default in multiple places)
+     */
+    --b-task-board-gap                               : var(--b-widget-gap);
+
+    /**
+     * Default header text transformed (applied to column & swimlane headers)
+     */
+    --b-task-board-header-text-transform             : null;
+
+    /**
+     * Board body padding (requires a unit for calc to work as intended)
+     */
+    --b-task-board-body-padding                      : 0em; /* em for calc to work as intended */
+
+    /**
+     * Column header background when using sticky headers
+     */
+    --b-task-board-column-headers-sticky-background  : var(--b-task-board-background);
+
+    /**
+     * Column task count badge color
+     */
+    --b-task-board-column-count-color                : var(--b-task-board-column-header-icon-color);
+
+    /**
+     * Column task count badge background
+     */
+    --b-task-board-column-count-background           : var(--b-neutral-95);
+
+    /**
+     * Column task count badge font size
+     */
+    --b-task-board-column-count-font-size            : .8em;
+
+    /**
+     * Gap between columns
+     */
+    --b-task-board-column-gap                        : 0px;
+
+    /**
+     * Column padding
+     */
+    --b-task-board-column-padding                    : var(--b-task-board-gap);
+
+    /**
+     * Column background (by default also applies to the column header)
+     */
+    --b-task-board-column-background                 : var(--b-task-board-background);
+
+    /**
+     * Column border radius
+     */
+    --b-task-board-column-border-radius              : null;
+
+    /**
+     * Column border
+     */
+    --b-task-board-column-border                     : null;
+
+    /**
+     * Column separator border (between columns)
+     */
+    --b-task-board-column-separator-border           : unset;
+
+    /**
+     * Column box shadow
+     */
+    --b-task-board-column-box-shadow                 : null;
+
+    /**
+     * Column min width
+     */
+    --b-task-board-column-min-width                  : 12em;
+
+    /**
+     * Column header background (defaults to using column's background)
+     */
+    --b-task-board-column-header-background          : var(--b-task-board-column-background);
+
+    /**
+     * Column header border radius
+     */
+    --b-task-board-column-header-border-radius       : null;
+
+    /**
+     * Column header top border
+     */
+    --b-task-board-column-header-border-top          : unset;
+
+    /**
+     * Column header bottom border
+     */
+    --b-task-board-column-header-border-bottom       : unset;
+
+    /**
+     * Column header box shadow
+     */
+    --b-task-board-column-header-box-shadow          : null;
+
+    /**
+     * Column header text color
+     */
+    --b-task-board-column-header-color               : var(--b-panel-header-color);
+
+    /**
+     * Column header icon color
+     */
+    --b-task-board-column-header-icon-color          : var(--b-text-3);
+
+    /**
+     * Column header font size
+     */
+    --b-task-board-column-header-font-size           : 1.1em;
+
+    /**
+     * Column header font weight
+     */
+    --b-task-board-column-header-font-weight         : 400;
+
+    /**
+     * Column header gap
+     */
+    --b-task-board-column-header-gap                 : .5em;
+
+    /**
+     * Height of sticky headers
+     */
+    --b-task-board-column-header-sticky-height       : 4em;
+
+    /**
+     * Column header text alignment
+     */
+    --b-task-board-column-header-text-align          : null;
+
+    /**
+     * Column header text transform (defaults to using header text transform)
+     */
+    --b-task-board-column-header-text-transform      : var(--b-task-board-header-text-transform);
+
+    /**
+     * Column header padding
+     */
+    --b-task-board-column-header-padding             : var(--b-task-board-column-padding) var(--b-task-board-column-padding) 0 calc(var(--b-task-board-column-padding) + 0.25em);
+
+    /**
+     * Collapsed column's title's top offset
+     */
+    --b-task-board-column-header-collapsed-title-top : 1em;
+
+    /**
+     * Swimlane header background
+     */
+    --b-task-board-swimlane-header-background        : var(--b-neutral-95);
+
+    /**
+     * Swimlane header border radius
+     */
+    --b-task-board-swimlane-header-border-radius     : null;
+
+    /**
+     * Swimlane header border bottom
+     */
+    --b-task-board-swimlane-header-border-bottom     : null;
+
+    /**
+     * Swimlane header border top
+     */
+    --b-task-board-swimlane-header-border-top        : null;
+
+    /**
+     * Swimlane header box shadow
+     */
+    --b-task-board-swimlane-header-box-shadow        : null;
+
+    /**
+     * Swimlane header text color
+     */
+    --b-task-board-swimlane-header-color             : var(--b-task-board-column-header-color);
+
+    /**
+     * Swimlane header font size
+     */
+    --b-task-board-swimlane-header-font-size         : .9em;
+
+    /**
+     * Swimlane header icon color
+     */
+    --b-task-board-swimlane-header-icon-color        : var(--b-task-board-column-header-icon-color);
+
+    /**
+     * Swimlane header padding
+     */
+    --b-task-board-swimlane-header-padding           : 0.5em 1em;
+
+    /**
+     * Swimlane header text transform (defaults to using header text transform)
+     */
+    --b-task-board-swimlane-header-text-transform    : var(--b-task-board-header-text-transform);
+
+    /**
+     * Swimlane body background
+     */
+    --b-task-board-swimlane-background               : null;
+
+    /**
+     * Card background
+     */
+    --b-task-board-card-background                   : var(--b-neutral-100);
+
+    /**
+     * Card border
+     */
+    --b-task-board-card-border                       : 1px solid var(--b-border-7);
+
+    /**
+     * Card border top
+     */
+    --b-task-board-card-border-top                   : unset;
+
+    /**
+     * Card border inline end
+     */
+    --b-task-board-card-border-inline-end            : unset;
+
+    /**
+     * Card border bottom
+     */
+    --b-task-board-card-border-bottom                : unset;
+
+    /**
+     * Card border inline start
+     */
+    --b-task-board-card-border-inline-start          : unset;
+
+    /**
+     * Card border top radius
+     */
+    --b-task-board-card-border-top-radius            : 0.5em;
+
+    /**
+     * Card border bottom radius
+     */
+    --b-task-board-card-border-bottom-radius         : 0.5em;
+
+    /**
+     * Card box shadow
+     */
+    --b-task-board-card-box-shadow                   : null;
+
+    /**
+     * Gap between cards
+     */
+    --b-task-board-card-gap                          : var(--b-task-board-gap);
+
+    /**
+     * Card height, when displaying more than one card per row
+     */
+    --b-task-board-card-inline-height                : 6.5em;
+
+    /**
+     * Card height, when displaying more than one card per row and there are only two cards per row
+     */
+    --b-task-board-card-inline-large-height          : 8em;
+
+    /**
+     * Card padding
+     */
+    --b-task-board-card-padding                      : var(--b-task-board-gap);
+
+    /**
+     * Read-only card's text color
+     * @state Read-only
+     */
+    --b-task-board-card-readonly-color               : var(--b-color-light-gray);
+
+    /**
+     * Read-only card's background
+     * @state Read-only
+     */
+    --b-task-board-card-readonly-background          : var(--b-task-board-card-background) repeating-linear-gradient(45deg, color-mix(in srgb, var(--b-neutral-0), transparent 98%), color-mix(in srgb, var(--b-neutral-0), transparent 98%) 10px, transparent 10px, transparent 20px);
+
+    /**
+     * Hovered card's background
+     * @state Hovered
+     */
+    --b-task-board-card-hover-background             : var(--b-neutral-100);
+
+    /**
+     * Hovered card's box shadow
+     * @state Hovered
+     */
+    --b-task-board-card-hover-box-shadow             : var(--b-elevation-1);
+
+    /**
+     * Hovered card's transform
+     * @state Hovered
+     */
+    --b-task-board-card-hover-transform              : translateY(-1px);
+
+    /**
+     * Card focus outline offset
+     * @state Focused
+     */
+    --b-task-board-card-focus-outline-offset         : -2px;
+
+    /**
+     * Selected card's box shadow
+     * @state Selected
+     */
+    --b-task-board-card-selected-box-shadow          : var(--b-elevation-2);
+
+    /**
+     * Selected card's transform
+     * @state Selected
+     */
+    --b-task-board-card-selected-transform           : translateY(-1px);
+
+    /**
+     * Selected card's animation
+     * @state Selected
+     */
+    --b-task-board-card-selected-animation           : null;
+
+    /**
+     * Selected card's outline
+     * @state Selected
+     */
+    --b-task-board-card-selected-outline             : null;
+
+    /**
+     * Unselected card's opacity (when another card is selected)
+     * @state Selected
+     */
+    --b-task-board-card-unselected-opacity           : null;
+
+    /**
+     * Unselected card's hover opacity (when another card is selected)
+     * @state Selected
+     */
+    --b-task-board-card-unselected-hover-opacity     : null;
+
+    /**
+     * Unselected card's box shadow (when another card is selected)
+     * @state Selected
+     */
+    --b-task-board-card-unselected-box-shadow        : var(--b-task-board-card-box-shadow);
+
+    /**
+     * Card header background
+     */
+    --b-task-board-card-header-background            : null;
+
+    /**
+     * Card header color
+     */
+    --b-task-board-card-header-color                 : var(--b-task-board-color);
+
+    /**
+     * Card header font size
+     */
+    --b-task-board-card-header-font-size             : null;
+
+    /**
+     * Card header font weight
+     */
+    --b-task-board-card-header-font-weight           : 500;
+
+    /**
+     * Gap between items in card header
+     */
+    --b-task-board-card-header-gap                   : .5em;
+
+    /**
+     * Card header padding
+     */
+    --b-task-board-card-header-padding               : var(--b-task-board-card-padding);
+
+    /**
+     * Card body text color
+     */
+    --b-task-board-card-body-color                   : var(--b-neutral-30);
+
+    /**
+     * Gap between items in card body
+     */
+    --b-task-board-card-body-gap                     : var(--b-task-board-card-padding);
+
+    /**
+     * Card body padding
+     */
+    --b-task-board-card-body-padding                 : 0 var(--b-task-board-card-padding) var(--b-task-board-card-padding) var(--b-task-board-card-padding);
+
+    /**
+     * Card footer text color
+     */
+    --b-task-board-card-footer-color                 : var(--b-text-4);
+
+    /**
+     * Card footer font size
+     */
+    --b-task-board-card-footer-font-size             : 1em;
+
+    /**
+     * Gap between items in card footer
+     */
+    --b-task-board-card-footer-gap                   : var(--b-task-board-card-padding);
+
+    /**
+     * Card footer padding
+     */
+    --b-task-board-card-footer-padding               : 0 var(--b-task-board-gap) var(--b-task-board-gap) var(--b-task-board-gap);
+
+    /**
+     * Color used for highlighting scrolled to card
+     */
+    --b-task-board-card-highlight-color              : var(--b-color-orange);
+
+    /**
+     * Transition duration when collapsing/expanding columns
+     */
+    --b-task-board-column-collapse-duration          : var(--b-default-transition-duration);
+}
+
+.b-colorize {
+    /**
+     * Selected card's background
+     * @state Selected
+     */
+    --b-task-board-card-selected-background : var(--b-primary-96);
+
+    /**
+     * Focused card's background
+     * @state Focused
+     */
+    --b-task-board-card-focus-background    : var(--b-task-board-card-selected-background);
+}
+
+.b-bryntum {
+    /**
+     * Card focus outline
+     * @state Focused
+     */
+    --b-task-board-card-focus-outline : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+}
+
+.b-task-board-base {
+    user-select         : none;
+    -webkit-user-select : none;
+    overflow            : hidden;
+
+    font-size           : var(--b-task-board-font-size);
+}
+
+.b-task-board-body {
+    /* align-items : flex-start; */
+    display    : flex;
+    flex-flow  : column nowrap;
+    flex       : 1;
+    overflow   : auto;
+    position   : relative;
+
+    background : var(--b-task-board-background);
+
+    /* Buttons should use same color on focus outline as cards */
+    button:focus-visible {
+        outline : var(--b-task-board-card-focus-outline);
+    }
+}
+
+.b-task-board-column-headers {
+    display        : flex;
+    /* width          : calc(100% - var(--b-task-board-body-padding) * 2); */
+
+    gap            : var(--b-task-board-column-gap);
+    /* Room for box-shadow, since overflow is hidden in default swimlane */
+    padding        : var(--b-task-board-body-padding);
+    padding-bottom : 0;
+    z-index        : var(--b-task-board-column-headers-z-index);
+
+    .b-sticky-headers & {
+        position   : sticky;
+        top        : 0;
+
+        background : var(--b-task-board-column-headers-sticky-background);
+        height     : var(--b-task-board-column-header-sticky-height);
+        /* Height not respected for some reason */
+        min-height : var(--b-task-board-column-header-sticky-height);
+    }
+
+    /* To stretch header when there is horizontal scroll */
+    .b-task-board-body.b-horizontal-overflow & {
+        width : fit-content;
+    }
+}
+
+.b-task-board-column-header {
+    display           : flex;
+    overflow          : clip;
+    align-items       : center;
+    container-type    : inline-size;
+
+    &:not(.b-collapsed, .b-collapsing, .b-expanding) {
+        @container (width < 200px) {
+            .b-task-board-column-count {
+                display : none;
+            }
+        }
+
+        @container (width < 160px) {
+            .b-task-board-column-expander {
+                display : none;
+            }
+        }
+
+        @container (width < 140px) {
+            .b-task-board-column-header-menu-button {
+                display : none;
+            }
+        }
+    }
+
+    background-color  : var(--b-task-board-column-header-background);
+    border-radius     : var(--b-task-board-column-header-border-radius);
+    border            : var(--b-task-board-column-border);
+    border-inline-end : var(--b-task-board-column-separator-border, var(--b-task-board-column-border));
+    border-top        : var(--b-task-board-column-header-border-top, var(--b-task-board-column-border));
+    border-bottom     : var(--b-task-board-column-header-border-bottom, var(--b-task-board-column-border));
+    box-shadow        : var(--b-task-board-column-header-box-shadow);
+    font-weight       : var(--b-task-board-column-header-font-weight);
+    text-align        : var(--b-task-board-column-header-text-align);
+    text-transform    : var(--b-task-board-column-header-text-transform);
+
+    .b-task-board-base:not(.b-no-transitions) & {
+        transition : width var(--b-task-board-column-collapse-duration);
+    }
+
+    &.b-last {
+        border-inline-end : var(--b-task-board-column-border);
+    }
+
+    &.b-collapsed {
+        .b-task-board-column-expander {
+            margin : 0;
+            rotate : 0deg;
+
+            .b-rtl & {
+                rotate : 180deg;
+            }
+        }
+
+        &:not(.b-collapsing) {
+            /* Hide column title when fully collapsed, it is displayed in the body instead */
+            .b-task-board-column-title {
+                /* Hide but keep in DOM, so header layout stays the same height, no need to adjust icon */
+                visibility : hidden;
+            }
+        }
+    }
+
+    .b-task-board-column-count {
+        padding : 0.2em 0.4em;
+    }
+
+    button, i {
+        color      : var(--b-task-board-column-header-icon-color);
+        align-self : center;
+
+        &:hover {
+            color : var(--b-task-board-column-header-color);
+        }
+    }
+}
+
+.b-task-board-column-header-padder {
+    display           : flex;
+    flex              : 1;
+    align-items       : stretch;
+    overflow          : clip;
+    width             : 0;
+
+    --b-button-height : 2.5em;
+
+    gap               : var(--b-task-board-column-header-gap);
+    padding           : var(--b-task-board-column-header-padding);
+
+    .b-collapsed:not(.b-collapsing) > & {
+        justify-content : center;
+        gap             : 0; /* When title is visually hidden, suppress gap to keep icon centered */
+    }
+
+    > * {
+        display     : flex;
+        align-items : center;
+    }
+
+    /* Hide in case used by demos */
+    .b-collapsed > &::before {
+        display : none;
+    }
+
+    .b-collapsed:not(.b-rotate-title) > & > :not(.b-task-board-column-expander) {
+        display : none;
+    }
+}
+
+.b-column-title-text {
+    display       : flex;
+    align-items   : center;
+    flex          : 1 1 auto;
+    overflow      : clip;
+    text-overflow : ellipsis;
+    min-width     : 0;
+}
+
+.b-task-board-column-title {
+    flex          : 1;
+    overflow      : clip;
+    text-overflow : ellipsis;
+    white-space   : nowrap;
+    width         : 0;
+
+    color         : var(--b-task-board-column-header-color);
+    font-size     : var(--b-task-board-column-header-font-size);
+    font-weight   : var(--b-task-board-column-header-font-weight);
+}
+
+.b-task-board-column-count {
+    transform           : none;
+    transition          : transform var(--b-default-transition-duration);
+    margin-inline-start : .4em;
+    border-radius       : 1em;
+    min-height          : 2em;
+    min-width           : 2em;
+    display             : grid;
+    place-items         : center;
+    flex-shrink         : 0;
+
+    font-size           : var(--b-task-board-column-count-font-size);
+    color               : var(--b-task-board-column-count-color);
+    background          : var(--b-task-board-column-count-background);
+}
+
+.b-task-board-swimlane {
+    display          : flex;
+    flex-direction   : column;
+    min-width        : 100%;
+    width            : fit-content;
+    flex-shrink      : 0;
+
+    background-color : var(--b-task-board-swimlane-background);
+
+    > .b-task-board-column {
+        min-height : 2em;
+    }
+
+    &.b-collapsed {
+        .b-task-board-swimlane-body {
+            height : 0 !important;
+        }
+
+        .b-task-board-swimlane-expander {
+            rotate : 0deg;
+        }
+
+        .b-task-board-column {
+            overflow : clip;
+        }
+    }
+
+    /* Transition own height along with the body, and no scrollbars in columns during swimlane expand/collapse */
+    &.b-collapsing,
+    &.b-expanding {
+        transition : height var(--b-default-transition-duration);
+        overflow   : clip;
+
+        .b-task-board-column-body {
+            overflow : clip;
+        }
+    }
+
+    &.b-last .b-task-board-swimlane-body {
+        /* Room for box-shadow below last swimlane */
+        padding-bottom : var(--b-task-board-body-padding);
+    }
+}
+
+/* Not using swimlanes, fill height */
+.b-task-board-swimlane[data-lane=default] {
+    flex     : 1;
+    overflow : hidden; /* Each column scrolls on its own when not using swimlanes, cannot use clip */
+
+    .b-task-board-swimlane-body {
+        flex     : 1;
+        overflow : clip;
+    }
+}
+
+.b-task-board-swimlane-header {
+    display        : flex;
+    align-items    : center;
+    z-index        : var(--b-task-board-swimlane-header-z-index);
+
+    /* To match column headers */
+    margin         : 0 var(--b-task-board-body-padding);
+
+    background     : var(--b-task-board-swimlane-header-background);
+    border-radius  : var(--b-task-board-swimlane-header-border-radius);
+    border-top     : var(--b-task-board-swimlane-header-border-top);
+    border-bottom  : var(--b-task-board-swimlane-header-border-bottom);
+    box-shadow     : var(--b-task-board-swimlane-header-box-shadow);
+    gap            : var(--b-task-board-column-header-gap);
+    padding        : var(--b-task-board-swimlane-header-padding);
+    text-transform : var(--b-task-board-swimlane-header-text-transform);
+
+    * {
+        font-size : var(--b-task-board-swimlane-header-font-size);
+    }
+
+    /* Position sticky does not play well with dom transition, disable during it */
+    .b-sticky-headers:not(.b-dom-transition) & {
+        position : sticky;
+        top      : var(--b-task-board-column-header-sticky-height);
+    }
+
+    button, i {
+        color : var(--b-task-board-swimlane-header-icon-color);
+
+        &:hover {
+            color : var(--b-task-board-swimlane-header-color);
+        }
+    }
+
+    .b-collapsible > & {
+        cursor : pointer;
+    }
+}
+
+.b-task-board-swimlane-title {
+    display     : flex;
+    align-items : center;
+    gap         : .5em;
+
+    color       : var(--b-task-board-swimlane-header-color);
+
+    .b-sticky-headers:not(.b-dom-transition) & {
+        position : sticky;
+
+        left     : var(--b-task-board-swimlane-header-padding);
+
+        .b-rtl & {
+            left  : auto;
+            right : var(--b-task-board-swimlane-header-padding);
+        }
+    }
+}
+
+.b-task-board-swimlane-count {
+    font-size : var(--b-task-board-column-count-font-size);
+}
+
+.b-task-board-column-expander,
+.b-task-board-swimlane-expander {
+    rotate : 180deg;
+
+    .b-rtl & {
+        rotate : 0deg;
+    }
+}
+
+.b-task-board-column-expander {
+    margin-inline-end : -.5em;
+    padding           : 0;
+    /* Move it towards the end */
+    order             : 500;
+}
+
+.b-task-board-swimlane-body {
+    display        : flex;
+    flex-direction : row;
+    height         : 100%; /* When virtualizing it is not sized by cards */
+    transition     : height var(--b-default-transition-duration), flex var(--b-default-transition-duration);
+
+    gap            : var(--b-task-board-column-gap);
+    /* Room for box-shadow, since overflow is hidden in default swimlane */
+    padding        : 0 var(--b-task-board-body-padding);
+}
+
+.b-task-board-column-header,
+.b-task-board-column {
+    min-width : var(--b-task-board-column-min-width);
+
+    &.b-fixed-width {
+        flex-shrink : 0;
+    }
+
+    &:not(.b-fixed-width) {
+        flex : 1;
+    }
+
+    &.b-collapsed {
+        flex            : unset;
+        min-width       : 3em;
+        justify-content : center;
+
+        /* In the dom transition snapshot, it has to use assigned width */
+        .b-task-board-body:not(.b-dom-transition-snapshot) & {
+            width : 0 !important;
+        }
+    }
+
+    &.b-expanding {
+        flex : unset;
+    }
+}
+
+.b-task-board-column {
+    display           : flex;
+    flex-flow         : column nowrap;
+    position          : relative;
+    contain           : style layout;
+
+    background-color  : var(--b-task-board-column-background);
+    border-radius     : var(--b-task-board-column-border-radius);
+    box-shadow        : var(--b-task-board-column-box-shadow);
+    border            : var(--b-task-board-column-border);
+    border-inline-end : var(--b-task-board-column-separator-border, var(--b-task-board-column-border));
+
+    border-top        : none; /* Order is important, to override border above */
+
+    .b-task-board-base:not(.b-no-transitions) &:not(.b-task-board-drag-proxy) {
+        transition : width var(--b-task-board-column-collapse-duration);
+    }
+
+    &.b-last {
+        border-inline-end : var(--b-task-board-column-border);
+    }
+
+    /* Hide cards when fully collapsed */
+    &.b-collapsed:not(.b-collapsing) {
+        .b-task-board-column-bbar,
+        .b-task-board-column-body-inner,
+        .b-task-board-card {
+            display : none;
+        }
+    }
+
+    &.b-collapsing {
+        /* Show the title in body only when fully collapsed  */
+        .b-task-board-column-title {
+            display : none;
+        }
+
+        .b-task-board-card {
+            transition : opacity var(--b-default-transition-duration) linear;
+            opacity    : 0;
+        }
+    }
+
+    &.b-collapsed {
+        .b-task-board-column-body {
+            padding-top : 0;
+            overflow    : visible;
+
+            .b-task-board-column-count {
+                padding : 0.4em 0.2em;
+            }
+        }
+
+        &:not(.b-collapsing) {
+            .b-task-board-column-body {
+                display : flex;
+            }
+
+            /* Scoped to the body title: in vertical column-group mode the header lives inside the column, so an
+               unscoped `.b-task-board-column-title` rule would also match (and un-hide) the in-column header title,
+               making the collapsed header reserve length-dependent rotated-title space. The visible rotated title lives
+               in the body; the header title stays compacted away by the shared expander-only rule. */
+            .b-task-board-column-body .b-task-board-column-title {
+                display        : flex;
+                writing-mode   : vertical-rl;
+                width          : auto;
+                justify-self   : center;
+                align-items    : center;
+
+                margin-top     : var(--b-task-board-column-header-collapsed-title-top);
+                /* To match column headers when in body */
+                font-weight    : var(--b-task-board-column-header-font-weight);
+                text-transform : var(--b-task-board-column-header-text-transform);
+
+                .b-rtl & {
+                    justify-content : flex-end;
+                }
+            }
+
+            .b-task-board-column-body .b-column-title-text {
+                flex : unset;
+            }
+        }
+
+        .b-task-board-card {
+            opacity : 0;
+        }
+    }
+
+    &.b-expanding {
+        .b-task-board-card {
+            transition       : opacity var(--b-default-transition-duration) ease-in;
+            transition-delay : .05s;
+            opacity          : 0;
+        }
+    }
+}
+
+/* Stick title in collapsed column when using sticky headers */
+.b-sticky-headers .b-task-board-column.b-collapsed .b-task-board-column-title {
+    position : sticky;
+
+    top      : /*var(--b-task-board-column-header-sticky-height)*/ 0;
+}
+
+/* Displaying more than one card per row, make them equal height */
+.b-inline {
+    .b-task-board-card {
+        overflow : clip;
+
+        height   : var(--b-task-board-card-inline-height);
+    }
+
+    &.b-2-tasks-per-row {
+        .b-task-board-card {
+            height : var(--b-task-board-card-inline-large-height);
+        }
+    }
+}
+
+.b-task-board-column-body {
+    flex       : 1;
+    height     : fit-content;
+    overflow   : auto;
+    /* To leave some space to drop a card into an empty swimlanes column */
+    min-height : calc(2 * var(--b-task-board-column-padding) + var(--b-task-board-card-gap));
+    contain    : style layout;
+}
+
+.b-task-board-column-body-inner {
+    display        : grid;
+    grid-auto-rows : min-content;
+    align-items    : start;
+    min-height     : 100%;
+    width          : 100%;
+
+    gap            : var(--b-task-board-card-gap);
+    padding        : var(--b-task-board-column-padding);
+
+    /* Boosts layout performance, but means we have to used fixed height on swimlanes */
+    .b-virtualized & {
+        position : absolute;
+    }
+}
+
+.b-task-board-card {
+    position            : relative;
+    cursor              : pointer;
+    min-height          : 2em;
+    min-width           : 0;
+    opacity             : 1;
+    overflow            : clip;
+    transition          : linear, transform var(--b-default-transition-duration) ease, box-shadow var(--b-default-transition-duration) linear, opacity var(--b-default-transition-duration) linear, height var(--b-default-transition-duration) ease-in;
+    contain             : style; /*layout*/
+    /* Not using layout, since it promotes card to a layer */
+
+    background          : var(--b-task-board-card-background);
+    border-radius       : var(--b-task-board-card-border-top-radius) var(--b-task-board-card-border-top-radius) var(--b-task-board-card-border-bottom-radius) var(--b-task-board-card-border-bottom-radius);
+    border-block-start  : var(--b-task-board-card-border-top, var(--b-task-board-card-border)); /* Top */
+    border-inline-end   : var(--b-task-board-card-border-inline-end, var(--b-task-board-card-border)); /* Right */
+    border-block-end    : var(--b-task-board-card-border-bottom, var(--b-task-board-card-border)); /* Bottom */
+    border-inline-start : var(--b-task-board-card-border-inline-start, var(--b-task-board-card-border)); /* Left */
+    box-shadow          : var(--b-task-board-card-box-shadow);
+
+    &:hover {
+        background : var(--b-task-board-card-hover-background);
+        box-shadow : var(--b-task-board-card-hover-box-shadow);
+
+        transform  : var(--b-task-board-card-hover-transform);
+    }
+
+    /* Dont highlight tasks on hover when dragging */
+    .b-task-board-base.b-dragging-task &:hover {
+        background : var(--b-task-board-card-background);
+        box-shadow : var(--b-task-board-card-box-shadow);
+        transform  : none;
+    }
+
+    &.b-selected {
+        animation-duration : var(--b-default-transition-duration);
+
+        animation-name     : var(--b-task-board-card-selected-animation);
+        transform          : var(--b-task-board-card-selected-transform);
+        background         : var(--b-task-board-card-selected-background);
+        box-shadow         : var(--b-task-board-card-selected-box-shadow);
+
+        &::after {
+            content        : '';
+            position       : absolute;
+            pointer-events : none;
+
+            border         : var(--b-task-board-card-selected-outline);
+            border-radius  : var(--b-task-board-card-border-top-radius) var(--b-task-board-card-border-top-radius) var(--b-task-board-card-border-bottom-radius) var(--b-task-board-card-border-bottom-radius);
+            top            : var(--b-task-board-card-focus-outline-offset);
+            right          : var(--b-task-board-card-focus-outline-offset);
+            bottom         : var(--b-task-board-card-focus-outline-offset);
+            left           : var(--b-task-board-card-focus-outline-offset);
+        }
+    }
+
+    &.b-selected:hover {
+        animation-duration : -1;
+    }
+
+    &:focus-visible {
+        background     : var(--b-task-board-card-focus-background);
+        outline        : var(--b-task-board-card-focus-outline);
+        outline-offset : var(--b-task-board-card-focus-outline-offset);
+    }
+
+    .b-has-selection &:not(.b-selected) {
+        box-shadow : var(--b-task-board-card-unselected-box-shadow);
+        opacity    : var(--b-task-board-card-unselected-opacity);
+
+        &:hover {
+            box-shadow : var(--b-task-board-card-hover-box-shadow);
+            opacity    : var(--b-task-board-card-unselected-hover-opacity);
+        }
+    }
+
+    /* Dim non-highlighted cards when highlighting is active */
+    .b-is-highlighting &:not(.b-highlighted) {
+        transition : opacity 0.4s;
+        opacity    : 0.2;
+    }
+
+    &.b-fx-highlight {
+        animation : b-anim-fx-highlight-card 1s ease-out;
+    }
+
+    &.b-read-only {
+        background : var(--b-task-board-card-readonly-background);
+        color      : var(--b-task-board-card-readonly-color);
+
+        /* .b-task-board-card-header::before { */
+        /*     content     : "#{ $fa-var-lock }"; */
+        /*     font-family : $ icon-font; */
+        /*     font-weight : $ icon-font-weight; */
+        /* } */
+    }
+}
+
+@keyframes b-anim-fx-highlight-card {
+    0% {
+        box-shadow : var(--b-task-board-card-box-shadow);
+    }
+    50% {
+        box-shadow : 0 0 3px 1px var(--b-task-board-card-highlight-color);
+    }
+    100% {
+        box-shadow : var(--b-task-board-card-box-shadow);
+    }
+}
+
+/* Dont wrap text in headers as card gets smaller */
+.b-medium-cards,
+.b-small-cards,
+.b-tiny-cards {
+    .b-task-board-card-header .b-task-board-text[data-role="item-name"] {
+        white-space : nowrap;
+        width       : 0;
+    }
+}
+
+.b-task-board-column.b-micro-cards {
+    .b-task-board-card {
+        height          : 2.5em;
+        min-height      : 2.5em;
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+    }
+
+    .b-task-board-card-header,
+    .b-task-board-card-body {
+        display : none;
+    }
+
+    .b-task-board-card-footer {
+        padding : 0;
+    }
+}
+
+.b-task-board-card-header {
+    position      : relative;
+    display       : flex;
+    flex-flow     : row nowrap;
+    align-items   : center;
+    transition    : background var(--b-default-transition-duration) linear;
+    overflow      : clip;
+
+    background    : var(--b-task-board-card-header-background);
+    border-radius : calc(var(--b-task-board-card-border-top-radius) - 1px) calc(var(--b-task-board-card-border-top-radius) - 1px) 0 0;
+    font-size     : var(--b-task-board-card-header-font-size);
+    font-weight   : var(--b-task-board-card-header-font-weight);
+    gap           : var(--b-task-board-card-header-gap);
+    padding       : var(--b-task-board-card-header-padding);
+
+    .b-task-board-text {
+        overflow      : clip;
+        text-overflow : ellipsis;
+
+        color         : var(--b-task-board-card-header-color);
+
+        &[data-ref=text] {
+            flex : 1;
+        }
+    }
+}
+
+.b-task-board-card-body {
+    display        : flex;
+    flex-direction : column;
+    overflow       : clip;
+    transition     : height var(--b-default-transition-duration), padding var(--b-default-transition-duration);
+
+    gap            : var(--b-task-board-card-body-gap);
+    padding        : var(--b-task-board-card-body-padding);
+
+    .b-task-board-text {
+        color : var(--b-task-board-card-body-color);
+    }
+}
+
+/* Remove top padding on footer if there is no card body */
+.b-task-board-card-header + .b-task-board-card-footer {
+    padding-top : 0;
+}
+
+.b-task-board-card-footer {
+    align-items    : center;
+    display        : flex;
+    flex-direction : row;
+    overflow       : clip;
+    transition     : height var(--b-default-transition-duration), padding var(--b-default-transition-duration);
+
+    gap            : var(--b-task-board-card-footer-gap);
+    padding        : var(--b-task-board-card-footer-padding);
+
+    .b-task-board-text {
+        flex : 1;
+    }
+
+    .b-task-board-task-item {
+        font-size : var(--b-task-board-card-footer-font-size);
+        color     : var(--b-task-board-card-footer-color);
+    }
+}
+
+/* Needs to be specific enough to override collapse rules etc. */
+.b-task-board .b-task-board-body.b-dom-transition * {
+    transition     : all var(--b-default-transition-duration);
+    pointer-events : none;
+}
+
+@keyframes b-anim-selected {
+    from {
+        scale : 1.0;
+    }
+
+    to {
+        scale : 1.03;
+    }
+}
+
+@media (max-width : 736px) {
+    /* Hide all column header buttons except menu button */
+    .b-task-board-column-header-padder > button:not(.b-task-board-column-header-menu-button) {
+        display : none;
+    }
+}
+
+@media (max-width : 480px) {
+    /* Hide all column header buttons */
+    .b-task-board-column-header-padder > button {
+        display : none;
+    }
+}

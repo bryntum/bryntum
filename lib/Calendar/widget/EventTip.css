@@ -1,0 +1,10 @@
+.b-cal-tooltip-duration,
+.b-cal-tooltip-recurrence {
+    display : flex;
+    gap     : 0.5em;
+    i {
+        justify-content : center;
+        color           : var(--b-clock-hand-color);
+        width           : var(--b-clock-size);
+    }
+}

@@ -1,0 +1,785 @@
+:root, :host {
+    /**
+     * Button box-shadow, overridden by renditions
+     */
+    --b-button-box-shadow                        : null;
+
+    /**
+     * Button text-align
+     */
+    --b-button-text-align                        : center;
+
+    /**
+     * Opacity for disabled buttons
+     * @state Disabled
+     */
+    --b-button-disabled-opacity                  : 0.4;
+
+    /**
+     * Border-radius for icon-only buttons
+     */
+    --b-button-icon-only-border-radius           : 50%;
+
+    /**
+     * Button text font-weight
+     */
+    --b-button-font-weight                       : 500;
+
+    /**
+     * Gap between icon and label
+     */
+    --b-button-gap                               : 0.5em;
+
+    /**
+     * Button height
+     */
+    --b-button-height                            : 3em;
+
+    /**
+     * Inline padding for buttons with icon
+     */
+    --b-button-icon-padding-inline               : var(--b-widget-padding);
+
+    /**
+     * Inline padding for buttons with icon at the end
+     */
+    --b-button-end-icon-padding-inline           : var(--b-widget-padding);
+
+    /**
+     * Inline padding for buttons with menu
+     */
+    --b-button-menu-padding-inline               : var(--b-widget-padding);
+
+    /**
+     * Button opacity
+     */
+    --b-button-opacity                           : 1;
+
+    /**
+     * Text-only button inline padding
+     */
+    --b-button-padding-inline                    : var(--b-widget-padding);
+
+    /**
+     * Box-shadow for pressed buttons, overridden by renditions
+     * @state Pressed
+     */
+    --b-button-pressed-box-shadow                : none;
+
+    /**
+     * Focus outline width
+     * @state Focused
+     */
+    --b-button-focus-outline-width               : var(--b-widget-focus-outline-width);
+
+    /**
+     * Focus outline offset
+     * @state Focused
+     */
+    --b-button-focus-outline-offset              : calc(var(--b-widget-focus-outline-width) * -1);
+
+    /**
+     * Box-shadow for active buttons, overridden by renditions
+     * @state Active
+     */
+    /*--b-button-active-box-shadow             : null;*/
+
+    /**
+     * Button border-radius
+     */
+    --b-button-border-radius                     : var(--b-widget-border-radius);
+
+    /**
+     * Box-shadow for focused buttons, overridden by renditions
+     * @state Focused
+     */
+    /*--b-button-focus-box-shadow              : null;*/
+
+    /**
+     * Border-color for focused buttons, overridden by renditions
+     * @state Focused
+     */
+    /*--b-button-focus-border-color            : null;*/
+
+    /**
+     * Box-shadow for hovered buttons, overridden by renditions
+     * @state Hovered
+     */
+    /*--b-button-hover-box-shadow              : null;*/
+
+    /**
+     * Border-color for disabled buttons
+     * @state Disabled
+     */
+    /*--b-button-disabled-border-color         : null;*/
+
+    /**
+     * Box-shadow for active elevated buttons
+     * @state Active
+     * @rendition Elevated
+     */
+    --b-button-elevated-active-box-shadow        : var(--b-elevation-1);
+
+    /**
+     * Box-shadow for elevated buttons
+     * @rendition Elevated
+     */
+    --b-button-elevated-box-shadow               : var(--b-elevation-1);
+
+    /**
+     * Box-shadow for focused elevated buttons
+     * @state Focused
+     * @rendition Elevated
+     */
+    --b-button-elevated-focus-box-shadow         : var(--b-elevation-1);
+
+    /**
+     * Box-shadow for hovered elevated buttons
+     * @state Hovered
+     * @rendition Elevated
+     */
+    --b-button-elevated-hover-box-shadow         : var(--b-elevation-2);
+
+    /**
+     * Text color for elevated buttons
+     * @rendition Elevated
+     */
+    /*--b-button-elevated-color          : null;*/
+
+    /**
+     * Text color for filled buttons
+     * @rendition Filled
+     */
+    --b-button-filled-color                      : var(--b-text-5);
+
+    /**
+     * Box-shadow for hovered filled buttons
+     * @state Hovered
+     * @rendition Filled
+     */
+    --b-button-filled-hover-box-shadow           : none;
+
+    /**
+     * Box-shadow for hovered tonal buttons
+     * @state Hovered
+     * @rendition Tonal
+     */
+    --b-button-tonal-hover-box-shadow            : none;
+
+    /**
+     * Border width for tonal buttons
+     * @rendition Tonal
+     */
+    /*--b-button-tonal-border-width           : null;*/
+
+    /**
+     * Border width for outlined buttons
+     * @rendition Outlined
+     */
+    --b-button-outlined-border-width             : 1px;
+
+    /**
+     * Border color for outlined buttons
+     * @rendition Outlined
+     */
+    --b-button-outlined-border-color             : var(--b-border-6);
+
+    /**
+     * Background for disabled outlined buttons
+     * @state Disabled
+     * @rendition Outlined
+     */
+    --b-button-outlined-disabled-background      : transparent;
+
+    /**
+     * Border color for disabled outlined buttons
+     * @state Disabled
+     * @rendition Outlined
+     */
+    --b-button-outlined-disabled-border-color    : var(--b-border-6);
+
+    /**
+     * Border color for focused outlined buttons
+     * @state Focused
+     * @rendition Outlined
+     */
+    /*--b-button-outlined-focus-border-color     : null;*/
+
+    /**
+     * Background for outlined buttons
+     * @rendition Outlined
+     */
+    --b-button-outlined-background               : transparent;
+
+    /**
+     * Text color for pressed outlined buttons
+     * @rendition Outlined
+     * @state Pressed
+     */
+    --b-button-outlined-pressed-color            : unset;
+
+    /**
+     * Background for text buttons
+     * @rendition Text
+     */
+    --b-button-type-text-background              : transparent;
+
+    /**
+     * Background for disabled text buttons
+     * @state Disabled
+     * @rendition Text
+     */
+    --b-button-type-text-disabled-background     : transparent;
+
+    /**
+     * Background for disabled buttons
+     * @state Disabled
+     */
+    --b-button-disabled-background               : var(--b-widget-disabled-background);
+
+    /**
+     * Disabled button text color
+     * @state Disabled
+     */
+    --b-button-disabled-color                    : var(--b-neutral-50);
+
+    /**
+     * Background for focused text buttons
+     * @state Focused
+     */
+    --b-button-type-text-focused-background      : transparent;
+
+    --b-button-type-text-text-only-border-radius : unset;
+
+    /**
+    * Focus outline color
+    * @state Focused
+    */
+    --b-button-focus-outline-color               : var(--b-primary);
+
+    /**
+     * Button content z-index (above ripple)
+     */
+    --b-button-content-z-index                   : 1;
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+/**
+ * Background for elevated buttons
+ * @rendition Elevated
+ */
+/*--b-button-elevated-background          : var(--b-primary-98);*/
+
+/**
+ * Background for hovered elevated buttons
+ * @state Hovered
+ * @rendition Elevated
+ */
+/*--b-button-elevated-hover-background    : var(--b-primary-95);*/
+
+/**
+ * Background for focused elevated buttons
+ * @state Focused
+ * @rendition Elevated
+ */
+/*--b-button-elevated-focused-background  : var(--b-primary-95);*/
+
+/**
+ * Background for active elevated buttons
+ * @state Active
+ * @rendition Elevated
+ */
+/*--b-button-elevated-active-background   : var(--b-primary-95);*/
+
+/**
+ * Background for pressed elevated buttons
+ * @state Pressed
+ * @rendition Elevated
+ */
+/*--b-button-elevated-pressed-background  : var(--b-primary-90);*/
+
+/**
+ * Background for hovered pressed elevated buttons
+ * @state Pressed
+ * @rendition Elevated
+ */
+/*--b-button-elevated-pressed-hover-background  : var(--b-primary-92);*/
+
+/**
+ * Text color for elevated buttons
+ * @rendition Elevated
+ */
+/*--b-button-elevated-color               : var(--b-primary-40);*/
+
+/**
+ * Background for filled buttons
+ * @rendition Filled
+ */
+/*--b-button-filled-background            : var(--b-primary-45);*/
+
+/**
+ * Background for hovered filled buttons
+ * @state Hovered
+ * @rendition Filled
+ */
+/*--b-button-filled-hover-background      : var(--b-primary-55);*/
+
+/**
+ * Background for focused filled buttons
+ * @state Focused
+ * @rendition Filled
+ */
+/*--b-button-filled-focused-background    : var(--b-primary-60);*/
+
+/**
+ * Background for active filled buttons
+ * @state Active
+ * @rendition Filled
+ */
+/*--b-button-filled-active-background     : var(--b-primary-60);*/
+
+/**
+ * Background for pressed filled buttons
+ * @state Pressed
+ * @rendition Filled
+ */
+/*--b-button-filled-pressed-background    : var(--b-primary-65);*/
+
+/**
+ * Background for hovered pressed filled buttons
+ * @state Pressed
+ * @rendition Filled
+ */
+/*--b-button-filled-pressed-hover-background  : var(--b-primary-70);*/
+
+/**
+ * Background for hovered outlined buttons
+ * @state Hovered
+ * @rendition Outlined
+ */
+/*--b-button-outlined-hover-background    : var(--b-primary-95);*/
+
+/**
+ * Background for focused outlined buttons
+ * @state Focused
+ * @rendition Outlined
+ */
+/*--b-button-outlined-focused-background  : var(--b-primary-90);*/
+
+/**
+ * Background for active outlined buttons
+ * @state Active
+ * @rendition Outlined
+ */
+/*--b-button-outlined-active-background   : var(--b-primary-90);*/
+
+/**
+ * Background for pressed outlined buttons
+ * @state Pressed
+ * @rendition Outlined
+ */
+/*--b-button-outlined-pressed-background  : var(--b-primary-90);*/
+
+/**
+ * Background for hovered pressed outlined buttons
+ * @state Pressed
+ * @rendition Outlined
+ */
+/*--b-button-outlined-pressed-hover-background  : var(--b-primary-92);*/
+
+/**
+ * Border color for hovered outlined buttons
+ * @rendition Outlined
+ */
+/*--b-button-outlined-hover-border-color  : var(--b-primary-80);*/
+
+/**
+ * Text color for outlined buttons
+ * @rendition Outlined
+ */
+/*--b-button-outlined-color               : var(--b-primary-25);*/
+
+/**
+ * Border color for focused outlined buttons
+ * @state Focused
+ * @rendition Outlined
+ */
+/*--b-button-outlined-focus-border-color  : var(--b-primary);*/
+
+/**
+ * Background for tonal buttons
+ * @rendition Tonal
+ */
+/*--b-button-tonal-background             : var(--b-primary-95);*/
+
+/**
+ * Background for hovered tonal buttons
+ * @state Hovered
+ * @rendition Tonal
+ */
+/*--b-button-tonal-hover-background       : var(--b-primary-90);*/
+
+/**
+ * Background for focused tonal buttons
+ * @state Focused
+ * @rendition Tonal
+ */
+/*--b-button-tonal-focused-background     : var(--b-primary-90);*/
+
+/**
+ * Background for active tonal buttons
+ * @state Active
+ * @rendition Tonal
+ */
+/*--b-button-tonal-active-background      : var(--b-primary-85);*/
+
+/**
+ * Background for pressed tonal buttons
+ * @state Pressed
+ * @rendition Tonal
+ */
+/*--b-button-tonal-pressed-background     : var(--b-primary-80);*/
+
+/**
+ * Background for hovered pressed tonal buttons
+ * @state Pressed
+ * @rendition Tonal
+ */
+/*--b-button-tonal-pressed-hover-background  : var(--b-primary-85);*/
+
+/**
+ * Text color for tonal buttons
+ * @rendition Tonal
+ */
+/*--b-button-tonal-color                  : var(--b-primary-30);*/
+
+/**
+ * Border color for tonal buttons
+ * @rendition Tonal
+ */
+/*--b-button-tonal-border-color           : null;*/
+
+/**
+ * Background for hovered text buttons
+ * @state Hovered
+ * @rendition Text
+ */
+/*--b-button-type-text-hover-background   : var(--b-primary-95);*/
+
+/**
+ * Background for active text buttons
+ * @state Active
+ * @rendition Text
+ */
+/*--b-button-type-text-active-background  : var(--b-primary-90);*/
+
+/**
+ * Background for pressed text buttons
+ * @state Pressed
+ * @rendition Text
+ */
+/*--b-button-type-text-pressed-background : var(--b-primary-90);*/
+
+/**
+ * Background for hovered pressed text buttons
+ * @state Pressed
+ * @rendition Text
+ */
+/*--b-button-type-text-pressed-hover-background  : var(--b-primary-92);*/
+
+/**
+ * Text color for text buttons
+ * @rendition Text
+ */
+/*--b-button-type-text-color              : var(--b-primary-20);*/
+
+/*--b-button-split-color                  : var(--b-button-border-color);*/
+/*--b-button-tonal-split-color            : color-mix(in srgb, var(--b-button-tonal-color), transparent 70%);*/
+/*--b-button-outlined-split-color         : var(--b-button-border-color);*/
+/*--b-button-filled-split-color           : var(--b-button-color);*/
+/*--b-button-type-text-split-color        : var(--b-button-color);*/
+/*--b-button-elevated-split-color         : color-mix(in srgb, var(--b-button-color), transparent 70%);*/
+/* } */
+
+.b-button {
+    display                 : flex;
+    align-items             : center;
+    position                : relative;
+    transition-property     : box-shadow, font-weight, background, color, border, border-radius;
+    transition-duration     : var(--b-default-transition-duration);
+    overflow                : hidden; /* clip does not seem to work with ellipsis */
+    flex-shrink             : 0;
+    font-family             : inherit;
+    text-decoration         : none; /* For link buttons */
+    padding-block           : 0;
+    contain                 : style; /* Can only isolate style, as size may depend on content */
+
+    --b-button-border-width : var(--b-button-idle-border-width);
+    --b-button-border-color : var(--b-button-idle-border-color);
+    --b-widget-font-weight  : var(--b-button-font-weight);
+    --bi-button-cursor      : pointer;
+
+    background              : var(--b-button-background);
+    border                  : var(--b-button-border-width) solid var(--b-button-border-color);
+    border-radius           : var(--b-button-border-radius);
+    box-shadow              : var(--b-button-box-shadow);
+    color                   : var(--bi-button-applied-color, var(--b-button-color));
+    cursor                  : var(--bi-button-cursor);
+    gap                     : var(--b-button-gap);
+    height                  : var(--b-button-height);
+    max-height              : var(--b-button-max-height);
+    opacity                 : var(--b-button-opacity);
+    padding-inline          : var(--b-button-padding-inline);
+    justify-content         : var(--b-button-text-align);
+
+    .b-button-label, i {
+        white-space   : nowrap;
+        text-overflow : ellipsis;
+        transition    : color 0.2s;
+        margin        : 0; /* To override some CSS resets */
+        z-index       : var(--b-button-content-z-index); /* Above ripple */
+
+        cursor        : var(--bi-button-cursor);
+    }
+
+    .b-button-label {
+        overflow : hidden; /* clip does not seem to work with ellipsis */
+    }
+
+    i {
+        flex-shrink : 0;
+    }
+
+    /* region Renditions */
+
+    &.b-button-elevated {
+        --b-button-background               : var(--b-button-elevated-background, var(--b-primary-98));
+        --b-button-hover-background         : var(--b-button-elevated-hover-background, var(--b-primary-95));
+        --b-button-focused-background       : var(--b-button-elevated-focused-background, var(--b-primary-95));
+        --b-button-active-background        : var(--b-button-elevated-active-background, var(--b-primary-95));
+        --b-button-pressed-background       : var(--b-button-elevated-pressed-background, var(--b-primary-90));
+        --b-button-pressed-hover-background : var(--b-button-elevated-pressed-hover-background, var(--b-primary-92));
+        --b-button-box-shadow               : var(--b-button-elevated-box-shadow);
+        --b-button-hover-box-shadow         : var(--b-button-elevated-hover-box-shadow);
+        --b-button-focus-box-shadow         : var(--b-button-elevated-focus-box-shadow);
+        --b-button-active-box-shadow        : var(--b-button-elevated-active-box-shadow);
+        --b-button-color                    : var(--b-button-elevated-color, var(--b-primary-40));
+        --b-button-split-color              : var(--b-button-elevated-split-color, color-mix(in srgb, var(--b-button-color), transparent 70%));
+    }
+
+    &.b-button-filled
+    {
+        --b-button-background               : var(--b-button-filled-background, var(--b-primary-45));
+        --b-button-hover-background         : var(--b-button-filled-hover-background, var(--b-primary-55));
+        --b-button-focused-background       : var(--b-button-filled-focused-background, var(--b-primary-60));
+        --b-button-active-background        : var(--b-button-filled-active-background, var(--b-primary-60));
+        --b-button-pressed-background       : var(--b-button-filled-pressed-background, var(--b-primary-65));
+        --b-button-pressed-hover-background : var(--b-button-filled-pressed-hover-background, var(--b-primary-70));
+        --b-button-color                    : var(--b-button-filled-color);
+        --b-button-hover-box-shadow         : var(--b-button-filled-hover-box-shadow);
+        --b-button-split-color              : var(--b-button-filled-split-color, var(--b-button-color));
+    }
+
+    &.b-button-tonal {
+        --b-button-background               : var(--b-button-tonal-background, var(--b-primary-95));
+        --b-button-hover-background         : var(--b-button-tonal-hover-background, var(--b-primary-90));
+        --b-button-focused-background       : var(--b-button-tonal-focused-background, var(--b-primary-90));
+        --b-button-active-background        : var(--b-button-tonal-active-background, var(--b-primary-85));
+        --b-button-pressed-background       : var(--b-button-tonal-pressed-background, var(--b-primary-80));
+        --b-button-pressed-hover-background : var(--b-button-tonal-pressed-hover-background, var(--b-primary-85));
+        --b-button-hover-box-shadow         : var(--b-button-tonal-hover-box-shadow);
+        --b-button-color                    : var(--b-button-tonal-color, var(--b-primary-30));
+        --b-button-split-color              : var(--b-button-tonal-split-color, color-mix(in srgb, var(--b-button-tonal-color, var(--b-primary-30)), transparent 70%));
+        --b-button-idle-border-width        : var(--b-button-tonal-border-width);
+        --b-button-idle-border-color        : var(--b-button-tonal-border-color);
+        --b-button-focus-border-color       : var(--b-button-tonal-border-color);
+        --b-button-hover-border-color       : var(--b-button-tonal-border-color);
+        --b-button-disabled-border-color    : var(--b-button-tonal-border-color);
+    }
+
+    &.b-button-outlined {
+        --b-button-background               : var(--b-button-outlined-background);
+        --b-button-hover-background         : var(--b-button-outlined-hover-background, var(--b-primary-95));
+        --b-button-focused-background       : var(--b-button-outlined-focused-background, var(--b-primary-90));
+        --b-button-active-background        : var(--b-button-outlined-active-background, var(--b-primary-90));
+        --b-button-pressed-background       : var(--b-button-outlined-pressed-background, var(--b-primary-90));
+        --b-button-pressed-hover-background : var(--b-button-outlined-pressed-hover-background, var(--b-primary-92));
+        --b-button-color                    : var(--b-button-outlined-color, var(--b-primary-25));
+        --b-button-pressed-color            : var(--b-button-outlined-pressed-color);
+        --b-button-idle-border-width        : var(--b-button-outlined-border-width);
+        --b-button-idle-border-color        : var(--b-button-outlined-border-color);
+        --b-button-focus-border-color       : var(--b-button-outlined-focus-border-color, var(--b-primary));
+        --b-button-hover-border-color       : var(--b-button-outlined-hover-border-color, var(--b-primary-80));
+        --b-button-disabled-background      : var(--b-button-outlined-disabled-background);
+        --b-button-disabled-border-color    : var(--b-button-outlined-disabled-border-color);
+        --b-button-split-color              : var(--b-button-outlined-split-color, var(--b-button-border-color));
+    }
+
+    &.b-button-text
+    {
+        --b-button-background               : var(--b-button-type-text-background);
+        --b-button-hover-background         : var(--b-button-type-text-hover-background, var(--b-primary-95));
+        --b-button-focused-background       : var(--b-button-type-text-focused-background);
+        --b-button-active-background        : var(--b-button-type-text-active-background, var(--b-primary-90));
+        --b-button-pressed-background       : var(--b-button-type-text-pressed-background, var(--b-primary-90));
+        --b-button-pressed-hover-background : var(--b-button-type-text-pressed-hover-background, var(--b-primary-92));
+        --b-button-color                    : var(--b-button-type-text-color, var(--b-primary-20));
+        --b-button-disabled-background      : var(--b-button-type-text-disabled-background);
+        --b-button-split-color              : var(--b-button-type-text-split-color, var(--b-button-color));
+
+        &.b-split-button .b-button-menu-icon {
+            align-self : center;
+        }
+
+        &.b-text:not(:has(.b-button-icon)) {
+            border-radius : var(--b-button-type-text-text-only-border-radius, var(--b-button-border-radius));
+        }
+    }
+
+    /* endregion */
+
+    &:focus-visible,
+    &.b-contains-focus[aria-expanded] {
+        outline-offset : var(--b-button-focus-outline-offset);
+        outline        : var(--b-button-focus-outline-color) solid var(--b-button-focus-outline-width);
+    }
+
+    &.b-focus,
+    &:focus-visible {
+        --b-button-background   : var(--b-button-focused-background);
+        --b-button-box-shadow   : var(--b-button-focus-box-shadow);
+        --b-button-border-color : var(--b-button-focus-border-color);
+    }
+
+    &:hover,.b-hover {
+        &:where(:not(:active, .b-disabled)) {
+            --b-button-background   : var(--b-button-hover-background);
+            --b-button-box-shadow   : var(--b-button-hover-box-shadow);
+            --b-button-border-color : var(--b-button-hover-border-color);
+        }
+    }
+
+    &.b-active,
+    &:active {
+        --b-button-background : var(--b-button-active-background);
+        --b-button-box-shadow : var(--b-button-active-box-shadow);
+    }
+
+    &.b-rotate-vertical {
+        padding-inline : 0;
+        padding-block  : var(--b-button-padding-inline);
+
+        width          : var(--b-button-height);
+        height         : auto;
+
+        .b-button-label {
+            writing-mode : vertical-lr;
+        }
+    }
+
+    &.b-rotate-left {
+        flex-direction : column-reverse;
+
+        .b-button-label {
+            rotate : 180deg;
+        }
+
+        i {
+            rotate : 270deg;
+        }
+    }
+
+    &.b-rotate-right {
+        flex-direction : column;
+
+        i {
+            rotate : 90deg;
+        }
+    }
+
+    &.b-pressed {
+        --bi-button-applied-color : var(--b-button-pressed-color);
+        --b-button-background     : var(--b-button-pressed-background);
+        --b-button-box-shadow     : var(--b-button-pressed-box-shadow);
+
+        &:hover {
+            --b-button-background : var(--b-button-pressed-hover-background);
+        }
+    }
+
+    &.b-icon-align-start {
+        --b-button-padding-inline : var(--b-button-icon-padding-inline);
+    }
+
+    &.b-icon-align-end {
+        --b-button-padding-inline : var(--b-button-end-icon-padding-inline);
+
+        .b-button-icon {
+            order : 1;
+        }
+    }
+
+    &.b-disabled {
+        --b-button-color        : var(--b-button-disabled-color);
+        --b-button-background   : var(--b-button-disabled-background);
+        --b-button-opacity      : var(--b-button-disabled-opacity);
+        --b-button-box-shadow   : none;
+        --b-button-border-color : var(--b-button-disabled-border-color);
+
+        --bi-button-cursor      : normal;
+    }
+
+    /* Icon only, placed here to override padding from b-icon-align-start above */
+    &:not(.b-text, .b-has-menu-icon, .b-tab) {
+        aspect-ratio              : 1 / 1;
+
+        --b-button-padding-inline : 0;
+        --b-button-border-radius  : var(--b-button-icon-only-border-radius);
+    }
+
+    &.b-has-menu-icon:not(.b-text) {
+        --b-button-padding-inline : var(--b-button-menu-padding-inline);
+    }
+
+    .b-button-menu-icon::before {
+        transition : rotate .2s;
+    }
+
+    &.b-menu-visible .b-button-menu-icon::before {
+        rotate : 180deg;
+    }
+}
+
+.b-button-custom-content {
+    display     : flex;
+    align-items : center;
+}
+
+.b-using-keyboard .b-button-key {
+    text-decoration : underline;
+}
+
+.b-split-button {
+    /* Never padding at end because the split trigger is anchored there */
+    padding-inline-end : 0;
+
+    .b-button-menu-icon {
+        display             : grid;
+        place-content       : center;
+        align-self          : stretch;
+        transition          : border .2s;
+
+        padding-inline      : var(--b-button-padding-inline);
+        border-inline-start : 1px solid var(--b-button-split-color);
+    }
+    /* Center icon and label in the space available to them before the trigger icon */
+    i:first-child {
+        flex       : 1 0 auto;
+        text-align : end;
+    }
+    .b-button-label {
+        flex       : 1 0 auto;
+        text-align : start;
+    }
+}

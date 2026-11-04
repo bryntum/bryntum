@@ -1,0 +1,297 @@
+:root, :host {
+    /**
+     * Splitter size (width or height depending on orientation)
+     */
+    --b-splitter-size               : 4px; /* .25em leads to half pixel fails in a lot of tests */
+
+    /**
+     * Size when hovered
+     * @state Hovered
+     */
+    --b-splitter-hover-size         : 8px;
+
+    /**
+     * Size when hovered on touch devices
+     * @state Hovered
+     */
+    --b-splitter-touch-hover-size   : 16px;
+
+    /**
+     * Size when disabled
+     * @state Disabled
+     */
+    --b-splitter-disabled-size      : 1px;
+
+    /**
+     * Splitter color
+     */
+    --b-splitter-color              : var(--b-border-6);
+
+    /**
+     * Splitter color when hovered
+     * @state Hovered
+     */
+    --b-splitter-hover-color        : var(--b-border-7);
+
+    /**
+     * Splitter color when disabled
+     * @state Disabled
+     */
+    --b-splitter-disabled-color     : var(--b-border-7);
+
+    /**
+     * Splitter buttons size
+     */
+    --b-splitter-button-size        : 1em;
+
+    /**
+     * Splitter buttons size on touch platforms
+     */
+    --b-splitter-touch-button-size  : 1.3em;
+
+    /**
+     * Splitter buttons icon color
+     */
+    --b-splitter-button-icon-color  : var(--b-border-4);
+
+    /**
+     * Splitter buttons icon color when hovered
+     * @state Hovered
+     */
+    --b-splitter-button-hover-color : var(--b-border-2);
+
+    /**
+     * Splitter z-index (for the ::after pseudo element that covers the drag area)
+     */
+    --b-splitter-z-index            : 10000;
+
+    /**
+     * Splitter buttons z-index
+     */
+    --b-splitter-buttons-z-index    : 10001;
+
+    /* Internal vars that should not be set by themes */
+    --bi-splitter-overflow          : visible; /* Allow any touch handle to overflow */
+    --bi-splitter-inner-top         : 0;
+    --bi-splitter-inner-left        : 0;
+    --bi-splitter-inner-translate   : 0 0;
+
+    /*
+     * The inner is always the hover size to make it easier to grab.
+     * It is transparent until hovered or being moved.
+     */
+    --bi-splitter-inner-size        : var(--b-splitter-hover-size);
+    @media (pointer : coarse) {
+        --bi-splitter-inner-size : var(--b-splitter-touch-hover-size);
+    }
+}
+
+/* The div surrounding the buttons */
+.b-splitter-buttons {
+    display             : none;
+    position            : absolute;
+    height              : 2.4em;
+    width               : 2.4em;
+    margin-inline-start : -1.2em;
+    transition          : top 0.2s ease-in-out, inset-inline-start 0.2s ease-in-out;
+    z-index             : var(--b-splitter-buttons-z-index);
+    font-size           : var(--b-splitter-button-size);
+}
+
+.b-splitter {
+    position                 : relative;
+    touch-action             : none;
+
+    background               : var(--b-splitter-color);
+    flex                     : 0 0 var(--b-splitter-size);
+    overflow                 : var(--bi-splitter-overflow);
+    z-index                  : var(--b-splitter-z-index);
+
+    &.b-disabled {
+        pointer-events         : none;
+
+        --b-splitter-size      : var(--b-splitter-disabled-size);
+        --b-splitter-color     : var(--b-splitter-disabled-color);
+        --bi-splitter-overflow : clip;
+    }
+
+    &:not(.b-disabled) {
+        &.b-hover,
+        &.b-contains-focus,
+        &.b-moving,
+        &.b-show-buttons {
+            /* Display splitter buttons on hover */
+            .b-splitter-buttons {
+                display : flex;
+            }
+        }
+
+        /* The fat inner part of the splitter that is grabbable.
+         * It is transparent and sits on top of the splitter. It is used to make the splitter easier to grab.
+         * But when hovered or being moved, it becomes visible.
+         */
+        &.b-hover,
+        &.b-contains-focus,
+        &.b-moving,
+        &.b-show-buttons {
+            --b-splitter-color : var(--b-splitter-hover-color);
+            .b-splitter-inner {
+                background : var(--b-splitter-hover-color);
+            }
+        }
+    }
+
+    .b-splitter-inner {
+        position    : absolute;
+        display     : flex;
+        align-items : center;
+
+        /* Center the inner in the splitter */
+        translate   : var(--bi-splitter-inner-translate);
+    }
+
+    &.b-horizontal {
+        --bi-splitter-inner-translate : 0 -50%;
+
+        /* The inner overflows the splitter to make it easier to grab.
+         * It is transparent until hovered or being moved. */
+        .b-splitter-inner {
+            top    : 50%;
+            height : var(--bi-splitter-inner-size);
+            width  : 100%;
+        }
+
+        &:not(.b-drag-disabled) {
+            cursor : ns-resize;
+        }
+
+        /* Rotate buttons for horizontal splitter */
+        .b-splitter-buttons {
+            rotate : 90deg;
+        }
+    }
+
+    &.b-vertical {
+        --bi-splitter-inner-translate : -50% 0;
+
+        /* The inner overflows the splitter to make it easier to grab.
+         * It is transparent until hovered or being moved. */
+        .b-splitter-inner {
+            inset-inline-start : 50%;
+            width              : var(--bi-splitter-inner-size);
+            height             : 100%;
+            flex-direction     : column;
+        }
+
+        &:not(.b-drag-disabled) {
+            cursor : ew-resize;
+        }
+
+        .b-splitter-buttons {
+            margin-inline-start : 0;
+            margin-block-start  : -1.2em;
+        }
+    }
+
+    /* Hide splitter if not having two siblings */
+    &:last-child,
+    &:first-child {
+        visibility : hidden;
+        flex       : 0;
+        min-width  : 0;
+    }
+
+    /* region RTL */
+    &.b-rtl {
+        &.b-vertical {
+            --bi-splitter-inner-translate : 50% 0;
+            .b-splitter-buttons {
+                scale : -1 1;
+            }
+        }
+
+        .b-splitter-button-expand {
+            justify-content : flex-end;
+            translate       : 100%;
+
+        }
+
+        .b-splitter-button-collapse {
+            justify-content : flex-start;
+            translate       : -100%;
+        }
+    }
+    /* endregion */
+}
+
+.b-splitter-button-collapse,
+.b-splitter-button-expand {
+    flex        : 1;
+    cursor      : pointer;
+    display     : flex;
+    align-items : center;
+    position    : relative;
+    padding     : .1em 0 0 0;
+    border      : none;
+
+    background  : var(--b-splitter-color);
+
+    &:hover .b-splitter-button-icon {
+        color : var(--b-splitter-button-hover-color);
+    }
+
+    &:focus-visible {
+        outline : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+    }
+
+    &.b-disabled {
+        cursor         : default;
+        visibility     : hidden !important;
+        pointer-events : none;
+    }
+
+    &:not(.b-disabled) {
+        pointer-events : auto;
+    }
+}
+
+.b-splitter-button-collapse {
+    border-top-left-radius    : 100% 50%;
+    border-bottom-left-radius : 100% 50%;
+    justify-content           : flex-end;
+}
+
+.b-splitter-button-expand {
+    border-top-right-radius    : 100% 50%;
+    border-bottom-right-radius : 100% 50%;
+}
+
+.b-splitter-button-icon {
+    cursor        : pointer;
+    height        : 1.5em;
+    font-size     : 1.3em;
+    font-weight   : 400;
+    align-content : center;
+
+    color         : var(--b-splitter-button-icon-color);
+}
+
+/* region Touch */
+
+.b-splitter-button-touch-area {
+    height   : 3em;
+    top      : -.3em;
+    width    : 2em;
+    position : absolute;
+}
+
+.b-splitter-button-collapse .b-splitter-button-touch-area {
+    inset-inline-start : -.9em;
+}
+
+.b-splitter-button-expand .b-splitter-button-touch-area {
+    inset-inline-end : -.9em;
+}
+
+/* endregion */
+

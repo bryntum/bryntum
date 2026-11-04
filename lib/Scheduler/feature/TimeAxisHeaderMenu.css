@@ -1,0 +1,7 @@
+.b-sch-time-axis-menu-date-range-popup {
+    width : 22em;
+
+    .b-popup-content {
+        grid-template-columns : auto 1fr auto;
+    }
+}

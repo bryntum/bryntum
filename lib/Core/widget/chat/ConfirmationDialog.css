@@ -1,0 +1,75 @@
+/* Styles shared by both inline and popup modes */
+.b-confirmation-dialog {
+    container-type : inline-size;
+
+    .b-approve-button {
+        --b-primary : var(--b-color-green);
+    }
+    .b-reject-button {
+        --b-primary : var(--b-color-red);
+    }
+    .b-message-icon {
+        font-size : 2em;
+        color     : var(--b-primary);
+    }
+    .b-change-message {
+        align-items : center;
+    }
+    .b-confirmation-dialog-content > * {
+        white-space : nowrap;
+    }
+    .b-records-item {
+        background-color : var(--b-neutral-90);
+        display          : flex;
+        align-items      : center;
+        border-radius    : 1em;
+        padding          : .5em;
+    }
+}
+
+/* Embedded inline in the chat bubble area */
+.b-inline-item > .b-confirmation-dialog {
+    --b-popup-background : var(--b-neutral-97);
+    border-radius        : var(--b-chat-panel-border-radius);
+    font-size            : .9em;
+    flex-shrink          : 0;
+    .b-toolbar-content {
+        --b-toolbar-padding  : var(--b-panel-padding);
+    }
+    @container (max-width: 460px) {
+        .b-approve-button .b-button-label, .b-reject-button .b-button-label {
+            display : none;
+        }
+    }
+
+    @container (max-width: 360px) {
+        .b-highlight-button .b-button-label, .b-preview-button .b-button-label {
+            display : none;
+        }
+    }
+}
+
+/* Floating popup wrapper */
+.b-confirmation-dialog-popup {
+    width     : 80%;
+    max-width : 42em;
+    /* Docking position when not centered / dragged */
+    &:not(.b-centered,.b-dragged-by-user) {
+        top                : .5em;
+        inset-inline-start : calc(100% - .5em);
+        translate          : -100%;
+        transition         : top .4s ease, inset-inline-start .4s ease;
+    }
+
+    @container (max-width: 550px) {
+        .b-approve-button .b-button-label, .b-reject-button .b-button-label {
+            display : none;
+        }
+    }
+
+    @container (max-width: 380px) {
+        .b-highlight-button .b-button-label, .b-preview-button .b-button-label {
+            display : none;
+        }
+    }
+}

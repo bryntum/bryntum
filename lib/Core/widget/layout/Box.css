@@ -1,0 +1,25 @@
+/* Override to use flex layout if hbox or vbox layout is used */
+
+.b-hbox, .b-vbox {
+    display         : flex;
+    align-items     : stretch;
+    justify-content : flex-start;
+    position        : relative;
+
+    > .b-box-center {
+        flex     : 1 1 auto;
+        overflow : hidden; /* clip does not work same way here */
+    }
+}
+
+.b-hbox {
+    flex-flow : row nowrap;
+}
+
+.b-vbox {
+    flex-flow : column nowrap;
+}
+
+.b-box-justify-stretch {
+    justify-content : stretch;
+}

@@ -1,0 +1,143 @@
+:root, :host {
+    /**
+     * Resource header avatar size (vertical mode)
+     */
+    --b-resource-header-avatar-size : 2.5em;
+
+    /**
+     * Resource header inner gap (vertical mode)
+     */
+    --b-resource-header-gap         : 0.5em;
+}
+
+.b-colorize {
+    /**
+     * Resource header avatar background color (vertical mode)
+     */
+    --b-resource-header-avatar-background-color : var(--b-primary-85);
+}
+
+.b-sch-vertical .b-sch-time-axis-column {
+    flex-direction : row;
+    min-height     : 3em;
+}
+
+.b-resource-header {
+    flex     : 1;
+    position : relative;
+    contain  : strict;
+
+    &.b-has-images {
+        min-height : 3em; /* Will not shrinkwrap since resource header cells are absolutely positioned */
+    }
+
+    &.b-grouped {
+        height : 6em;
+    }
+
+    .b-resource-avatar {
+        --b-avatar-size : var(--b-resource-header-avatar-size);
+    }
+}
+
+.b-resource-header-group-cell {
+    position       : absolute;
+    display        : flex;
+    align-items    : stretch;
+    flex-direction : column;
+    height         : 100%;
+
+    > .b-resource-header-group-text-wrap {
+        padding           : 0.5em 0;
+        display           : flex;
+        width             : 100%;
+        justify-content   : center;
+        align-items       : center;
+        transition        : border var(--b-default-transition-duration);
+
+        border-bottom     : 1px solid var(--b-grid-header-border-color);
+        border-inline-end : 1px solid var(--b-grid-header-border-color);
+
+        > span {
+            position           : sticky;
+            inset-inline-start : 0;
+            padding-inline     : var(--b-horizontal-time-axis-cell-padding-inline)
+        }
+    }
+
+    .b-resource-header-group-children {
+        position : relative;
+        height   : 100%;
+    }
+}
+
+.b-resource-header-cell {
+    position                   : absolute;
+    display                    : flex;
+    justify-content            : center;
+    align-items                : center;
+    overflow                   : hidden;
+    white-space                : nowrap;
+    contain                    : strict;
+    height                     : 100%;
+    user-select                : none;
+    -webkit-user-select        : none;
+    transition                 : background-color var(--b-default-transition-duration), color var(--b-default-transition-duration), border var(--b-default-transition-duration);
+
+    border-inline-end          : 1px solid var(--b-grid-header-border-color);
+    color                      : var(--b-grid-header-color);
+    font-size                  : var(--b-grid-header-font-size);
+    font-weight                : var(--b-grid-header-font-weight);
+
+    gap                        : var(--b-resource-header-gap);
+
+    --bi-resource-avatar-color : var(--b-resource-event-color, var(--b-primary));
+
+    .b-animating & {
+        transition : width 0.2s, left 0.2s, right 0.2s;
+    }
+
+    &:hover {
+        cursor     : pointer;
+
+        background : var(--b-grid-header-hover-background);
+    }
+
+    &:focus-visible {
+        outline : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+        outline-offset: calc(var(--b-widget-focus-outline-width) * -1);
+    }
+
+    > :first-child {
+        margin-inline-start : 0.3em;
+    }
+
+    > :last-child {
+        margin-inline-end : 0.3em;
+    }
+
+    &.b-align-start {
+        justify-content : flex-start;
+    }
+
+    &.b-align-end {
+        justify-content : flex-end;
+    }
+
+    i {
+        margin-inline-end : .5em;
+    }
+
+    .b-resource-name {
+        overflow      : hidden;
+        text-overflow : ellipsis;
+    }
+
+    .b-resource-avatar {
+        transition       : background var(--b-default-transition-duration);
+
+        background-color : var(--b-resource-header-avatar-background-color);
+
+        --b-primary      : var(--bi-resource-avatar-color);
+    }
+}

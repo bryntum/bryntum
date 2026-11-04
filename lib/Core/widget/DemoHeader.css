@@ -1,0 +1,83 @@
+/* Not imported by DemoHeader.css on purpose, to not spam CSS bundle */
+
+.demo-header {
+    display                    : flex;
+    padding-inline             : 0.7em 0;
+    padding-block              : 0;
+    flex                       : 0 0 auto; /* Must participate in flex using flex-basis: auto */
+
+    background                 : var(--b-demo-header-background);
+    border-bottom              : 1px solid var(--b-border-6);
+    transition                 : background-color var(--b-default-transition-duration), padding var(--b-default-transition-duration), font-size .1s, border-color var(--b-default-transition-duration);
+
+    a {
+        text-decoration : none;
+    }
+
+    .b-icon {
+        font-size : 1.1em;
+    }
+
+    .title {
+        margin-inline-end : auto;
+        display           : flex;
+        align-items       : center;
+        white-space       : nowrap;
+        color             : var(--b-text-1);
+
+        &:focus-visible {
+            outline-offset : var(--b-button-focus-outline-offset);
+            outline        : var(--b-button-focus-outline-width) solid var(--b-widget-focus-outline-color);
+            border-radius  : var(--b-widget-border-radius);
+        }
+
+        h1 {
+            display     : flex;
+            align-items : center;
+            margin      : 0;
+            font-weight : 600;
+            font-size   : 1.1em;
+        }
+
+        svg {
+            margin-inline-end  : .75em;
+            height             : 2em;
+            width              : 2em;
+            background         : #0076f8;
+            padding-inline-end : .2em;
+            border-radius      : 5px;
+
+            g {
+                fill : #fff;
+            }
+        }
+
+        /* Keep in sync with demo-resources/scss/_header.scss and Grid/examples/_shared/shared.css */
+        .tier-badge {
+            margin-inline-start : .75em;
+            padding             : .15em .4em;
+            border-radius       : .35em;
+            font-size           : .65em;
+            font-weight         : 600;
+            text-transform      : uppercase;
+            background          : transparent;
+            border              : 1px solid var(--b-neutral-50);
+            color               : var(--b-neutral-50);
+        }
+    }
+
+    .b-toolbar {
+        font-size              : .9em;
+
+        --b-toolbar-padding    : 0.7em;
+        --b-toolbar-background : transparent;
+    }
+
+    /* Keep in sync with demo-resources/scss/_header.scss and Grid/examples/_shared/shared.css */
+    /* Light text in dark mode, except on the pale Material 3 and high contrast fills */
+    /* Anchored on head, a :root :has() makes Chrome invalidate the whole document on inline style writes */
+    :where(head:not(:has(link[data-bryntum-theme][href*="material3"],
+                          link[data-bryntum-theme][href*="high-contrast"])) ~ body) & [data-ref="trialButton"] {
+        --b-button-filled-color : light-dark(var(--b-text-5), var(--b-text-1));
+    }
+}

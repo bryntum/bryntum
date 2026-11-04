@@ -1,0 +1,42 @@
+:root, :host {
+    /**
+     * Background for odd rows when striped
+     */
+    --b-stripe-odd-color    : var(--b-neutral-98);
+
+    /**
+     * Background for even rows when striped
+     */
+    --b-stripe-even-color   : var(--b-neutral-100);
+
+    /**
+     * Border width for the stripe rows, mainly intended to be used by high contrast themes
+     */
+    --b-stripe-border-width : 0;
+}
+
+.b-stripe {
+    --b-grid-row-border-width : var(--b-stripe-border-width);
+
+    .b-grid-row.b-odd {
+        --b-grid-cell-background : var(--b-stripe-odd-color);
+    }
+
+    .b-grid-row.b-even {
+        --b-grid-cell-background : var(--b-stripe-even-color);
+    }
+
+    .b-hide-row-hover {
+        .b-grid-row.b-odd {
+            --b-grid-cell-hover-background          : var(--b-stripe-odd-color);
+            --b-grid-cell-selected-background       : var(--b-stripe-odd-color);
+            --b-grid-cell-hover-selected-background : var(--b-stripe-odd-color);
+        }
+
+        .b-grid-row.b-even {
+            --b-grid-cell-hover-background          : var(--b-stripe-even-color);
+            --b-grid-cell-selected-background       : var(--b-stripe-even-color);
+            --b-grid-cell-hover-selected-background : var(--b-stripe-even-color);
+        }
+    }
+}

@@ -1,0 +1,193 @@
+:root, :host {
+    /**
+     * Gap between menu item parts (icon, text, sub-menu icon)
+     */
+    --b-menu-item-gap                    : var(--b-widget-gap);
+
+    /**
+     * Menu icon width, to make sure everything lines up nicely
+     */
+    --b-menu-item-icon-width             : 1em;
+
+    /**
+     * Minimum width of a menu item
+     */
+    --b-menu-item-min-width              : 12em;
+
+    /**
+     * Menu item padding
+     */
+    --b-menu-item-padding                : var(--b-widget-padding);
+
+    /**
+     * Menu item font-weight
+     */
+    --b-menu-item-font-weight            : var(--b-widget-font-weight);
+
+    /*--bi-menu-item-margin-inline-end     : null;*/
+
+    /**
+     * Separator item color
+     */
+    --b-menu-item-separator-border-color : var(--b-border-6);
+
+    /**
+     * Menu item color
+     */
+    --b-menu-item-color                  : var(--b-widget-color);
+
+    /**
+     * Color for menu item's icon
+     */
+    --b-menu-item-icon-color             : var(--b-menu-item-color);
+
+    /**
+     * Color for disabled menu item
+     * @state Disabled
+     */
+    --b-menu-item-disabled-color         : var(--b-widget-disabled-color);
+
+    /**
+     * Color for disabled menu item's icon
+     * @state Disabled
+     */
+    --b-menu-item-disabled-icon-color    : var(--b-neutral-70);
+
+    /**
+     * Menu item background
+     */
+    --b-menu-item-background             : transparent;
+
+    /**
+     * Color for menu item when hovering it
+     * @state Hovered
+     */
+    --b-menu-item-hover-color            : var(--b-widget-color);
+
+    /**
+     * Color for menu item when focused
+     * @state Focused
+     */
+    --b-menu-item-focus-color            : var(--b-widget-color);
+
+    /**
+     * Color for menu item's icon when hovering the item
+     * @state Hovered
+     */
+    --b-menu-item-hover-icon-color       : var(--b-widget-color);
+
+    /**
+     * Color for menu item's icon when hovering the item
+     * @state Focused
+     */
+    --b-menu-item-focus-icon-color       : var(--b-widget-color);
+
+    /**
+     * Menu item border radius
+     */
+    --b-menu-item-border-radius          : null;
+
+    /**
+     * Height of the separator
+     */
+    --b-menu-item-separator-height       : 1px;
+
+    /**
+     * Inset-inline for the separator
+     */
+    --b-menu-item-separator-inset        : 0;
+}
+
+/* .b-bryntum { */
+/**
+ * Background for hovered menu item
+ * @state Hovered
+ */
+/*--b-menu-item-hover-background : var(--b-primary-90);*/
+
+/**
+ * Background for focused menu item
+ * @state Focused
+ */
+/*--b-menu-item-focus-background : var(--b-primary-90);*/
+/* } */
+
+.b-menu-item {
+    display       : flex;
+    align-items   : center;
+    outline       : none;
+    overflow      : clip;
+    flex-shrink   : 0;
+
+    background    : var(--b-menu-item-background);
+    border-radius : var(--b-menu-item-border-radius);
+    color         : var(--b-menu-item-color);
+    font-weight   : var(--b-menu-item-font-weight);
+    gap           : var(--b-menu-item-gap);
+    min-width     : var(--b-menu-item-min-width);
+    padding       : var(--b-menu-item-padding);
+
+    &.b-separator:not(.b-first-visible-child) {
+        overflow   : visible;
+
+        margin-top : calc(var(--b-menu-item-separator-height) * 2 - 1px);
+
+        &::before {
+            content      : '';
+            display      : block;
+            position     : absolute;
+
+            inset-inline : var(--b-menu-item-separator-inset);
+            top          : calc(var(--b-menu-item-separator-height) * -1);
+            border-top   : 1px solid var(--b-menu-item-separator-border-color);
+        }
+    }
+
+    &:not(.b-disabled) {
+        cursor : pointer;
+    }
+
+    &:hover {
+        --b-menu-item-color      : var(--b-menu-item-hover-color);
+        --b-menu-item-background : var(--b-menu-item-hover-background, var(--b-primary-90));
+        --b-menu-item-icon-color : var(--b-menu-item-hover-icon-color);
+    }
+
+    &:focus-within {
+        --b-menu-item-color      : var(--b-menu-item-focus-color);
+        --b-menu-item-background : var(--b-menu-item-focus-background, var(--b-primary-90));
+        --b-menu-item-icon-color : var(--b-menu-item-focus-icon-color);
+    }
+
+    &.b-disabled {
+        --b-menu-item-color      : var(--b-menu-item-disabled-color);
+        --b-menu-item-icon-color : var(--b-menu-item-disabled-icon-color);
+    }
+
+    &.b-rtl .b-icon-sub-menu:before {
+        rotate : 180deg;
+    }
+}
+
+.b-menu-item-icon {
+    justify-self : center;
+
+    color        : var(--b-menu-item-icon-color);
+    width        : var(--b-menu-item-icon-width);
+}
+
+.b-menu-text {
+    flex                : 1;
+    white-space         : nowrap;
+    overflow            : hidden;
+    text-overflow       : ellipsis;
+    gap                 : var(--b-menu-item-gap);
+
+    margin-inline-start : calc(var(--b-menu-item-icon-width) + var(--b-menu-item-gap));
+    margin-inline-end   : var(--bi-menu-item-margin-inline-end);
+}
+
+.b-menu:not(.b-menu-with-icon) .b-menu-text,
+.b-menu-item-icon ~ .b-menu-text {
+    margin-inline-start : 0;
+}

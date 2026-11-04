@@ -1,0 +1,3 @@
+# Compiled from the TypeScript sources with `npx -p typescript@3.8 tsc`
+lib/Engine/**/*.js
+lib/ChronoGraph/**/*.js

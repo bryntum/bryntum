@@ -1,0 +1,37 @@
+/* @after Core/widget/Container.css */
+
+.b-time-picker {
+    max-height : 39em;
+
+    .b-list {
+        background-color : transparent;
+        align-items      : center;
+        scroll-snap-type : block;
+    }
+}
+
+.b-time-picker-item {
+    aspect-ratio      : 1;
+    flex-shrink       : 0;
+    width             : 3em;
+    scroll-snap-align : start;
+    display           : grid;
+    place-content     : center;
+    cursor            : pointer;
+
+    border-radius     : var(--b-widget-border-radius);
+
+    &:hover {
+        outline        : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+        outline-offset : calc(var(--b-widget-focus-outline-width) * -1);
+    }
+
+    &[aria-selected="true"] {
+        outline        : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+        outline-offset : calc(var(--b-widget-focus-outline-width) * -1);
+    }
+}
+
+.b-time-picker-content {
+    justify-content : center;
+}

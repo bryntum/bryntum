@@ -1,0 +1,210 @@
+/* @after Core/widget/CalendarPanel.css */
+
+/*
+ * Shared styling for date-picker-style day cells and their inner / payload
+ * elements. Owns *all* cell-inner and payload rules for both:
+ *
+ *   - The DatePicker family (Core/widget/DatePicker,
+ *     Scheduler/widget/SchedulerDatePicker, Calendar/widget/CalendarDatePicker)
+ *   - Calendar/widget/YearView
+ *
+ * DOM contract: each day cell holds an inner element (the circle that carries
+ * the date number) and an optional payload element (sibling of the inner)
+ * that hosts the count badge or dot markers.
+ *
+ *  - The inner element uses class `b-date-picker-cell-inner` in *both* widget
+ *    families.
+ *  - The payload element uses class `b-date-picker-cell-payload` in both.
+ *  - The cell uses `b-calendar-panel-cell` in the DatePicker family (from
+ *    CalendarPanel's `dayCellCls`) and `b-date-picker-cell` in YearView, so
+ *    cell-level selectors below combine the two with a comma.
+ *
+ * Mode-specific classes layered onto the payload element:
+ *
+ *   - `b-cell-events-badge`            for `showEvents : 'count'`
+ *   - `b-cal-minimal-event-container`  for `showEvents : 'dots'`
+ *   - `b-icon b-icon-circle`           for `showEvents : true` (bullets)
+ *
+ * Both families add `b-show-events-{mode}` to their content element. Selectors
+ * below are intentionally unscoped (no `.b-date-picker` / `.b-year-view-content`
+ * wrapper) since the cell / inner / payload class names are widget-specific
+ * enough on their own.
+ *
+ * The `--b-date-picker-cell-inner-z-index` and
+ * `--b-date-picker-cell-payload-z-index` variables are defined in
+ * Core/widget/DatePicker.css. The `--b-date-picker-date-*` and
+ * `--b-year-view-*` variable groups come from DatePicker.css and YearView.css
+ * respectively.
+ */
+
+/* ------------------------------------------------------------------------- */
+/* Cell inner - shared by DatePicker family and YearView                      */
+/* ------------------------------------------------------------------------- */
+
+/*
+ * The element that goes circular on selection. The `aspect-ratio: 1/1` +
+ * `min-width` pattern lets the dots-mode rule below collapse the height
+ * while keeping the inner a circle. The same rule applies in both widget
+ * families so the inner renders identically.
+ */
+.b-date-picker-cell-inner {
+    display         : flex;
+    flex-direction  : column;
+    flex-shrink     : 0;
+    align-items     : center;
+    justify-content : center;
+    margin-inline   : auto;
+    border-radius   : 50%;
+    position        : relative;
+    aspect-ratio    : 1 / 1;
+    height          : 100%;
+    /* Sizing flows through the internal `--bi-` so the mode override below
+     * just has to swap one variable. Falls back to the standard public
+     * theme variable when neither dots nor count mode is active. */
+    min-width       : var(--bi-date-picker-cell-inner-min-width, var(--b-date-picker-cell-inner-min-width));
+    z-index         : var(--b-date-picker-cell-inner-z-index);
+
+    background      : var(--b-date-picker-date-background);
+    padding         : var(--b-date-picker-date-padding);
+    outline         : var(--b-date-picker-date-border);
+}
+
+/*
+ * When the widget's content element advertises `showEvents : 'dots'` or
+ * `showEvents : 'count'`, swap to the wider inner size. The override
+ * cascades from the content element down into the cell-inner so we don't
+ * have to repeat the mode switch on the cell-inner rule itself.
+ */
+.b-show-events-dots,
+.b-show-events-count {
+    --bi-date-picker-cell-inner-min-width : var(--b-date-picker-cell-inner-min-width-with-events);
+}
+
+/*
+ * YearView's inner is focusable (role=link, tabIndex=-1). DatePicker's inner
+ * is presentation-only (its containing cell carries the focus there and gets
+ * its own outline via `.b-calendar-panel-cell:focus-visible::after` in
+ * DatePicker.css), so this rule never triggers in the DatePicker family
+ * even though both widgets share the inner class.
+ */
+.b-date-picker-cell-inner:focus-visible {
+    outline : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+    z-index : 1;
+}
+
+.b-date-picker-cell {
+    /* Anchors the absolutely-positioned `.b-date-picker-cell-payload` to the
+     * cell rather than to some ancestor. Marked `!important` because there
+     * are some rules which reset this */
+    position : relative !important;
+}
+
+/* Heatmap event-display: cell background intensifies with event count. */
+.b-show-events-heatmap .b-date-picker-cell {
+    /* Constrain the event count to a 1-10 range for the heatmap calculation,
+     * treating anything above 10 as 10 to avoid excessively bright colors.
+     * The count is reduced by 1 at the low end to give a better visual
+     * distinction between 0 and 1 events, so that even a single event will
+     * show a noticeable color instead of being almost indistinguishable from
+     * zero events. */
+    --bi-input    : clamp(0, (var(--bi-event-count) - 1) / 9, 1);
+
+    /* Mix the "End" color into the "Start" color.
+     * At count 1, it's 0% of the end color.
+     * At count 10, it's 100% of the end color. */
+    --bi-bg-color : color-mix(
+        in oklab,
+        var(--b-heatmap-end)   calc(var(--bi-input) * 100%),
+        var(--b-heatmap-start) calc((1 - var(--bi-input)) * 100%)
+    );
+
+    &:not([data-event-count="0"]) {
+        background-color : var(--bi-bg-color);
+        font-weight      : calc(var(--b-year-view-foreground-font-weight) + 100);
+    }
+}
+
+/* ------------------------------------------------------------------------- */
+/* Shared payload + dots-mode rules                                           */
+/* ------------------------------------------------------------------------- */
+
+/* Payload sibling - docked to the bottom of the cell, full width. */
+.b-date-picker-cell-payload {
+    pointer-events  : none;
+    position        : absolute;
+    inset           : auto 0 0 0;
+    display         : flex;
+    justify-content : center;
+    overflow        : clip;
+    z-index         : var(--b-date-picker-cell-payload-z-index);
+
+    font-weight     : var(--b-widget-font-weight);
+}
+
+/*
+ * Dots mode - the cell becomes a flex column with extra bottom padding so the
+ * date number sits at the top and the dot row stacks at the bottom (via
+ * `align-content: end` from CalendarEventRendering.css's
+ * `.b-cal-minimal-event-container`).
+ */
+.b-show-events-dots {
+    --bi-extra-cell-padding : calc(var(--bi-event-count-margin-top) + var(--bi-event-count-dot-size));
+
+    .b-calendar-panel-cell,
+    .b-date-picker-cell {
+        padding-bottom  : var(--bi-extra-cell-padding);
+        flex-direction  : column;
+        justify-content : flex-start;
+    }
+
+    .b-date-picker-cell-inner {
+        height : auto;
+    }
+}
+
+/*
+ * When the cell hosts an event indicator below the date number (a bullet
+ * for `showEvents : true` or the count badge for `showEvents : 'count'`),
+ * shift the date upward inside the inner so the two visually balance. The
+ * DatePicker family adds `b-has-bullet` for bullet mode; both DatePicker
+ * and YearView add `b-has-badge` for count mode (YearView never sets
+ * `b-has-bullet`, so the combined selector is a no-op there).
+ */
+.b-calendar-panel-cell,
+.b-date-picker-cell {
+    &:is(.b-has-bullet, .b-has-badge) {
+        .b-date-picker-cell-inner {
+            justify-content : flex-start;
+            padding-top     : 2px;
+        }
+    }
+
+    /* Bullet mode also lifts the payload off the cell bottom slightly so
+     * the bullet doesn't sit flush with the cell edge. */
+    &.b-has-bullet .b-date-picker-cell-payload {
+        bottom : 2px;
+    }
+}
+
+/*
+ * Count-mode badge - same rule for both DatePicker-family cells and YearView
+ * cells (now that the inner is sized identically by the rule above, both
+ * widget families have enough room to host the badge at the same offset).
+ * Layered onto the payload element when `showEvents : 'count'` produces a
+ * non-zero count. Explicit `left` + `right: auto` keep the badge centered
+ * against its own width - `inset: 0` on both sides would left-anchor it
+ * once a width is set.
+ */
+.b-cell-events-badge {
+    display       : grid;
+    place-items   : center;
+    border-radius : 50%;
+    aspect-ratio  : 1 / 1;
+    inset         : auto auto 2px calc(50% - var(--b-date-picker-cell-badge-size) / 2);
+
+    font-size     : var(--b-date-picker-cell-badge-font-size);
+    background    : var(--b-date-picker-cell-badge-background);
+    color         : var(--b-date-picker-cell-badge-color);
+    width         : var(--b-date-picker-cell-badge-size);
+    transform     : var(--b-date-picker-cell-badge-transform);
+}

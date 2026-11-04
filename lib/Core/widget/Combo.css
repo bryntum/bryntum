@@ -1,0 +1,143 @@
+/* @after Core/widget/TextField.css */
+
+:root, :host {
+    /**
+     * Top padding for chipview in combo when using "filled" rendition
+     * @rendition Filled
+     */
+    --b-combo-filled-chip-view-padding-top                : 1.55em;
+
+    /**
+     * Top padding for chipview in combo with label displayed before and using "filled" rendition
+     * @rendition Filled
+     */
+    --b-combo-filled-label-before-chip-view-padding-top   : 0.5em;
+
+    /**
+     * Top padding for chipview in combo when using "outlined" rendition
+     * @rendition Outlined
+     */
+    --b-combo-outlined-chip-view-padding-top              : 0.6em;
+
+    /**
+     * Top padding for chipview in combo with label displayed before and using "outlined" rendition
+     * @rendition Outlined
+     */
+    --b-combo-outlined-label-before-chip-view-padding-top : 0.5em;
+
+    /**
+     * Font size for chipview in combo
+     */
+    --b-combo-chip-font-size                              : .9em;
+
+    /**
+     * Block margin for chipview in combo
+     */
+    --b-combo-chip-view-margin-block                      : 0;
+
+    /**
+     * Padding for chipview in combo
+     */
+    --b-combo-chip-view-padding                           : 0.6em 1em;
+
+    /**
+     * Minimum height for chipview in combo (to avoid it collapsing when empty)
+     */
+    --b-combo-chip-view-min-height                        : 3em;
+}
+
+.b-combo {
+    /* Picker icon */
+
+    [data-ref="expand"]::before {
+        transition : rotate 0.2s ease;
+    }
+
+    &.b-open [data-ref="expand"]::before {
+        rotate : 180deg;
+    }
+
+    &.b-not-editable :not(.b-field-trigger) {
+        cursor : pointer;
+    }
+
+    &.b-uses-chip-view {
+        .b-field-inner {
+            justify-items : start;
+        }
+
+        &:not(.b-empty) input::placeholder {
+            visibility : hidden;
+        }
+    }
+
+    &.b-text-field-filled {
+        --b-combo-chip-view-padding-top : var(--b-combo-filled-chip-view-padding-top);
+    }
+
+    &.b-text-field-outlined {
+        --b-combo-chip-view-padding-top : var(--b-combo-outlined-chip-view-padding-top);
+    }
+
+    &.b-label-align-before,
+    &.b-label-before {
+        &.b-text-field-filled {
+            --b-combo-chip-view-padding-top : var(--b-combo-filled-label-before-chip-view-padding-top);
+        }
+
+        &.b-text-field-outlined {
+            --b-combo-chip-view-padding-top : var(--b-combo-outlined-label-before-chip-view-padding-top);
+        }
+    }
+
+    &.b-hide-trigger {
+        .b-field-trigger.b-icon-picker {
+            display : none;
+        }
+    }
+
+    &.b-inline-picker {
+        display   : flex;
+        flex-flow : column nowrap;
+        gap       : 0.5em;
+    }
+}
+
+.b-combo-chip-view {
+    color                        : inherit;
+    flex                         : 1;
+    align-self                   : stretch;
+
+    padding-top                  : var(--b-combo-chip-view-padding-top);
+    min-height                   : var(--b-combo-chip-view-min-height);
+    margin-block                 : var(--b-combo-chip-view-margin-block);
+
+    --b-chip-view-chip-font-size : var(--b-combo-chip-font-size);
+    --b-chip-view-padding        : var(--b-combo-chip-view-padding);
+
+    &.b-chip-view input {
+        flex       : 1;
+        height     : auto;
+        order      : 99999;
+        padding    : 0;
+        align-self : center;
+    }
+}
+
+.b-combo-picker {
+    &:not(.b-floating) {
+        align-self : stretch;
+    }
+    &.b-empty:not(.b-masked)[data-add-new-value]::after {
+        content : attr(data-add-new-value);
+        display : block;
+        cursor  : pointer;
+
+        padding : var(--b-list-item-padding);
+        color   : var(--b-list-item-color);
+    }
+}
+
+.b-float-root > .b-combo-picker {
+    padding : var(--b-menu-padding);
+}

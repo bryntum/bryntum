@@ -1,0 +1,205 @@
+/* @after Core/widget/Popup.css */
+
+:root, :host {
+    /**
+     * Hint highlighter z-index
+     */
+    --b-hint-highlighter-z-index : 99999;
+
+    /**
+     * Hint highlighter center z-index (behind content)
+     */
+    --b-hint-highlighter-center-z-index : -1;
+}
+
+.b-internal {
+    --bi-hint-highlight-top    : null;
+    --bi-hint-highlight-left   : null;
+    --bi-hint-highlight-width  : null;
+    --bi-hint-highlight-height : null;
+}
+
+.b-hint {
+    code {
+        padding     : 2px 4px;
+        line-height : 1;
+
+        background  : var(--b-neutral-80);
+    }
+
+    .b-description {
+        line-height : 1.7em;
+    }
+
+    .b-mask {
+        --b-mask-background      : color-mix(in srgb, var(--b-neutral-70), transparent 90%);
+        --b-mask-text-background : transparent;
+        --b-elevation-1          : none;
+        --b-mask-text-color      : transparent;
+    }
+}
+
+.b-hint.b-floating {
+    width      : max-content;
+    max-width  : 37em;
+    transition : top 0.5s, inset-inline-start 0.5s;
+
+    [data-ref="steps"] {
+        margin-inline-end : auto;
+    }
+
+    &.b-no-title {
+        .b-hint-header {
+            max-height : 0;
+            padding    : 0;
+        }
+
+        .b-popup-close {
+            position          : absolute;
+            inset-block-start : var(--b-widget-padding-large);
+            inset-inline-end  : var(--b-widget-padding-large);
+        }
+
+        .b-hint-content {
+            /* Make space for the close tool */
+            padding-inline-end : calc(var(--b-widget-padding-large) * 2);
+            padding-block      : var(--b-widget-padding-large) 0;
+        }
+    }
+
+    &, .b-hint-body-wrap {
+        border-radius : .5em;
+    }
+
+    .b-button {
+        height : 2.75em;
+    }
+
+    .b-tooltip-header .b-tool {
+        position : absolute;
+        top      : .5em;
+        right    : .5em;
+    }
+}
+
+.b-float-root .b-hint-highlighter {
+    /* Default high-visibility highlight color for guided hints.
+       Previously null (inherited), now set explicitly to ensure the hint highlighter
+       remains clearly visible across both light and dark themes when no custom color
+       is provided by the application. */
+    --bi-hint-highlight-color  : var(--b-color-orange);
+
+    background-color : transparent; /* Ensure the content area is transparent */
+    pointer-events   : none !important; /* Allow interactions within the content area */
+    transition       : left .5s, top 0.5s, width 0.5s, height 0.5s, background-color 0.7s;
+    border-radius    : 3px;
+
+    outline          : 2px solid var(--bi-hint-highlight-color);
+    left             : var(--bi-hint-highlight-left);
+    top              : var(--bi-hint-highlight-top);
+    width            : var(--bi-hint-highlight-width);
+    height           : var(--bi-hint-highlight-height);
+
+    &.b-hint-highlighter-ping {
+        animation : b-anim-hint-highlighter-ping 1.2s 3 linear;
+        z-index   : var(--b-hint-highlighter-z-index);
+    }
+
+    &.b-hint-highlighter-center {
+        background-color : var(--bi-hint-highlight-color);
+        border-radius    : 50%;
+        outline-offset   : -2px;
+        z-index          : var(--b-hint-highlighter-center-z-index);
+    }
+
+    &.b-realigning {
+        transition : none !important;
+    }
+}
+
+@keyframes b-anim-hint-highlighter-ping {
+    0%, 100% {
+        outline-color  : var(--bi-hint-highlight-color);
+        outline-offset : -2px;
+        outline-width  : 2px;
+    }
+    70% {
+        outline-offset : 20px;
+        outline-color  : color-mix(in srgb, var(--bi-hint-highlight-color) 40%, transparent 60%);
+        outline-width  : 10px;
+    }
+    95% {
+        outline-offset : 20px;
+        outline-color  : transparent;
+        outline-width  : 10px;
+    }
+    96% {
+        outline-offset : -2px;
+        outline-color  : transparent;
+        outline-width  : 2px;
+    }
+}
+
+.b-modal-mask[owned-by*="b-hint"] {
+    --bi-hint-highlight-radius : var(--b-widget-border-radius, 0px);
+
+    /* Default hole clipping for browsers not supporting 'shape' */
+    clip-path  : polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%,
+        var(--bi-hint-highlight-left) var(--bi-hint-highlight-top),
+        var(--bi-hint-highlight-left) calc(var(--bi-hint-highlight-top) + var(--bi-hint-highlight-height)),
+        calc(var(--bi-hint-highlight-left) + var(--bi-hint-highlight-width)) calc(var(--bi-hint-highlight-top) + var(--bi-hint-highlight-height)),
+        calc(var(--bi-hint-highlight-left) + var(--bi-hint-highlight-width)) var(--bi-hint-highlight-top),
+        var(--bi-hint-highlight-left) var(--bi-hint-highlight-top)
+    );
+
+    /* Clip out the highlight area with nice rounded corners if possible*/
+    @supports (clip-path: shape(from 0 0, close)) {
+        clip-path: shape(
+            evenodd
+
+            /* --- 1. Outer Mask (The Viewport / Full Rectangle - Drawn Clockwise) --- */
+            from 0% 0%,
+            line to 100% 0%,
+            line to 100% 100%,
+            line to 0% 100%,
+            line to 0% 0%,
+
+            /* --- 2. Inner Hole (The Highlight Area with Rounded Corners) anti clockwise --- */
+            /* Start near the TOP-LEFT corner, before the arc */
+            line to calc(var(--bi-hint-highlight-left) + var(--bi-hint-highlight-radius)) var(--bi-hint-highlight-top),
+
+            /* TOP-LEFT Corner (Approaching from the right, curving down and left) */
+            /* Arc from (left+radius, top) to (left, top+radius) */
+            arc to var(--bi-hint-highlight-left) calc(var(--bi-hint-highlight-top) + var(--bi-hint-highlight-radius)) of var(--bi-hint-highlight-radius),
+
+            /* Left Edge Line */
+            line to var(--bi-hint-highlight-left) calc(var(--bi-hint-highlight-top) + var(--bi-hint-highlight-height) - var(--bi-hint-highlight-radius)),
+
+            /* BOTTOM-LEFT Corner (Approaching from above, curving down and right) */
+            /* Arc from (left, top+height-radius) to (left+radius, top+height) */
+            arc to calc(var(--bi-hint-highlight-left) + var(--bi-hint-highlight-radius)) calc(var(--bi-hint-highlight-top) + var(--bi-hint-highlight-height)) of var(--bi-hint-highlight-radius),
+
+            /* Bottom Edge Line */
+            line to calc(var(--bi-hint-highlight-left) + var(--bi-hint-highlight-width) - var(--bi-hint-highlight-radius)) calc(var(--bi-hint-highlight-top) + var(--bi-hint-highlight-height)),
+
+            /* BOTTOM-RIGHT Corner (Approaching from left, curving up and right) */
+            /* Arc from (left+width-radius, top+height) to (left+width, top+height-radius) */
+            arc to calc(var(--bi-hint-highlight-left) + var(--bi-hint-highlight-width)) calc(var(--bi-hint-highlight-top) + var(--bi-hint-highlight-height) - var(--bi-hint-highlight-radius)) of var(--bi-hint-highlight-radius),
+
+            /* Right Edge Line */
+            line to calc(var(--bi-hint-highlight-left) + var(--bi-hint-highlight-width)) calc(var(--bi-hint-highlight-top) + var(--bi-hint-highlight-radius)),
+
+            /* TOP-RIGHT Corner (Approaching from below, curving up and left) */
+            /* Arc from (left+width, top+radius) to (left+width-radius, top) */
+            arc to calc(var(--bi-hint-highlight-left) + var(--bi-hint-highlight-width) - var(--bi-hint-highlight-radius)) var(--bi-hint-highlight-top) of var(--bi-hint-highlight-radius),
+
+            /* Top Edge Line back to hole starting point, before the arc */
+            line to calc(var(--bi-hint-highlight-left) + var(--bi-hint-highlight-radius)) var(--bi-hint-highlight-top),
+
+            /* Close the clipping shape */
+            line to 0% 0%
+        );
+    }
+
+    transition : all .5s;
+}

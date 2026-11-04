@@ -1,0 +1,196 @@
+:root, :host {
+    /**
+     * Bar border-width, overridden by specific series (0-5)
+     */
+    --b-histogram-bar-border-width      : null;
+    /**
+     * Bar 0 border-width
+     */
+    --b-histogram-bar0-border-width     : null;
+    /**
+     * Bar 1 border-width
+     */
+    --b-histogram-bar1-border-width     : null;
+    /**
+     * Bar 2 border-width
+     */
+    --b-histogram-bar2-border-width     : null;
+    /**
+     * Bar 3 border-width
+     */
+    --b-histogram-bar3-border-width     : null;
+    /**
+     * Bar 4 border-width
+     */
+    --b-histogram-bar4-border-width     : null;
+    /**
+     * Bar 5 border-width
+     */
+    --b-histogram-bar5-border-width     : null;
+
+    /**
+     * Bar transition duration
+     */
+    --b-histogram-transition-duration   : .3s;
+
+    /**
+     * Bar legend font size
+     */
+    --b-histogram-bar-legend-font-size  : 0.8em;
+
+    /**
+     * Bar fill color, overridden by specific series (0-5)
+     */
+    --b-histogram-bar-color             : var(--b-color-green);
+
+    /**
+     * Bar stroke color, overridden by specific series (0-5)
+     */
+    --b-histogram-bar-border-color      : null;
+
+    /**
+     * Bar 0 fill color
+     */
+    --b-histogram-bar0-color            : var(--b-color-green);
+
+    /**
+     * Bar 0 stroke color
+     */
+    --b-histogram-bar0-border-color     : null;
+
+    /**
+     * Bar 1 fill color
+     */
+    --b-histogram-bar1-color            : var(--b-color-blue);
+
+    /**
+     * Bar 1 stroke color
+     */
+    --b-histogram-bar1-border-color     : null;
+
+    /**
+     * Bar 2 fill color
+     */
+    --b-histogram-bar2-color            : var(--b-color-indigo);
+
+    /**
+     * Bar 2 stroke color
+     */
+    --b-histogram-bar2-border-color     : null;
+
+    /**
+     * Bar 3 fill color
+     */
+    --b-histogram-bar3-color            : var(--b-color-teal);
+
+    /**
+     * Bar 3 stroke color
+     */
+    --b-histogram-bar3-border-color     : null;
+
+    /**
+     * Bar 4 fill color
+     */
+    --b-histogram-bar4-color            : var(--b-color-orange);
+
+    /**
+     * Bar 4 stroke color
+     */
+    --b-histogram-bar4-border-color     : null;
+
+    /**
+     * Bar 5 fill color
+     */
+    --b-histogram-bar5-color            : var(--b-color-lime);
+
+    /**
+     * Bar 5 stroke color
+     */
+    --b-histogram-bar5-border-color     : null;
+
+    /**
+     * Bar exceeds top fill color
+     */
+    --b-histogram-exceeds-top-bar-color : var(--b-color-red);
+
+    /**
+     * Histogram outline color
+     */
+    --b-histogram-outline-color         : #f99;
+}
+
+.b-histogram {
+    background-color : #fff;
+    padding          : 1px;
+    contain          : strict;
+
+    svg {
+        * {
+            vector-effect : non-scaling-stroke;
+        }
+    }
+
+    rect {
+        fill                : var(--b-histogram-bar-color);
+        stroke-width        : var(--b-histogram-bar-border-width);
+        stroke              : var(--b-histogram-bar-border-color);
+
+        &.b-series-index-0 {
+            fill         : var(--b-histogram-bar0-color);
+            stroke-width : var(--b-histogram-bar0-border-width);
+            stroke       : var(--b-histogram-bar0-border-color);
+        }
+        &.b-series-index-1 {
+            fill         : var(--b-histogram-bar1-color);
+            stroke-width : var(--b-histogram-bar1-border-width);
+            stroke       : var(--b-histogram-bar1-border-color);
+        }
+        &.b-series-index-2 {
+            fill         : var(--b-histogram-bar2-color);
+            stroke-width : var(--b-histogram-bar2-border-width);
+            stroke       : var(--b-histogram-bar2-border-color);
+        }
+        &.b-series-index-3 {
+            fill         : var(--b-histogram-bar3-color);
+            stroke-width : var(--b-histogram-bar3-border-width);
+            stroke       : var(--b-histogram-bar3-border-color);
+        }
+        &.b-series-index-4 {
+            fill         : var(--b-histogram-bar4-color);
+            stroke-width : var(--b-histogram-bar4-border-width);
+            stroke       : var(--b-histogram-bar4-border-color);
+        }
+        &.b-series-index-5 {
+            fill         : var(--b-histogram-bar5-color);
+            stroke-width : var(--b-histogram-bar5-border-width);
+            stroke       : var(--b-histogram-bar5-border-color);
+        }
+
+        transition-property : x, y, width, height, fill;
+        transition-duration : var(--b-histogram-transition-duration);
+
+        &.b-exceeds-top {
+            fill : var(--b-histogram-exceeds-top-bar-color);
+        }
+    }
+
+    text.b-bar-legend {
+        writing-mode   : tb;
+        text-anchor    : end;
+        font-size      : var(--b-histogram-bar-legend-font-size);
+        /* So as not to interfere with mouseover of the bars */
+        pointer-events : none;
+    }
+
+    svg {
+        /* Because of the stroke coordinate system, 0.5 of a pixel at the edges overflows/ */
+        overflow : visible;
+    }
+
+    path {
+        fill           : transparent;
+        stroke         : var(--b-histogram-outline-color);
+        transition     : d var(--b-histogram-transition-duration);
+        pointer-events : none;
+    }
+}

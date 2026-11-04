@@ -1,0 +1,283 @@
+@charset "UTF-8";
+
+/* Themes need more specific rules than Widgets etc. to make sure the values are applied no matter the import order */
+:root:not(.b-nothing), :host(:not(.b-nothing)) {
+    --b-primary                                  : light-dark(#0f6cbd, #115ea3); /* colorBrandBackground = brand[80] */
+    --b-secondary                                : var(--b-color-orange);
+
+    --b-mix                                      : light-dark(#fff, #262626);
+    --b-opposite                                 : light-dark(#000, #fff);
+    --b-neutral-88                               : light-dark(hsl(0 0% 88%), hsl(0 0% 25.2%)); /* colorNeutralStrokeDisabled */
+    --b-neutral-82                               : light-dark(hsl(0 0% 82%), hsl(0 0% 30.3%)); /* colorNeutralStroke1 */
+    --b-neutral-78                               : light-dark(hsl(0 0% 78%), hsl(0 0% 33.7%)); /* colorNeutralStroke1Hover */
+    --b-neutral-74                               : light-dark(hsl(0 0% 74%), hsl(0 0% 37.1%)); /* colorNeutralForegroundDisabled */
+    --b-neutral-38                               : light-dark(hsl(0 0% 38%), hsl(0 0% 67.7%)); /* colorNeutralForeground3, colorNeutralStrokeAccessible */
+    --b-neutral-34                               : light-dark(hsl(0 0% 34%), hsl(0 0% 71.1%)); /* colorNeutralStrokeAccessibleHover */
+    --b-neutral-26                               : light-dark(hsl(0 0% 26%), hsl(0 0% 77.9%)); /* colorNeutralForeground2 */
+    --b-neutral-14                               : light-dark(hsl(0 0% 14%), hsl(0 0% 88.1%)); /* colorNeutralForeground1 */
+    --b-text-1                                   : light-dark(var(--b-neutral-14), var(--b-neutral-0)); /* colorNeutralForeground1 = white */
+    --b-text-2                                   : light-dark(var(--b-neutral-26), var(--b-neutral-20)); /* colorNeutralForeground2 ~ grey[84] */
+    --b-text-3                                   : var(--b-neutral-38); /* colorNeutralForeground3 ~ grey[68] */
+
+    --b-elevation-1                              : 0 0 2px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.42)), 0 4px 8px light-dark(rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.44));
+    --b-elevation-2                              : 0 0 2px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.42)), 0 8px 16px light-dark(rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.44));
+    --b-elevation-3                              : 0 0 8px light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.42)), 0 14px 28px light-dark(rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.44));
+
+    /* region Neutral shades — light values from Colors.css, dark values from fluent2-dark */
+    --b-neutral-100                              : light-dark(hsl(0 0% 100%), hsl(0 0% 15%));
+    --b-neutral-99                               : light-dark(hsl(0 0% 99%),  hsl(0 0% 15.85%));
+    --b-neutral-98                               : light-dark(hsl(0 0% 98%),  hsl(0 0% 16.7%));
+    --b-neutral-97                               : light-dark(hsl(0 0% 97%),  hsl(0 0% 17.55%));
+    --b-neutral-96                               : light-dark(hsl(0 0% 96%),  hsl(0 0% 18.4%));
+    --b-neutral-95                               : light-dark(hsl(0 0% 95%),  hsl(0 0% 19.25%));
+    --b-neutral-94                               : light-dark(hsl(0 0% 94%),  hsl(0 0% 20.1%));
+    --b-neutral-93                               : light-dark(hsl(0 0% 93%),  hsl(0 0% 20.95%));
+    --b-neutral-92                               : light-dark(hsl(0 0% 92%),  hsl(0 0% 21.8%));
+    --b-neutral-91                               : light-dark(hsl(0 0% 91%),  hsl(0 0% 22.65%));
+    --b-neutral-90                               : light-dark(hsl(0 0% 90%),  hsl(0 0% 23.5%));
+    --b-neutral-85                               : light-dark(hsl(0 0% 85%),  hsl(0 0% 27.75%));
+    --b-neutral-80                               : light-dark(hsl(0 0% 80%),  hsl(0 0% 32%));
+    --b-neutral-75                               : light-dark(hsl(0 0% 75%),  hsl(0 0% 36.25%));
+    --b-neutral-70                               : light-dark(hsl(0 0% 70%),  hsl(0 0% 40.5%));
+    --b-neutral-65                               : light-dark(hsl(0 0% 65%),  hsl(0 0% 44.75%));
+    --b-neutral-60                               : light-dark(hsl(0 0% 60%),  hsl(0 0% 49%));
+    --b-neutral-55                               : light-dark(hsl(0 0% 55%),  hsl(0 0% 53.25%));
+    --b-neutral-50                               : light-dark(hsl(0 0% 50%),  hsl(0 0% 57.5%));
+    --b-neutral-45                               : light-dark(hsl(0 0% 45%),  hsl(0 0% 61.75%));
+    --b-neutral-40                               : light-dark(hsl(0 0% 40%),  hsl(0 0% 66%));
+    --b-neutral-35                               : light-dark(hsl(0 0% 35%),  hsl(0 0% 70.25%));
+    --b-neutral-30                               : light-dark(hsl(0 0% 30%),  hsl(0 0% 74.5%));
+    --b-neutral-25                               : light-dark(hsl(0 0% 25%),  hsl(0 0% 78.75%));
+    --b-neutral-20                               : light-dark(hsl(0 0% 20%),  hsl(0 0% 83%));
+    --b-neutral-15                               : light-dark(hsl(0 0% 15%),  hsl(0 0% 87.25%));
+    --b-neutral-10                               : light-dark(hsl(0 0% 10%),  hsl(0 0% 91.5%));
+    --b-neutral-5                                : light-dark(hsl(0 0% 5%),   hsl(0 0% 95.75%));
+    --b-neutral-2                                : light-dark(hsl(0 0% 2%),   hsl(0 0% 98.3%));
+    --b-neutral-1                                : light-dark(hsl(0 0% 1%),   hsl(0 0% 99.15%));
+    --b-neutral-0                                : light-dark(hsl(0 0% 0%),   hsl(0 0% 100%));
+    /* endregion */
+
+    /* region Core */
+
+    --b-widget-border-radius                     : calc(4em / 14); /* borderRadiusMedium */
+    --b-widget-border-radius-large               : .8em;
+    --b-widget-padding                           : .8em;
+    --b-widget-gap                               : .8em;
+    --b-widget-border-color                      : var(--b-neutral-38); /* colorNeutralStrokeAccessible */
+    --b-widget-disabled-color                    : light-dark(var(--b-neutral-74), var(--b-neutral-75)); /* colorNeutralForegroundDisabled */
+    --b-widget-disabled-background               : light-dark(var(--b-neutral-94), hsl(0 0% 8%)); /* colorNeutralBackgroundDisabled */
+    --b-widget-focus-outline-color               : light-dark(#000, #fff); /* colorStrokeFocus2 */
+    --b-widget-sub-menu-icon                     : "\f105";
+
+    --b-icon-picker                              : "\f107";
+    --b-icon-spin-up                             : "\f077";
+    --b-icon-spin-down                           : "\f078";
+
+    --b-button-height                            : calc(32em / 14); /* Button medium */
+    --b-button-font-weight                       : 600; /* fontWeightSemibold */
+    --b-button-focus-outline-color               : light-dark(#000, #fff); /* colorStrokeFocus2 */
+    --b-button-disabled-opacity                  : 1; /* Explicit disabled colors instead of opacity */
+    --b-button-disabled-color                    : light-dark(var(--b-neutral-74), var(--b-neutral-75)); /* colorNeutralForegroundDisabled */
+    --b-button-outlined-disabled-border-color    : var(--b-neutral-88); /* colorNeutralStrokeDisabled */
+
+    --b-button-type-text-text-only-border-radius : 10em;
+    --b-button-icon-only-border-radius           : var(--b-widget-border-radius);
+    --b-checkbox-size                            : calc(16em / 14); /* Checkbox medium indicator */
+
+    --b-checkbox-check-font-size                 : .7em;
+    --b-checkbox-hover-border-color              : light-dark(var(--b-neutral-34), var(--b-neutral-30)); /* colorNeutralStrokeAccessibleHover */
+
+    --b-chip-view-chip-border-radius             : var(--b-widget-border-radius);
+    --b-chip-view-chip-background                : var(--b-neutral-94);
+    --b-chip-view-chip-hover-background          : var(--b-neutral-92);
+    --b-chip-view-chip-selected-color            : var(--b-text-5);
+
+    --b-divider-line-color                       : var(--b-border-6);
+    --b-divider-text-color                       : var(--b-text-2);
+
+    --b-field-set-border-color                   : var(--b-neutral-80);
+
+    --b-list-item-border-radius                  : var(--b-widget-border-radius);
+    --b-list-item-focus-background               : var(--b-neutral-93);
+    --b-list-item-selected-background            : var(--b-neutral-96);
+
+    --b-menu-item-color                          : var(--b-text-2);
+    --b-menu-item-border-radius                  : var(--b-widget-border-radius);
+    --b-menu-item-padding                        : .5em .6em;
+    --b-menu-padding                             : .4em;
+    --b-menu-item-separator-height               : 9px;
+    --b-menu-item-separator-inset                : -.4em;
+
+    --b-panel-with-header-padding                : 0 var(--b-widget-padding-large) var(--b-widget-padding-large) var(--b-widget-padding-large);
+
+    --b-popup-background                         : var(--b-panel-background);
+    --b-popup-padding                            : var(--b-widget-padding);
+
+    --b-radio-check-gap                          : 0.25em;
+
+    --b-slide-toggle-border-color                : var(--b-border-5);
+    --b-slide-toggle-disabled-border-color       : transparent;
+    --b-slide-toggle-height                      : 1.5em;
+    --b-slide-toggle-thumb-background            : var(--b-neutral-40);
+    --b-slide-toggle-hovered-thumb-background    : var(--b-neutral-35);
+
+    --b-slider-thumb-border                      : .25em solid var(--b-neutral-100);
+    --b-slider-thumb-elevation                   : 0 0 1px 1px var(--b-border-5);
+    --b-slider-thumb-value-size                  : 1.9em;
+    --b-slider-track-color                       : var(--b-neutral-45);
+    --b-slider-step-border-radius                : 0;
+    --b-slider-step-width                        : 1px;
+    --b-slider-step-height                       : 100%;
+    --b-slider-step-color                        : var(--b-neutral-100);
+    --b-slider-step-opacity                      : 1;
+    --b-slider-thumb-focus-outline-color         : light-dark(#000, #fff); /* colorStrokeFocus2 */
+
+    --b-splitter-color                           : var(--b-neutral-80);
+    --b-splitter-size                            : 1px;
+    --b-splitter-hover-size                      : 5px;
+    --b-splitter-hover-color                     : var(--b-neutral-90);
+
+    --b-tab-label-position                       : relative;
+    --b-tab-color                                : light-dark(var(--b-neutral-26), var(--b-neutral-20)); /* colorNeutralForeground2 */
+    --b-tab-active-tab-color                     : light-dark(var(--b-neutral-14), var(--b-neutral-0)); /* colorNeutralForeground1 */
+    --b-tab-font-weight                          : 400; /* body1 */
+    --b-tab-active-font-weight                   : 600; /* body1Strong */
+    --b-tab-indicator-border-radius              : 10em; /* borderRadiusCircular */
+    --b-tab-indicator-height                     : calc(3em / 14); /* strokeWidthThicker */
+    --b-tab-indicator-hidden-color               : var(--b-neutral-80);
+    --b-tab-hover-indicator-opacity              : 1;
+    --b-tab-hover-indicator-color                : var(--b-neutral-80);
+    --b-tab-hover-background                     : var(--b-neutral-100);
+    --b-tab-hover-color                          : light-dark(var(--b-neutral-14), var(--b-neutral-0)); /* colorNeutralForeground2Hover */
+
+    --b-tab-bar-border-bottom-width              : 0;
+    --b-text-field-input-height                  : calc(32em / 14); /* Input medium */
+
+    --b-text-field-outlined-input-padding        : 0 calc(10em / 14); /* spacingHorizontalMNudge */
+    --b-date-time-field-inner-trigger-padding    : calc(5em / 14); /* Half the inline input padding */
+    --b-text-field-outlined-border-color         : light-dark(var(--b-neutral-82) var(--b-neutral-82) var(--b-neutral-38) var(--b-neutral-82), var(--b-neutral-70) var(--b-neutral-70) var(--b-neutral-38) var(--b-neutral-70)); /* colorNeutralStroke1, colorNeutralStrokeAccessible bottom */
+    --b-text-field-outlined-focus-border-width   : 1px 1px 2px 1px;
+    --b-text-field-disabled-opacity              : 1; /* Explicit disabled colors instead of opacity */
+    --b-text-field-disabled-color                : light-dark(var(--b-neutral-74), var(--b-neutral-75)); /* colorNeutralForegroundDisabled */
+    --b-text-field-disabled-background           : transparent; /* colorTransparentBackground */
+    --b-text-field-disabled-border-color         : var(--b-neutral-88); /* colorNeutralStrokeDisabled */
+    --b-text-field-trigger-disabled-color        : light-dark(var(--b-neutral-74), var(--b-neutral-75));
+    --b-label-disabled-color                     : light-dark(var(--b-neutral-74), var(--b-neutral-75)); /* colorNeutralForegroundDisabled */
+    --b-field-trigger-edge-gap                   : .8em;
+    --b-spin-trigger-font-size                   : .8em;
+
+    /* endregion */
+
+    /* Grid */
+    --b-grid-header-font-weight                  : 400;
+    --b-grid-header-color                        : var(--b-neutral-25);
+    --b-grid-header-icon-color                   : var(--b-neutral-35);
+
+    /* Gantt */
+    --b-scroll-button-border-width               : 1px;
+
+    /* TaskBoard */
+    --b-task-board-column-header-font-weight     : 600;
+
+    /* Heat map values ranging from lowest to highest intensity to create
+     * background colors to indicate how "hot" an element is, for example
+     * based on the number of events in a calendar cell.
+     */
+    /*
+     * Start color for the heatmap, representing the lowest intensity (e.g. 1 event in a calendar cell).
+     */
+    --b-heatmap-start                            : light-dark(oklab(0.96 0.01 0.04), oklab(0.53 -0.03 0.1));
+
+    /*
+     * End color for the heatmap, representing the highest intensity (e.g. 10 or more events in a calendar cell).
+     */
+    --b-heatmap-end                              : light-dark(oklab(0.86 0.05 0.02), oklab(0.38 0.13 0.03));
+}
+
+/* The only remaining media query: --b-heatmap-mix-blend-mode is a <blend-mode> keyword,
+   not a <color>, so light-dark() cannot be used. Since it follows the system preference while
+   the colors follow the computed color-scheme, forcing color-scheme on an element while the
+   system preference differs leaves the blend mode matching the system, not the colors. */
+@media (prefers-color-scheme: dark) {
+    :root:not(.b-nothing), :host(:not(.b-nothing)) {
+        --b-heatmap-mix-blend-mode : hard-light;
+    }
+}
+
+/* Shades of primary color have to be specified per widget, for color-mix to work as intended */
+.b-bryntum:not(.b-nothing) {
+    --bi-primary-shade                                : light-dark(var(--b-primary-50), var(--b-primary-30)); /* Lighter shade of the brand, for accents on a dark background */
+
+    /* region Core */
+
+    --b-button-focus-border-color                     : var(--b-border-6);
+
+    --b-button-filled-hover-background                : var(--b-primary-40);
+    --b-button-filled-pressed-background              : var(--b-primary-30);
+    --b-button-filled-active-background               : var(--b-primary-30);
+
+    --b-button-outlined-hover-border-color            : var(--b-border-5);
+    --b-button-outlined-hover-background              : var(--b-neutral-97);
+    --b-button-outlined-pressed-background            : var(--b-neutral-93);
+    --b-button-outlined-active-background             : var(--b-neutral-93);
+    --b-button-outlined-focused-background            : var(--b-neutral-100);
+
+    --b-checkbox-checked-background                   : var(--bi-primary-shade);
+    --b-checkbox-checked-border-color                 : var(--b-checkbox-checked-background);
+    --b-checkbox-checked-hover-background             : var(--b-primary-45);
+
+    --b-chip-view-chip-selected-background            : var(--b-primary);
+    --b-chip-view-chip-active-background              : var(--b-primary);
+    --b-chip-view-chip-active-selected-background     : var(--b-primary);
+
+    --b-list-checkbox-checked-background              : var(--b-primary);
+
+    --b-menu-background                               : var(--b-primary-100);
+
+    --b-menu-item-hover-background                    : var(--b-neutral-96);
+    --b-menu-item-focus-background                    : var(--b-neutral-96);
+    --b-menu-item-hover-icon-color                    : var(--b-primary-40);
+    --b-menu-item-focus-icon-color                    : var(--b-primary-40);
+
+    --b-radio-checked-color                           : var(--bi-primary-shade);
+    --b-radio-checked-background                      : var(--b-neutral-100);
+    --b-radio-checked-border-color                    : var(--b-widget-border-color);
+
+    --b-slide-toggle-background                       : var(--b-neutral-100);
+    --b-slide-toggle-hover-background                 : var(--b-neutral-100);
+    --b-slide-toggle-checked-hovered-thumb-background : var(--b-neutral-100);
+    --b-slide-toggle-checked-border-color             : transparent;
+    --b-slide-toggle-checked-background               : var(--bi-primary-shade);
+    --b-slide-toggle-checked-hover-background         : var(--b-primary-45);
+
+    --b-slider-color                                  : var(--bi-primary-shade);
+
+    --b-tab-indicator-color                           : var(--bi-primary-shade);
+
+    --b-text-field-outlined-hover-border-color        : light-dark(var(--b-neutral-78) var(--b-neutral-78) var(--b-neutral-34) var(--b-neutral-78), var(--b-neutral-65) var(--b-neutral-65) var(--b-neutral-30) var(--b-neutral-65)); /* colorNeutralStroke1Hover, colorNeutralStrokeAccessibleHover bottom */
+    --b-text-field-focus-border-color                 : light-dark(var(--b-neutral-82) var(--b-neutral-82) var(--b-primary) var(--b-neutral-82), var(--b-neutral-70) var(--b-neutral-70) var(--bi-primary-shade) var(--b-neutral-70)); /* colorCompoundBrandStroke bottom */
+    --b-text-field-filled-hover-border-color          : var(--bi-primary-shade);
+
+    --b-toast-background                              : var(--b-neutral-100);
+
+    /* endregion */
+
+    /* Grid */
+
+    --b-grid-cell-hover-background                    : light-dark(var(--b-neutral-96), var(--b-neutral-92)); /* colorSubtleBackgroundHover */
+    --b-grid-cell-selected-background                 : light-dark(var(--b-primary-96), var(--b-primary-70)); /* ~ colorBrandBackground2 */
+    --b-grid-cell-hover-selected-background           : light-dark(var(--b-primary-91), var(--b-primary-65)); /* ~ colorBrandBackground2Hover */
+
+    --b-rating-column-empty-color                     : var(--b-neutral-90);
+
+    --b-tree-expander-icon-font-size                  : 1em;
+}
+
+/* Theme meta data */
+.b-theme-info {
+    --b-theme-name             : "Fluent2";
+    --b-theme-filename         : "fluent2";
+    --b-theme-button-rendition : "outlined";
+    --b-theme-label-position   : "above";
+    --b-theme-overlap-label    : "false";
+}

@@ -1,0 +1,54 @@
+:root, :host {
+    /**
+     * Color used on the drag proxy to highlight invalid drop locations
+     */
+    --b-column-reorder-invalid-color        : var(--b-color-red);
+
+    --b-column-reorder-stretched-background : var(--b-primary-95);
+}
+
+.b-grid-header {
+
+    &.b-drag-proxy {
+        line-height       : normal;
+        transition        : background-color 0.3s;
+        border-inline-end : none;
+
+        font-weight       : var(--b-grid-header-font-weight);
+        background-color  : var(--b-grid-header-background);
+        outline           : 1px solid var(--b-grid-header-border-color); /* to match invalid border */
+
+        /* Dragging parent */
+        &.b-grid-header-parent {
+            justify-content : stretch;
+
+            > .b-grid-header-text {
+                border-inline-end : none;
+            }
+        }
+
+        .b-grid-header:last-child {
+            border-inline-end : none;
+        }
+    }
+
+    &.b-drop-placeholder {
+        opacity : .3;
+    }
+
+    &.b-drag-invalid {
+        --b-grid-header-color : var(--b-column-reorder-invalid-color);
+
+        outline               : 1px solid var(--b-column-reorder-invalid-color);
+    }
+}
+
+.b-column-reorder-stretched {
+    outline                    : none;
+
+    --b-grid-header-background : var(--b-column-reorder-stretched-background);
+
+    > * {
+        display : none !important;
+    }
+}

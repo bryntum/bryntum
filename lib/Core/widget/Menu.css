@@ -1,0 +1,50 @@
+/* @after Core/widget/Popup.css */
+
+:root, :host {
+    /**
+     * Menu border-radius
+     */
+    --b-menu-border-radius : var(--b-widget-border-radius);
+
+    /**
+     * Menu background
+     */
+    --b-menu-background    : var(--b-panel-background);
+
+    /**
+     * Menu padding
+     */
+    --b-menu-padding       : 0;
+}
+
+.b-menu.b-popup {
+    min-height              : 2em; /* Required for alignment code */
+    user-select             : none;
+    -webkit-user-select     : none;
+
+    background              : var(--b-menu-background);
+
+    --b-panel-padding       : var(--b-menu-padding);
+    --b-popup-border-radius : var(--b-menu-border-radius);
+
+    .b-menu-body-wrap {
+        border-radius : 0;
+    }
+}
+
+.b-menu-content {
+    gap : 0;
+
+    /* Widgets in a menu */
+    > :not(.b-menu-item) {
+        margin : 1em;
+    }
+}
+
+.b-menu-custom-content {
+    display : flex;
+}
+
+.b-menu-with-submenu .b-menu-item:not(.b-has-submenu) {
+    --bi-menu-item-margin-inline-end : 2em;
+}

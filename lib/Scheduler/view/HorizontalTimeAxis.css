@@ -1,0 +1,181 @@
+:root, :host {
+    /**
+     * Header tick border width
+     */
+    --b-horizontal-time-axis-border-width        : var(--b-grid-header-border-width);
+
+    /**
+     * Header tick padding inline
+     */
+    --b-horizontal-time-axis-cell-padding-inline : var(--b-sch-event-padding-inline, var(--b-gantt-task-padding-inline));
+
+    /**
+     * Header tick padding block
+     */
+    --b-horizontal-time-axis-cell-padding-block  : 0;
+
+    /**
+     * Font size for lowest time axis row
+     */
+    --b-horizontal-time-axis-lowest-font-size    : .9em;
+}
+
+.b-no-column-lines {
+    --b-horizontal-time-axis-border-width : 0;
+}
+
+.b-sch-time-axis-column.b-grid-header.b-depth-0 {
+    /* TimeAxis header should span entire width */
+    --b-grid-header-padding : 0;
+
+    /* Prevent hover effect for the entire header */
+    /* (not overriding --b-grid-header-hover-background, since we use it for individual ticks instead */
+    &:hover {
+        background : var(--b-grid-header-background);
+        color      : var(--b-grid-header-color);
+    }
+
+    /* Bottom border on ticks instead in horizonal modes (also applies to Gantt, TimelineHistogram etc.) */
+    .b-timeline-base:not(.b-sch-vertical) & {
+        border-block-end : none;
+    }
+}
+
+.b-horizontal-time-axis {
+    flex-direction      : column;
+    flex                : 1 0 100%;
+    user-select         : none;
+    -webkit-user-select : none;
+    overflow            : clip;
+}
+
+.b-sch-header-row {
+    position : relative;
+    flex     : 1 0 2em;
+    contain  : strict;
+    overflow : clip;
+
+    &.b-sch-header-row-0.b-lowest {
+        /* Stretch to fill header if there is just one row */
+        flex : 1;
+    }
+
+    &.b-sticky-header .b-sch-header-text {
+        position           : sticky;
+        inset-inline-start : var(--b-horizontal-time-axis-cell-padding-inline);
+    }
+}
+
+.b-sch-header-time-axis-cell {
+    display             : flex;
+    align-items         : center;
+    justify-content     : center;
+    position            : absolute;
+    inset-block         : 0;
+    cursor              : pointer;
+    overflow            : clip;
+    white-space         : nowrap;
+    contain             : strict;
+    transition          : background-color var(--b-default-transition-duration), border var(--b-default-transition-duration);
+
+    border-block-end    : var(--b-horizontal-time-axis-border-width) solid var(--b-grid-header-border-color);
+    border-inline-start : var(--b-horizontal-time-axis-border-width) solid var(--b-grid-header-border-color);
+    color               : var(--b-grid-header-color);
+    font-size           : var(--b-grid-header-font-size);
+    font-weight         : var(--b-grid-header-font-weight);
+
+    /* Simplify displaying an icon in demos */
+    &.fa {
+        display     : flex;
+        font-weight : var(--b-grid-header-font-weight);
+    }
+
+    &.b-align-start {
+        justify-content : flex-start;
+        padding-inline  : var(--b-horizontal-time-axis-cell-padding-inline);
+    }
+
+    &.b-align-end {
+        justify-content : flex-end;
+    }
+
+    /* Hover effects only on individual TimeAxis cells */
+    .b-horizontal-time-axis &:hover {
+        background : var(--b-grid-header-hover-background);
+        color      : var(--b-grid-header-hover-color);
+    }
+
+    /* https://github.com/bryntum/bryntum/issues/2626 */
+    /* Ensure last time axis cell shows text left align if content does not fit */
+    &.b-last .b-sch-header-text {
+        overflow : hidden;
+    }
+
+    .b-lowest > & {
+        border-block-end-width : var(--b-grid-header-container-border-width);
+        font-size              : var(--b-horizontal-time-axis-lowest-font-size);
+    }
+}
+
+/* TODO Clean up below if not needed */
+
+.b--grid-header-container .b-sch-time-axis-column {
+    /* Override the b-fill-last-column stretching */
+    flex-grow         : unset !important;
+    background        : var(--b-grid-header-background);
+    border-inline-end : 0 none;
+}
+
+/* With the sync approach header cells are now absolutely positioned and need to get their height from somewhere */
+.b--sch-timeaxiscolumn-levels-1 {
+    min-height : 1.5em;
+}
+
+.b--sch-timeaxiscolumn-levels-2 {
+    min-height : 3em;
+}
+
+.b--sch-timeaxiscolumn-levels-3 {
+    min-height : 4.5em;
+}
+
+.b--sch-header-time-axis-cell {
+    padding-block : var(--b-horizontal-time-axis-cell-padding-block);
+
+    &.b-align-start,
+    &.b-align-end {
+        .b-sch-header-text {
+            padding-inline : var(--b-horizontal-time-axis-cell-padding-inline);
+        }
+    }
+
+    &.b-align-start {
+        justify-content : flex-start;
+    }
+
+    &.b-align-end {
+        justify-content : flex-end;
+    }
+}
+
+.b--schedulerbase.b-fill-last-column {
+    .b-sch-time-axis-column:last-child {
+        border-inline-end-color : var(--b-grid-header-border-color);
+    }
+}
+
+.b--sch-header-time-axis-cell[data-tick-index="0"] {
+    border-inline-start : 0;
+}
+
+/* Adjust header borders to be able to have time range header elements placed above the border */
+.b--timelinebase:not(.b-sch-vertical) {
+    .b-grid-header-container {
+        border-bottom : 0;
+    }
+
+    .b-header:not(.b-grid-header-scroller-normal) .b-grid-headers,
+    .b-horizontal-time-axis {
+        border-bottom : 1px solid var(--b-grid-header-border-color);
+    }
+}

@@ -1,0 +1,31 @@
+.b-timeline-base.b-drag-creating {
+    user-select         : none;
+    -webkit-user-select : none;
+
+    /* prevent tooltips from showing when creating events and prevent 'scheduleclick' from firing on the mouseup of a dragcreate */
+    .b-sch-time-axis-cell,
+        /* prevent other events from reacting to hover during drag create */
+    .b-sch-event-wrap,
+    .b-gantt-task-wrap {
+        pointer-events : none;
+    }
+
+    * {
+        transition : none;
+    }
+}
+
+.b-sch-drag-creating.b-too-narrow {
+    opacity : 0.25;
+}
+
+.b-sch-drag-create-tooltip.b-too-narrow {
+    .b-sch-tooltip-start-date,
+    .b-sch-tooltip-end-date {
+        /* color : $eventdragcreate-invalid-color; */
+
+        .b-sch-clock {
+            /* border-color : $eventdragcreate-invalid-color; */
+        }
+    }
+}

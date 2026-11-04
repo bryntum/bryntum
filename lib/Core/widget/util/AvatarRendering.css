@@ -1,0 +1,82 @@
+:root, :host {
+    /**
+     * Avatar size
+     */
+    --b-avatar-size                    : 2.5em;
+
+    /**
+     * Text transform for avatar initials
+     */
+    --b-avatar-initials-text-transform : uppercase;
+
+    /**
+     * Font weight for avatar initials
+     */
+    --b-avatar-initials-font-weight    : 600;
+
+    /**
+     * Border radius for avatar
+     */
+    --b-avatar-border-radius           : 50%;
+
+    /**
+     * Aspect ratio for avatar
+     */
+    --b-avatar-aspect-ratio            : 1 / 1;
+
+    /**
+     * Font size for avatar icon
+     */
+    --b-avatar-icon-font-size          : 1.1em;
+
+    /**
+     * Border for avatar
+     */
+    --b-avatar-border                  : null;
+}
+
+.b-colorize {
+    /**
+     * Avatar background. Visible when displaying icon, initials or an image with transparent background
+     */
+    --b-avatar-background     : var(--b-primary-85);
+
+    /**
+     * Color for avatar icons
+     */
+    --b-avatar-icon-color     : var(--b-primary-30);
+
+    /**
+     * Color for avatar initials
+     */
+    --b-avatar-initials-color : var(--b-primary-30);
+}
+
+.b-resource-avatar {
+    touch-action  : pan-x pan-y;
+    display       : grid;
+    place-items   : center;
+    flex-shrink   : 0;
+
+    width         : var(--b-avatar-size); /* width & height works better than aspect-ratio */
+    height        : var(--b-avatar-size);
+    background    : var(--b-avatar-background);
+    border-radius : var(--b-avatar-border-radius);
+    border        : var(--b-avatar-border);
+
+    &.b-resource-icon:before {
+        color     : var(--b-avatar-icon-color);
+        font-size : var(--b-avatar-icon-font-size);
+    }
+
+    /* Ensure our specificity is greater than font awesome's */
+    i& {
+        display : grid;
+    }
+}
+
+.b-resource-initials {
+    color          : var(--b-avatar-initials-color);
+    font-weight    : var(--b-avatar-initials-font-weight);
+    text-transform : var(--b-avatar-initials-text-transform);
+}

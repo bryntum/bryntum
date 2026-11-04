@@ -1,0 +1,121 @@
+/* @after Core/widget/List.css */
+
+:root, :host {
+    /**
+     * Border radius for color swatches
+     */
+    --b-color-picker-color-border-radius  : var(--b-widget-border-radius);
+
+    --b-color-picker-color-outline-width  : 2px;
+
+    --b-color-picker-color-outline        : var(--b-color-picker-color-outline-width) solid currentColor; /* To transition from */
+
+    /**
+     * Outline for hovered & selected color swatches
+     * @state Hovered
+     */
+    --b-color-picker-color-hover-outline  : var(--b-color-picker-color-outline-width) solid currentColor;
+
+    /**
+     * Outline for currently active/focused (when navigating using keyboard) color swatch
+     * @state Focused
+     */
+    --b-color-picker-color-active-outline : var(--b-color-picker-color-outline-width) solid color-mix(in oklab, currentColor, transparent 50%);
+
+    /**
+     * Outline offset for hovered & selected color swatches
+     * @state Hovered
+     */
+    --b-color-picker-color-outline-offset : 2px;
+
+    /**
+     * Size of color swatches
+     */
+    --b-color-picker-color-size           : 2em;
+
+    /**
+     * Gap between swatches
+     */
+    --b-color-picker-gap                  : .8em;
+
+    /**
+     * Color picker padding
+     */
+    --b-color-picker-padding              : var(--b-widget-padding);
+
+    /**
+     * Color used for no color
+     */
+    --b-color-picker-color-no-color-color : #ccc;
+
+    /**
+     * Number of columns in the picker layout (overridden for combo pickers)
+     */
+    --b-color-picker-columns              : 5;
+}
+
+.b-color-picker {
+    display               : grid;
+    overflow              : visible;
+
+    --b-menu-padding      : var(--b-color-picker-padding);
+    grid-gap              : var(--b-color-picker-gap);
+    grid-template-columns : repeat(var(--b-color-picker-columns), 1fr);
+
+    --b-list-background   : transparent;
+
+    /* Make layout that matches combo width when used as a ColorField picker */
+    &.b-combo-picker,
+    &.b-color-column-picker {
+        grid-template-columns : repeat(auto-fill, minmax(var(--b-color-picker-color-size), 1fr));
+        min-width             : calc(var(--b-color-picker-color-size) * 4 + var(--b-color-picker-gap) * 3);
+
+        /* Override width to scale to fit */
+        .b-color-picker-swatch {
+            width : 100%;
+        }
+    }
+}
+
+.b-color-picker-swatch {
+    display          : grid;
+    aspect-ratio     : 1 / 1;
+    cursor           : pointer;
+    background-color : currentColor;
+    position         : relative;
+    place-items      : center;
+    overflow         : clip;
+    outline-offset   : calc(var(--b-color-picker-color-outline-width) * -1);
+    transition       : outline-offset .2s;
+    outline          : var(--b-color-picker-color-hover-outline);
+
+    border-radius    : var(--b-color-picker-color-border-radius);
+    color            : var(--b-primary);
+    width            : var(--b-color-picker-color-size);
+
+    &.b-color-active {
+        outline        : var(--b-color-picker-color-active-outline);
+        outline-offset : var(--b-color-picker-color-outline-offset);
+    }
+
+    &.b-selected,
+    &:hover {
+        outline        : var(--b-color-picker-color-hover-outline);
+        outline-offset : var(--b-color-picker-color-outline-offset);
+    }
+
+    &.b-no-color {
+        background-color : transparent;
+        border           : 1px solid currentColor;
+
+        color            : var(--b-color-picker-color-no-color-color);
+
+        &::before {
+            content           : '';
+            position          : absolute;
+            height            : 300%;
+            border-inline-end : 1px solid currentColor;
+            rotate            : 135deg;
+        }
+    }
+}

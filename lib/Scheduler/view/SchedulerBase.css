@@ -1,0 +1,6 @@
+.b-sch-vertical {
+    /* Vertical mode should not have a border on its single row */
+    .b-grid-cell {
+        border-bottom : none;
+    }
+}

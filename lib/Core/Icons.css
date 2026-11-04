@@ -1,0 +1,833 @@
+.b-icon {
+    /* In case there is text content in the element */
+    display : inline-flex;
+    gap     : .5em;
+}
+
+.b-icon::before,
+.b-fw-icon::before {
+    font-style   : normal;
+    font-variant : normal;
+    line-height  : 1;
+    display      : grid;
+    place-items  : center;
+
+    /* Font Awesome not built in, include it in your app if you want our default icons */
+    font-family  : var(--b-widget-icon-font-family);
+    font-weight  : var(--b-widget-icon-font-weight);
+}
+
+.b-fw-icon::before {
+    width : 1em;
+}
+
+/* region Icons - Actions */
+
+.b-icon-scroll-left::before {
+    content : var(--b-icon-scroll-left, "\f104"); /* Include empty alt text to hide from screen readers */
+}
+
+.b-icon-scroll-right::before {
+    content : var(--b-icon-scroll-right, "\f105");
+}
+
+.b-icon-spin-up::before {
+    content : var(--b-icon-spin-up, "\f0d8");
+}
+
+.b-icon-spin-down::before {
+    content : var(--b-icon-spin-down, "\f0d7");
+}
+
+.b-icon-add:before {
+    content : var(--b-icon-add, "\+");
+}
+
+.b-icon-clear:before {
+    content : var(--b-icon-clear, "\f00d");
+}
+
+.b-icon-remove:before {
+    content : var(--b-icon-remove, "\f00d");
+}
+
+.b-icon-close:before {
+    content : var(--b-icon-close, "\f00d");
+}
+
+.b-icon-remove-circle:before {
+    content : var(--b-icon-remove-circle, "\f057");
+}
+
+.b-icon-collapse-down:before {
+    content : var(--b-icon-collapse-down, "\f078");
+}
+
+.b-icon-collapse-left:before {
+    content : var(--b-icon-collapse-left, "\f053");
+}
+
+.b-icon-collapse-right:before {
+    content : var(--b-icon-collapse-right, "\f054");
+}
+
+.b-icon-collapse-up:before {
+    content : var(--b-icon-collapse-up, "\f077");
+}
+
+.b-icon-filter-disable:before {
+    content : var(--b-icon-filter-disable, "\f05e");
+}
+
+.b-icon-search:before {
+    content : var(--b-icon-search, "\f002");
+}
+
+.b-icon-search-plus:before {
+    content : var(--b-icon-search-plus, "\f00e");
+}
+
+.b-icon-search-minus:before {
+    content : var(--b-icon-search-minus, "\f010");
+}
+
+.b-icon-hide:before {
+    content : var(--b-icon-hide, "\f057");
+}
+
+.b-icon-trash:before {
+    content : var(--b-icon-trash, "\f1f8");
+}
+
+.b-icon-edit:before {
+    content : var(--b-icon-edit, "\f303");
+}
+
+.b-icon-show-details:before {
+    content : var(--b-icon-show-details, "\f002");
+}
+
+.b-icon-rename:before {
+    content : var(--b-icon-rename, "\f044");
+}
+
+.b-icon-copy:before {
+    content : var(--b-icon-copy, "\f0c5");
+}
+
+.b-icon-cut:before {
+    content : var(--b-icon-cut, "\f0c4");
+}
+
+.b-icon-paste:before {
+    content : var(--b-icon-paste, "\f0ea");
+}
+
+.b-icon-expand-row:before {
+    content : var(--b-icon-expand-row, "\f107");
+}
+
+.b-icon-expand-column:before {
+    content : var(--b-icon-expand-column, "\f105");
+}
+
+.b-icon-expand {
+    content : var(--b-icon-expand, "\f065");
+}
+
+.b-icon-first:before {
+    content : var(--b-icon-first, "\f100");
+}
+
+.b-rtl {
+    .b-icon-first,
+    .b-icon-last,
+    .b-icon-next,
+    .b-icon-previous,
+    .b-icon-scroll-left,
+    .b-icon-scroll-right,
+    .b-icon-collapse-left:not(.b-splitter-button-icon),
+    .b-icon-collapse-right:not(.b-splitter-button-icon),
+    .b-icon-tree-expand,
+    .b-icon-expand-gridregion,
+    .b-icon-collapse-gridregion {
+        &::before {
+            scale : -1 1;
+        }
+    }
+}
+
+.b-icon-last:before {
+    content : var(--b-icon-last, "\f101");
+}
+
+.b-icon-redo:before {
+    content : var(--b-icon-redo, "\f01e");
+}
+
+.b-icon-reload:before {
+    content : var(--b-icon-reload, "\f01e");
+}
+
+.b-icon-undo:before {
+    content : var(--b-icon-undo, "\f0e2");
+}
+
+.b-icon-compare:before {
+    content : var(--b-icon-compare, "\e13a");
+}
+
+.b-icon-split-horizontal:before,
+.b-icon-split-vertical:before,
+.b-icon-split-both:before {
+    min-width     : 1em !important;
+    width         : 1em;
+    height        : 1em;
+    border-radius : 2px;
+    border        : 2px solid currentColor;
+    overflow      : hidden;
+}
+
+.b-icon-split-horizontal:before {
+    content           : var(--b-icon-split-horizontal, "┃");
+    rotate            : 90deg;
+    border-left-width : 3px;
+    align-items       : start;
+    line-height       : 0.8;
+}
+
+.b-icon-split-vertical:before {
+    content          : var(--b-icon-split-vertical, "┃");
+    border-top-width : 3px;
+    align-items      : start;
+    line-height      : 0.8;
+}
+
+.b-icon-split-both:before {
+    content          : var(--b-icon-split-both, "╋");
+    border-top-width : 3px;
+}
+
+.b-icon-download:before {
+    content : var(--b-icon-download, "\f019");
+}
+
+.b-icon-zoom::before {
+    content : var(--b-icon-zoom, "\f002");
+}
+
+/* endregion */
+
+/* region Icons - Docs */
+
+.b-icon-code:before {
+    content : var(--b-icon-code, "\f121");
+}
+
+.b-icon-clipboard:before {
+    content : var(--b-icon-clipboard, "\f328");
+}
+
+/* endregion */
+
+/* region Icons - Filter */
+
+.b-icon-filter:before {
+    content : var(--b-icon-filter, "\f0b0");
+}
+
+.b-icon-filter-equal:before {
+    content : var(--b-icon-filter-equal, "\f0b0");
+}
+
+.b-icon-filter-less:before {
+    content : var(--b-icon-filter-less, "\f053");
+}
+
+.b-icon-filter-before:before {
+    content : var(--b-icon-filter-before, "\f053");
+}
+
+.b-icon-filter-more:before {
+    content : var(--b-icon-filter-more, "\f054");
+}
+
+.b-icon-filter-after:before {
+    content : var(--b-icon-filter-after, "\f054");
+}
+
+/* endregion */
+
+/* region Icons - Checkboxes */
+
+.b-icon-check:before {
+    content : var(--b-icon-check, "\f00c");
+}
+
+.b-icon-checked:before {
+    content : var(--b-icon-checked, "\f14a");
+}
+
+.b-icon-unchecked:before {
+    content : var(--b-icon-unchecked, "\f0c8");
+}
+
+/* endregion */
+
+/* region Icons - RadioButton */
+
+.b-icon-radio:before {
+    content : var(--b-icon-radio, "\f111");
+}
+
+.b-icon-radio-unchecked:before {
+    content : var(--b-icon-radio-unchecked, "\f111");
+}
+
+.b-icon-radio-checked:before {
+    content : var(--b-icon-radio-checked, "\f192");
+}
+
+/* endregion */
+
+/* region Icons - Date & Time */
+
+.b-icon-calendar:before {
+    content : var(--b-icon-calendar, "\f133");
+}
+
+.b-icon-calendar-day:before {
+    content : var(--b-icon-calendar-day, "\f783");
+}
+
+.b-icon-calendar-plus:before {
+    content : var(--b-icon-calendar-plus, "\f271");
+}
+
+.b-icon-clock:before {
+    content : var(--b-icon-clock, "\f017");
+}
+
+.b-icon-recurring:before {
+    content : var(--b-icon-recurring, "\f021");
+}
+
+.b-icon-duration:before {
+    content : var(--b-icon-duration, "\f254");
+}
+
+.b-icon-milestone:before {
+    content : var(--b-icon-milestone, "\f219");
+}
+
+/* endregion */
+
+/* region Icons - Others */
+
+.b-icon-locked:before {
+    content : var(--b-icon-locked, "\f023");
+}
+
+.b-icon-unlocked:before {
+    content : var(--b-icon-unlocked, "\f09c");
+}
+
+.b-icon-user:before {
+    content : var(--b-icon-user, "\f0c0");
+}
+
+.b-icon-menu:before {
+    content : var(--b-icon-menu, "\f0c9");
+}
+
+.b-icon-menu-horizontal:before {
+    content : var(--b-icon-menu-horizontal, "\f141");
+}
+
+.b-icon-menu-vertical:before {
+    content : var(--b-icon-menu-vertical, "\f142");
+}
+
+.b-icon-info:before {
+    content : var(--b-icon-info, "\f129");
+}
+
+.b-icon-sub-menu:before {
+    content : var(--b-widget-sub-menu-icon);
+}
+
+.b-icon-star:before {
+    content : var(--b-icon-star, "\f005");
+}
+
+.b-icon-warning:before {
+    content : var(--b-icon-warning, "\f071");
+}
+
+.b-icon-columns:before {
+    content : var(--b-icon-columns, "\f0db");
+}
+
+.b-icon-picker:before {
+    content    : var(--b-icon-picker, "\f0d7");
+    transition : rotate .2s;
+}
+
+.b-icon-picker-rotated:before {
+    content    : var(--b-icon-picker-rotated, "\f0d7");
+    rotate     : 180deg;
+    transition : rotate .2s;
+}
+
+.b-icon-resize-horizontal:before {
+    content : var(--b-icon-resize-horizontal, "\f337");
+}
+
+.b-icon-fullscreen:before {
+    content : var(--b-icon-fullscreen, "\f0b2");
+}
+
+.b-icon-cog:before {
+    content : var(--b-icon-cog, "\f013");
+}
+
+.b-linux,
+.b-windows {
+    /* A bug in esbuild prevents nesting these rules in .b-icon-cog::before above */
+    .b-icon-cog:before {
+        /* this particular icon is off-center vertically w/o this alignment (but not on Mac) */
+        vertical-align : middle;
+    }
+}
+
+.b-icon-file-download:before {
+    content : var(--b-icon-file-download, "\f56d");
+}
+
+.b-icon-sync:before {
+    content : var(--b-icon-sync, "\f2f1");
+}
+
+.b-icon-bad-mood-emoji:before {
+    content : var(--b-icon-bad-mood-emoji, "\f119");
+}
+
+.b-icon-circle:before {
+    content : var(--b-icon-circle, "\f111");
+}
+
+.b-icon-square:before {
+    content : var(--b-icon-square, "\f0c8");
+}
+
+.b-icon-merge-cells:before {
+    content : var(--b-icon-merge-cells, "\f5fd");
+}
+
+.b-icon-merge-events:before {
+    content : var(--b-icon-merge-events, "\f5fd");
+}
+
+.b-icon-version:before {
+    content : var(--b-icon-version, "\e5a0");
+}
+
+.b-icon-material:before {
+    content : var(--b-icon-material, "\e4e6");
+}
+
+.b-icon-cost:before {
+    content : var(--b-icon-cost, "\f81d");
+}
+
+.b-icon-paper-plane:before {
+    content : var(--b-icon-paper-plane, "\f1d8");
+}
+
+.b-icon-robot:before {
+    content : var(--b-icon-robot, "\f544");
+}
+
+.b-icon-mic:before {
+    content : var(--b-icon-mic, "\f130");
+}
+
+.b-icon-play:before {
+    content : var(--b-icon-play, "\f04b");
+}
+
+.b-icon-stop:before {
+    content : var(--b-icon-stop, "\f04d");
+}
+
+.b-icon-message:before {
+    content : var(--b-icon-message, "\f27a");
+}
+
+.b-icon-volume-high:before {
+    content : var(--b-icon-volume-high, "\f028");
+}
+
+.b-icon-thumbs-up:before {
+    content : var(--b-icon-thumbs-up, "\f164");
+}
+
+.b-icon-thumbs-down:before {
+    content : var(--b-icon-thumbs-down, "\f165");
+}
+
+.b-icon-exclamation-circle:before {
+    content : var(--b-icon-exclamation-circle, "\f06a");
+}
+
+.b-icon-eye:before {
+    content : var(--b-icon-eye, "\f06e");
+}
+
+.b-icon-mouse-pointer:before {
+    content : var(--b-icon-mouse-pointer, "\f245");
+}
+
+/* endregion */
+
+/* region Icons - Arrows */
+
+.b-icon-up:before {
+    content : var(--b-icon-up, "\f062");
+}
+
+.b-icon-down:before {
+    content : var(--b-icon-down, "\f063");
+}
+
+.b-icon-left:before {
+    content : var(--b-icon-left, "\f060");
+}
+
+.b-icon-right:before {
+    content : var(--b-icon-right, "\f061");
+}
+
+.b-icon-angle-left:before {
+    content : var(--b-icon-angle-left, "\f104");
+}
+
+.b-icon-angle-right:before {
+    content : var(--b-icon-angle-right, "\f105");
+}
+
+.b-icon-before:before {
+    content : var(--b-icon-before, "\f053");
+}
+
+.b-icon-previous:before {
+    content : var(--b-icon-previous, "\f053");
+}
+
+.b-icon-after:before {
+    content : var(--b-icon-after, "\f054");
+}
+
+.b-icon-next:before {
+    content : var(--b-icon-next, "\f054");
+}
+
+.b-icon-move-left-right:before {
+    content : var(--b-icon-move-left-right, "\f337");
+}
+
+.b-icon-move-up-down:before {
+    content : var(--b-icon-move-up-down, "\f338");
+}
+
+.b-icon-circle-arrow-up:before {
+    content : var(--b-icon-circle-arrow-up, "\f0aa");
+}
+
+/* endregion */
+
+/* region Icons - Column */
+
+.b-icon-column-move-left:before {
+    content : var(--b-icon-column-move-left, "\f0a8");
+}
+
+.b-icon-column-move-right:before {
+    content : var(--b-icon-column-move-right, "\f0a9");
+}
+
+.b-icon-hide-column:before {
+    content : var(--b-icon-hide-column, "\f057");
+}
+
+.b-icon-column-pin:before {
+    content : var(--b-icon-column-pin, "\f08d");
+}
+
+.b-icon-column-unpin:before {
+    content : var(--b-icon-column-unpin, "\e68f");
+}
+
+/* endregion */
+
+/* region Icons - Sort */
+
+.b-icon-sort:before {
+    content : var(--b-icon-sort, "\f0dc");
+}
+
+.b-icon-sort-asc:before {
+    content : var(--b-icon-sort-asc, "\f15e");
+}
+
+.b-icon-sort-desc:before {
+    content : var(--b-icon-sort-desc, "\f15d");
+}
+
+.b-icon-sorted-asc:before {
+    content : var(--b-icon-sorted-asc, "\f062");
+}
+
+/* endregion */
+
+/* region Icons - Group */
+
+.b-icon-group-asc:before {
+    content : var(--b-icon-group-asc, "\f885");
+}
+
+.b-icon-group-desc:before {
+    content : var(--b-icon-group-desc, "\f160");
+}
+
+.b-icon-group-collapse:before {
+    content : var(--b-icon-group-collapse, "\f056");
+}
+
+.b-icon-group-expand:before {
+    content : var(--b-icon-group-expand, "\f055");
+}
+
+.b-icon-grouped-asc:before {
+    content : var(--b-icon-grouped-asc, "\f012");
+}
+
+/* endregion */
+
+/* region Icons - Tree */
+
+.b-icon-tree-expand:before {
+    content : var(--b-icon-tree-expand, "\f105");
+}
+
+.b-icon-tree-collapse:before {
+    content : var(--b-icon-tree-collapse, "\f107");
+}
+
+.b-icon-tree-folder:before {
+    content : var(--b-icon-tree-folder, "\f07b");
+}
+
+.b-icon-tree-folder-open:before {
+    content : var(--b-icon-tree-folder-open, "\f07c");
+}
+
+.b-icon-tree-leaf:before {
+    content : var(--b-icon-tree-leaf, "\f111");
+}
+
+/* endregion */
+
+/* region Icons - Splitter */
+
+.b-icon-expand-gridregion:before {
+    content : var(--b-icon-expand-gridregion, "\f054");
+}
+
+.b-icon-collapse-gridregion:before {
+    content : var(--b-icon-collapse-gridregion, "\f053");
+}
+
+/* endregion */
+
+/* region Icons - Scheduler */
+
+.b-icon-lock-row:before {
+    content : var(--b-icon-lock-row, "\e67a");
+}
+
+.b-icon-unlock-row:before {
+    content : var(--b-icon-unlock-row, "\e691");
+}
+
+.b-icon-unassign:before {
+    content : var(--b-icon-unassign, "\f506");
+}
+
+.b-icon-valid:before {
+    content : var(--b-icon-valid, "\f00c");
+}
+
+.b-icon-invalid:before {
+    content : var(--b-icon-invalid, "\f05e");
+}
+
+.b-icon-checking:before {
+    content : var(--b-icon-checking, "\f110");
+}
+
+.b-icon-expand-resource:before {
+    content : var(--b-icon-expand-resource, "\f103");
+}
+
+.b-icon-note:before {
+    content : var(--b-icon-note, "\f249");
+}
+
+.b-icon-advanced:before {
+    content : var(--b-icon-advanced, "\f085");
+}
+
+.b-icon-palette:before {
+    content : var(--b-icon-palette, "\f53f");
+}
+
+/* endregion */
+
+/* region Icons - Gantt */
+
+.b-icon-renumber:before {
+    content : var(--b-icon-renumber, "\f884");
+}
+
+.b-icon-indent:before {
+    content : var(--b-icon-indent, "\f03c");
+}
+
+.b-icon-outdent:before {
+    content : var(--b-icon-outdent, "\f03b");
+}
+
+.b-icon-subtask::before {
+    content : var(--b-icon-subtask, "\e476");
+}
+
+.b-icon-predecessor::before {
+    content : var(--b-icon-predecessor, "\e477");
+}
+
+.b-icon-successor::before {
+    content : var(--b-icon-successor, "\e47a");
+}
+
+.b-icon-link:before {
+    content : var(--b-icon-link, "\f0c1");
+}
+
+.b-icon-unlink:before {
+    content : var(--b-icon-unlink, "\f127");
+}
+
+/* endregion */
+
+/* region Icons - Additional calendar icons */
+
+.b-icon-calendar-days:before {
+    content : var(--b-icon-calendar-days, "\f073");
+}
+
+.b-icon-calendar-week:before {
+    content : var(--b-icon-calendar-week, "\f784");
+}
+
+/* endregion */
+
+/* region Icons - Text / fonts */
+
+.b-icon-bold:before {
+    content : var(--b-icon-bold, "\f032");
+}
+
+.b-icon-underline:before {
+    content : var(--b-icon-underline, "\f0cd");
+}
+
+.b-icon-italic:before {
+    content : var(--b-icon-italic, "\f033");
+}
+
+/* endregion */
+
+/* region Live clock icon */
+
+.b-icon-clock-live {
+    background-color : currentColor;
+    border-radius    : 50%;
+    width            : 1em;
+    height           : 1em;
+    animation-delay  : 0s;
+    display          : grid;
+
+    &:before,
+    &:after {
+        grid-area     : 1 / 1 / 1 / 1;
+        position      : relative;
+        font-size     : 1em !important;
+        content       : "";
+        width         : .10em !important;
+        left          : .44em; /* half width of clock - half width of hand */
+        background    : #fff;
+        border-radius : .5em;
+    }
+
+    &:before {
+        top                  : .15em;
+        /*need !important since i:before has fixed height when used in fields etc. need to override it*/
+        height               : .4em !important; /* half the width/height of the clock */
+        transform-origin     : .05em .35em;
+        animation            : b-anim-rotate 6s infinite linear;
+        animation-play-state : paused;
+        animation-delay      : inherit;
+    }
+
+    &:after {
+        top                  : .22em;
+        height               : .33em; /* top + height for little hand must = top + height for big hand */
+        transform-origin     : .05em .3em;
+        animation            : b-anim-rotate 72s infinite linear; /* time should be big-hand time * 12 */
+        animation-play-state : paused;
+        animation-delay      : inherit;
+    }
+}
+
+/* endregion */
+
+/* region Icons - Chart */
+
+.b-icon-chart:before {
+    content : var(--b-icon-chart, "\f201");
+}
+
+.b-icon-settings:before {
+    content : var(--b-icon-settings, "\f013");
+}
+
+/* endregion */
+
+/* region Spinner icon */
+
+.b-icon-spinner:before {
+    content   : var(--b-icon-spinner, "\f110");
+    animation : b-anim-rotate 2s infinite linear;
+}
+
+@keyframes b-anim-rotate {
+    0% {
+        rotate : 0deg;
+    }
+    100% {
+        rotate : 360deg;
+    }
+}
+
+/* endregion */

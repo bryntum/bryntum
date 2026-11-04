@@ -1,0 +1,154 @@
+:root, :host {
+    /* Keeping all of these private until requested */
+
+    --b-gripper-edge-size        : 1em;
+
+    --b-gripper-horz-cursor      : ns-resize;
+    --b-gripper-border           : 1px solid rgba(0, 0, 0, 0.3);
+    --b-gripper-horz-edge-height : var(--b-gripper-edge-size);
+    --b-gripper-horz-height      : .25em;
+    --b-gripper-horz-width       : 1.2em;
+    --b-gripper-horz-offset      : .4em;
+    --b-gripper-horz-transition  : opacity 0.2s, margin-inline-start 0.2s, width 0.2s;
+
+    --b-gripper-vert-cursor      : ew-resize;
+    --b-gripper-vert-gradient    : repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.8) 3px);
+    --b-gripper-vert-edge-width  : var(--b-gripper-edge-size);
+    --b-gripper-vert-width       : calc(var(--b-gripper-vert-edge-width) / 2);
+    --b-gripper-vert-height      : 12px;
+    --b-gripper-vert-offset      : 4px;
+    --b-gripper-vert-transition  : opacity 0.2s, margin-top 0.2s, height 0.2s;
+}
+
+/*
+    The Gripper
+    ===========
+    The Hoverable mixin applies various b-hover classes to a hoverTarget element. Based on these classes, a resize
+    gripper element inside the target is styled. This element may be always present, or (as with CalendarDrag), moved
+    in to the active hoverTarget on hoverEnter.
+
+    Hoverable may set the following classes simultaneously. Within each are the classes that are mutually exclusive:
+
+     - b-hover-(top|bottom)
+     - b-hover-(right|left)
+     - b-hover-edge   (set when hovering near any edge)
+
+   It may be that none of the above are present if hoverEdges is used. When hoverEdges is not used, these classes will
+   be present on the hoverTarget no matter where the cursor is inside it.
+
+   To facilitate animations, the b-hover-anim class is added in a way such that transitions for styles activated by it
+   will be animated.
+*/
+
+.b-gripper {
+    position : absolute;
+
+    &::after {
+        content  : " " / "";
+        position : absolute;
+        opacity  : 0;
+    }
+
+    /*
+     Horizontal gripper (top and bottom):
+            +---------------------------+
+            |           =====           |
+            |                           |
+            |                           |
+            |           =====           |
+            +---------------------------+
+     */
+    &.b-gripper-horz {
+        .b-hover-top &,
+        .b-hover-bottom & {
+            cursor : var(--b-gripper-horz-cursor);
+            height : var(--b-gripper-horz-edge-height);
+            left   : 0;
+            right  : 0;
+        }
+
+        .b-hover-bottom & {
+            bottom : 0;
+        }
+
+        &::after {
+            width               : 0;
+            left                : 50%;
+            margin-inline-start : 0;
+
+            border-top          : var(--b-gripper-border);
+            border-bottom       : var(--b-gripper-border);
+            height              : var(--b-gripper-horz-height);
+        }
+    }
+
+    /*
+     Vertical gripper (left and right):
+            +---------------------------+
+            |                           |
+            | ||                     || |
+            | ||                     || |
+            |                           |
+            +---------------------------+
+     */
+    &.b-gripper-vert {
+        .b-hover-left &,
+        .b-hover-right & {
+            top    : 0;
+            bottom : 0;
+
+            cursor : var(--b-gripper-vert-cursor);
+            width  : var(--b-gripper-vert-edge-width);
+        }
+
+        .b-hover-right & {
+            right : 0;
+        }
+
+        .b-hover-left & {
+            left : 0;
+        }
+
+        &::after {
+            height     : 0;
+            top        : 50%;
+            margin-top : 0;
+
+            background : var(--b-gripper-vert-gradient);
+            width      : var(--b-gripper-vert-width);
+        }
+    }
+}
+
+/* Nesting these rules inside the ::after did not work */
+.b-hover-anim.b-hover-edge .b-gripper-horz::after {
+    opacity             : 1;
+
+    margin-inline-start : calc(var(--b-gripper-horz-width) / -2);
+    width               : var(--b-gripper-horz-width);
+    transition          : var(--b-gripper-horz-transition);
+}
+
+.b-hover-top .b-gripper-horz::after {
+    top : var(--b-gripper-horz-offset);
+}
+
+.b-hover-bottom .b-gripper-horz::after {
+    bottom : var(--b-gripper-horz-offset);
+}
+
+.b-hover-anim.b-hover-edge .b-gripper-vert::after {
+    opacity    : 1;
+
+    margin-top : calc(var(--b-gripper-vert-height) / -2);
+    height     : var(--b-gripper-vert-height);
+    transition : var(--b-gripper-vert-transition);
+}
+
+.b-hover-left .b-gripper-vert::after {
+    left : var(--b-gripper-vert-offset);
+}
+
+.b-hover-right .b-gripper-vert::after {
+    right : var(--b-gripper-vert-offset);
+}

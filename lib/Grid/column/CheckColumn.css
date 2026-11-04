@@ -1,0 +1,9 @@
+/* @after Grid/view/Header.css */
+
+.b-check-header-with-checkbox {
+    align-items : center;
+
+    .b-grid-header-text {
+        display : none;
+    }
+}

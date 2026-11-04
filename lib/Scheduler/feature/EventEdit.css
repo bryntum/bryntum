@@ -1,0 +1,42 @@
+.b-event-editor {
+    width : 28em;
+
+    /* The EventEditor may be rendered statically, so it may be sized by flexbox */
+    /* Ensure it does not exceed 100% of available width. */
+    /* width     : min(100%, calc(16em + var(--date-time-length))); */
+    /*     min-width : min(100%, calc(16em + var(--date-time-length))); */
+    /*     flex      : unset; */
+
+    &.b-collapsed {
+        .b-panel-collapse-revealer {
+            display : none;
+        }
+    }
+
+    [data-ref="saveButton"],
+    [data-ref="cancelButton"],
+    [data-ref="deleteButton"] {
+        min-width : 5.5em;
+    }
+}
+
+.b-event-editor-content {
+    grid-template-columns : minmax(min-content, 1fr) minmax(min-content, 1fr);
+    align-items           : end;
+
+    .b-widget {
+        grid-column : span 2;
+    }
+
+    [data-ref="startDateField"],
+    [data-ref="endDateField"] {
+        grid-column : span 1;
+        min-width   : 10em;
+    }
+
+    [data-ref="startTimeField"],
+    [data-ref="endTimeField"] {
+        grid-column : span 1;
+        min-width   : 12em;
+    }
+}

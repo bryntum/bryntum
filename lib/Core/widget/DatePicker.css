@@ -1,0 +1,396 @@
+/* @after Core/widget/CalendarPanel.css */
+
+:root, :host {
+    /**
+     * Min-width of the entire picker
+     */
+    --b-date-picker-min-width                   : 25em;
+
+    /**
+     * Font weight for the title
+     */
+    --b-date-picker-title-font-weight           : 600;
+
+    /**
+     * Font size for the day letters
+     */
+    --b-date-picker-day-font-size               : 1em;
+
+    /**
+     * Padding for the date elements
+     */
+    --b-date-picker-date-padding                : 0.5em;
+
+    /**
+     * Font size for the date elements
+     */
+    --b-date-picker-date-font-size              : 1em;
+
+    /**
+     * Font weight for today's date
+     */
+    --b-date-picker-today-font-weight           : inherit;
+
+    /**
+     * Font weight for the selected date
+     * @state Selected
+     */
+    --b-date-picker-selected-font-weight        : 600;
+
+    /**
+     * Border-radius for the selected week
+     * @state Selected
+     */
+    --b-date-picker-selected-week-border-radius : 2px;
+
+    /**
+     * Block margin for the date cells
+     */
+    --b-date-picker-cell-margin-block           : 2px; /* Gives some gap between highlighted week and date cell */
+
+    /**
+     * Font-size for the top toolbar (that holds the navigation buttons + month/year)
+     */
+    --b-date-picker-toolbar-font-size           : 1em;
+
+    /**
+     * Day letter color
+     */
+    --b-date-picker-day-color                   : var(--b-neutral-20);
+
+    /**
+     * Date color
+     */
+    --b-date-picker-date-color                  : var(--b-neutral-30);
+
+    /**
+     * Today's date's background
+     */
+    --b-date-picker-today-background            : transparent;
+
+    /**
+     * Selected date's text color
+     * @state Selected
+     */
+    --b-date-picker-selected-color              : var(--b-primary-30);
+
+    /**
+     * Date picker's header padding, when configured to be shown
+     */
+    --b-date-picker-header-padding              : 1.5em 0;
+
+    /**
+     * Color
+     */
+    --b-date-picker-color                       : var(--b-primary);
+
+    /**
+     * Minimum width of the day-number circle (the `.b-date-picker-cell-inner`
+     * element). YearView uses the same class so the value applies in both
+     * widget families via the shared rule in Core/widget/DatePickerCell.css.
+     */
+    --b-date-picker-cell-inner-min-width        : 2.25em;
+
+    /**
+     * Minimum width of the day-number circle when `showEvents` is `'dots'`
+     * or `'count'`. The wider value gives the dot row / count badge room
+     * to sit alongside the date number without crowding it.
+     */
+    --b-date-picker-cell-inner-min-width-with-events : 2.8em;
+
+    /**
+     * Date picker cell inner z-index
+     */
+    --b-date-picker-cell-inner-z-index          : 1;
+
+    /**
+     * Date picker cell payload z-index
+     */
+    --b-date-picker-cell-payload-z-index        : 1;
+
+    /**
+     * Date picker month/year picker z-index
+     */
+    --b-date-picker-overlay-z-index             : 1;
+
+    /**
+     * Date picker focus outline z-index
+     */
+    --b-date-picker-focus-z-index               : 1;
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+    /**
+     * Today's date's color
+     */
+    /*--b-date-picker-today-color               : var(--b-primary-50);*/
+
+    /**
+     * Today's date's border
+     */
+    /*--b-date-picker-today-border              : 1px solid var(--b-date-picker-today-color);*/
+
+    /**
+     * Today's date's background when hovered
+     * @state Hovered
+     */
+    /*--b-date-picker-today-hover-background    : var(--b-primary-95);*/
+
+    /**
+     * Selected date's background when hovered
+     * @state Hovered
+     */
+    /*--b-date-picker-selected-hover-background : var(--b-date-picker-selected-background);*/
+
+    /**
+     * Color for dates in a selected range (excluding first/last)
+     * @state Selected
+     */
+    /*--b-date-picker-selected-range-color      : var(--b-date-picker-date-color);*/
+
+    /**
+     * Background for dates in a selected range (excluding first/last)
+     * @state Selected
+     */
+    /*--b-date-picker-selected-range-background : var(--b-primary-96);*/
+
+    /**
+     * Color used on text and buttons in the date picker's top toolbar
+     */
+    /*--b-date-picker-toolbar-color             : var(--b-primary-30);*/
+
+    /**
+     * Background for week containing the selected date, if configured to highlight it
+     */
+    /*--b-date-picker-selected-week-background  : var(--b-primary-95);*/
+
+    /**
+     * Background for hovered date
+     * @state Hovered
+     */
+    /*--b-date-picker-date-hover-background     : var(--b-primary-95);*/
+
+    /*--b-date-picker-date-hover-color          : null;*/
+
+    /**
+     * Background for selected date
+     * @state Selected
+     */
+    /*--b-date-picker-selected-background       : var(--b-primary-90);*/
+/* } */
+
+.b-date-picker {
+    position                                     : relative;
+    opacity                                      : 1;
+    flex-shrink                                  : 0; /* Avoid it being squashed */
+
+    color                                        : var(--b-date-picker-color);
+    min-width                                    : var(--b-date-picker-min-width);
+
+    --b-calendar-panel-day-color                 : var(--b-date-picker-day-color);
+    --b-calendar-panel-day-font-size             : var(--b-date-picker-day-font-size);
+    --b-calendar-panel-color                     : var(--b-date-picker-date-color);
+    --b-calendar-panel-cell-background           : transparent;
+    --b-calendar-panel-cell-font-size            : var(--b-date-picker-date-font-size);
+
+    /* override some Panel variables */
+    --b-panel-header-padding                     : var(--b-date-picker-header-padding);
+    --b-panel-top-toolbar-margin-inline          : 0;
+    --b-panel-with-header-top-toolbar-background : transparent;
+
+    &.b-date-picker-has-payload {
+        --b-calendar-panel-cell-display : block;
+    }
+
+    &.b-floating .b-weeks-container {
+        max-height : 24em;
+    }
+
+    .b-top-toolbar {
+
+        --b-toolbar-background : transparent;
+        --b-toolbar-gap        : 0;
+
+        > .b-toolbar-content > .b-widget {
+            font-size : var(--b-date-picker-toolbar-font-size);
+        }
+
+        .b-button {
+            min-width                  : 2em;
+
+            --b-button-type-text-color : var(--b-date-picker-toolbar-color, var(--b-primary-30));
+        }
+
+        .b-widget {
+            --b-primary : inherit;
+        }
+
+        .b-text-field {
+            color                     : var(--b-date-picker-toolbar-color, var(--b-primary-30));
+            --b-text-field-background : transparent;
+        }
+
+        /* Slightly smaller navigation icons */
+        i {
+            font-size : .9em;
+        }
+    }
+
+    /* Slightly bigger month & year labels */
+    [data-ref="monthButton"],
+    [data-ref="yearButton"] {
+        .b-button-label {
+            font-size : 1.1em;
+        }
+    }
+
+    .b-calendar-panel-cell {
+        cursor       : pointer;
+        line-height  : 1;
+        margin-block : var(--b-date-picker-cell-margin-block);
+
+        &:hover {
+            --b-date-picker-date-background : var(--b-date-picker-date-hover-background, var(--b-primary-95));
+            color                           : var(--b-date-picker-date-hover-color);
+        }
+
+        &:focus-visible {
+            outline : none;
+
+            /* Focus outline, to go on top */
+            &::after {
+                content        : '';
+                position       : absolute;
+                border-radius  : .25em;
+                pointer-events : none;
+
+                inset          : calc(var(--b-widget-focus-outline-width) * -1) var(--b-widget-focus-outline-width);
+                outline        : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+                outline-offset : -1px;
+                z-index        : var(--b-date-picker-focus-z-index);
+            }
+        }
+
+        /* If the range pseudo element is visible, clip it to make arrow endings if range continues */
+        &:not(.b-range-end) {
+            &:last-child, &.b-last-visible-cell {
+                &::before {
+                    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 50%, calc(100% - 10px) 100%, 0 100%)
+                }
+            }
+        }
+        &:not(.b-range-start) {
+            &:first-child, &.b-first-visible-cell {
+                &::before {
+                    clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%)
+                }
+            }
+        }
+    }
+
+    /*
+     * The `.b-date-picker-cell-payload` element styling lives in the shared
+     * Core/widget/DatePickerCell.css so YearView can reuse it.
+     */
+
+    .b-month-picker,
+    .b-year-picker {
+        inset   : 0;
+        z-index : var(--b-date-picker-overlay-z-index);
+    }
+
+    .b-selected-date:not(.b-in-range) {
+        --b-date-picker-date-hover-background : var(--b-date-picker-selected-hover-background, var(--b-date-picker-selected-background, var(--b-primary-90)));
+        --b-calendar-panel-color              : var(--b-date-picker-selected-color);
+        --b-date-picker-date-background       : var(--b-date-picker-selected-background, var(--b-primary-90));
+        --b-calendar-panel-cell-font-weight   : var(--b-date-picker-selected-font-weight);
+
+        --b-date-picker-date-border           : var(--b-date-picker-selected-border);
+    }
+
+    /* Border from today needs to beat selection styling */
+    .b-today,
+    .b-today:not(.b-in-range) {
+        --b-date-picker-date-border           : var(--b-date-picker-today-border, 1px solid var(--b-date-picker-today-color, var(--b-primary-50)));
+    }
+
+    .b-today {
+        --b-date-picker-date-hover-background : var(--b-date-picker-today-hover-background, var(--b-primary-95));
+        --b-calendar-panel-color              : var(--b-date-picker-today-color, var(--b-primary-50));
+        --b-calendar-panel-date-background    : var(--b-date-picker-today-background);
+        --b-calendar-panel-cell-font-weight   : var(--b-date-picker-today-font-weight);
+    }
+
+    &.b-highlight-selected-week {
+        .b-calendar-week:has(.b-selected-date) {
+            background    : var(--b-date-picker-selected-week-background, var(--b-primary-95));
+            border-radius : var(--b-date-picker-selected-week-border-radius)
+        }
+    }
+
+    /* region Range */
+
+    /* Date in a selected range, excluding first & last */
+    .b-in-range {
+        --b-date-picker-selected-color : var(--b-date-picker-selected-range-color);
+    }
+
+    .b-range-start:where(:not(.b-range-end)),
+    .b-range-end:where(:not(.b-range-start)),
+    .b-in-range {
+        &::before {
+            content            : '';
+            position           : absolute;
+            display            : block;
+            height             : 100%;
+            inset-inline-start : 0;
+
+            /* Slightly lighter background to differentiate from the selected start/end dates */
+            background         : var(--b-date-picker-selected-range-background, var(--b-primary-96));
+        }
+    }
+
+    .b-range-start::before {
+        inset-inline-start : 50%;
+        width              : calc(50% + var(--b-calendar-panel-gap));
+    }
+
+    .b-in-range::before {
+        width : calc(100% + var(--b-calendar-panel-gap));
+    }
+
+    .b-range-end::before {
+        width : 50%;
+    }
+
+    /* endregion */
+
+    /* Lighter color for out-of-range dates */
+    .b-out-of-range {
+        opacity        : var(--b-calendar-panel-disabled-cell-opacity);
+    }
+}
+
+/* `.b-date-picker-cell-inner` lives in the shared Core/widget/DatePickerCell.css. */
+
+.b-date-picker-title {
+    display         : flex;
+    flex-direction  : row;
+    flex            : 1;
+    align-items     : center;
+    justify-content : center;
+    gap             : 0.3em;
+    overflow        : visible;
+}
+
+.b-date-picker-month-button,
+.b-date-picker-year-button {
+    padding                         : 0;
+    background                      : transparent;
+    border-radius                   : 1px;
+
+    font-weight                     : var(--b-date-picker-title-font-weight);
+
+    --b-button-focus-outline-offset : 1px;
+}

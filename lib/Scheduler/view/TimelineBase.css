@@ -1,0 +1,102 @@
+:root, :host {
+    --b-top-canvas-zindex                  : 1000;
+
+    /**
+     * Timeline loading indicator z-index
+     */
+    --b-timeline-loading-indicator-z-index : 100;
+}
+
+.b-timeline-base {
+    &.b-animating .b-grid-row {
+        transition : height 0.2s, translate 0.2s, inset 0.2s;
+    }
+}
+
+.b-time-axis-cell:not(.b-group-title) {
+    --b-grid-cell-padding-inline : 0;
+}
+
+/* Used by Gantt too */
+.b-sch-canvas {
+    position       : absolute;
+    inset          : 0;
+    pointer-events : none;
+    contain        : strict;
+    overflow       : clip;
+    height         : max(1px, 100%); /* For unknown reasons inset is not enough */
+
+    /* Width is set from code, see TimeAxisSubGrid#syncCanvasWidth */
+}
+
+/* Used by Gantt too */
+.b-time-axis-sub-grid .b-sch-foreground-canvas {
+    z-index : var(--b-events-zindex);
+}
+
+/* Indicates events not rendered during a zoom gesture with liveZoom off, behind the events but above the rows */
+.b-sch-zoom-placeholder-canvas {
+    z-index : calc(var(--b-events-zindex) - 1);
+
+    .b-placeholder {
+        position         : absolute;
+        contain          : strict;
+        opacity          : .4;
+
+        background-color : var(--b-neutral-90);
+        border-radius    : var(--b-sch-event-border-radius, 0.25em);
+    }
+}
+
+/* Prevent tooltips and hover effects while wheel/pinch zooming */
+.b-wheel-zooming {
+    .b-sch-event-wrap,
+    .b-gantt-task-wrap,
+    svg rect {
+        pointer-events : none;
+    }
+}
+
+.b-sch-top-canvas {
+    z-index : var(--b-top-canvas-zindex);
+}
+
+.b-calculation-progress-wrap,
+.b-timeline-loading-indicator-wrap {
+    position : absolute;
+    bottom   : 0;
+    display  : flex;
+    width    : 100%;
+    height   : 2px;
+    z-index  : var(--b-timeline-loading-indicator-z-index);
+}
+
+.b-timeline-loading-indicator-wrap {
+    background : color-mix(in srgb, var(--b-color-green), transparent 80%);
+}
+
+.b-calculation-progress,
+.b-timeline-loading-indicator {
+    opacity    : 0.6;
+
+    background : var(--b-color-green);
+}
+
+.b-timeline-loading-indicator {
+    animation : b-anim-line-loop 3s linear infinite;
+}
+
+@keyframes b-anim-line-loop {
+    0% {
+        width               : 0;
+        margin-inline-start : 0;
+    }
+    50% {
+        width               : 100%;
+        margin-inline-start : 0;
+    }
+    100% {
+        width               : 100%;
+        margin-inline-start : 100%;
+    }
+}

@@ -1,0 +1,533 @@
+:root, :host {
+    /**
+     * Chat bubble z-index
+     */
+    --b-chat-bubble-z-index                   : 1;
+
+    --b-chat-panel-border-radius              : 1em;
+    --b-chat-panel-message-them-align-self    : flex-start;
+    --b-chat-panel-message-them-background    : var(--b-neutral-90);
+    --b-chat-panel-message-them-color         : var(--b-text-2);
+    --b-chat-panel-intro-color                : var(--b-neutral-50);
+    --b-chat-panel-example-prompt-color       : var(--b-neutral-70);
+    --b-chat-panel-example-prompt-hover-color : var(--b-neutral-40);
+    --b-chat-panel-message-us-align-self      : flex-end;
+    --b-chat-panel-message-us-color           : #FFF;
+    --b-chat-panel-message-color              : var(--b-chat-panel-message-us-color);
+    --b-chat-panel-tool-color                 : var(--b-color-lighter-gray);
+    --b-chat-panel-tool-color-active          : var(--b-color-gray);
+    --b-chat-panel-tool-hover-color           : var(--b-color-light-gray);
+    --b-chat-panel-font-size                  : .8em;
+    --b-chat-panel-loading-color              : var(--b-text-3);
+    --b-chat-panel-option-hover-background    : color-mix(in srgb, var(--b-chat-panel-message-us-background), transparent 90%);
+    --b-chat-panel-avatar-size                : 5em;
+}
+
+/* .b-bryntum { */
+    /*--b-chat-panel-message-us-background : var(--b-primary);*/
+/* } */
+
+.b-internal {
+    --bi-value : null;
+}
+
+/*region Chat bubbles*/
+
+.b-chat-bubbles {
+    display    : flex;
+    flex-flow  : column nowrap;
+    gap        : 0.5em;
+    overflow-x : clip;
+    overflow-y : auto;
+
+    /* Creates an initial gap*/
+    &:before {
+        content : "";
+    }
+
+    .b-message {
+        display        : flex;
+        flex-direction : column;
+        gap            : 0.2em;
+        overflow       : clip;
+        width          : 100%;
+        flex-shrink    : 0;
+
+        align-self     : var(--b-chat-panel-message-align-self);
+    }
+
+    .b-bubble {
+        padding       : 0.5em 0.75em;
+        opacity       : 1;
+        transition    : opacity .2s, translate .2s;
+        translate     : 0;
+        min-height    : 2.5em;
+        line-height   : 1.5em;
+        max-width     : 80%;
+        word-wrap     : break-word;
+        overflow      : auto;
+        z-index       : var(--b-chat-bubble-z-index);
+
+        border-radius : var(--b-chat-panel-border-radius);
+        align-self    : var(--b-chat-panel-message-align-self);
+        background    : var(--b-chat-panel-message-background);
+        color         : var(--b-chat-panel-message-color);
+
+        .b-aborted {
+            opacity : .3;
+        }
+
+        .b-failed {
+            color : var(--b-color-red);
+        }
+
+        strong {
+            font-weight : 600;
+        }
+    }
+
+    .b-undone .b-bubble {
+        opacity : .3;
+    }
+
+    .b-async .b-bubble {
+        width       : 3.5em;
+        display     : flex;
+        align-items : center;
+        overflow    : clip;
+    }
+
+    .b-async .b-asyncstatus {
+        font-size            : .8em;
+        opacity              : .8;
+        padding-inline-start : .2em;
+    }
+
+    .b-bubble-loading {
+        position           : relative;
+        inset-inline-start : -2em;
+        width              : .5em;
+        height             : .5em;
+        border-radius      : 50%;
+        animation          : b-anim-jumping-dots 2s infinite;
+        box-shadow         : calc(2em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(2.75em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(3.5em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color);
+    }
+
+    .b-bubble-tools {
+        .b-undone-tag {
+            border-radius  : 1em;
+            font-size      : .75em;
+            padding-inline : .5em;
+            background     : var(--b-color-red);
+            color          : var(--b-neutral-100);
+        }
+        display          : flex;
+        padding-inline   : 0.75em;
+        gap              : .5em;
+        align-items      : center;
+        transition       : opacity .2s, translate .2s;
+        transition-delay : .2s;
+        justify-content  : var(--b-chat-panel-message-them-align-self);
+    }
+
+    .b-bubble-tool {
+        font-size : var(--b-chat-panel-font-size);
+        color     : var(--b-chat-panel-tool-color);
+
+        &:hover {
+            --b-chat-panel-tool-color : var(--b-chat-panel-tool-hover-color);
+        }
+    }
+
+    button.b-bubble-tool {
+        cursor         : pointer;
+        border         : none;
+        background     : transparent;
+        padding-inline : 0;
+    }
+
+    .b-timestamp {
+        font-size : .7em;
+        color     : var(--b-chat-panel-tool-color);
+    }
+
+    .b-us {
+        --b-chat-panel-message-align-self : var(--b-chat-panel-message-us-align-self);
+        --b-chat-panel-message-background : var(--b-chat-panel-message-us-background, var(--b-primary));
+        --b-chat-panel-message-color      : var(--b-chat-panel-message-us-color);
+    }
+
+    .b-them {
+        --b-chat-panel-message-align-self : var(--b-chat-panel-message-them-align-self);
+        --b-chat-panel-message-background : var(--b-chat-panel-message-them-background);
+        --b-chat-panel-message-color      : var(--b-chat-panel-message-them-color);
+    }
+
+    .b-confidence {
+        position      : relative;
+        width         : 1em;
+        height        : .6em;
+        border-radius : .25em;
+        border        : 1px solid var(--b-chat-panel-tool-color);
+        overflow      : clip;
+
+        &::before {
+            display    : block;
+            position   : absolute;
+            content    : '';
+            height     : 100%;
+            opacity    : 0.6;
+            width      : calc(var(--bi-value) * 100%);
+            background : var(--b-chat-panel-tool-color);
+        }
+    }
+
+    .b-options {
+        display         : flex;
+        flex-wrap       : wrap;
+        justify-content : flex-end;
+        gap             : .5em;
+        opacity         : 1;
+        transition      : height .2s, opacity .2s, gap .2s;
+        height          : auto;
+        overflow        : hidden;
+        align-items     : var(--b-chat-panel-message-us-align-self);
+
+        &:has(.b-selected) {
+            gap : 0;
+
+            .b-option {
+                pointer-events : none;
+            }
+
+            .b-option:not(.b-selected) {
+                opacity          : 0;
+                height           : 0;
+                min-height       : 0;
+                padding-block    : 0;
+                display          : none;
+                transition-delay : 0s;
+            }
+        }
+    }
+
+    .b-option {
+        background          : none;
+        font-size           : 1em;
+        padding             : 0.5em 0.75em;
+        opacity             : 1;
+        transition          : opacity .2s, translate .2s, height .2s, min-height .2s, padding .2s, display .2s;
+        transition-delay    : .2s;
+        translate           : 0;
+        min-height          : 2.5em;
+        line-height         : 1.5em;
+        overflow            : hidden;
+        transition-behavior : allow-discrete;
+        interpolate-size    : allow-keywords;
+        border              : 1px solid var(--b-chat-panel-tool-color);
+        border-radius       : var(--b-chat-panel-border-radius);
+
+        &:not(.b-outdated):hover {
+            cursor     : pointer;
+            background : var(--b-chat-panel-option-hover-background);
+        }
+
+        &.b-selected {
+            border     : none;
+            background : var(--b-chat-panel-message-us-background, var(--b-primary));
+            color      : var(--b-chat-panel-message-us-color);
+        }
+
+        /* Slide options in with a slight delay between each*/
+        &:nth-child(2) {
+            transition-delay : .3s;
+        }
+
+        &:nth-child(3) {
+            transition-delay : .4s;
+        }
+
+        &:nth-child(4) {
+            transition-delay : .5s;
+        }
+
+        &:nth-child(5) {
+            transition-delay : .6s;
+        }
+
+        &:nth-child(6) {
+            transition-delay : .7s;
+        }
+
+        /* Below nth-child rules to enforce 0 delay*/
+        &.b-outdated {
+            opacity          : .3;
+            transition-delay : 0s;
+        }
+    }
+
+    .b-bottom-anchor {
+        min-height : 1px;
+    }
+}
+
+@starting-style {
+    .b-chat-bubbles.b-animate {
+        .b-bubble {
+            opacity   : 0;
+            translate : 0 1em
+        }
+
+        .b-bubble-tools {
+            opacity   : 0;
+            translate : 0 -1em
+        }
+
+        .b-option {
+            translate : -100% 0;
+            opacity   : 0;
+        }
+    }
+}
+
+/* Inspired by https:/*nzbin.github.io/three-dots/*/
+
+/* MIT License */
+
+/* Copyright (c) 2018 Zongbin */
+
+/* Permission is hereby granted, free of charge, to any person obtaining a copy */
+/* of this software and associated documentation files (the "Software"), to deal */
+/* in the Software without restriction, including without limitation the rights */
+/* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell */
+/* copies of the Software, and to permit persons to whom the Software is */
+/* furnished to do so, subject to the following conditions: */
+
+/* The above copyright notice and this permission notice shall be included in all */
+/* copies or substantial portions of the Software. */
+
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR */
+/* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, */
+/* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE */
+/* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER */
+/* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, */
+/* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE */
+/* SOFTWARE. */
+
+@keyframes b-anim-jumping-dots {
+    0%, 33.333%, 66.667%, 100% {
+        box-shadow : calc(2em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(2.75em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(3.5em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color);
+    }
+    16.667%, 50%, 83.333% {
+        box-shadow : calc(2em * var(--b-rtl-negate)) -.5em 0 0 var(--b-chat-panel-loading-color), calc(2.75em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(3.5em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color);
+    }
+    33.333% {
+        box-shadow : calc(2em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(2.75em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(3.5em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color);
+    }
+    50% {
+        box-shadow : calc(2em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(2.75em * var(--b-rtl-negate)) -.5em 0 0 var(--b-chat-panel-loading-color), calc(3.5em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color);
+    }
+    66.667% {
+        box-shadow : calc(2em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(2.75em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(3.5em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color);
+    }
+    83.333% {
+        box-shadow : calc(2em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(2.75em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(3.5em * var(--b-rtl-negate)) -.5em 0 0 var(--b-chat-panel-loading-color);
+    }
+    100% {
+        box-shadow : calc(2em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(2.75em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color), calc(3.5em * var(--b-rtl-negate)) 0 0 0 var(--b-chat-panel-loading-color);
+    }
+}
+
+/*endregion*/
+
+/*region Chat panel*/
+
+.b-chat-panel-mixin.b-panel {
+    > header:after {
+        display : none;
+    }
+
+    .b-float-root > &.b-floating {
+        /* We dont want the shadow on the top */
+        --b-aligned-above-floating-box-shadow : var(--b-widget-floating-box-shadow );
+    }
+
+    .b-chat-panel-mixin-content {
+        --b-panel-with-header-padding : 0;
+        padding                       : 0;
+
+        & > div {
+            padding-inline : 1em;
+        }
+    }
+
+    .b-chat-bubbles {
+        padding-top : 1em;
+        flex        : 1;
+    }
+
+    .b-intro {
+        display        : flex;
+        flex-direction : column;
+        align-items    : center;
+        gap            : .5em;
+        text-align     : center;
+        margin-bottom  : 1em;
+        color          : var(--b-chat-panel-intro-color);
+
+        div {
+            line-height : 1.5em;
+        }
+
+        .b-chat-avatar {
+            border-radius : 50%;
+            margin-bottom : 1em;
+            background    : var(--b-primary); /* Not using the commented variable since this is a direct use */
+            width         : var(--b-chat-panel-avatar-size);
+        }
+    }
+
+    .b-example-prompt {
+        font-size  : .9em;
+        font-style : italic;
+        cursor     : pointer;
+        color      : var(--b-chat-panel-example-prompt-color);
+
+        &::before {
+            content : '"';
+        }
+
+        &::after {
+            content : '"';
+        }
+
+        &:hover {
+            color : var(--b-chat-panel-example-prompt-hover-color);
+        }
+    }
+
+    .b-text-area-field {
+        padding-bottom : 1em;
+
+        .b-field-inner {
+            border-radius : var(--b-chat-panel-border-radius);
+        }
+
+        textarea, [contenteditable] {
+            max-height : 10em;
+        }
+
+        &.b-multiline {
+            textarea, [contenteditable] {
+                mask-image : linear-gradient(to bottom, transparent, black 1em, black calc(100% - 1em), transparent);
+            }
+        }
+
+        .b-field-trigger {
+            overflow : visible;
+            color    : var(--b-chat-panel-tool-color);
+
+            &:before {
+                font-size : 1.5em;
+            }
+
+            &:hover:not(.b-ai-context-chip) {
+                color : var(--b-chat-panel-tool-hover-color);
+            }
+
+            &.b-send-chat-msg {
+                transition : color .2s;
+            }
+
+            /* Tab focus style*/
+            .b-using-keyboard &.b-icon-mic:focus {
+                padding-inline-end : 0;
+                outline-offset     : .4em;
+                margin-inline-end  : var(--b-field-trigger-edge-gap);
+            }
+        }
+
+        & .b-send-chat-msg:not(.b-disabled) {
+            color : var(--b-chat-panel-tool-color-active);
+        }
+    }
+
+    /* Tools below the textarea */
+    &.b-chat-tools-below .b-text-area-field .b-field-inner,
+    .b-text-area-field.b-multiline .b-field-inner {
+        flex-wrap       : wrap;
+        justify-content : flex-end;
+        padding-bottom  : .7em;
+    }
+
+    .b-ai-context-chip.b-field-trigger {
+        font-size            : .8em;
+        cursor               : pointer;
+        gap                  : .5em;
+        display              : flex;
+        flex-direction       : row;
+        margin-inline-end    : auto;
+        border-radius        : 1em;
+        padding-block        : .4em;
+        background-color     : var(--b-chat-panel-tool-color);
+        color                : var(--b-color-black);
+        padding-inline-start : var(--b-field-trigger-edge-gap);
+        margin-inline-start  : var(--b-field-trigger-edge-gap);
+
+        span {
+            padding : 0;
+        }
+
+        &:hover {
+            background-color : var(--b-chat-panel-tool-hover-color);
+        }
+    }
+}
+
+/*endregion*/
+
+/*#region AI chat panel*/
+
+.b-is-speaking button.b-bubble-tool[data-ref="readAloud"] {
+    color : blue;
+}
+
+.b-aichat-panel-mixin.b-panel .b-text-area-field .b-is-recording {
+    color : blue;
+
+    &:hover {
+        color : blue;
+    }
+}
+
+.b-bubble {
+    ul, ol {
+        padding-inline-start : 1em;
+    }
+
+    > p:first-child {
+        margin-block-start : 0;
+    }
+
+    > p:last-child {
+        margin-block-end : 0;
+    }
+
+}
+
+.b-aichat-panel-mixin .b-panel-header .b-tool[data-ref="offline"] {
+    color : #f99d9d;
+}
+
+/*endregion*/
+
+/*region Mention tags in chat bubbles*/
+
+.b-bubble-mention-tag {
+    font-weight      : 600;
+    border-radius    : .25em;
+    padding-inline   : .2em;
+    background-color : color-mix(in srgb, var(--b-chat-panel-message-color), transparent 85%);
+}
+
+/*endregion*/

@@ -1,0 +1,23 @@
+.b-rich-text-field {
+    overflow : visible;
+    height   : 10em;
+
+    color    : var(--b-text-field-input-color);
+
+    .b-field-inner {
+        overflow    : visible;
+        align-items : flex-start;
+    }
+
+    .b-rich-text-field-container {
+        width   : 100%;
+        height  : 100%;
+        padding : .5em;
+        outline : none;
+    }
+
+    .b-cell-editor & {
+        height     : 100%;
+        min-height : 100%;
+    }
+}

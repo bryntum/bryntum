@@ -1,0 +1,378 @@
+:root, :host {
+    /**
+     * Space at top for all Calendar views
+     */
+    --b-calendar-view-padding-top                  : 1.2em;
+
+    /**
+     * Calendar event border radius (for DayView-based views)
+     */
+    --b-calendar-event-border-radius               : 5px;
+
+    /**
+     * Overflow popup z-index
+     */
+    --b-calendar-overflow-popup-visible-z-index    : 10;
+
+    /**
+     * "More events" border-radius
+     */
+    --b-calendar-cell-overflow-hover-border-radius : 4px;
+
+    /**
+     * Calendar foreground color
+     */
+    --b-calendar-foreground-color                  : var(--b-widget-color);
+
+    /**
+     * Calendar background
+     */
+    --b-calendar-background                        : transparent;
+
+    /**
+     * Calendar border color
+     */
+    --b-calendar-border-color                      : var(--b-border-7);
+
+    /**
+     * Hovered date's background color
+     * @state Hovered
+     */
+    --b-calendar-date-hover-background             : var(--b-neutral-95);
+
+    /**
+     * Today's date's font-weight
+     */
+    --b-calendar-today-font-weight                 : null;
+
+    /**
+     * "More events" color
+     */
+    --b-calendar-cell-overflow-color               : var(--b-text-3);
+
+    /**
+     * "More events" background color when hovered
+     * @state Hovered
+     */
+    --b-calendar-cell-overflow-hover-background    : var(--b-neutral-90);
+
+    /**
+     * "More events" color when hovered
+     * @state Hovered
+     */
+    --b-calendar-cell-overflow-hover-color         : null;
+
+    /**
+     * "More events" background color when active
+     * @state Active
+     */
+    --b-calendar-cell-active-overflow-color        : var(--b-neutral-50);
+
+    /**
+     * Selected dates border
+     */
+    --b-calendar-selected-date-border              : null;
+
+    /**
+     * Week cell color
+     */
+    --b-calendar-week-cell-color                   : var(--b-text-1);
+
+    /**
+     * Week cell background color
+     */
+    --b-calendar-week-cell-background              : null;
+
+    /**
+     * Week cell hover color
+     * @state Hovered
+     */
+    --b-calendar-week-cell-hover-color             : var(--b-neutral-20);
+
+    /**
+     * Week cell hover border-radius
+     * @state Hovered
+     */
+    --b-calendar-week-cell-hover-border-radius     : 3px;
+
+    /**
+     * Non-working day background color
+     */
+    --b-calendar-non-working-day-background        : var(--b-neutral-98);
+
+    /**
+     * View description color
+     */
+    --b-calendar-view-desc-color                   : var(--b-widget-color);
+
+    /**
+     * View description font size
+     */
+    --b-calendar-view-desc-font-size               : 1.4em;
+
+    /**
+     * View description font weight
+     */
+    --b-calendar-view-desc-font-weight             : 400;
+
+    /**
+     * Text color in day header cells for weekend days
+     */
+    --b-calendar-view-header-cell-weekend-color    : var(--b-color-red);
+
+    /**
+     * Text color in day header cells for non-working days.
+     * This takes precedence over the weekend color if a non-working day is also a weekend.
+     */
+    --b-calendar-view-header-cell-non-working-day-color : var(--b-color-red);
+
+    /**
+     * Calendar's top toolbar's border bottom
+     */
+    --b-calendar-toolbar-border-bottom             : 1px solid var(--b-calendar-border-color);
+
+    /**
+     * Other month foreground color
+     */
+    --b-calendar-other-month-foreground-color      : var(--b-text-4);
+
+    /**
+     * Week background when hovered
+     * @state Hovered
+     */
+    --b-calendar-week-cell-hover-background        : var(--b-calendar-date-hover-background);
+
+    /**
+     * Today's date's background color
+     */
+    --b-calendar-today-background                  : var(--b-date-picker-today-background);
+}
+
+/* .b-bryntum { */
+
+    /**
+     * Today's date's background color when hovered
+     * @state Hovered
+     */
+    /*--b-calendar-today-hover-background        : var(--b-primary-90);*/
+
+    /**
+     * Today's date's color
+     */
+    /*--b-calendar-today-color                   : var(--b-date-picker-today-color);*/
+
+    /**
+     * Today's date's border
+     */
+    /*--b-calendar-today-border                  : var(--b-date-picker-today-border);*/
+
+    /**
+     * Focused cell background color when keyboard navigation is used
+     * @state Focused
+     */
+    /*--b-calendar-focused-cell-background-color : var(--b-primary-95);*/
+/* } */
+
+.b-calendar.b-outer {
+    height : 100%;
+}
+
+.b-calendar, .b-calendar-content {
+    /* The row items are fitted */
+    overflow : hidden;
+}
+
+.b-calendar {
+    user-select         : none;
+    -webkit-user-select : none;
+
+    :is([role="gridcell"]:not(.b-grid-cell),[role="columnheader"]):focus-visible {
+        outline          : none;
+
+        /* Important rule because focused state takes precedence over all other states */
+        background-color : var(--b-calendar-focused-cell-background-color, var(--b-primary-95)) !important;
+    }
+
+    &.b-overflow-popup-visible {
+        /* Boost the Calendar's stacking position while an overflow popup is visible */
+        /* so that if it overflows the bounds of the Calendar element, it sits above */
+        /* surrounding static elements. */
+        z-index : var(--b-calendar-overflow-popup-visible-z-index);
+    }
+
+    .b-calendar-content {
+        /* Not using var, that would change all nested panels too */
+        gap : 0;
+    }
+
+    /* Nesting required to win over other bundle themes */
+    /* https://github.com/bryntum/bryntum/issues/2820 */
+    .b-calendar-view-desc-text {
+        overflow       : hidden;
+        white-space    : nowrap;
+        text-overflow  : ellipsis;
+        text-transform : capitalize;
+
+        color          : var(--b-calendar-view-desc-color);
+        font-size      : var(--b-calendar-view-desc-font-size);
+        font-weight    : var(--b-calendar-view-desc-font-weight);
+    }
+
+    .b-calendar-toolbar {
+        --bi-adjacent-button-border-radius : var(--b-button-icon-only-border-radius);
+        --bi-adjacent-button-border-width  : var(--b-button-border-width);
+        --bi-prev-button-margin-start      : inherit;
+
+        /* When the "prev" and "next" buttons are adjacent, remove border-radius
+         * and border between prev/next buttons */
+        &:has([data-ref="prevButton"] + [data-ref="nextButton"]) {
+            --bi-adjacent-button-border-radius : 0;
+            --bi-adjacent-button-border-width  : 0;
+            --bi-prev-button-margin-start      : calc(var(--b-toolbar-gap) * -1);
+        }
+
+        background    : transparent;
+        border-bottom : var(--b-calendar-toolbar-border-bottom);
+
+        /* Prev and next buttons touch when adjacent */
+        [data-ref="nextButton"] {
+            margin-inline-start : var(--bi-prev-button-margin-start);
+        }
+
+        /* When the buttons are outlined and adjacent, adjust their adjacent border-radius and borders so they merge */
+        [data-ref="prevButton"].b-button-outlined {
+            border-start-end-radius : var(--bi-adjacent-button-border-radius);
+            border-end-end-radius   : var(--bi-adjacent-button-border-radius);
+            border-inline-end-width : var(--bi-adjacent-button-border-width);
+        }
+        [data-ref="nextButton"].b-button-outlined {
+            border-start-start-radius : var(--bi-adjacent-button-border-radius);
+            border-end-start-radius   : var(--bi-adjacent-button-border-radius);
+        }
+    }
+
+    &:not(.b-calendar-nav-toolbar) .b-calendar-toolbar {
+        .b-cal-nav-item {
+            display : none;
+        }
+    }
+
+    &:not(.b-calendar-nav-sidebar) .b-sidebar {
+        .b-cal-nav-item {
+            display : none;
+        }
+    }
+
+    &.b-responsive-small {
+        /* Desc margin-start is only needed in responsive-small when gap is unset */
+        .b-calendar-view-desc {
+            margin-inline-start : 0.5em;
+        }
+
+        .b-calendar-toolbar {
+            --b-toolbar-min-size : 2em;
+            --b-toolbar-padding  : 0.2em;
+
+            .b-calendar-view-desc-text {
+                font-size : 120%;
+            }
+
+            > .b-toolbar-content {
+                gap : unset;
+            }
+
+            button {
+                --b-button-padding-inline : 1em;
+                aspect-ratio              : unset;
+
+                &:not(.b-pressed) {
+                    background-color : transparent;
+                    border-color     : transparent;
+                }
+            }
+
+            .b-sidebar-toggle {
+                margin-inline-end : 0.5em;
+            }
+
+            .b-calendar-mode-button,
+            .b-calendar-today-button {
+                > .b-button-menu-icon,
+                > span {
+                    display : none;
+                }
+            }
+        }
+    }
+
+    &:not(.b-responsive-small) {
+        .b-calendar-toolbar {
+            .b-calendar-mode-button {
+                > .b-button-icon {
+                    display : none;
+                }
+            }
+        }
+    }
+
+    .b-calendar-view-container {
+        /* More space at top when used in a Calendar */
+        > .b-month-view,
+        > .b-year-view {
+            > .b-panel-body-wrap > .b-panel-content {
+                padding-top : var(--b-calendar-view-padding-top);
+            }
+        }
+    }
+}
+
+.b-notransition:is(.b-calendar-mixin, .b-calendar) * {
+    transition : none !important;
+}
+
+.b-panel-ui-calendar-banner.b-panel-header {
+    --b-panel-header-padding       : 2em 1em;
+    --b-panel-header-border-bottom : var(--b-calendar-toolbar-border-bottom);
+    --b-panel-header-color         : var(--b-calendar-view-desc-color);
+    --b-panel-header-font-size     : var(--b-calendar-view-desc-font-size);
+    --b-panel-header-font-weight   : var(--b-calendar-view-desc-font-weight);
+    --b-panel-header-background    : var(--b-grid-toolbar-background);
+
+    /* TODO : Use var to match */
+    height                         : 42px;
+}
+
+.b-calendar-keyboard-actions-popup {
+    --b-popup-background : var(--b-neutral-95);
+    width                : 44em;
+    max-width            : 90vw;
+    max-height           : min(90dvh, 58em);
+
+    .b-header-title {
+        text-align : center;
+        font-size  : 150%;
+    }
+
+    .b-panel-content {
+        display               : grid;
+        grid-template-columns : 1.5fr 1fr;
+        gap                   : 1em;
+
+        .b-kbd-help-column-1 {
+            justify-self    : end;
+            text-align      : end;
+            text-wrap-style : balance;
+        }
+
+        kbd {
+            display          : inline-block;
+            border-radius    : .25em;
+            padding          : 0.2em 0.5em;
+            margin           : 0 0.2em;
+            line-height      : 1;
+            border           : 1px solid var(--b-neutral-80);
+            box-shadow       : 0 1px 0 var(--b-neutral-80);
+            background-color : var(--b-neutral-97);
+        }
+    }
+}

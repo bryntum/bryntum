@@ -1,0 +1,80 @@
+/* Vars shared with Search are defined in base/SearchQuickFind.css */
+
+:root, :host {
+    /**
+     * Inset (position) for the quick find header "text field"
+     */
+    --b-quick-find-header-inset : 0;
+
+    /**
+     * Padding for the quick find hit text highlight
+     */
+    --b-quick-find-hit-padding  : .2em 0;
+
+    /**
+     * Color for the quick find hit count indicator shown in the header
+     */
+    --b-quick-find-header-badge-color : var(--b-grid-header-color);
+
+    /**
+     * Quick find header hit z-index
+     */
+    --b-quick-find-header-z-index     : 1;
+}
+
+.b-quick-hit-cell {
+    background : var(--b-quick-find-background, var(--b-primary-95));
+}
+
+.b-quick-hit-text {
+    border-radius : 2px;
+
+    --b-primary   : var(--b-quick-find-primary);
+
+    font-weight   : var(--b-quick-find-font-weight);
+    background    : var(--b-quick-find-background, var(--b-primary-95));
+    line-height : .8;
+}
+
+.b-quick-hit-text {
+    padding : var(--b-quick-find-hit-padding);
+}
+
+.b-quick-hit-header {
+    position    : absolute;
+    display     : grid;
+    place-items : center;
+    z-index     : var(--b-quick-find-header-z-index);
+
+    --b-primary : var(--b-quick-find-primary);
+
+    inset       : var(--b-quick-find-header-inset);
+    background  : var(--b-quick-find-background, var(--b-primary-95));
+
+    /* &.b-quick-hit-mode-grid { */
+    /*     bottom  : auto; */
+    /*     height  : 3em; */
+    /*     z-index : 100; */
+    /*     opacity : 0.75; */
+    /* } */
+}
+
+.b-quick-hit-cell-badge,
+.b-quick-hit-header .b-quick-hit-badge {
+    position         : absolute;
+    line-height      : 1;
+
+    font-size        : var(--b-quick-find-badge-font-size);
+    inset-inline-end : var(--b-quick-find-badge-offset);
+    top              : var(--b-quick-find-badge-offset);
+}
+
+.b-quick-hit-header .b-quick-hit-badge {
+    color : var(--b-quick-find-header-badge-color);
+}
+
+.b-quick-hit-cell-badge {
+    color : var(--b-quick-find-badge-color);
+}
+
+

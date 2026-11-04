@@ -1,0 +1,15 @@
+/* @after Core/widget/TextField.css */
+
+.b-date-range-picker {
+    .b-start-date,
+    .b-end-date {
+        width : 13em;
+    }
+
+    /* Make sizes match the fields in the DateRangeField */
+    &.b-date-range-field-picker {
+        .b-end-date {
+            width : 11em;
+        }
+    }
+}

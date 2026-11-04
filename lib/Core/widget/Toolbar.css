@@ -1,0 +1,134 @@
+/* @after Core/widget/Container.css */
+
+:root, :host {
+    /**
+     * Gap between toolbar items
+     */
+    --b-toolbar-gap              : var(--b-widget-gap);
+
+    /**
+     * Toolbar padding
+     */
+    --b-toolbar-padding          : var(--b-widget-padding);
+
+    /**
+     * Toolbar separator height ("|" items)
+     */
+    --b-toolbar-separator-height : 2em;
+
+    /**
+     * Content justification
+     */
+    --b-toolbar-justify-content  : flex-start;
+
+    /**
+     * Toolbar background
+     */
+    --b-toolbar-background       : var(--b-panel-background);
+
+    /**
+     * Toolbar separator color ("|" items)
+     */
+    --b-toolbar-separator-color  : var(--b-neutral-50);
+
+    /* Vars that can be adjusted by the app */
+    /* --b-toolbar-min-size : null; */
+}
+
+.b-toolbar {
+    display        : flex;
+    flex-direction : row;
+    gap            : 0;
+    overflow       : hidden;
+    flex-shrink    : 0;
+    transition     : background-color .2s;
+
+    background     : var(--b-toolbar-background);
+
+    &.b-dock-left,
+    &.b-dock-right {
+        flex-direction         : column;
+
+        --bi-toolbar-min-width : var(--b-toolbar-min-size, unset);
+    }
+
+    &.b-dock-top,
+    &.b-dock-bottom {
+        align-items             : center;
+        flex-wrap               : nowrap;
+
+        --bi-toolbar-min-height : var(--b-toolbar-min-size, unset);
+
+        /* Buttons in the toolbar should fill available height (textfields are larger) */
+        .b-box-center.b-toolbar-content > .b-button {
+            height     : 100%;
+
+            min-height : var(--b-button-height);
+        }
+    }
+
+    .b-overflow-button {
+        margin        : var(--b-toolbar-padding);
+        place-content : center;
+
+        /* Rotate scroll buttons when toolbar is docked left or right */
+        &.b-rotate-vertical {
+            rotate     : 90deg;
+            align-self : center;
+        }
+
+        &:active {
+            background : var(--b-neutral-90);
+        }
+    }
+
+    .b-box-center.b-toolbar-content {
+        align-items : center;
+    }
+
+    .b-html {
+        align-items : center;
+    }
+
+}
+
+.b-toolbar-content {
+    /* Remove gap between adjacent text buttons (buttons without border) */
+    > .b-button-text:not(.b-hidden) + .b-button-text {
+        margin-inline-start : calc(var(--b-toolbar-gap) * -1);
+    }
+}
+
+.b-box-center.b-toolbar-content {
+    flex            : 1;
+    overflow        : hidden; /* Cannot use clip */
+
+    gap             : var(--b-toolbar-gap);
+    padding         : var(--b-toolbar-padding);
+    min-height      : var(--bi-toolbar-min-height);
+    min-width       : var(--bi-toolbar-min-width);
+    justify-content : var(--b-toolbar-justify-content);
+}
+
+.b-toolbar-separator {
+    border-inline-end : 1px solid var(--b-toolbar-separator-color);
+    min-height        : var(--b-toolbar-separator-height);
+}
+
+.b-toolbar-fill {
+    flex          : 1;
+
+    /* A fill is invisible, so it must not add spacing of its own.
+       Remove half a gap from each side */
+    margin-inline : calc(var(--b-toolbar-gap) / -2);
+}
+
+.b-toolbar-overflow-menu > .b-panel-body-wrap > .b-menu-content {
+    .b-widget {
+        /* Don't allow horizontal flex styles to apply in the vertical layout of a Menu */
+        flex  : 0 0 auto !important;
+
+        /* Width must obey the Menu's align-items:stretch */
+        width : auto;
+    }
+}

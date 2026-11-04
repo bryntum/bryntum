@@ -1,0 +1,6 @@
+:root, :host {
+    /**
+     * Event z-index
+     */
+    --b-events-zindex : 6; /* Events & tasks */
+}

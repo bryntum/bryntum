@@ -1,0 +1,30 @@
+/* @after Core/widget/Combo.css */
+
+/* Styles shared between ColorField and TaskBoards ColorBoxCombo */
+.b-color-field,
+.b-color-box-combo {
+    .b-color-box {
+        grid-area     : before;
+        width         : 1.5em;
+        flex-shrink   : 0;
+        transition    : color var(--b-default-transition-duration);
+
+        border-radius : var(--b-color-picker-color-border-radius);
+        margin-inline : var(--b-widget-padding) 0;
+
+        &.b-no-color {
+            background : none;
+
+            border     : 1px solid var(--b-color-picker-color-no-color-color);
+        }
+    }
+}
+
+.b-color-box {
+    width             : 1em;
+    aspect-ratio      : 1 / 1;
+    background        : currentColor;
+    margin-inline-end : .5em;
+
+    color             : var(--b-primary);
+}

@@ -1,0 +1,39 @@
+:root, :host {
+    /**
+     * Ripple clip z-index
+     */
+    --b-ripple-clip-z-index : 0;
+}
+
+.b-ripple-clip {
+    position       : absolute;
+    inset          : 0;
+    border-radius  : inherit;
+    overflow       : clip;
+    pointer-events : none;
+    z-index        : var(--b-ripple-clip-z-index);
+
+    &::before {
+        position           : absolute;
+        content            : "";
+        width              : 0;
+        aspect-ratio       : 1 / 1;
+        border-radius      : 50%;
+        opacity            : 0;
+        transition         : width .2s linear, opacity .1s linear;
+
+        translate          : -50% -50%;
+
+        inset-inline-start : var(--b-click-x);
+        inset-block-start  : var(--b-click-y);
+        background         : var(--b-ripple-background);
+        mix-blend-mode     : var(--b-ripple-blend-mode);
+    }
+
+    &.b-animate {
+        &::before {
+            opacity : 1;
+            width   : 200%;
+        }
+    }
+}

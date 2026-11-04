@@ -1,0 +1,443 @@
+/* @after Calendar/view/CalendarEventRendering.css */
+:root, :host {
+    /**
+     * Font size for the year view.
+     */
+    --b-year-view-font-size                        : .9em;
+
+    /**
+     * Font size when the year view is in big mode (responsive).
+     */
+    --b-year-view-font-size-big                    : 1.3em;
+
+    /**
+     * Font weight for the foreground elements in the year view.
+     */
+    --b-year-view-foreground-font-weight           : 300;
+
+    /**
+     * Background color for the year view.
+     */
+    --b-year-view-background                       : var(--b-calendar-background);
+
+    /**
+     * Foreground color for the year view.
+     */
+    --b-year-view-foreground-color                 : var(--b-calendar-foreground-color);
+
+    /**
+     * Gap between month rows in the year view.
+     */
+    --b-year-view-row-gap                          : 3em;
+
+    /**
+     * Gap between month columns in the year view.
+     */
+    --b-year-view-column-gap                       : 1em;
+
+    /**
+     * Padding for the content in the year view.
+     */
+    --b-year-view-content-padding                  : var(--b-panel-padding);
+
+    /**
+     * Size of the day cells in the year view.
+     */
+    --b-year-view-day-cell-size                    : 2em;
+
+    /**
+     * Color of the day cells in the year view.
+     */
+    --b-year-view-day-cell-color                   : var(--b-text-3);
+
+    /**
+     * Maximum width for a month view in the year view.
+     */
+    --b-year-view-month-max-width                  : 20em;
+
+    /**
+     * Minimum width for a month view in the year view.
+     */
+    --b-year-view-month-min-width                  : 16em;
+
+    /**
+     * Minimum width for a month view in the year view when `showEvents` is
+     * `'dots'` or `'count'`. Both renditions hang an extra payload element
+     * off each day cell (a dot row or a count badge) and the cells need a
+     * little more horizontal room than in the plain / heatmap rendition to
+     * keep the row from clipping.
+     */
+    --b-year-view-month-min-width-with-events      : 21em;
+
+    /**
+     * Font size for the month names in the year view.
+     */
+    --b-year-view-month-name-font-size             : 1.3em;
+
+    /**
+     * Maximum width for the month name in the year view.
+     */
+    --b-year-view-month-name-max-width             : calc(var(--b-year-view-month-max-width) / var(--b-year-view-month-name-font-size));
+
+    /**
+     * Background color for the month names in the year view.
+     */
+    --b-year-view-month-name-cell-background       : null;
+
+    /**
+     * Color for the month names in the year view.
+     */
+    --b-year-view-month-name-cell-color            : var(--b-calendar-week-cell-color);
+
+    /**
+     * Background color for the month names on hover in the year view.
+     * @state Hovered
+     */
+    --b-year-view-month-name-cell-hover-background : var(--b-calendar-week-cell-hover-background);
+
+    /**
+     * Color for the month name on hover in the year view.
+     * @state Hovered
+     */
+    --b-year-view-month-name-cell-hover-color      : var(--b-calendar-week-cell-hover-color);
+
+    /**
+     * Background color for week numbers in the year view.
+     */
+    --b-year-view-week-cell-background             : var(--b-neutral-98);
+
+    /**
+     * Color for week numbers in the year view.
+     */
+    --b-year-view-week-cell-color                  : var(--b-neutral-60);
+
+    /**
+     * Background color for week numbers on hover in the year view.
+     * @state Hovered
+     */
+    --b-year-view-week-cell-hover-background       : var(--b-calendar-week-cell-hover-background);
+
+    /**
+     * Color for week numbers on hover in the year view.
+     * @state Hovered
+     */
+    --b-year-view-week-cell-hover-color            : var(--b-calendar-week-cell-hover-color);
+
+    /**
+     * Background color for the day cells in the year view.
+     */
+    --b-year-view-cell-background                  : null;
+
+    /**
+     * Color for the day cells in the year view.
+     */
+    --b-year-view-cell-color                       : var(--b-calendar-foreground-color);
+
+    /**
+     * Background color for the day cells on hover in the year view.
+     * @state Hovered
+     */
+    --b-year-view-cell-hover-background            : var(--b-calendar-week-cell-hover-background);
+
+    /**
+     * Color for the day cells on hover in the year view.
+     * @state Hovered
+     */
+    --b-year-view-cell-hover-color                 : var(--b-text-2);
+
+    /**
+     * Color for the day cells of other months in the year view.
+     */
+    --b-year-view-other-month-cell-color           : var(--b-calendar-other-month-foreground-color);
+
+    /**
+     * Blend mode for events on hover in the year view.
+     * @state Hovered
+     */
+    --b-year-view-events-hover-blend-mode          : multiply;
+
+    /**
+     * Background for the drag proxy in the year view.
+     */
+    --b-year-view-dragproxy-background             : linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)) currentColor;
+
+    /**
+     * Year view active cell overflow z-index
+     */
+    --b-year-view-active-overflow-z-index          : 10;
+}
+
+.b-colorize {
+    /**
+     * Heatmap background (a shade of the heatmaps color)
+     */
+    --b-year-view-heatmap-background       : var(--b-primary-85);
+
+    /**
+     * Heatmap hover background (a shade of the heatmaps color)
+     * @state Hovered
+     */
+    --b-year-view-heatmap-hover-background : var(--b-primary-75);
+
+    /**
+     * Color for tentative events in the year view.
+     */
+    --b-year-view-tentative-event-color    : var(--b-primary-75);
+
+    /**
+     * Secondary color for tentative events in the year view.
+     */
+    --b-year-view-tentative-event-color2   : var(--b-primary-90);
+
+    /**
+     * Font weight for the "today" cell in the year view.
+     */
+    --b-year-view-today-cell-font-weight   : var(--b-calendar-today-font-weight);
+}
+
+/* .b-bryntum { */
+    /**
+     * Background color for the "today" cell in the year view.
+     */
+    /* --b-year-view-today-cell-background  : var(--b-calendar-today-background); */
+
+    /**
+     * Color for the "today" cell in the year view.
+     */
+    /* --b-year-view-today-cell-color       : var(--b-calendar-today-color); */
+
+    /**
+     * Border for the "today" cell in the year view.
+     */
+    /* --b-year-view-today-cell-border      : var(--b-calendar-today-border); */
+/* } */
+
+.b-year-view {
+    background : transparent;
+}
+
+.b-year-view-content {
+    flex-basis           : 0;
+    display              : flex;
+    flex-flow            : row wrap;
+    align-content        : flex-start;
+    justify-content      : space-around;
+
+    font-size            : var(--b-year-view-font-size);
+    font-weight          : var(--b-year-view-foreground-font-weight);
+    padding              : var(--b-year-view-content-padding);
+    column-gap           : var(--b-year-view-column-gap);
+    row-gap              : var(--b-year-view-row-gap);
+    padding-inline-start : max(calc((25% - var(--b-year-view-month-max-width) + var(--b-year-view-row-gap)) - var(--b-year-view-content-padding) * 2), var(--b-year-view-content-padding));
+
+    /*
+     * YearView's day-cell inner doesn't want the 0.5em internal padding the
+     * DatePicker family uses (the inner already sits in a tight grid with
+     * the dot row / count badge below it). Override the theme variable
+     * inside the YearView scope so it cascades to every shared cell-inner
+     * rule from Core/widget/DatePickerCell.css.
+     */
+    --b-date-picker-date-padding         : 0;
+
+    /*
+     * YearView packs 12 months into one view, so each day-cell inner is
+     * tighter than CalendarDatePicker's. Drop the default 2.25em minimum
+     * down to 2em here so the cells fit comfortably; the wider
+     * `-with-events` variant stays at its global default (gets applied by
+     * the mode override in DatePickerCell.css).
+     */
+    --b-date-picker-cell-inner-min-width : 2em;
+
+    /*
+     * The `.b-date-picker-cell-payload` styling and the `b-show-events-dots`
+     * cell/inner adjustments live in Core/widget/DatePickerCell.css, shared
+     * with the DatePicker family so the dot row renders identically here
+     * and in CalendarDatePicker.
+     */
+
+    /*
+     * Pick the appropriate month min-width for the current mode. The
+     * `.b-year-view-month` rule below reads `--bi-year-view-month-min-width`
+     * so it doesn't have to repeat the mode switch. Both the `dots` and
+     * `count` renditions hang a payload off the cell, so they share the
+     * wider `-with-events` value.
+     */
+    --bi-year-view-month-min-width : var(--b-year-view-month-min-width);
+
+    &:is(.b-show-events-dots, .b-show-events-count) {
+        --bi-year-view-month-min-width : var(--b-year-view-month-min-width-with-events);
+    }
+
+    .b-year-view-body-wrap & {
+        background : var(--b-year-view-background);
+        color      : var(--b-year-view-foreground-color);
+    }
+
+    .b-year-view.b-responsive-small & {
+        font-size : var(--b-year-view-font-size-big);
+    }
+
+    .b-year-view-month {
+        display    : flex;
+        flex-flow  : column nowrap;
+        height     : min-content;
+
+        flex-basis : calc(25% - var(--b-year-view-column-gap));
+        min-width  : var(--bi-year-view-month-min-width);
+    }
+
+    .b-year-view-month-name {
+        margin-bottom : .4em;
+        padding       : 0.1em 0 0.2em 0.3em;
+        border        : 0 none;
+        text-align    : start;
+        font-family   : inherit;
+        font-weight   : inherit;
+
+        font-size     : var(--b-year-view-month-name-font-size);
+        color         : var(--b-year-view-month-name-cell-color);
+        background    : var(--b-year-view-month-name-cell-background);
+        max-width     : var(--b-year-view-month-name-max-width);
+
+        &:hover {
+            cursor     : pointer;
+
+            background : var(--b-year-view-month-name-cell-hover-background);
+            color      : var(--b-year-view-month-name-cell-hover-color);
+        }
+    }
+
+    .b-calendar-week-days {
+        height : 2.1em;
+    }
+
+    .b-year-view.b-responsive-small & .b-calendar-week {
+        /* TODO toggling on/off in debugger doesn't seem to have any effect */
+        max-width : 100%;
+    }
+
+    .b-calendar-week {
+        display   : flex;
+        flex-flow : row nowrap;
+
+        max-width : var(--b-year-view-month-max-width);
+
+        /* Extra space below the last week. */
+        /* This value is subtracted from the month bottom margin. */
+        /* This is needed because of margin collapsing. Without this, the */
+        /* last row of month blocks would touch the bottom of the content element. */
+        &:last-child {
+            margin-bottom : var(--b-year-view-content-padding);
+        }
+
+        > * {
+            flex            : 1 1 auto;
+            display         : flex;
+            justify-content : center;
+            align-items     : center;
+        }
+    }
+
+    .b-year-view-weekday-cell {
+        color : var(--b-year-view-day-cell-color);
+    }
+
+    &.b-hide-week-numbers {
+        .b-week-number-cell {
+            display : none;
+        }
+    }
+
+    /* Hover state of the inner circle (kept off while dragging). */
+    &:not(.b-draggable-active) {
+        /* Heatmap shading, `--bi-bg-color` is only defined in heatmap mode */
+        &.b-show-events-heatmap .b-calendar-cell:not([data-event-count="0"]):hover .b-date-picker-cell-inner {
+            background-color : var(--bi-bg-color);
+            mix-blend-mode   : var(--b-heatmap-mix-blend-mode);
+        }
+
+        .b-calendar-cell .b-date-picker-cell-inner:hover {
+            cursor     : pointer;
+
+            background : var(--b-year-view-cell-hover-background);
+            color      : var(--b-year-view-cell-hover-color);
+        }
+    }
+
+    .b-calendar-cell {
+        &.b-cal-tentative-event {
+            background-color : var(--b-year-view-tentative-event-color);
+
+            &.b-other-month {
+                background-color : var(--b-year-view-tentative-event-color2);
+            }
+        }
+
+        &.b-today .b-date-picker-cell-inner {
+            border-radius : 50%;
+
+            background    : var(--b-year-view-today-cell-background, var(--b-calendar-today-background));
+            border        : var(--b-year-view-today-cell-border, var(--b-calendar-today-border, var(--b-date-picker-today-border, 1px solid var(--b-date-picker-today-color, var(--b-primary-50)))));
+            color         : var(--b-year-view-today-cell-color, var(--b-calendar-today-color, var(--b-date-picker-today-color, var(--b-primary-50))));
+            font-weight   : var(--b-year-view-today-cell-font-weight);
+        }
+
+        &.b-other-month .b-date-picker-cell-inner {
+            color : var(--b-year-view-other-month-cell-color);
+        }
+    }
+
+    /*
+     * Day cell payload styling lives in the shared
+     * Core/widget/DatePickerCell.css.
+     * Anything left here is *not* day-cell styling - mostly
+     * the week-number column and overall content layout.
+     */
+
+    .b-week-number-cell {
+        border      : 0 none;
+        padding     : 0;
+        font-family : inherit;
+        font-weight : inherit;
+        font-size   : inherit;
+
+        flex        : 0 0 var(--b-year-view-day-cell-size);
+        background  : var(--b-year-view-week-cell-background);
+        color       : var(--b-year-view-week-cell-color);
+
+        &:hover {
+            cursor     : pointer;
+
+            background : var(--b-year-view-week-cell-hover-background);
+            color      : var(--b-year-view-week-cell-hover-color);
+        }
+
+        .b-calendar-cell-inner {
+            outline : 0 none;
+        }
+    }
+
+    /* When we're hiding non working days, make them display : none */
+    &.b-hide-non-working-days {
+        .b-non-working-day {
+            display : none;
+        }
+    }
+
+    /* In the header, which does not have a week, no background colour */
+    .b-calendar-week:not([data-week]) {
+        .b-week-number-cell {
+            background-color : inherit;
+        }
+    }
+
+    /* Focus outline for the month-name button and the week-number cell's
+     * focusable inner. The day-cell inner's focus styling lives in
+     * Core/widget/DatePickerCell.css (targets `.b-date-picker-cell-inner`,
+     * which the week-number cell does NOT use - its inner still carries the
+     * generic `.b-calendar-cell-inner` class). */
+    :is(.b-year-view-month-name:focus-visible, .b-week-number-cell:has(.b-calendar-cell-inner:focus-visible)) {
+        outline : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+        z-index : 1;
+    }
+}

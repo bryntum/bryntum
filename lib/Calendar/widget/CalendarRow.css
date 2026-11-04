@@ -1,0 +1,332 @@
+/* @after Calendar/widget/WeekView.css */
+:root, :host {
+    /**
+     * Non-working day background
+     */
+    --b-calendar-row-non-working-day-background : transparent;
+
+    /**
+     * The font size for the day name and date in the header when `compactHeader` is set.
+     */
+    --b-calendar-row-compact-header-font-size   : 1em;
+}
+
+.b-internal {
+    --bi-min-day-width           : null;
+    --bi-cell-container-overflow : null;
+}
+
+.b-calendar-row {
+    /* No transition when initializing as the "all day" section of a DayView */
+    &.b-animating:not(.b-day-view-initializing) {
+        .b-calendar-row-cell-container {
+            transition : height var(--b-day-view-all-day-height-transition-duration),
+                         min-height var(--b-day-view-all-day-height-transition-duration);
+        }
+    }
+
+    display     : flex;
+    flex-flow   : column nowrap;
+    align-items : stretch;
+    overflow    : hidden;
+    flex        : 1 0 0%;
+    background  : var(--b-month-view-background);
+
+    /* These two main elements contain the elements which provide scroll. */
+    /* They must autoHeight to shrinkwrap content. */
+    .b-calendar-row-header, .b-calendar-row-body {
+        flex      : 0 0 auto;
+        display   : flex;
+        flex-flow : row nowrap;
+    }
+
+    /* Must flex to fit in the CalendarRow's height. */
+    /* Contains scrollable content - overflow controlled by widget's Scroller. */
+    .b-calendar-row-body {
+        flex     : 1 1 0%;
+        overflow : hidden;
+
+        &.b-zero-height {
+            max-height : 0px;
+        }
+        &:not(.b-zero-height) {
+            /* Give the cell container a border at the top to "scroll against". */
+            /* It looks odd scrolling off the top with no border. */
+            border-top : 1px solid var(--b-calendar-border-color);
+        }
+    }
+
+    .b-calendar-row-header-container, .b-calendar-row-cell-container {
+        flex        : 1 0 0%;
+        display     : flex;
+        flex-flow   : row nowrap;
+        align-items : stretch;
+        overflow    : hidden;
+    }
+
+    /* This becomes the offsetParent of event bars so that %age widths based upon how many */
+    /* days cells are spanned works, and no layout has to be done on width change. */
+    /* Position important as this flex now overrides the default applied in the shared ruleset above. */
+    /* The cell container must contain vertical scrolling. */
+    .b-calendar-row-cell-container {
+        /* Event bars must use this as their offsetParent and calculate their %age width using this element. */
+        position : relative;
+
+        /* Needed to make sure it shrinkwraps the width of the cells and does *not* flex down */
+        /* to fit in the bodyElement when there's a minDayWidth. The bodyElement has to scroll it */
+        /* in this case. CalendarRow sets --bi-cell-container-overflow to 'visible' when minDayWidth is set. */
+        overflow : var(--bi-cell-container-overflow, hidden);
+    }
+
+    .b-cal-cell-header {
+        padding         : var(--b-calendar-view-padding-top) 0 .2em;
+        justify-content : center;
+        align-items     : center;
+        overflow        : hidden;
+        text-overflow   : ellipsis;
+        white-space     : nowrap;
+
+        background      : var(--b-month-view-background);
+
+        /* This kind of view doesn't show the week. */
+        .b-week-num {
+            display : none;
+        }
+
+        cursor          : pointer;
+
+        .b-day-name-date {
+            background : var(--bi-calendar-date-background);
+
+            &:focus-visible {
+                outline : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+            }
+        }
+
+        &:hover {
+            --bi-calendar-date-background : var(--b-calendar-date-hover-background);
+        }
+
+        /* During dragging, override the hovered effect in the cell header. */
+        .b-draggable-started & {
+            &:hover {
+                --bi-calendar-date-background : initial;
+            }
+        }
+
+        .b-day-name-day {
+            font-size     : .8em;
+            margin-bottom : .2em;
+
+            &.b-day-name-short {
+                font-size : 1.1em;
+            }
+        }
+
+        .b-day-name-date {
+            font-size       : 1.8em;
+            border-radius   : 50%;
+            width           : 1.8em;
+            height          : 1.8em;
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+            margin          : 0.1em 0 0.2em 0;
+            transition      : background-color .3s, width .3s, height .3s, font-weight .3s, color .3s;
+            .b-no-transitions & {
+                transition : none;
+            }
+        }
+
+        &.b-weekend .b-day-name-part {
+            color : var(--b-calendar-view-header-cell-weekend-color);
+        }
+        &.b-non-working-day .b-day-name-part {
+            color : var(--b-calendar-view-header-cell-non-working-day-color);
+        }
+
+        &.b-selected-date .b-day-name-date {
+            border : var(--b-calendar-selected-date-border);
+        }
+
+        &.b-today {
+            --bi-calendar-date-background : var(--b-calendar-today-background);
+
+            .b-day-name-date {
+                border : var(--b-calendar-today-border, var(--b-date-picker-today-border, 1px solid var(--b-date-picker-today-color, var(--b-primary-50))));
+                color  : var(--b-calendar-today-color, var(--b-date-picker-today-color, var(--b-primary-50)));
+            }
+
+            &:hover {
+                --bi-calendar-date-background : var(--b-calendar-today-hover-background, var(--b-primary-90));
+            }
+        }
+
+        &.b-selected-date,
+        &.b-current-date {
+            --bi-calendar-date-background : var(--b-date-picker-selected-background, var(--b-primary-90));
+
+            .b-day-name-date {
+                color : var(--b-date-picker-selected-color, var(--b-primary-30));
+            }
+
+            &:hover {
+                --bi-calendar-date-background : var(--b-date-picker-date-hover-background, var(--b-primary-95));
+            }
+        }
+    }
+
+    /* Day numbers will be 00-00 form, so needs to be oval, not circle. */
+    &.b-shifted-day {
+        .b-day-name-date {
+            width : 3em;
+
+            /* Use large px value instead of 50% to produce a pill shape instead of an oval when spanning multiple days */
+            border-radius : 9999px;
+        }
+    }
+
+    /* If the all day events are not shown (which carry inter-cell borders) apply borders */
+    /* to the date cells. */
+    &.b-hide-all-day-header {
+        .b-cal-cell-header:not(:last-child) {
+            border-inline-end : var(--b-month-view-cell-border-width) solid var(--b-month-view-border-color);
+        }
+        .b-calendar-row-body {
+            display : none;
+        }
+    }
+
+    .b-cal-cell-header, .b-calendar-cell {
+        /* Must exactly match flex of DayView's .b-calendar-cell */
+        flex      : 1 1 100%;
+
+        min-width : var(--bi-min-day-width, 0);
+
+        /* //border-top      : $monthview-cell-border-width solid $monthview-border-color; */
+        /* //border-right    : $monthview-cell-border-width solid $monthview-border-color; */
+        color     : var(--b-month-view-cell-color);
+        display   : flex;
+        flex-flow : column nowrap;
+    }
+
+    .b-calendar-cell {
+        &.b-weekend {
+            color : var(--b-calendar-view-cell-weekend-color);
+        }
+        &.b-non-working-day {
+            background : var(--b-month-view-non-working-day-background);
+            color      : var(--b-calendar-view-header-cell-non-working-day-color);
+        }
+
+        /* The .b-cal-cell-header must overflow to hide the right border */
+        overflow : visible;
+
+        &.b-today {
+            .b-day-num {
+                border-radius : 50%;
+                background    : var(--b-month-view-today-day-num-background, var(--b-calendar-today-background));
+                color         : var(--b-month-view-today-day-num-color, var(--b-calendar-today-color, var(--b-date-picker-today-color, var(--b-primary-50))));
+                font-weight   : var(--b-month-view-today-day-num-font-weight);
+            }
+        }
+
+        &.b-non-working-day {
+            .b-cal-event-bar-container {
+                background : var(--b-calendar-row-non-working-day-background);
+            }
+        }
+
+        /* Event cells carry the right border. */
+        /* Except the last cell. The widget has borders. */
+        &:not(:last-child) {
+            border-inline-end : var(--b-month-view-cell-border-width) solid var(--b-month-view-border-color);
+        }
+    }
+
+    /* The .b-cal-cell-header is flex : 0 0 auto */
+    /* The event container flexes to fill */
+    .b-cal-event-bar-container {
+        flex : 1 1 100%;
+    }
+
+    &.b-responsive-small {
+        .b-cal-cell-header {
+            padding-block-start : 0.4em;
+
+            .b-day-name-date {
+                font-size : 1.5em;
+            }
+            .b-dayname-date {
+                flex-direction  : row;
+                justify-content : center;
+                > * {
+                    font-size : 1.5em;
+                }
+            }
+        }
+    }
+
+    &.b-compact-header {
+        .b-cal-cell-header {
+            flex-flow     : row nowrap;
+            gap           : 0.25em;
+            padding-block : 0.5em;
+            font-weight   : 500;
+
+            * {
+                font-size : var(--b-calendar-row-compact-header-font-size) !important;
+                margin    : 0 !important;;
+            }
+
+            .b-day-name-date {
+                background : transparent;
+                width      : 1em;
+                height     : 1.8em;
+            }
+
+            &.b-selected-date {
+                .b-day-name-date {
+                    width      : 1.8em;
+
+                    background : var(--bi-calendar-date-background);
+                }
+            }
+
+            &.b-weekend {
+                * {
+                    color : var(--b-calendar-view-header-cell-weekend-color);
+                }
+            }
+            &.b-non-working-day {
+                * {
+                    color : var(--b-calendar-view-header-cell-non-working-day-color);
+                }
+            }
+        }
+    }
+
+    /* Support for row header when rowHeaderRenderer is configured */
+    &.b-has-row-header {
+        display               : grid;
+        grid-template-columns : var(--bi-row-header-width, auto) 1fr;
+        grid-template-rows    : auto 1fr;
+
+        .b-calendar-row-prefix {
+            grid-column : 1;
+            grid-row    : 1 / span 2;  /* Spans both header and body rows */
+            display     : flex;
+            align-items : center;
+        }
+
+        .b-calendar-row-header {
+            grid-column : 2;
+            grid-row    : 1;
+        }
+
+        .b-calendar-row-body {
+            grid-column : 2;
+            grid-row    : 2;
+        }
+    }
+}

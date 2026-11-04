@@ -1,0 +1,92 @@
+.b-gripper-horz {
+    .b-hover-top.b-starts-above &,
+    .b-hover-bottom.b-ends-below & {
+        display : none;
+    }
+}
+
+.b-cal-event-wrap {
+    &:not(.b-rtl) {
+        &.b-hover-left.b-continues-past,
+        &.b-hover-right.b-continues-future {
+            .b-gripper-vert {
+                display : none;
+            }
+        }
+    }
+    &.b-rtl {
+        &.b-hover-right.b-continues-past,
+        &.b-hover-left.b-continues-future {
+            .b-gripper-vert {
+                display : none;
+            }
+        }
+    }
+}
+
+.b-cal-drag-proxy {
+    position       : absolute;
+    pointer-events : none;
+    opacity        : 0.8;
+    max-width      : 17em;
+
+    /* .b-cal-event { */
+    /*     background : $yearview-dragproxy-background; */
+    /* !* Equal padding both ends so that text or trailing icons don't run right into the end *! */
+    /* padding    : 0 $calendar-event-bar-padding-start; */
+    /*     gap        : $cal-event-bar-gap; */
+    /* } */
+}
+
+/* In YearViews the cell is the receiver of b-cal-tentative-event, so we do not want it to be untargetable. */
+.b-day-view-content,
+.b-month-view-content {
+    .b-cal-tentative-event {
+        pointer-events : none;
+    }
+}
+
+.b-day-view-day-container {
+    .b-cal-tentative-event:not(.b-cal-tentative-event-first) {
+        .b-event-header,
+        .b-cal-event-desc {
+            display : none;
+        }
+    }
+}
+
+/* When dragging, do not allow hover effect on week number, day number, or overflow button. */
+.b-draggable-started:not(.b-year-view-content) {
+    /* Hand cursor while dragging */
+    cursor : pointer;
+
+    .b-week-num, .b-day-num, .b-cal-cell-overflow {
+        pointer-events : none;
+    }
+}
+
+/* Hide resizing event using clip to avoid focus loss during drag resize */
+.b-cal-event-wrap.b-resizing {
+    clip           : rect(0, 0, 0, 0);
+    pointer-events : none;
+}
+
+.b-cal-event-footer {
+    .b-cal-tentative-event.b-cal-event-footer-desc-overlap &,
+    .b-cal-event-wrap:not(.b-cal-tentative-event-last) & {
+        display : none;
+    }
+}
+
+.b-cal-event-footer {
+    position    : absolute;
+    bottom      : 0.5em;
+    right       : 0.7em;
+    white-space : nowrap;
+    font-size   : .7em;
+
+    .b-rtl & {
+        right : auto;
+        left  : 0.7em;
+    }
+}

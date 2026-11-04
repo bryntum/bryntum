@@ -1,0 +1,34 @@
+.b-cell-editor {
+    --b-widget-floating-box-shadow : none;
+
+    .b-field {
+        border-radius                : 0;
+
+        background                   : var(--b-grid-cell-applied-background);
+
+        --b-text-field-input-padding : var(--b-grid-cell-padding-block) var(--b-grid-cell-padding-inline);
+    }
+}
+
+.b-grid-cell {
+    /* Cls applied to cell (& row) during editing, apply transparent color to hide overflow */
+    &.b-editing {
+        color   : transparent;
+        /* Reset outline-width to 0 during editing. Uses `0` instead of `none` because
+           `outline: none` only sets outline-style but leaves outline-width at its computed
+           default (medium ≈ 1.5px), which Chrome reports via getComputedStyle even though
+           no outline is visually painted */
+        outline : 0;
+
+        &:not(.b-tree-cell) > :not(.b-editor),
+        &.b-tree-cell > .b-tree-cell-value {
+            visibility : hidden;
+        }
+    }
+
+    /* Prevent transition to and from transparent when starting / finalizing editing */
+    &.b-editing,
+    &.b-after-edit {
+        --bi-grid-cell-selected-color-transition-duration : 0ms;
+    }
+}

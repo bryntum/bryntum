@@ -1,0 +1,16 @@
+/* @after Core/widget/Panel.css */
+
+.b-carousel-content {
+    &:not(.b-carousel-empty) {
+        padding : 0;
+    }
+
+    > .b-carousel-content {
+        overflow : clip;
+    }
+
+    &.b-carousel-empty > .b-carousel-inner-ct,
+    &:not(.b-carousel-empty) > .b-carousel-empty-text {
+        display : none;
+    }
+}

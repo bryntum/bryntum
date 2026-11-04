@@ -1,0 +1,276 @@
+:root, :host {
+    /**
+     * Splitter z-index
+     */
+    --b-grid-splitter-zindex                     : 10;
+
+    /**
+     * Splitter width
+     */
+    --b-region-resize-splitter-width             : var(--b-splitter-size);
+
+    /**
+     * Splitter width when hovering (also used as the invisible interactable area width)
+     * @state Hovered
+     */
+    --b-region-resize-splitter-width-hover       : var(--b-splitter-hover-size);
+
+    /**
+     * Splitter width when touched (also used as the invisible touch area width)
+     * @state Touched
+     */
+    --b-region-resize-splitter-touch-width-hover : var(--b-splitter-touch-hover-size);
+
+    /**
+     * Splitter width when collapsed
+     * @state Collapsed
+     */
+    --b-region-resize-splitter-collapsed-width   : var(--b-region-resize-splitter-width);
+
+    /**
+     * Splitter color
+     */
+    --b-region-resize-splitter-color             : var(--b-splitter-color);
+
+    /**
+     * Color for the expand / collapse buttons showed on hover
+     */
+    --b-region-resize-button-color               : var(--b-splitter-button-icon-color);
+
+    /**
+     * Splitter color when hovered
+     * @state Hovered
+     */
+    --b-region-resize-splitter-hover-color       : var(--b-splitter-hover-color);
+
+    /**
+     * Color for the expand / collapse buttons showed on hover
+     * @state Hovered
+     */
+    --b-region-resize-button-hover-color         : var(--b-splitter-button-hover-color);
+
+    /* Internal vars */
+    --bi-grid-splitter-button-size               : var(--b-splitter-button-size, 1em);
+    --bi-grid-splitter-button-display            : flex;
+}
+
+.b-grid-base.b-split {
+    --b-grid-splitter-color : var(--b-region-resize-splitter-color);
+
+    .b-grid-splitter:not(.b-disabled) {
+        --b-grid-splitter-width : var(--b-region-resize-splitter-width);
+    }
+
+    @media (pointer : coarse) {
+        --b-region-resize-splitter-width-hover : var(--b-region-resize-splitter-touch-width-hover);
+    }
+}
+
+/* Splitters are part of the flexbox layout and sit between the child widgets */
+.b-grid-splitter {
+    @media (any-pointer : coarse) {
+        --bi-grid-splitter-button-size : var(--b-splitter-touch-button-size, 1.3em);
+    }
+
+    position       : relative;
+
+    pointer-events : var(--bi-grid-splitter-pointer-events, none);
+    z-index        : var(--b-grid-splitter-zindex);
+
+    .b-split & {
+        --bi-grid-splitter-pointer-events : all;
+    }
+
+    &.b-disabled {
+        --bi-grid-splitter-pointer-events : none;
+    }
+}
+
+/* region RTL */
+
+.b-grid-base.b-split.b-rtl .b-grid-splitter-inner .b-grid-splitter-buttons {
+    .b-grid-splitter-button-collapse, .b-grid-splitter-button-expand {
+        scale : -1;
+    }
+
+    .b-grid-splitter-button-expand {
+        justify-content : flex-end;
+    }
+
+    .b-grid-splitter-button-collapse {
+        justify-content : flex-start;
+    }
+}
+
+/* endregion */
+
+.b-grid-base.b-split .b-grid-splitter:where(:not(.b-disabled)) {
+    overflow : visible;
+
+    /* There's internal structure when it's a draggable splitter */
+    .b-grid-splitter-inner {
+        position       : absolute;
+        inset-block    : 0;
+        left           : 50%;
+        translate      : -50%;
+        background     : inherit;
+        flex-direction : column;
+        align-items    : center;
+        opacity        : 0;
+        transition     : opacity .2s;
+
+        display        : flex;
+        /* Expanded click area when splitter is narrow */
+        width          : var(--b-region-resize-splitter-width-hover);
+    }
+
+    &.b-grid-splitter-collapsed {
+        cursor                  : initial;
+
+        --b-grid-splitter-width : var(--b-region-resize-splitter-collapsed-width);
+        --b-grid-splitter-color : var(--b-region-resize-splitter-hover-color);
+
+        .b-grid-splitter-inner {
+            opacity : 1;
+        }
+
+        &:not(.b-grid-splitter-allow-collapse) .b-grid-splitter-button-collapse,
+        &.b-grid-splitter-allow-collapse .b-grid-splitter-button-expand {
+            visibility : hidden;
+        }
+
+        /* Always display splitter-buttons el when collapsed */
+        .b-grid-splitter-buttons {
+            --bi-grid-splitter-buttons-opacity : 1;
+            --bi-grid-splitter-buttons-scale   : 1;
+        }
+    }
+
+    /* region Splitter buttons */
+
+    /* Hide right arrow for first splitter in a multi region grid */
+    &.b-left-only:not(.b-grid-splitter-collapsed) .b-grid-splitter-button-expand,
+        /* Hide left arrow for last splitter in a multi region grid */
+    &.b-right-only:not(.b-grid-splitter-collapsed) .b-grid-splitter-button-collapse {
+        visibility : hidden;
+    }
+
+    /* The div surrounding the buttons */
+    .b-grid-splitter-buttons {
+        display    : var(--bi-grid-splitter-button-display);
+        position   : absolute;
+        translate  : 0 -50%;
+        height     : 2.4em;
+        width      : 2.4em;
+        transition : scale .1s, opacity .1s;
+
+        opacity    : var(--bi-grid-splitter-buttons-opacity, 0);
+        scale      : var(--bi-grid-splitter-buttons-scale, 0);
+        font-size  : var(--bi-grid-splitter-button-size);
+    }
+
+    /* Styling for both collapse and expand button */
+    .b-grid-splitter-button-collapse,
+    .b-grid-splitter-button-expand {
+        flex        : 1;
+        cursor      : pointer;
+        display     : flex;
+        align-items : center;
+
+        background  : var(--b-grid-splitter-color);
+
+        &:hover {
+            --b-region-resize-button-color : var(--b-region-resize-button-hover-color);
+        }
+    }
+
+    .b-grid-splitter-button-collapse {
+        border-top-left-radius    : 100% 50%;
+        border-bottom-left-radius : 100% 50%;
+        justify-content           : flex-end;
+        padding-right             : .1em;
+        /* RTL OK */
+    }
+
+    .b-grid-splitter-button-expand {
+        border-top-right-radius    : 100% 50%;
+        border-bottom-right-radius : 100% 50%;
+        padding-left               : .1em;
+        /* RTL OK */
+    }
+
+    /* This element is now a SVG */
+    .b-grid-splitter-button-icon {
+        cursor : pointer;
+        height : 1.5em;
+
+        fill   : var(--b-region-resize-button-color);
+    }
+
+    /* endregion */
+
+    /* When hovered or being moved, the inner pops out to cover a larger area. */
+    /* How much it does that by depends on whether the pointer capability is coarse or fine. */
+    &.b-hover,
+    &.b-partner-splitter-hover,
+    &.b-touching,
+    &.b-moving {
+        --b-grid-splitter-color                 : var(--b-region-resize-splitter-hover-color);
+        --bi-region-resize-splitter-inner-width : var(--b-region-resize-splitter-width-hover);
+
+        .b-grid-splitter-inner {
+            opacity : 1;
+        }
+
+        /* Display splitter buttons on hover */
+        &:not(.b-partner-splitter-hover) {
+            --bi-grid-splitter-buttons-scale   : 1;
+            --bi-grid-splitter-buttons-opacity : 1;
+        }
+    }
+}
+
+.b-grid-base.b-split:not(.b-grid-splitter-no-drag) .b-grid-splitter:not(.b-disabled, .b-grid-splitter-collapsed) .b-grid-splitter-inner {
+    cursor : col-resize;
+}
+
+/* Collapsing means drop to zero width whether in a .b-split grid or not. */
+.b-grid-header-scroller.b-collapsed,
+.b-grid-footer-scroller.b-collapsed,
+.b-virtual-scroller.b-collapsed {
+    width     : 0;
+    min-width : 0 !important;
+}
+
+/* region Touch */
+/* Touch device touch area is larger */
+/* .b-splitter-touch-area { */
+/*     width    : $ grid-region-resize-splitter-width-touch; */
+/*     left     : calc((#{$grid-region-resize-splitter-width-touch} - #{$grid-region-resize-splitter-width}) / -2); */
+/*     position : absolute; */
+/*     top      : 0; */
+/*     height   : 100%; */
+/* } */
+
+.b-grid-splitter-button-collapse .b-splitter-button-touch-area {
+    left : -.9em;
+}
+
+.b-grid-splitter-button-expand .b-splitter-button-touch-area {
+    right : -.9em;
+}
+
+/* endregion */
+
+/* No hover, or moving behaviour during DragHelper activity */
+.b-drag-helper-active {
+    .b-grid-base.b-split {
+        .b-grid-splitter {
+            pointer-events : none !important;
+        }
+    }
+}
+
+.b-hide-splitter-buttons {
+    --bi-grid-splitter-button-display : none;
+}

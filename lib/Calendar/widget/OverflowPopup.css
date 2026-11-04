@@ -1,0 +1,64 @@
+:root, :host {
+    /**
+     * Overflow popup z-index
+     */
+    --b-overflow-popup-z-index : 20;
+}
+
+.b-overflow-popup {
+    min-width : 13em;
+    max-width : 30em;
+
+    /* Enable it to escape the Calendar element bounds to behave like a floater */
+    /* even though it's rendered into the Calendar for navigation to work. */
+    position  : fixed !important;
+    z-index   : var(--b-overflow-popup-z-index);
+
+    /*
+     * When the eventList is just a simple list of events,
+     * event bar container can flex up and event bars take full width
+     * Popup's body handles overflow.
+     */
+    .b-widget.b-cal-event-bar-container {
+        flex : 0 0 auto;
+
+        .b-cal-event-wrap {
+            flex-shrink : 0;
+        }
+    }
+}
+
+.b-overflow-popup-content {
+    &:has(> .b-calendar-mixin) {
+        --b-agenda-view-cell-padding-block  : 0.5em;
+        --b-agenda-view-cell-padding-inline : 0.5em;
+
+        /* When hosting a Calendar view, we do not add padding */
+        padding : 0 !important;
+
+        /* Hide day header in DayView overflow popups and date block in AgendaView */
+        .b-calendar-row-header, .b-cal-agenda-date {
+            display: none !important;
+        }
+    }
+
+    /* If there's a scrollbar at the inline-end, we don't need a margin there. */
+    .b-visible-scrollbar & {
+        &:has(> .b-cal-event-bar-container.b-vertical-overflow) {
+            padding-inline-end : 0;
+        }
+    }
+}
+
+/* Nesting required to win over other bundle themes */
+/* https://github.com/bryntum/bryntum/issues/2820 */
+.b-day-cell-collecter .b-overflow-popup-content {
+    contain     : style !important;
+    flex-flow   : column nowrap;
+    align-items : stretch;
+
+    .b-cal-event-wrap {
+        flex-shrink : 0;
+        position    : relative !important;
+    }
+}

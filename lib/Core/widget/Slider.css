@@ -1,0 +1,374 @@
+/* TODO Tooltip animation, text */
+
+:root, :host {
+    /**
+     * Thumb size
+     */
+    --b-slider-thumb-size                 : 1.5em;
+
+    /**
+     * Thumb elevation (box-shadow)
+     */
+    --b-slider-thumb-elevation            : var(--b-elevation-1);
+
+    /**
+     * Thumb border
+     */
+    --b-slider-thumb-border               : null;
+
+    /**
+     * Track height
+     */
+    --b-slider-track-height               : 0.5em;
+
+    /**
+     * Step indicator size
+     */
+    --b-slider-step-size                  : calc(var(--b-slider-track-height) * 0.4);
+
+    /**
+     * Step indicator width, overrides `--b-slider-step-size` if set
+     */
+    --b-slider-step-width                 : unset;
+
+    /**
+     * Step indicator height, overrides `--b-slider-step-size` if set
+     */
+    --b-slider-step-height                : unset;
+
+    /**
+     * Step indicator opacity
+     */
+    --b-slider-step-opacity               : 0.5;
+
+    /**
+     * Ring pseudo content (material)
+     */
+    --b-slider-ring-content               : none;
+
+    /**
+     * Value display border-radius ("tooltip" docked after the slider)
+     */
+    --b-slider-value-border-radius        : var(--b-widget-border-radius);
+
+    /**
+     * Thumb size when showing value in the thumb (`showValue: "thumb"`)
+     */
+    --b-slider-thumb-value-size           : 1.75em;
+
+    /**
+     * Thumb text color (when showing value or icon in the thumb)
+     */
+    --b-slider-thumb-text-color           : var(--b-neutral-100);
+
+    /**
+     * Color for lesser steps
+     */
+    --b-slider-step-lesser-color          : var(--b-neutral-100);
+
+    /**
+    * Text color for the value display ("tooltip" docked after the slider)
+    */
+    --b-slider-value-color                : var(--b-neutral-100);
+
+    /**
+     * Disabled color
+     * @state Disabled
+     */
+    --b-slider-disabled-color             : var(--b-neutral-80);
+
+    /**
+     * Thumb color when disabled
+     * @state Disabled
+     */
+    --b-slider-disabled-thumb-color       : var(--b-neutral-80);
+
+    /**
+     * Track color when disabled
+     * @state Disabled
+     */
+    --b-slider-disabled-track-color       : var(--b-neutral-90);
+
+    /**
+     * Track color
+     */
+    --b-slider-track-color                : var(--b-neutral-85);
+
+    /**
+     * Track border
+     */
+    --b-slider-track-border               : null;
+
+    /**
+     * Focus outline offset for the thumb
+     * @state Focused
+     */
+    --b-slider-thumb-focus-outline-offset : 2px;
+
+    /**
+     * Focus outline width for the thumb
+     * @state Focused
+     */
+    --b-slider-thumb-focus-outline-width  : var(--b-widget-focus-outline-width);
+
+    /**
+     * Step indicator border-radius
+     */
+    --b-slider-step-border-radius         : 50%;
+
+    /**
+     * Slider thumb z-index (above steps)
+     */
+    --b-slider-thumb-z-index              : 1;
+
+    /**
+     * Slider value label z-index
+     */
+    --b-slider-value-z-index              : 1;
+}
+
+.b-internal {
+    /* Internal vars that should not be set by themes */
+    --bi-slider-value-percent : null;
+    --bi-slider-value         : null;
+    --bi-slider-max           : null;
+    --bi-slider-min           : null;
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+/**
+ * Slider color
+ */
+/* --b-slider-color                      : var(--b-primary); */
+
+/**
+ * Background for the value display ("tooltip" docked after the slider)
+ */
+/*--b-slider-value-background          : var(--b-primary-30);*/
+
+/**
+ * Thumb color
+ */
+/*--b-slider-thumb-color               : var(--b-slider-color);*/
+
+/**
+ * Slider step color
+ */
+/*--b-slider-step-color                : var(--b-slider-color);*/
+
+/**
+ * Focus outline color for the thumb
+ * @state Focused
+ */
+/*--b-slider-thumb-focus-outline-color : var(--b-primary-60);*/
+/* } */
+
+.b-slider {
+    place-items               : center;
+    gap                       : .75em;
+    display                   : grid;
+    overflow                  : visible;
+
+    /* Ensure thumb does not overflow slider */
+    min-height                : calc(var(--b-slider-thumb-value-size) + var(--b-slider-thumb-focus-outline-width) * 2 + var(--b-slider-thumb-focus-outline-offset) * 2);
+
+    --bi-slider-value-percent : calc(((var(--bi-slider-value) - var(--bi-slider-min)) / (var(--bi-slider-max) - var(--bi-slider-min))) * 100%);
+
+    &.b-label-above > .b-label.b-align-start {
+        justify-self : start;
+    }
+
+    .b-field-inner {
+        width               : 100%;
+        grid-template-areas : "track";
+    }
+
+    &.b-text:not(.b-show-value) .b-field-inner {
+        grid-template-areas : "track" "below";
+        gap                 : 0.5em;
+    }
+
+    input {
+        grid-area  : track;
+        appearance : none;
+        opacity    : 0;
+        cursor     : pointer;
+        width      : 100%;
+        height     : 100%;
+    }
+
+    &:not(.b-disabled) .b-field-inner {
+        &:hover {
+            --bi-checkbox-ring-opacity : var(--b-checkbox-ring-hover-opacity);
+        }
+
+        &:has(input:active) {
+            --bi-checkbox-ring-opacity : var(--b-checkbox-ring-active-opacity);
+        }
+
+        &:has(input:focus) {
+            --bi-checkbox-ring-opacity : var(--b-checkbox-ring-focus-opacity);
+        }
+
+        &:has(input:focus-visible) .b-slider-thumb {
+            outline        : var(--b-slider-thumb-focus-outline-width) solid var(--b-slider-thumb-focus-outline-color, var(--b-primary-60));
+            outline-offset : var(--b-slider-thumb-focus-outline-offset);
+        }
+    }
+
+    &.b-thumb-value {
+        --b-slider-thumb-size : var(--b-slider-thumb-value-size);
+
+        .b-slider-thumb::after {
+            display       : grid;
+            counter-reset : variable var(--bi-slider-value);
+            content       : counter(variable);
+            font-size     : 0.7em;
+            width         : 100%;
+            height        : 100%;
+            place-items   : center;
+            line-height   : 1em;
+
+            color         : var(--b-slider-thumb-text-color);
+        }
+    }
+
+    &.b-show-value {
+        .b-slider-internal-label {
+            grid-column   : -1;
+            padding       : 0.5em;
+            font-size     : 0.9em;
+            position      : relative;
+            min-width     : 2.75em;
+            text-align    : center;
+            z-index       : var(--b-slider-value-z-index);
+
+            background    : var(--b-slider-value-background, var(--b-primary-30));
+            border-radius : var(--b-slider-value-border-radius);
+            color         : var(--b-slider-value-color);
+
+            &::before {
+                content            : '';
+                width              : 0.75em;
+                aspect-ratio       : 1 / 1;
+                background         : inherit;
+                rotate             : 45deg;
+                position           : absolute;
+                inset-inline-start : 0;
+                top                : 50%;
+                translate          : calc(-50% * var(--b-rtl-negate)) -50%;
+            }
+        }
+    }
+
+    &.b-widget.b-disabled {
+        --b-slider-color            : var(--b-slider-disabled-color);
+        --b-slider-thumb-color      : var(--b-slider-disabled-thumb-color);
+        --b-slider-track-color      : var(--b-slider-disabled-track-color);
+        --b-slider-value-background : var(--b-slider-disabled-thumb-color);
+    }
+
+    /* If used as a widget in a grid cell, consume full width */
+    .b-grid-cell & {
+        width : 100%;
+    }
+}
+
+.b-slider-track {
+    display        : flex;
+    align-items    : center;
+    grid-area      : track;
+    border-radius  : 0.25em;
+    position       : relative;
+    pointer-events : none;
+    transition     : background .2s;
+
+    background     : var(--b-slider-track-color);
+    border         : var(--b-slider-track-border);
+    height         : var(--b-slider-track-height);
+    width          : calc(100% - var(--b-slider-thumb-size));
+}
+
+.b-slider-progress {
+    border-radius  : inherit;
+    height         : 100%;
+    pointer-events : none;
+    transition     : background .2s;
+
+    width          : var(--bi-slider-value-percent);
+    background     : var(--b-slider-color, var(--b-primary));
+}
+
+.b-slider-thumb {
+    position           : absolute;
+    flex-shrink        : 0;
+    aspect-ratio       : 1/ 1;
+    border-radius      : 50%;
+    translate          : calc(-50% * var(--b-rtl-negate));
+    background-color   : currentColor;
+    outline            : 0 solid transparent; /* To allow initial transition */
+    outline-offset     : 0;
+    transition         : color .2s, scale .2s, outline .2s, outline-offset .2s;
+    z-index            : var(--b-slider-thumb-z-index); /* Above steps */
+
+    inset-inline-start : var(--bi-slider-value-percent);
+
+    color              : var(--b-slider-thumb-color, var(--b-slider-color, var(--b-primary)));
+    width              : var(--b-slider-thumb-size);
+    box-shadow         : var(--b-slider-thumb-elevation);
+    border             : var(--b-slider-thumb-border);
+
+    &::before {
+        content          : var(--b-slider-ring-content);
+        display          : block;
+        background       : currentColor;
+        position         : absolute;
+        top              : 50%;
+        left             : 50%;
+        translate        : calc(-50% * var(--b-rtl-negate)) -50%;
+        transform-origin : center center;
+        border-radius    : 50%;
+        pointer-events   : none;
+        transition       : opacity .5s ease;
+        aspect-ratio     : 1 / 1;
+
+        opacity          : var(--bi-checkbox-ring-opacity);
+
+        width            : calc(var(--b-slider-thumb-size) * 1.75);
+    }
+}
+
+.b-slider-steps {
+    display         : flex;
+    position        : absolute;
+    width           : 100%;
+    height          : 100%;
+    justify-content : space-evenly;
+    align-items     : center;
+}
+
+.b-slider-step {
+    background-color : var(--b-slider-step-color, var(--b-slider-color, var(--b-primary)));
+    border-radius    : var(--b-slider-step-border-radius);
+    width            : var(--b-slider-step-width, var(--b-slider-step-size));
+    height           : var(--b-slider-step-height, var(--b-slider-step-size));
+    opacity          : var(--b-slider-step-opacity);
+
+    &.b-less {
+        --b-slider-color : var(--b-slider-step-lesser-color);
+    }
+}
+
+.b-slider-internal-label {
+    color : var(--b-label-color);
+}
+
+.b-slider-thumb-icon {
+    display     : grid;
+    place-items : center;
+    height      : 100%;
+    font-size   : .7em;
+
+    color       : var(--b-slider-thumb-text-color);
+}

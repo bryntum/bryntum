@@ -1,0 +1,358 @@
+/* @after Core/widget/Field.css */
+
+/* Defaults also used by List for check items */
+:root, :host {
+    /**
+     * Checkbox box size
+     */
+    --b-checkbox-size                         : 1.25em;
+
+    /**
+     * Checkbox box border-radius
+     */
+    --b-checkbox-border-radius                : /*0.25em;*/ calc(var(--b-widget-border-radius) / 2);
+
+    /**
+     * Checkbox checkmark font size
+     */
+    --b-checkbox-check-font-size              : .9em;
+
+    /**
+     * Disabled checkbox opacity
+     * @state Disabled
+     */
+    --b-checkbox-disabled-opacity             : 1;
+
+    /**
+     * Gap between checkbox box and text
+     */
+    --b-checkbox-inner-gap                    : 1em;
+
+    /**
+     * Checkbox ring content, used by Material3 theme to display a ring around the checkbox
+     */
+    --b-checkbox-ring-content                 : none;
+
+    /**
+     * Checkbox box background
+     */
+    /*--b-checkbox-background                   : null;*/
+
+    /**
+     * Checkbox box border-radius
+     */
+    /*--b-checkbox-border-radius                : null;*/
+
+    /**
+     * Checkbox box border-width
+     */
+    --b-checkbox-border-width                 : 1px;
+
+    /**
+     * Checkbox box border-color
+     */
+    --b-checkbox-border-color                 : var(--b-widget-border-color);
+
+    /**
+     * Checked checkbox box background
+     * @state Checked
+     */
+    /*--b-checkbox-checked-background           : null;*/
+
+    /**
+     * Checked checkbox box border-color
+     * @state Checked
+     */
+    --b-checkbox-checked-border-color         : var(--b-widget-border-color);
+
+    /**
+     * Checked checkbox box content (checkmark icon)
+     * @state Checked
+     */
+    /*--b-checkbox-checked-check-content        : null;*/
+
+    /**
+     * Checked checkbox checkmark color
+     * @state Checked
+     */
+    --b-checkbox-checked-check-color          : var(--b-neutral-100);
+
+    /**
+     * Hovered checked checkbox box background
+     * @state Checked
+     */
+    /*--b-checkbox-checked-hover-background     : null;*/
+
+    /**
+     * Disabled checked checkbox checkmark color
+     * @state Disabled
+     */
+    --b-checkbox-disabled-checked-check-color : var(--b-neutral-100);
+
+    /**
+     * Disabled checked checkbox box background
+     * @state Disabled
+     */
+    --b-checkbox-disabled-checked-background  : var(--b-neutral-50);
+
+    /**
+     * Hovered checkbox box background
+     * @state Hovered
+     */
+    /*--b-checkbox-hover-background             : null;*/
+
+    /**
+     * Hovered checkbox box border-color
+     * @state Hovered
+     */
+    --b-checkbox-hover-border-color           : var(--b-border-3);
+
+    /**
+     * Focused checkbox box outline-width
+     * @state Focused
+     */
+    --b-checkbox-focus-outline-width          : var(--b-widget-focus-outline-width);
+
+    /**
+     * Focused checkbox box outline-offset
+     * @state Focused
+     */
+    --b-checkbox-focus-outline-offset         : 2px;
+
+    /**
+     * Focused checkbox box outline-color
+     * @state Focused
+     */
+    --b-checkbox-focus-outline-color          : var(--b-widget-focus-outline-color);
+
+    /**
+     * Disabled checkbox box background
+     * @state Disabled
+     */
+    /*--b-checkbox-disabled-background          : null;*/
+
+    /* Read-only defaults to the disabled paint, resolved at the element in the `.b-read-only` rule below */
+
+    /**
+     * Read-only checkbox box border-color
+     * @state Read-only
+     */
+    /*--b-checkbox-read-only-border-color       : null;*/
+
+    /**
+     * Hovered checkbox ring opacity (Material3 theme)
+     * @state Hovered
+     */
+    /*--b-checkbox-ring-hover-opacity           : null;*/
+
+    /**
+     * Focused checkbox ring opacity (Material3 theme)
+     * @state Focused
+     */
+    /*--b-checkbox-ring-focus-opacity           : null;*/
+
+    /**
+     * Active checkbox ring opacity (Material3 theme)
+     * @state Active
+     */
+    /*--b-checkbox-ring-active-opacity          : null;*/
+
+    /* Internal vars that should not be set by themes */
+    --bi-checkbox-ring-opacity                : 0;
+}
+
+.b-checkbox {
+    width    : fit-content;
+    overflow : visible;
+
+    > .b-field-inner > input {
+        grid-area  : input;
+        appearance : none;
+        margin     : 0;
+    }
+
+    &:not(.b-disabled, .b-read-only) {
+        input, label {
+            cursor : pointer;
+        }
+    }
+
+    &:focus-within,
+    &.b-focus {
+        input {
+            outline : none;
+        }
+
+        input:focus-visible ~ .b-checkbox-box,
+        &.b-focus input ~ .b-checkbox-box {
+            outline        : var(--b-checkbox-focus-outline-width) solid var(--b-checkbox-focus-outline-color);
+            outline-offset : var(--b-checkbox-focus-outline-offset);
+        }
+    }
+
+    > .b-field-inner {
+        grid-template-areas : "input";
+    }
+
+    &.b-text > .b-field-inner {
+        grid-template-areas : "input after";
+        gap                 : var(--b-checkbox-inner-gap);
+    }
+
+    .b-checkbox-label {
+        grid-area           : after;
+        white-space         : nowrap;
+        justify-self        : stretch;
+        overflow            : hidden;
+        text-overflow       : ellipsis;
+        user-select         : none;
+        -webkit-user-select : none;
+
+        color               : var(--b-label-color);
+    }
+
+    /* Source order below is hover -> focus -> active, all of equal specificity, so active wins on press */
+    &:not(.b-disabled, .b-read-only) {
+        &:has(input:hover),
+        &.b-hover {
+            --bi-checkbox-ring-opacity : var(--b-checkbox-ring-hover-opacity);
+        }
+    }
+
+    /* Read-only is still focusable, so it keeps the focus ring */
+    &:not(.b-disabled) {
+        &:has(input:focus-visible),
+        &.b-focus {
+            --bi-checkbox-ring-opacity : var(--b-checkbox-ring-focus-opacity);
+        }
+    }
+
+    &:not(.b-disabled, .b-read-only) {
+        &:has(input:active),
+        &.b-active {
+            --bi-checkbox-ring-opacity : var(--b-checkbox-ring-active-opacity);
+        }
+    }
+}
+
+/* Rules that apply to checkbox, but not to slide toggles */
+.b-checkbox:not(.b-slide-toggle) {
+
+    > .b-field-inner {
+        grid-template-columns : var(--b-checkbox-size);
+
+        input {
+            aspect-ratio : 1 / 1;
+
+            width        : var(--b-checkbox-size);
+        }
+    }
+
+    &.b-text > .b-field-inner {
+        grid-template-columns : var(--b-checkbox-size) auto;
+    }
+
+    /* Ring */
+    > .b-field-inner::before {
+        content        : var(--b-checkbox-ring-content);
+        background     : var(--b-primary);
+        grid-area      : input;
+        border-radius  : 50%;
+        pointer-events : none;
+        transition     : opacity 0.3s;
+        aspect-ratio   : 1 / 1;
+
+        width          : calc(var(--b-checkbox-size) * 2.25);
+        opacity        : var(--bi-checkbox-ring-opacity);
+    }
+
+    input:checked ~ .b-checkbox-box {
+        --b-checkbox-background   : var(--b-checkbox-checked-background);
+        --b-checkbox-border-color : var(--b-checkbox-checked-border-color);
+
+        &::after {
+            scale : 1;
+        }
+    }
+
+    &.b-disabled {
+        --b-checkbox-border-color         : var(--b-checkbox-disabled-border-color, var(--b-widget-disabled-color));
+        --b-checkbox-checked-border-color : var(--b-checkbox-border-color);
+        --b-checkbox-checked-check-color  : var(--b-checkbox-disabled-checked-check-color);
+        --b-checkbox-checked-background   : var(--b-checkbox-disabled-checked-background, var(--b-widget-disabled-background));
+        --b-label-color                   : var(--b-widget-disabled-color);
+        --b-checkbox-opacity              : var(--b-checkbox-disabled-opacity);
+    }
+
+    &.b-read-only:not(.b-disabled) {
+        --b-checkbox-border-color         : var(--b-checkbox-read-only-border-color, var(--b-checkbox-disabled-border-color, var(--b-widget-disabled-color)));
+        --b-checkbox-checked-border-color : var(--b-checkbox-border-color);
+        --b-checkbox-checked-background   : var(--b-checkbox-disabled-checked-background, var(--b-widget-disabled-background));
+        --b-checkbox-checked-check-color  : var(--b-checkbox-disabled-checked-check-color);
+    }
+
+    /* Unchecked box only - the checked box paints from --b-checkbox-disabled-checked-background */
+    &.b-disabled input:not(:checked) ~ .b-checkbox-box,
+    &.b-read-only:not(.b-disabled) input:not(:checked) ~ .b-checkbox-box {
+        background : var(--b-checkbox-disabled-background, var(--b-checkbox-background));
+    }
+
+    &:not(.b-disabled, .b-read-only) {
+        &:has(input:hover),
+        &.b-hover {
+            --b-checkbox-background   : var(--b-checkbox-hover-background);
+            --b-checkbox-border-color : var(--b-checkbox-hover-border-color);
+
+            input:checked ~ .b-checkbox-box {
+                --b-checkbox-background : var(--b-checkbox-checked-hover-background);
+            }
+        }
+    }
+}
+
+.b-checkbox-box {
+    grid-area       : input;
+    pointer-events  : none;
+    display         : flex;
+    align-items     : center;
+    justify-content : center;
+    transition      : background .2s ease, border .2s ease;
+
+    width           : var(--b-checkbox-size);
+    height          : var(--b-checkbox-size);
+    border-radius   : var(--b-checkbox-border-radius);
+    border          : var(--b-checkbox-border-width) solid var(--b-checkbox-border-color);
+    background      : var(--b-checkbox-background);
+    opacity         : var(--b-checkbox-opacity, 1);
+
+    &::after {
+        transition  : scale 0.2s ease, border .2s ease;
+        scale       : 0;
+
+        font-family : var(--b-widget-icon-font-family);
+        font-weight : var(--b-widget-icon-font-weight);
+        content     : var(--b-checkbox-checked-check-content);
+        color       : var(--b-checkbox-checked-check-color);
+        font-size   : var(--b-checkbox-check-font-size);
+    }
+}
+
+.b-menu > .b-menu-body-wrap .b-menu-content > .b-checkbox {
+    margin-inline-start : var(--b-checkbox-inner-gap);
+}
+
+/* region FieldContainer */
+
+/* Align non-inline field container with checkbox text */
+.b-field-container:not(.b-field-container-inline) > .b-field-container-wrap {
+    margin-top          : .5em;
+
+    margin-inline-start : calc(var(--b-checkbox-size) + var(--b-checkbox-inner-gap));
+}
+
+/* endregion */
+
+/* Align checkbox without label with other fields when used in a align-before Container */
+.b-container.b-label-align-before .b-checkbox:not(.b-has-label) {
+    grid-column : 2 / 2;
+}

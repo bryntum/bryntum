@@ -1,0 +1,54 @@
+:root, :host {
+    /**
+     * Background for the unfilled part of the progress bar
+     */
+    --b-task-board-progress-item-background    : var(--b-neutral-95);
+
+    /**
+     * Height of the progress bar
+     */
+    --b-task-board-progress-item-height        : .3em;
+
+    /**
+     * Border for the progress bar
+     */
+    --b-task-board-progress-item-border        : null;
+
+    /**
+     * Border radius for the progress bar
+     */
+    --b-task-board-progress-item-border-radius : 2px;
+}
+
+.b-colorize {
+    /**
+     * Color for the filled part of the progress bar
+     */
+    --b-task-board-progress-item-color : var(--b-primary-80);
+}
+
+.b-task-board-progress {
+    display     : flex; /* Not needed for the default look, but simplifies adding a label using CSS later */
+    align-items : center;
+    width       : 100%;
+
+    color       : var(--b-task-board-progress-item-color);
+    height      : var(--b-task-board-progress-item-height);
+}
+
+.b-task-board-progress-outline {
+    width         : 100%;
+    height        : 100%;
+    border-radius : var(--b-task-board-progress-item-border-radius);
+
+    background    : var(--b-task-board-progress-item-background);
+    border        : var(--b-task-board-progress-item-border);
+}
+
+.b-task-board-progress-progress {
+    border-radius : 2px;
+    transition    : width .2s;
+    height        : 100%;
+
+    background    : var(--b-task-board-progress-item-color);
+}

@@ -1,0 +1,85 @@
+:root, :host {
+    /**
+     * Resize grip z-index (under corner handles)
+     */
+    --b-resize-grip-z-index        : 1;
+
+    /**
+     * Resize grip corner z-index (on top of side handles)
+     */
+    --b-resize-grip-corner-z-index : 2;
+}
+
+.b-resize-grip {
+    position : absolute;
+    z-index  : var(--b-resize-grip-z-index); /* to be under the corner handle elements */
+}
+
+.b-resize-grip-top-start,
+.b-resize-grip-top-end,
+.b-resize-grip-bottom-start,
+.b-resize-grip-bottom-end {
+    width  : .5em;
+    height : .5em;
+}
+
+.b-resize-grip-top,
+.b-resize-grip-top-start,
+.b-resize-grip-top-end {
+    top : 0;
+}
+
+.b-resize-grip-bottom,
+.b-resize-grip-bottom-start,
+.b-resize-grip-bottom-end {
+    bottom : 0;
+}
+
+.b-resize-grip-start,
+.b-resize-grip-top-start,
+.b-resize-grip-bottom-start {
+    inset-inline-start : 0;
+}
+
+.b-resize-grip-end,
+.b-resize-grip-top-end,
+.b-resize-grip-bottom-end {
+    inset-inline-end : 0;
+}
+
+.b-resize-grip-top,
+.b-resize-grip-bottom {
+    height : .5em;
+}
+
+.b-resize-grip-start,
+.b-resize-grip-end {
+    width : .5em;
+}
+
+.b-resize-grip-top-start,
+.b-resize-grip-bottom-end {
+    cursor  : nwse-resize;
+    z-index : var(--b-resize-grip-corner-z-index); /* to be on top of the side handle elements */
+}
+
+.b-resize-grip-top-end,
+.b-resize-grip-bottom-start {
+    cursor  : nesw-resize;
+    z-index : var(--b-resize-grip-corner-z-index); /* to be on top of the side handle elements */
+}
+
+.b-resize-grip-top,
+.b-resize-grip-bottom {
+    cursor             : ns-resize;
+    width              : 100%;
+    inset-inline-start : 0;
+}
+
+.b-resize-grip-start,
+.b-resize-grip-end {
+    height : 100%;
+    top    : 0;
+    cursor : ew-resize;
+}
+

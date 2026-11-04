@@ -1,0 +1,42 @@
+/* @after Calendar/widget/CalendarRow.css */
+
+.b-day-selector {
+    .b-calendar-row-header-container {
+        border-bottom : 1px solid var(--b-calendar-border-color);
+
+        .b-cal-cell-header {
+            &:not(:hover) {
+                div.b-day-name-date {
+                    background-color : inherit;
+                    color            : inherit;
+                }
+            }
+            &.b-selected-date {
+                div.b-day-name-date {
+                    background : var(--b-event-list-day-selector-selected-date-background);
+                    color      : var(--b-event-list-day-selector-selected-date-color);
+                }
+            }
+        }
+    }
+
+    .b-calendar-row-body {
+        display : none;
+    }
+}
+
+/* We are working for a DayView */
+.b-day-view-with-day-selector, .b-week-view-with-day-selector {
+    /* We have the time axis to clear on the left */
+    .b-calendar-row-header-container {
+        border-inline-start : var(--b-day-view-split-width) solid var(--b-day-view-border-color);
+        margin-inline-start : var(--bi-time-axis-width);
+    }
+
+    /* If there are no all day events don't let the two borders create a double border */
+    &:not(.b-has-all-day-events) {
+        .b-calendar-row-header-container {
+            border-bottom-width : 0;
+        }
+    }
+}

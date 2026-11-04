@@ -1,0 +1,7 @@
+.b-widget.b-tooltip.b-field-error-tip {
+    /* Var defined in Field.css */
+    --b-primary                  : var(--b-field-error-tip-primary);
+
+    --b-tooltip-plain-background : var(--b-field-error-tip-background);
+    --b-tooltip-plain-color      : var(--b-field-error-tip-color);
+}

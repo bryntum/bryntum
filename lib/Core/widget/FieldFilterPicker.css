@@ -1,0 +1,44 @@
+/* @after Core/widget/Container.css */
+
+.b-field-filter-picker {
+    display                      : flex;
+    flex-flow                    : row wrap;
+    overflow                     : visible;
+
+    --b-container-gap            : 1em;
+
+    --b-text-field-default-width : 100%;
+}
+
+.b-field-filter-picker-property,
+.b-field-filter-picker-operator,
+.b-field-filter-picker-values,
+.b-field-filter-picker-case-sensitive,
+.b-field-filter-picker-values-multiple {
+    flex      : 1;
+    min-width : 10em;
+
+    &.b-hidden {
+        display : none;
+    }
+}
+
+.b-field-filter-picker-values-multiple {
+    display     : flex;
+    align-items : center;
+
+    gap         : var(--b-container-gap);
+
+    .b-field {
+        flex : 1;
+    }
+}
+
+.b-combo.b-field-filter-picker-combo-locked {
+    margin-top                   : .25em;
+
+    --b-text-field-border-width  : 0;
+    --b-text-field-input-padding : 0;
+    --b-text-field-input-height  : 3em;
+    --b-text-field-background    : transparent;
+}

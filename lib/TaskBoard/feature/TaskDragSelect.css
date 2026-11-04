@@ -1,0 +1,27 @@
+:root, :host {
+    /**
+     * Marquee z-index
+     */
+    --b-task-board-drag-select-z-index       : 100;
+
+    /**
+     * Marquee border
+     */
+    --b-task-board-drag-select-border        : 2px dashed var(--b-primary);
+
+    /**
+     * Marquee border radius
+     */
+    --b-task-board-drag-select-border-radius : .5em;
+}
+
+.b-drag-select-rect {
+    position         : absolute;
+    left             : 0;
+    top              : 0;
+    transform-origin : 0 0;
+    z-index          : var(--b-task-board-drag-select-z-index);
+
+    border           : var(--b-task-board-drag-select-border);
+    border-radius    : var(--b-task-board-drag-select-border-radius);
+}

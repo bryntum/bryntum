@@ -1,0 +1,140 @@
+/* @after Core/widget/Popup.css */
+
+:root, :host {
+    /**
+     * Padding for plain tooltips
+     * @rendition Plain
+     */
+    --b-tooltip-plain-padding      : 0.5em;
+
+    /**
+     * Padding for rich tooltips
+     * @rendition Rich
+     */
+    --b-tooltip-rich-padding       : var(--b-widget-padding);
+
+    /**
+     * Border radius for rich tooltips
+     * @rendition Rich
+     */
+    --b-tooltip-rich-border-radius : var(--b-widget-border-radius-large);
+
+    /**
+     * Font size for plain tooltips
+     * @rendition Plain
+     */
+    --b-tooltip-plain-font-size    : 0.9em;
+
+    /**
+     * Text gap for tooltips
+     */
+    --b-tooltip-text-gap           : 1em;
+
+    /**
+     * Flex direction for rich tooltips
+     * @rendition Rich
+     */
+    --b-tooltip-flex-direction     : column;
+
+    /**
+     * Align items setting for rich tooltips
+     * @rendition Rich
+     */
+    --b-tooltip-align-items        : flex-start;
+
+    /**
+     * Tooltip content's display setting for rich tooltips
+     * @rendition Rich
+     */
+    --b-tooltip-content-display    : flex;
+
+    /**
+     * Text color for plain tooltips
+     * @rendition Plain
+     */
+    --b-tooltip-plain-color        : var(--b-widget-color);
+
+    /**
+     * Text color for rich tooltips
+     * @rendition Rich
+     */
+    --b-tooltip-rich-color         : var(--b-widget-color);
+
+    /**
+     * Background color for rich tooltips
+     * @rendition Rich
+     */
+    --b-tooltip-rich-background    : var(--b-neutral-100);
+
+
+    /**
+     * Z-index for tooltips. They should appear above popups even when those popups move to front
+     */
+    --b-tooltip-z-index            : 2;
+}
+
+/* .b-bryntum { */
+    /**
+     * Background color for plain tooltips
+     * @rendition Plain
+     */
+    /*--b-tooltip-plain-background : var(--b-neutral-100);*/ /* Material uses primary */
+/* } */
+
+.b-tooltip.b-popup {
+    color : var(--b-primary);
+
+    /* When widgets within a Popup are focused and they show a tooltip, that popup is moved to the front
+     * at the end of the focus bubbling, when the focusin event is delivered to it.
+     * We need to make sure any tooltip shown during the focus bubbling is above other Popups.
+     */
+    z-index : var(--b-tooltip-z-index);
+
+    /* Only disallow selection if we are forbidding mouseovering */
+    &:not(.b-allow-over) {
+        user-select         : none;
+        -webkit-user-select : none;
+    }
+
+    &.b-plain-tooltip {
+        --b-popup-background    : var(--b-tooltip-plain-background, var(--b-neutral-100));
+        --b-panel-padding       : var(--b-tooltip-plain-padding);
+        --b-tooltip-color       : var(--b-tooltip-plain-color);
+        --b-widget-font-size    : var(--b-tooltip-plain-font-size);
+        --b-popup-border-radius : var(--b-widget-border-radius);
+
+        .b-tooltip-content {
+            display    : block;
+            text-align : center; /* For when we hit min-width */
+        }
+    }
+}
+
+.b-rich-tooltip {
+    --b-popup-background    : var(--b-tooltip-rich-background);
+    --b-tooltip-color       : var(--b-tooltip-rich-color);
+    --b-panel-padding       : var(--b-tooltip-rich-padding);
+    --b-popup-border-radius : var(--b-tooltip-rich-border-radius);
+
+    .b-tooltip-content {
+        flex-wrap      : wrap;
+
+        display        : var(--b-tooltip-content-display);
+        flex-direction : var(--b-tooltip-flex-direction);
+        align-items    : var(--b-tooltip-align-items);
+    }
+}
+
+.b-tooltip-content {
+    overflow-wrap : anywhere;
+    color         : var(--b-tooltip-color);
+
+    &:where(.b-text-content) {
+        --b-panel-gap : var(--b-tooltip-text-gap);
+
+        > * {
+            margin-block : 0;
+        }
+    }
+}
+

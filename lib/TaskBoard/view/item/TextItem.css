@@ -1,0 +1,20 @@
+.b-task-board-template,
+.b-task-board-text {
+    display     : flex;
+    align-items : center;
+    gap         : 0.5em;
+
+    color       : var(--b-task-board-card-body-color);
+
+    &.b-editing {
+        /* Match line-height, to not have single line text change task height after editing from empty */
+        min-height : 1.2em;
+    }
+}
+
+.b-task-board-card-footer {
+    .b-task-board-template,
+    .b-task-board-text {
+        color : var(--b-task-board-card-footer-color);
+    }
+}

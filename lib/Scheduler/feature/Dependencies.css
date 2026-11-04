@@ -1,0 +1,283 @@
+:root, :host {
+    /**
+     * Dependency remove icon z-index
+     */
+    --b-dependency-remove-icon-z-index   : 1000;
+
+    /**
+     * Terminals visible z-index (hoist above labels)
+     */
+    --b-dependency-terminals-visible-z-index : 2;
+
+    /**
+     * Dependencies z-index
+     */
+    --b-dependency-zindex                : 5;
+
+    /**
+     * Dependency stroke width (SVG)
+     */
+    --b-dependency-stroke-width          : 1;
+
+    /**
+     * Dependency hover stroke width (SVG)
+     */
+    --b-dependency-hover-stroke-width    : 2;
+
+    /**
+     * Size of the illustrational terminals in the dependency tooltip
+     */
+    --b-dependency-tooltip-terminal-size : .35em;
+
+    /**
+     * Inactive dependency stroke array (SVG). Used by Scheduler to mark dependencies that have been deactivated.
+     */
+    --b-inactive-dependency-stroke-array : 4 2;
+
+    /**
+     * Dependency line color (SVG stroke, also used as fill for markers)
+     */
+    --b-dependency-color                 : var(--b-border-5);
+
+    /**
+     * Dependency line color for selected dependencies (SVG stroke, also used as fill for markers)
+     * @state Selected
+     */
+    --b-dependency-selected-color        : var(--b-color-red);
+}
+
+.b-internal {
+    /* Set programmatically by the feature */
+    --b-dependency-marker : null;
+}
+
+/* .b-bryntum { */
+    /**
+     * Color of illustrational terminals in the dependency tooltip
+     */
+    /*--b-dependency-tooltip-terminal-color   : var(--b-primary-50);*/
+
+    /**
+     * Background of the illustrational events in the dependency tooltip
+     */
+    /*--b-dependency-tooltip-event-background : var(--b-primary-85);*/
+/* } */
+
+.b-sch-dependencies-canvas {
+    --bi-dependency-marker : url('#arrowEnd');
+
+    contain                : unset;
+    overflow               : visible;
+    z-index                : var(--b-dependency-zindex);
+}
+
+.b-sch-dependency-arrow {
+    /* Fallback for Safari */
+    fill : var(--b-dependency-color);
+    /* Supported by Chrome & FF */
+    fill : context-stroke;
+}
+
+.b-sch-dependency {
+    pointer-events : visibleStroke;
+    fill           : transparent;
+    transition     : stroke-width .2s linear, stroke .2s linear;
+
+    stroke         : var(--b-dependency-color);
+    stroke-width   : var(--b-dependency-stroke-width);
+
+    &.b-sch-dependency-over {
+        stroke-dasharray            : 0;
+
+        --b-dependency-stroke-width : var(--b-dependency-hover-stroke-width);
+    }
+
+    &.b-inactive {
+        stroke-dasharray : var(--b-inactive-dependency-stroke-array);
+    }
+
+    &.b-sch-released {
+        display : none;
+    }
+
+    &.b-click-area {
+        stroke           : transparent;
+
+        /* Active area has no gaps in it. Needs !important to override other, high specificity rules */
+        stroke-dasharray : none !important;
+        marker-end       : none;
+    }
+}
+
+/* region Line styles */
+
+/* Applied from the DependencyModel `lineStyle` field. `solid` adds no class and needs no rule. */
+.b-sch-dependency {
+    &.b-sch-dependency-dashed {
+        stroke-dasharray : 5, 5;
+    }
+
+    &.b-sch-dependency-dotted {
+        stroke-dasharray : 1, 3;
+    }
+
+    &.b-sch-dependency-dash-dot {
+        stroke-dasharray : 8, 4, 1, 4;
+    }
+
+    &.b-sch-dependency-long-dash {
+        stroke-dasharray : 12, 6;
+    }
+}
+
+/* endregion */
+
+/* region Markers */
+
+.b-sch-dependency {
+    marker-end : var(--b-dependency-marker);
+
+    &.b-sch-bidirectional-line {
+        marker-start : var(--b-dependency-marker);
+    }
+
+    &.b-sch-dependency-markerless {
+        marker-end : none;
+    }
+}
+
+/* endregion */
+
+/* region Tooltip */
+
+.b-sch-dependency-tooltip {
+    display               : grid;
+    grid-template-columns : auto auto auto;
+    grid-column-gap       : .5em;
+    align-items           : center;
+
+    label {
+        font-size : .8em;
+    }
+}
+
+.b-sch-dependency-creation-tooltip,
+.b-sch-dependency-tooltip {
+    .b-sch-box {
+        width         : 1em;
+        height        : .8em;
+        border-radius : 2px;
+        display       : none;
+        position      : relative;
+
+        background    : var(--b-dependency-tooltip-event-background, var(--b-primary-85));
+
+        &.b-start,
+        &.b-end,
+        &.b-right,
+        &.b-left,
+        &.b-top,
+        &.b-bottom {
+            display : block;
+        }
+
+        &:after {
+            content          : '';
+            border-radius    : 50%;
+            position         : absolute;
+
+            background-color : var(--b-dependency-tooltip-terminal-color, var(--b-primary-50));
+            width            : var(--b-dependency-tooltip-terminal-size);
+            height           : var(--b-dependency-tooltip-terminal-size);
+        }
+
+        &.b-end:after,
+        &.b-right:after {
+            inset-inline-end : calc(-0.5 * var(--b-dependency-tooltip-terminal-size));
+            top              : 50%;
+            translate        : 0 -50%;
+        }
+
+        &.b-start:after,
+        &.b-left:after {
+            inset-inline-start : calc(-0.5 * var(--b-dependency-tooltip-terminal-size));
+            top                : 50%;
+            translate          : 0 -50%;
+        }
+
+        &.b-top:after {
+            top                : calc(-0.5 * var(--b-dependency-tooltip-terminal-size));
+            inset-inline-start : 50%;
+            translate          : -50%;
+        }
+
+        &.b-bottom:after {
+            bottom             : calc(-0.5 * var(--b-dependency-tooltip-terminal-size));
+            inset-inline-start : 50%;
+            translate          : -50%;
+        }
+    }
+}
+
+/* endregion */
+
+/* region Selection */
+
+.b-sch-dependency:not(.b-click-area).b-selected {
+    stroke       : var(--b-dependency-selected-color);
+    stroke-width : 2;
+}
+
+.b-sch-dependency-remove-icon {
+    position       : absolute;
+    height         : 1em;
+    width          : 1em;
+    display        : flex;
+    translate      : -50% -50%;
+    pointer-events : all;
+    cursor         : pointer;
+    animation      : b-anim-show-dependency-remove-icon .2s ease-in-out 1;
+    font-size      : 1.1em;
+    z-index        : var(--b-dependency-remove-icon-z-index);
+
+    color          : var(--b-dependency-selected-color);
+
+    &:before {
+        border-radius : 50%;
+        background    : radial-gradient(circle, #fff 0%, #fff 60%, transparent 60%, transparent 100%)
+    }
+
+    &.b-removing {
+        animation : b-anim-hide-dependency-remove-icon .15s linear 1;
+    }
+}
+
+.b-sch-event, .b-gantt-task {
+    &.b-sch-terminals-visible {
+        z-index : var(--b-dependency-terminals-visible-z-index); /* Hoist above labels when shown */
+    }
+}
+
+@keyframes b-anim-show-dependency-remove-icon {
+    0% {
+        scale   : 0;
+        opacity : 0;
+    }
+    100% {
+        scale   : 1;
+        opacity : 1;
+    }
+}
+
+@keyframes b-anim-hide-dependency-remove-icon {
+    0% {
+        scale   : 1;
+        opacity : 1;
+    }
+    100% {
+        scale   : 0;
+        opacity : 0;
+    }
+}
+
+/* endregion */

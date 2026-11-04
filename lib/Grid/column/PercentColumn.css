@@ -1,0 +1,238 @@
+/* @after Grid/view/SubGrid.css */
+
+:root, :host {
+    /**
+     * Percent bar border radius
+     * @rendition Bar
+     */
+    --b-percent-column-bar-border-radius      : var(--b-widget-border-radius);
+
+    /**
+     * Percent bar max height
+     * @rendition Bar
+     */
+    --b-percent-column-bar-max-height         : 0.6em;
+
+    /**
+     * Percent bar border
+     * @rendition Bar
+     */
+    --b-percent-column-bar-border             : none;
+
+    /**
+     * Thickness of the outer circle in "circle" mode
+     * @rendition Circle
+     */
+    --b-percent-column-circle-thickness       : 0.5em;
+
+    /**
+     * Label font size in "circle" mode
+     * @rendition Circle
+     */
+    --b-percent-column-circle-label-font-size : .8em;
+
+    /**
+     * Percent bar background color (the "empty" part of the bar)
+     * @rendition Bar
+     */
+    --b-percent-column-bar-background         : var(--b-neutral-95);
+
+    /**
+     * Fill color for the bar when value is below `lowThreshold`
+     * @rendition Bar
+     */
+    --b-percent-column-low-fill-background    : var(--b-color-orange);
+
+    /**
+     * Value label's color when the bar is wide, and label gets moved inside the bar
+     * @rendition Bar
+     */
+    --b-percent-column-wide-value-color       : var(--b-neutral-100);
+
+    /**
+     * Value label's color when the value is below `lowThreshold`
+     * @rendition Bar
+     */
+    --b-percent-column-low-value-color        : var(--b-secondary);
+
+    /**
+     * Value label's color when the value is zero
+     * @rendition Bar
+     */
+    --b-percent-column-zero-value-color       : transparent;
+
+    /**
+     * Background color for the circle in "circle" mode
+     * @rendition Circle
+     */
+    --b-percent-column-circle-background      : var(--b-grid-cell-border-color);
+
+    /**
+     * Value label's color in "circle" mode
+     * @rendition Circle
+     */
+    --b-percent-column-circle-label-color     : var(--b-grid-cell-color);
+
+    /* Internal var */
+    --bi-percent-column-transition            : none;
+
+    /**
+     * Percent bar z-index (above outline)
+     */
+    --b-percent-column-bar-z-index            : 1;
+
+    /**
+     * Percent bar value z-index (above fill)
+     */
+    --b-percent-column-value-z-index          : 1;
+}
+
+/* .b-bryntum { */
+    /**
+    * Fill color for the bar (the "filled" part of the bar)
+    * @rendition Bar
+    */
+    /*--b-percent-column-fill-background         : var(--b-primary-50);*/
+
+    /**
+     * Value label's color
+     */
+    /*--b-percent-column-value-color             : var(--b-primary-50);*/
+
+    /**
+     * Color of the filled part of the circle in "circle" mode
+     * @rendition Circle
+     */
+    /*--b-percent-column-circle-done-color       : var(--b-primary);*/
+
+    /**
+     * Background color for the label (center) in "circle" mode
+     * @rendition Circle
+     */
+    /*--b-percent-column-circle-label-background : var(--b-grid-cell-background);*/
+/* } */
+
+.b-percent-bar-outer {
+    display        : flex;
+    height         : 30%;
+    overflow       : hidden;
+    width          : 100%; /* Instead of flex, used with flipped flex-direction in a demo */
+    outline-offset : -1px;
+
+    background     : var(--b-percent-column-bar-background);
+    outline        : var(--b-percent-column-bar-border);
+    border-radius  : var(--b-percent-column-bar-border-radius);
+    max-height     : var(--b-percent-column-bar-max-height);
+
+    &.b-low {
+        --b-percent-column-fill-background : var(--b-percent-column-low-value-color);
+        --b-percent-column-value-color     : var(--b-percent-column-low-value-color);
+    }
+
+    &.b-zero {
+        --b-percent-column-value-color : var(--b-percent-column-zero-value-color);
+    }
+
+    .b-percent-bar {
+        z-index    : var(--b-percent-column-bar-z-index); /* Above outline */
+
+        background : var(--b-percent-column-fill-background, var(--b-primary-50));
+        width      : var(--bi-percent-bar-value);
+        transition : var(--bi-percent-column-transition);
+    }
+
+    /* Needs a height when used in a sticky cell */
+    .b-sticky-cell-content & {
+        height : var(--b-percent-column-bar-max-height);
+    }
+}
+
+.b-percent-bar-value {
+    display         : flex;
+    align-items     : center;
+    justify-content : flex-start;
+    flex            : 1;
+    font-size       : 0.6em;
+    container-name  : percent-column-value;
+    container-type  : size;
+    z-index         : var(--b-percent-column-value-z-index); /* Above fill */
+
+    label {
+        transition          : translate .5s, color .5s;
+        margin-inline-start : 0.5em;
+
+        color               : var(--b-percent-column-value-color, var(--b-primary-50));
+        translate           : var(--bi-percent-column-value-translate, 0)
+    }
+}
+
+/* To allow transitioning var changes */
+@property --bi-percent-column-circle-angle {
+    syntax        : '<angle>';
+    inherits      : false;
+    initial-value : 0turn;
+}
+
+.b-percent-done-circle {
+    --bi-percent-column-circle-angle : 0;
+
+    display                     : flex;
+    align-items                 : center;
+    justify-content             : center;
+    margin                      : 0 auto;
+    max-height                  : 3em;
+    max-width                   : 3em;
+
+    border-radius               : 50%;
+    background                  : conic-gradient(var(--b-percent-column-circle-done-color, var(--b-primary)) 0 var(--bi-percent-column-circle-angle), transparent var(--bi-percent-column-circle-angle) 1turn) var(--b-percent-column-circle-background);
+
+    /* Override gradient for empty / full circles to eliminate visual artifacts */
+    /* &.b-full, */
+    /* &.b-empty { */
+    /*     background-image : none; */
+    /* } */
+
+    /* &.b-full { */
+    /*     background-color : var(--b-percent-column-circle-done-color); */
+    /* } */
+
+    /* Center label + fill */
+    &::after {
+        content         : attr(data-value);
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        border-radius   : 50%;
+
+        width           : calc(100% - var(--b-percent-column-circle-thickness));
+        height          : calc(100% - var(--b-percent-column-circle-thickness));
+        background      : var(--b-percent-column-circle-label-background, var(--b-grid-cell-background));
+        font-size       : var(--b-percent-column-circle-label-font-size);
+        color           : var(--b-percent-column-circle-label-color);
+    }
+
+    .b-animating & {
+        transition : --bi-percent-column-circle-angle .3s, height .3s, width .3s;
+    }
+}
+
+@container percent-column-value (width < 2em) {
+    label {
+        margin-inline-start                 : -.5em !important;
+
+        --b-percent-column-value-color      : var(--b-percent-column-wide-value-color);
+        --bi-percent-column-value-translate : -100%;
+    }
+}
+
+.b-grid-body-container.b-scrolling {
+    .b-percent-bar,
+    .b-percent-bar * {
+        transition : none;
+    }
+}
+
+.b-animating,
+.b-grid-row-updating {
+    --bi-percent-column-transition : width 0.5s, padding .5s, background-color .5s;
+}

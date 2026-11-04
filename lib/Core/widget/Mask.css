@@ -1,0 +1,118 @@
+:root, :host {
+    /**
+     * Mask border-radius
+     */
+    --b-mask-border-radius       : var(--b-widget-border-radius);
+
+    /**
+     * Mask padding
+     */
+    --b-mask-padding             : var(--b-widget-padding);
+
+    /**
+     * Mask text background
+     */
+    --b-mask-text-background     : var(--b-popup-background, var(--b-neutral-100));
+
+    /**
+     * Mask progress bar height
+     */
+    --b-mask-progress-height     : 0.25em;
+
+    /**
+     * Mask background
+     */
+    --b-mask-background          : color-mix(in srgb, var(--b-neutral-0), transparent 85%);
+
+    /**
+     * Mask text color
+     */
+    --b-mask-text-color          : var(--b-widget-color);
+
+    /**
+     * Mask progress bar color
+     */
+    --b-mask-progress-color      : color-mix(in srgb, var(--b-mask-text-color), transparent 30%);
+
+    /**
+     * Mask color
+     */
+    --b-mask-color               : var(--b-primary);
+
+    --b-mask-transition-duration : .5s;
+
+    /**
+     * Mask z-index
+     */
+    --b-mask-z-index             : 100;
+}
+
+.b-mask {
+    position    : absolute;
+    inset       : 0;
+    display     : grid;
+    place-items : center;
+    opacity     : 1;
+    z-index     : var(--b-mask-z-index);
+
+    background  : var(--b-mask-background);
+    color       : var(--b-mask-color);
+    transition  : opacity var(--b-mask-transition-duration);
+
+    /* This must follow the other rules that set opacity since they all (at present) have the same specificity. It */
+    /* tempting to extend the show animation to have a delay to achieve the show delay, but this wouldn't quite do */
+    /* for the following reasons: */
+    /* 1. Animations can be disabled but showDelay works independently */
+    /* 2. If an error occurs, the showDelay is cancelled and the error is shown */
+    &.b-delayed-show {
+        opacity : 0;
+    }
+
+    @starting-style {
+        opacity : 0;
+    }
+}
+
+.b-mask-rendition-text {
+    --b-mask-color      : transparent;
+    --b-mask-text-color : var(--b-text-2);
+
+    .b-mask-content {
+        box-shadow : none;
+    }
+}
+
+.b-mask-content {
+    position      : relative;
+    overflow      : hidden;
+
+    background    : var(--b-mask-text-background);
+    box-shadow    : var(--b-elevation-1);
+    border-radius : var(--b-mask-border-radius);
+}
+
+.b-mask-progress-bar {
+    height     : var(--b-mask-progress-height);
+    background : var(--b-mask-progress-color);
+}
+
+.b-mask-text {
+    display             : flex;
+    gap                 : 0.5em;
+    user-select         : none;
+    -webkit-user-select : none;
+    align-items         : center;
+
+    color               : var(--b-mask-text-color);
+    padding             : var(--b-mask-padding);
+
+    /* Names the progressbar via `aria-labelledby`, and is hidden when empty so it takes no part in the gap above */
+    .b-mask-message:empty {
+        display : none;
+    }
+}
+
+.b-masked {
+    /* Required to make sure masked Element can contain the Mask (which is absolute positioned) */
+    position : relative;
+}

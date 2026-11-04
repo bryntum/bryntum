@@ -1,0 +1,239 @@
+/* @after Core/widget/Panel.css */
+
+:root, :host {
+    /**
+     * Label padding
+     */
+    --b-field-label-padding             : 0;
+
+    /**
+     * Gap between label and field, for the default label position
+     */
+    --b-field-label-default-gap         : var(--b-widget-gap);
+
+    /**
+     * Gap between label and field, for label above the field
+     */
+    --b-field-label-above-gap           : .5em;
+
+    /**
+     * Gap between label and field, for label before the field
+     */
+    --b-field-label-before-gap          : var(--b-widget-gap);
+
+    /**
+     * Padding for label shown before the field
+     */
+    /*--b-field-label-before-padding : null;*/
+
+    /**
+     * Padding for label shown above the field
+     */
+    /*--b-field-label-above-padding  : null;*/
+
+    /**
+     * Template areas for the fields grid layout, for the default label position
+     */
+    --b-field-default-template-areas    : "before inner";
+
+    /**
+     * Template columns for the fields grid layout, for the default label position
+     */
+    --b-field-default-template-columns  : auto 1fr;
+
+    /**
+     * Template rows for the fields grid layout, for the default label position
+     */
+    --b-field-default-template-rows     : minmax(0, 1fr);
+
+    /**
+     * Padding for label, for the default label position
+     */
+    --b-field-default-label-padding     : 0 1em 0 0;
+
+    /**
+     * Primary color for tip shown for invalid fields
+     */
+    --b-field-error-tip-primary         : var(--b-color-red);
+
+
+    --b-field-align-before-label-column : unset;
+    --b-field-align-before-field-column : unset;
+}
+
+/* .b-bryntum { */
+    /**
+     * Text color for tip shown for invalid fields
+     */
+    /*--b-field-error-tip-color : var(--b-primary-30);*/
+
+    /**
+     * Background for tip shown for invalid fields
+     */
+    /*--b-field-error-tip-background : var(--b-primary-95);*/
+/* } */
+
+@property --bi-field-template-areas {
+    syntax   : '*';
+    inherits : false;
+}
+
+@property --bi-field-template-columns {
+    syntax   : '*';
+    inherits : false;
+}
+
+.b-field,
+.b-slider {
+    display                     : grid;
+    align-items                 : center;
+    justify-items               : start;
+    flex-shrink                 : 0;
+
+    --bi-field-template-areas   : "inner";
+    --bi-field-template-columns : 1fr;
+
+    grid-template-rows          : var(--bi-field-template-rows, minmax(0, 1fr));
+    grid-template-areas         : var(--bi-field-template-areas);
+    grid-template-columns       : var(--bi-field-template-columns);
+    color                       : var(--b-primary);
+    gap                         : var(--bi-field-gap);
+
+    --b-field-label-grid-area   : before;
+
+    .b-field-inner {
+        display       : grid;
+        align-items   : center;
+        justify-items : center;
+        grid-area     : inner;
+        max-height    : 100%;
+    }
+
+    .b-label {
+        align-self : center;
+
+        grid-area  : var(--b-field-label-grid-area);
+        padding    : var(--b-field-label-padding);
+    }
+
+    /* labels center themselves in the wrong direction by default */
+    .b-vbox > &.b-label-above .b-label {
+        align-self : flex-start;
+    }
+
+    &.b-has-label {
+        --bi-field-template-areas   : var(--b-field-default-template-areas);
+        --bi-field-template-rows    : var(--b-field-default-template-rows);
+        --bi-field-template-columns : var(--b-field-default-template-columns);
+        --bi-field-gap              : var(--b-field-label-default-gap);
+
+        /* --b-field-label-padding     : var(--b-field-default-label-padding); */
+
+        &.b-required .b-label::after {
+            content : '*';
+        }
+    }
+
+    &.b-label-align-before,
+    &.b-label-before {
+        --bi-field-template-rows    : minmax(0, 1fr);
+        --bi-field-template-columns : auto 1fr;
+        --bi-field-template-areas   : "before inner";
+        --b-field-label-grid-area   : before;
+        /* --b-field-label-padding     : var(--b-field-label-before-padding, 0 1em 0 0); */
+        --bi-field-gap              : var(--b-field-label-before-gap);
+    }
+
+    &.b-label-above {
+        --bi-field-template-rows    : auto 1fr;
+        --bi-field-template-columns : 1fr;
+        --bi-field-template-areas   : "above" "inner";
+        --b-field-label-grid-area   : above;
+        /* --b-field-label-padding     : var(--b-field-label-above-padding, 0 0 .5em 0); */
+        --bi-field-gap              : var(--b-field-label-above-gap);
+
+        /* stretch label out above the input to make all label space clickable */
+        .b-label {
+            width : var(--b-label-above-width);
+        }
+    }
+
+    &.b-label-align-before {
+        .b-label {
+            grid-column : var(--b-field-align-before-label-column);
+        }
+
+        .b-field-inner {
+            grid-column : var(--b-field-align-before-field-column);
+        }
+    }
+
+    &.b-read-only,&.b-disabled {
+        .b-field-trigger {
+            pointer-events : none;
+            opacity        : .5;
+        }
+    }
+}
+
+.b-field-container-wrap {
+    display  : flex;
+    flex     : 1 1 auto;
+    overflow : hidden;
+    position : relative;
+
+    gap      : var(--b-container-gap);
+
+    > .b-container {
+        width : 100%;
+    }
+
+    .b-field.b-collapsed:not(.b-field-container-inline) > & {
+        height : 0;
+    }
+
+    .b-field.b-collapsed.b-field-container-inline > & {
+        opacity : 0;
+    }
+}
+
+.b-field-container:not(.b-field-container-inline) {
+    .b-field-container {
+        gap : var(--b-container-gap);
+    }
+}
+
+.b-field-container-inline {
+    gap                         : var(--b-container-gap);
+
+    &.b-has-label {
+        --bi-field-template-areas   : "before inner container";
+        --bi-field-template-columns : auto 1fr auto;
+
+        &.b-label-above {
+            --bi-field-template-areas   : "above above" "inner container";
+            --bi-field-template-columns : 1fr auto;
+
+            .b-field-container-wrap  {
+                grid-row : 2;
+            }
+        }
+    }
+
+    &:not(.b-has-label) {
+        --bi-field-template-areas   : "inner container";
+        --bi-field-template-columns : 1fr auto;
+    }
+
+    .b-field-container-wrap {
+        grid-area : container;
+        width     : 100%;
+    }
+
+    .b-field-container {
+        width          : 100%;
+        display        : flex;
+        flex-direction : row;
+        flex-wrap      : nowrap;
+    }
+}

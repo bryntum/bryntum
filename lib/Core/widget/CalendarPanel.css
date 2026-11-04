@@ -1,0 +1,211 @@
+/* @after Core/widget/Panel.css */
+
+:root, :host {
+    /**
+     * Font-size used for day name letters and week numbers
+     */
+    --b-calendar-panel-day-font-size            : unset;
+
+    /**
+     * Font-weight used for day name letters
+     */
+    --b-calendar-panel-day-header-font-weight   : 500;
+
+    /**
+     * Width of the week number column
+     */
+    --b-calendar-panel-week-width               : 2em;
+
+    /**
+     * Display property for the week number column
+     */
+    --b-calendar-panel-week-number-display      : none;
+
+    /**
+     * Display property for date cells
+     */
+    --b-calendar-panel-cell-display             : flex;
+
+    /**
+     * Date cell padding
+     */
+    --b-calendar-panel-cell-padding             : none;
+
+    /**
+     * Date cell font size
+     */
+    --b-calendar-panel-cell-font-size           : 1em;
+
+    /**
+     * Date cell background
+     */
+    /* --b-calendar-panel-cell-background             : transparent; */
+
+    /**
+     * Date cell font-weight
+     */
+    --b-calendar-panel-cell-font-weight         : var(--b-widget-font-weight);
+
+    /**
+     * Disabled date cell opacity
+     */
+    --b-calendar-panel-disabled-cell-opacity    : 0.4;
+
+    /**
+     * Non-working day & date cell display
+     */
+    --b-calendar-panel-non-working-cell-display : flex;
+
+    /**
+     * Gap between day and date cells (must have a unit for calculations to work)
+     */
+    --b-calendar-panel-gap                      : 0em;
+
+    /**
+     * Color used for day name letters
+     */
+    --b-calendar-panel-day-color                : unset;
+
+    /**
+     * Date cell color
+     */
+    --b-calendar-panel-color                    : var(--b-widget-color);
+
+    /**
+     * Other month (last dates of the month before, first dates of the month after) cell color
+     */
+    --b-calendar-panel-other-month-color        : var(--b-neutral-60);
+
+    /**
+     * Gap between weeks. Also used as block padding for the weeks container to give even spacing
+     */
+    --b-calendar-panel-weeks-gap                : .5em;
+
+    /**
+     * The color of text in week number cells
+     */
+    /* --b-calendar-panel-week-number-color         : var(--b-primary-20); */
+}
+
+.b-internal {
+    --bi-min-column-width : null;
+}
+
+.b-calendar-panel {
+    user-select         : none;
+    -webkit-user-select : none;
+
+    &.b-show-week-column {
+        --b-calendar-panel-week-number-display : flex;
+    }
+
+    &.b-hide-other-month-cells .b-other-month {
+        /* They must take up space to keep the cell layout correct */
+        visibility     : hidden;
+        /* In addition to being low opacity, they may not be interactive */
+        pointer-events : none;
+    }
+
+    &.b-disable-other-month-cells .b-other-month {
+        /* Disabling means make them unresponsive to pointer interaction */
+        pointer-events : none;
+
+        opacity        : var(--b-calendar-panel-disabled-cell-opacity);
+    }
+
+    &.b-shade-past-dates .b-past-date {
+        opacity        : var(--b-calendar-panel-disabled-cell-opacity);
+    }
+}
+
+.b-calendar-panel-content {
+    gap     : 0;
+    padding : 0;
+
+    &.b-hide-non-working-days {
+        .b-non-working-day {
+            display : none;
+        }
+    }
+}
+
+.b-calendar-panel-row {
+    display : flex;
+}
+
+.b-week-number-cell {
+    flex-direction  : column;
+    justify-content : center;
+    cursor          : pointer;
+
+    display         : var(--b-calendar-panel-week-number-display);
+    font-size       : var(--b-calendar-panel-day-font-size);
+    width           : var(--b-calendar-panel-week-width);
+    color           : var(--b-calendar-panel-week-number-color, var(--b-primary-20));
+
+    .b-calendar-week-days & {
+        flex-direction : row;
+        font-size      : var(--b-calendar-panel-day-font-size);
+    }
+}
+
+.b-calendar-day-header {
+    flex            : 1;
+    justify-content : center;
+
+    display         : flex;
+    color           : var(--b-calendar-panel-day-color);
+    font-size       : var(--b-calendar-panel-day-font-size);
+    min-width       : var(--bi-min-column-width);
+    font-weight     : var(--b-calendar-panel-day-header-font-weight);
+}
+
+.b-calendar-week-days {
+    padding-inline : var(--b-calendar-panel-gap);
+    gap            : var(--b-calendar-panel-gap);
+}
+
+.b-weeks-container {
+    display       : flex;
+    flex-flow     : column nowrap;
+
+    padding-block : var(--b-calendar-panel-weeks-gap);
+    gap           : var(--b-calendar-panel-weeks-gap);
+
+    .b-calendar-panel-row {
+        flex       : 1;
+
+        min-height : var(--bi-min-row-height, 0);
+    }
+}
+
+.b-calendar-panel-days {
+    display : flex;
+    flex    : 1;
+
+    /* padding-inline : var(--b-calendar-panel-gap); */
+    gap     : var(--b-calendar-panel-gap);
+}
+
+.b-calendar-panel-cell {
+    flex            : 1;
+    justify-content : center;
+    align-items     : center;
+    position        : relative;
+    transition      : padding var(--b-default-transition-duration);
+
+    color           : var(--b-calendar-panel-color);
+    display         : var(--b-calendar-panel-cell-display);
+    padding         : var(--b-calendar-panel-cell-padding);
+    background      : var(--b-calendar-panel-cell-background);
+    font-weight     : var(--b-calendar-panel-cell-font-weight);
+    font-size       : var(--b-calendar-panel-cell-font-size);
+    min-width       : var(--bi-min-column-width);
+
+    &.b-other-month {
+        --b-calendar-panel-color : var(--b-calendar-panel-other-month-color);
+    }
+    &.b-disabled-date {
+        opacity        : var(--b-calendar-panel-disabled-cell-opacity);
+    }
+}

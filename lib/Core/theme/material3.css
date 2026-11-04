@@ -1,0 +1,338 @@
+@charset "UTF-8";
+
+/* Themes need more specific rules than Widgets etc. to make sure the values are applied no matter the import order */
+:root:not(.b-nothing), :host(:not(.b-nothing)) {
+    --b-primary                                               : var(--b-color-blue);
+    --b-secondary                                             : var(--b-color-orange);
+
+    --b-elevation-1                                           : 0 1px 3px 0 light-dark(rgb(0 0 0 /0.12), rgb(0 0 0 /0.22)), 0 1px 1px 0 light-dark(rgb(0 0 0 /0.10), rgb(0 0 0 /0.20)), 0 2px 1px -1px light-dark(rgb(0 0 0 /0.08), rgb(0 0 0 /0.18));
+    --b-elevation-2                                           : 0 1px 5px 0 light-dark(rgb(0 0 0 /0.12), rgb(0 0 0 /0.22)), 0 2px 2px 0 light-dark(rgb(0 0 0 /0.10), rgb(0 0 0 /0.20)), 0 3px 1px -2px light-dark(rgb(0 0 0 /0.08), rgb(0 0 0 /0.18));
+
+    /* region Neutral shades — light values from Colors.css, dark values from material3-dark */
+    --b-neutral-100                                           : light-dark(hsl(0 0% 100%), hsl(0 0% 15%));
+    --b-neutral-99                                            : light-dark(hsl(0 0% 99%), hsl(0 0% 15.85%));
+    --b-neutral-98                                            : light-dark(hsl(0 0% 98%), hsl(0 0% 16.7%));
+    --b-neutral-97                                            : light-dark(hsl(0 0% 97%), hsl(0 0% 17.55%));
+    --b-neutral-96                                            : light-dark(hsl(0 0% 96%), hsl(0 0% 18.4%));
+    --b-neutral-95                                            : light-dark(hsl(0 0% 95%), hsl(0 0% 19.25%));
+    --b-neutral-94                                            : light-dark(hsl(0 0% 94%), hsl(0 0% 20.1%));
+    --b-neutral-93                                            : light-dark(hsl(0 0% 93%), hsl(0 0% 20.95%));
+    --b-neutral-92                                            : light-dark(hsl(0 0% 92%), hsl(0 0% 21.8%));
+    --b-neutral-91                                            : light-dark(hsl(0 0% 91%), hsl(0 0% 22.65%));
+    --b-neutral-90                                            : light-dark(hsl(0 0% 90%), hsl(0 0% 23.5%));
+    --b-neutral-85                                            : light-dark(hsl(0 0% 85%), hsl(0 0% 27.75%));
+    --b-neutral-80                                            : light-dark(hsl(0 0% 80%), hsl(0 0% 32%));
+    --b-neutral-75                                            : light-dark(hsl(0 0% 75%), hsl(0 0% 36.25%));
+    --b-neutral-70                                            : light-dark(hsl(0 0% 70%), hsl(0 0% 40.5%));
+    --b-neutral-65                                            : light-dark(hsl(0 0% 65%), hsl(0 0% 44.75%));
+    --b-neutral-60                                            : light-dark(hsl(0 0% 60%), hsl(0 0% 49%));
+    --b-neutral-55                                            : light-dark(hsl(0 0% 55%), hsl(0 0% 53.25%));
+    --b-neutral-50                                            : light-dark(hsl(0 0% 50%), hsl(0 0% 57.5%));
+    --b-neutral-45                                            : light-dark(hsl(0 0% 45%), hsl(0 0% 61.75%));
+    --b-neutral-40                                            : light-dark(hsl(0 0% 40%), hsl(0 0% 66%));
+    --b-neutral-35                                            : light-dark(hsl(0 0% 35%), hsl(0 0% 70.25%));
+    --b-neutral-30                                            : light-dark(hsl(0 0% 30%), hsl(0 0% 74.5%));
+    --b-neutral-25                                            : light-dark(hsl(0 0% 25%), hsl(0 0% 78.75%));
+    --b-neutral-20                                            : light-dark(hsl(0 0% 20%), hsl(0 0% 83%));
+    --b-neutral-15                                            : light-dark(hsl(0 0% 15%), hsl(0 0% 87.25%));
+    --b-neutral-10                                            : light-dark(hsl(0 0% 10%), hsl(0 0% 91.5%));
+    --b-neutral-5                                             : light-dark(hsl(0 0% 5%), hsl(0 0% 95.75%));
+    --b-neutral-2                                             : light-dark(hsl(0 0% 2%), hsl(0 0% 98.3%));
+    --b-neutral-1                                             : light-dark(hsl(0 0% 1%), hsl(0 0% 99.15%));
+    --b-neutral-0                                             : light-dark(hsl(0 0% 0%), hsl(0 0% 100%));
+    /* endregion */
+
+    --b-mix                                                   : light-dark(#fff, #262626);
+    --b-opposite                                              : light-dark(#000, #fff);
+    --b-ripple-background                                     : light-dark(#00000010, #00000050);
+    --b-ripple-blend-mode                                     : soft-light;
+
+    /* region Core */
+    --b-widget-border-radius                                  : 0.35em;
+    --b-widget-border-radius-large                            : 1.5em;
+    --b-widget-color                                          : light-dark(var(--b-text-1), var(--b-neutral-15));
+
+    --b-button-border-radius                                  : 3em;
+    --b-button-filled-hover-box-shadow                        : var(--b-elevation-1);
+    --b-button-outlined-border-color                          : var(--b-border-5);
+    --b-button-outlined-hover-border-color                    : var(--b-border-4);
+    --b-button-tonal-hover-box-shadow                         : var(--b-elevation-1);
+    --b-button-padding                                        : 0 calc(var(--b-button-height) * 0.6);
+    --b-button-icon-padding                                   : 0 calc(var(--b-button-height) * 0.6) 0 calc(var(--b-button-height) * 0.4);
+    --b-button-end-icon-padding                               : 0 calc(var(--b-button-height) * 0.4) 0 calc(var(--b-button-height) * 0.6);
+    --b-button-rotate-padding                                 : calc(var(--b-button-height) * 0.6) 0;
+    --b-button-gap                                            : calc(var(--b-button-height) * 0.2);
+
+    --b-checkbox-border-color                                 : var(--b-neutral-35);
+    --b-checkbox-border-width                                 : 2px;
+    --b-checkbox-check-font-size                              : 1em;
+    --b-checkbox-hover-background                             : transparent;
+    --b-checkbox-hover-border-color                           : var(--b-border-2);
+    --b-checkbox-focus-outline-width                          : 0;
+    --b-checkbox-ring-hover-opacity                           : 0.1;
+    --b-checkbox-ring-focus-opacity                           : 0.2;
+    --b-checkbox-ring-active-opacity                          : 0.3;
+    --b-checkbox-ring-content                                 : '';
+    --b-checkbox-inner-gap                                    : 1em;
+
+    --b-field-label-default-gap                               : 0.5em;
+
+    --b-field-set-label-font-size                             : 0.7em;
+
+    --b-label-above-width                                     : auto;
+
+    --b-panel-with-header-padding                             : 0 1.5em 1.5em 1.5em;
+    --b-panel-header-font-size                                : 1.4em;
+    --b-panel-bottom-toolbar-padding                          : calc(var(--b-panel-padding) / 2) var(--b-panel-padding) var(--b-panel-padding) var(--b-panel-padding);
+    --b-panel-top-toolbar-margin-inline                       : var(--b-panel-padding);
+    --b-panel-top-toolbar-border-radius                       : 100em;
+
+    --b-popup-border-radius                                   : var(--b-widget-border-radius-large);
+
+    --b-radio-group-gap                                       : 0;
+
+    --b-slide-toggle-border-color                             : var(--b-border-3);
+    --b-slide-toggle-thumb-background                         : var(--b-neutral-50);
+    --b-slide-toggle-thumb-size                               : .9em;
+    --b-slide-toggle-checked-thumb-size                       : 1.25em;
+    --b-slide-toggle-hovered-thumb-background                 : var(--b-neutral-30);
+    --b-slide-toggle-disabled-border-color                    : var(--b-neutral-80);
+
+    --b-slider-ring-content                                   : '';
+
+    --b-splitter-size                                         : 1px;
+    --b-splitter-hover-size                                   : 5px;
+
+    --b-tab-label-position                                    : relative;
+    --b-tab-indicator-border-radius                           : var(--b-widget-border-radius) var(--b-widget-border-radius) 0 0;
+    --b-tab-indicator-height                                  : .25em;
+    --b-tab-color                                             : var(--b-neutral-20);
+
+    --b-toolbar-background                                    : var(--b-neutral-97);
+
+    --b-tooltip-plain-font-size                               : 0.8em;
+    --b-tooltip-rich-border-radius                            : 1em;
+
+    /* region TextField */
+
+    --b-field-trigger-color                                   : var(--b-neutral-30);
+
+    --b-text-field-label-scale                                : 0.7;
+    --b-text-field-label-above-grid-area                      : inner;
+    --b-text-field-label-grid-area                            : inner;
+    --b-text-field-focus-border-width                         : 2px;
+    --b-text-field-default-template-areas                     : "above" "inner";
+    --b-text-field-default-template-rows                      : auto 1fr;
+    --b-text-field-default-template-columns                   : 1fr;
+    /* --b-text-field-border-color                               : var(--b-border-3); */
+
+    --b-text-field-filled-border-width                        : 0 0 1px 0;
+    --b-text-field-filled-focus-border-width                  : 0 0 2px 0;
+    --b-text-field-filled-border-radius                       : var(--b-widget-border-radius) var(--b-widget-border-radius) 0 0;
+    --b-text-field-filled-input-padding                       : 1.25em 1em 0.5em 1em;
+    --b-text-field-filled-no-label-input-padding              : 1em;
+    --b-text-field-filled-background                          : light-dark(var(--b-neutral-95), var(--b-neutral-85));
+    --b-text-field-filled-hover-background                    : light-dark(var(--b-neutral-90), var(--b-neutral-80));
+    --b-text-field-filled-focus-background                    : light-dark(var(--b-neutral-90), var(--b-neutral-80));
+
+    --b-text-field-outlined-focus-border-width                : 2px;
+    --b-text-field-outlined-label-padding                     : 0 0.5em;
+    --b-text-field-outlined-label-before-padding              : 0 1em 0 0;
+    --b-text-field-outlined-label-above-padding               : 0 0.5em;
+    --b-text-field-outlined-background                        : transparent;
+    --b-text-field-outlined-hover-background                  : transparent;
+    --b-text-field-outlined-focus-background                  : transparent;
+    --b-text-field-outlined-hover-border-color                : var(--b-border-1);
+
+    /* Material specific vars */
+    --b-text-field-label-above-placeholder-color              : transparent;
+
+    --b-text-field-filled-material-label-position             : absolute;
+    --b-text-field-filled-material-label-top                  : 0.5em;
+    --b-text-field-filled-material-label-left                 : 1em;
+    --b-text-field-filled-material-label-cursor               : text;
+    --b-text-field-filled-material-empty-label-top            : calc(50% - 0.5em); /*1.25em;*/
+    --b-text-field-filled-material-empty-label-left           : 1em;
+    --b-text-field-filled-material-trigger-label-left         : 3em;
+    --b-text-field-filled-material-trigger-empty-label-left   : 3em;
+
+    --b-text-field-outlined-material-label-position           : absolute;
+    --b-text-field-outlined-material-label-top                : -0.35em;
+    --b-text-field-outlined-material-label-left               : .5em; /* As empty, -padding */
+    --b-text-field-outlined-material-label-cursor             : text;
+    --b-text-field-outlined-material-empty-label-background   : transparent;
+    --b-text-field-outlined-material-empty-label-padding      : 0em;
+    --b-text-field-outlined-material-empty-label-top          : calc(50% - 0.5em); /*1.2em;*/
+    --b-text-field-outlined-material-empty-label-left         : 1em;
+    --b-text-field-outlined-material-trigger-empty-label-left : 3em;
+
+    /* endregion */
+
+    --b-tooltip-plain-color                                   : var(--b-neutral-100);
+
+    /* endregion */
+
+    /* Grid */
+    --b-grid-header-background                                : light-dark(var(--b-neutral-100), var(--b-neutral-98));
+    --b-grid-header-color                                     : light-dark(var(--b-widget-color), var(--b-neutral-10));
+    --b-grid-cell-color                                       : light-dark(var(--b-widget-color), var(--b-neutral-20));
+
+    --b-group-header-color                                    : light-dark(var(--b-neutral-20), var(--b-neutral-5));
+
+    /* Scheduler */
+    --b-column-lines-tick-color                               : light-dark(var(--b-neutral-95), var(--b-neutral-93));
+
+    /* TaskBoard */
+    --b-task-board-card-background                            : light-dark(var(--b-neutral-100), var(--b-neutral-95));
+    --b-task-board-card-hover-background                      : light-dark(var(--b-neutral-100), var(--b-neutral-92));
+
+    /* Chart */
+
+    --b-chart-designer-labels-list-padding-block              : 0;
+
+    /* Heat map values ranging from lowest to highest intensity to create
+     * background colors to indicate how "hot" an element is, for example
+     * based on the number of events in a calendar cell.
+     */
+    /*
+     * Start color for the heatmap, representing the lowest intensity (e.g. 1 event in a calendar cell).
+     */
+    --b-heatmap-start                                         : light-dark(oklab(0.96 0.01 0.04), oklab(0.53 -0.03 0.1));
+    /*
+     * End color for the heatmap, representing the highest intensity (e.g. 10 or more events in a calendar cell).
+     */
+    --b-heatmap-end                                           : light-dark(oklab(0.86 0.05 0.02), oklab(0.38 0.13 0.03));
+}
+
+/* The only remaining media query: --b-heatmap-mix-blend-mode is a <blend-mode> keyword,
+   not a <color>, so light-dark() cannot be used. Since it follows the system preference while
+   the colors follow the computed color-scheme, forcing color-scheme on an element while the
+   system preference differs leaves the blend mode matching the system, not the colors. */
+@media (prefers-color-scheme: dark) {
+    :root:not(.b-nothing), :host(:not(.b-nothing)) {
+        --b-heatmap-mix-blend-mode : hard-light;
+    }
+}
+
+/* Shades of primary color have to be specified per widget, for color-mix to work as intended */
+.b-bryntum:not(.b-nothing) {
+    --bi-primary-shade                                : light-dark(var(--b-primary-40), var(--b-primary-30));
+
+    /* region Core */
+
+    /* Filled differs from light */
+    --b-button-filled-background                      : light-dark(var(--b-primary-45), var(--b-primary-20));
+    --b-button-filled-hover-background                : light-dark(var(--b-primary-55), var(--b-primary-25));
+    --b-button-filled-focused-background              : light-dark(var(--b-primary-60), var(--b-primary-30));
+    --b-button-filled-active-background               : light-dark(var(--b-primary-60), var(--b-primary-30));
+    --b-button-filled-pressed-background              : light-dark(var(--b-primary-65), var(--b-primary-40));
+
+    --b-button-outlined-pressed-background            : var(--b-primary-85);
+    --b-button-outlined-color                         : light-dark(var(--bi-primary-shade), var(--b-primary-40));
+
+    --b-button-tonal-background                       : light-dark(var(--b-primary-95), var(--b-primary-90));
+    --b-button-tonal-hover-background                 : light-dark(var(--b-primary-90), var(--b-primary-85));
+    --b-button-tonal-focused-background               : light-dark(var(--b-primary-90), var(--b-primary-85));
+    --b-button-tonal-active-background                : light-dark(var(--b-primary-85), var(--b-primary-80));
+    --b-button-tonal-pressed-background               : light-dark(var(--b-primary-80), var(--b-primary-75));
+
+    --b-button-type-text-focused-background           : var(--b-primary-90);
+    --b-button-type-text-pressed-background           : var(--b-primary-85);
+    --b-button-type-text-color                        : var(--b-primary-40);
+
+    --b-checkbox-checked-background                   : light-dark(var(--b-primary-45), var(--bi-primary-shade));
+    --b-checkbox-checked-border-color                 : var(--b-checkbox-checked-background);
+    --b-checkbox-checked-hover-background             : light-dark(var(--bi-primary-shade), var(--b-checkbox-checked-background));
+    --b-checkbox-focus-outline-color                  : null;
+
+    --b-chip-view-chip-color                          : var(--b-primary-30);
+
+    --b-field-error-tip-color                         : var(--b-neutral-100);
+    --b-field-error-tip-background                    : var(--b-primary-25);
+
+    --b-list-background                               : var(--b-primary-100);
+    --b-list-floating-background                      : var(--b-primary-100);
+    --b-list-checkbox-checked-background              : light-dark(var(--b-primary-45), var(--bi-primary-shade));
+
+    --b-menu-background                               : light-dark(var(--b-primary-99), var(--b-primary-98));
+    --b-menu-item-focus-background                    : var(--b-primary-85);
+    --b-menu-item-hover-color                         : var(--b-primary-30);
+    --b-menu-item-hover-icon-color                    : var(--b-primary-30);
+
+    --b-panel-top-toolbar-button-type-text-color      : light-dark(var(--b-primary-20), var(--b-primary-10));
+
+    --b-popup-background                              : light-dark(var(--b-primary-99), var(--b-primary-98));
+
+    --b-radio-checked-color                           : light-dark(var(--b-primary), var(--bi-primary-shade));
+
+    --b-slider-color                                  : light-dark(var(--b-primary), var(--bi-primary-shade));
+    --b-slider-track-color                            : light-dark(var(--b-primary-90), var(--b-primary-80));
+    --b-slider-thumb-focus-outline-color              : transparent;
+
+    --b-slide-toggle-background                       : light-dark(var(--b-neutral-95), var(--b-neutral-85));
+    --b-slide-toggle-hover-background                 : light-dark(var(--b-neutral-95), var(--b-neutral-85));
+    --b-slide-toggle-hovered-thumb-background         : light-dark(var(--b-neutral-30), var(--b-neutral-20));
+    --b-slide-toggle-checked-background               : light-dark(var(--b-primary), var(--b-primary-30));
+    --b-slide-toggle-checked-hover-background         : light-dark(var(--b-primary), var(--b-primary-30));
+    --b-slide-toggle-checked-hovered-thumb-background : light-dark(var(--b-primary-95), var(--b-primary-75));
+    --b-slide-toggle-checked-thumb-background         : light-dark(var(--b-neutral-100), var(--b-primary-90));
+
+    --b-tab-active-tab-color                          : var(--b-primary-50);
+
+    --b-tooltip-plain-background                      : var(--b-primary-25);
+    --b-tooltip-rich-background                       : var(--b-primary-98);
+
+    --b-text-field-focus-border-color                 : var(--bi-primary-shade);
+    --b-text-field-outlined-focus-label-color         : var(--bi-primary-shade);
+    --b-text-field-outlined-label-background          : var(--b-parent-background-color, var(--b-neutral-100));
+    --b-text-field-filled-focus-label-color           : var(--bi-primary-shade);
+    --b-text-field-filled-hover-border-color          : var(--bi-primary-shade);
+    --b-text-field-selection-background               : light-dark(var(--b-primary-85), var(--b-primary-70));
+
+    /* endregion */
+
+    /* Grid */
+    --b-grid-cell-hover-background                    : light-dark(var(--b-primary-98), var(--b-primary-95));
+    --b-grid-cell-selected-background                 : light-dark(var(--b-primary-96), var(--b-primary-95));
+    --b-grid-cell-hover-selected-background           : light-dark(var(--b-primary-94), var(--b-primary-90));
+    --b-percent-column-fill-background                : light-dark(var(--b-primary-50), var(--b-primary-40));
+}
+
+/* Less vars target b-colorize compared to b-bryntum, making it cheaper to use for coloring many elements.
+   Light values mirror the source-of-truth defaults so light mode behaves as before; dark values are
+   the overrides previously declared only in material3-dark.css. */
+.b-colorize:not(.b-nothing) {
+    /* Grid */
+    --b-quick-find-background               : light-dark(var(--b-quick-find-row-hover-background, var(--b-primary-95)), var(--b-primary-90));
+
+    /* Scheduler */
+    --b-resource-time-range-background      : light-dark(color-mix(in srgb, var(--b-primary), transparent var(--b-resource-time-range-background-transparency)), var(--b-primary-70));
+    --b-resource-time-range-color           : light-dark(var(--b-primary), var(--b-primary-70));
+
+    /* Calendar */
+    --b-day-view-body-background            : light-dark(var(--b-primary-95), var(--b-primary-90));
+
+    /* TaskBoard */
+    --b-task-board-card-selected-background : light-dark(var(--b-primary-96), var(--b-neutral-90));
+}
+
+/* Override specific event styles in Scheduler. The light values match the defaults from
+   EventStyles.css (.b-sch-event-wrap), so light mode is unchanged. The dark values lower each
+   mix percentage for stronger contrast on dark backgrounds. */
+.b-sch-event-wrap {
+    --b-sch-event-tonal-background             : light-dark(color-mix(in srgb, var(--b-primary), var(--b-mix) 86%), color-mix(in srgb, var(--b-primary), var(--b-mix) 80%));
+    --b-sch-event-tonal-hover-background       : light-dark(color-mix(in srgb, var(--b-primary), var(--b-mix) 70%), color-mix(in srgb, var(--b-primary), var(--b-mix) 60%));
+    --b-sch-event-indented-background          : light-dark(color-mix(in srgb, var(--b-primary), var(--b-mix) 90%), color-mix(in srgb, var(--b-primary), var(--b-mix) 80%));
+    --b-sch-event-indented-hover-background    : light-dark(color-mix(in srgb, var(--b-primary), var(--b-mix) 82%), color-mix(in srgb, var(--b-primary), var(--b-mix) 70%));
+    --b-sch-event-indented-selected-background : light-dark(color-mix(in srgb, var(--b-primary), var(--b-mix) 70%), color-mix(in srgb, var(--b-primary), var(--b-mix) 60%));
+}
+
+/* Theme meta data */
+.b-theme-info {
+    --b-theme-name             : "Material3";
+    --b-theme-filename         : "material3";
+    --b-theme-button-rendition : "tonal";
+    --b-theme-label-position   : "above";
+    --b-theme-overlap-label    : "true";
+    --b-theme-ripple           : "true";
+}

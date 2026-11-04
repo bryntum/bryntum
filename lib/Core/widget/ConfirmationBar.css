@@ -1,0 +1,5 @@
+/* @after Core/widget/Toolbar.css */
+
+.b-confirmation-bar {
+    --b-toolbar-justify-content : flex-end;
+}

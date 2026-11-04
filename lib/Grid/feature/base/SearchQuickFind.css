@@ -1,0 +1,49 @@
+/* Vars shared between Search & QuickFind */
+
+:root, :host {
+    /**
+     * Font-weight for the highlighted text in a search / quick find hit.
+     */
+    --b-quick-find-font-weight     : var(--b-grid-cell-font-weight);
+
+    /**
+     * Offset from cells edge for the badge with the hit number in a search / quick find hit.
+     */
+    --b-quick-find-badge-offset    : .4em;
+
+    /**
+     * Font-size for the badge with the hit number in a search / quick find hit.
+     */
+    --b-quick-find-badge-font-size : .7em;
+
+    /**
+     * Primary color for the search / quick find hits. Shades of it are used for the background and text color.
+     */
+    --b-quick-find-primary         : var(--b-secondary);
+
+    /**
+     * Text color for the badge with the hit number in a search / quick find hit.
+     */
+    --b-quick-find-badge-color     : var(--b-grid-header-color);
+}
+
+/* .b-colorize { */
+    /**
+     * Background color for the search / quick find hits. A shade of its primary color is used
+     */
+    /*--b-quick-find-background : var(--b-primary-95);*/
+
+    /**
+     * Background color for the search / quick find hits on a hovered row. A shade of its primary color is used
+     */
+    /*--b-quick-find-row-hover-background : var(--b-primary-95);*/
+/* } */
+
+.b-grid-row {
+    &.b-hover,
+    &.b-selected {
+        .b-colorize {
+            --b-quick-find-background : var(--b-quick-find-row-hover-background, var(--b-primary-95));
+        }
+    }
+}

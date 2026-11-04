@@ -1,0 +1,37 @@
+
+.b-calendar-full-week-button {
+    margin-inline-end : 1em;
+
+    .b-calendar:not(.b-calendar-include-weekends-button) & {
+        display : none;
+    }
+}
+
+.b-mode-selector {
+    /* handy https://blog.logrocket.com/understanding-min-content-max-content-fit-content-css */
+    flex-basis  : min-content;
+    flex-shrink : 0;
+
+    /* Displayed in a toolbar */
+    /* .b-toolbar-content > & > .b-button { */
+    /*     font-size : $button-toolbar-font-size; */
+    /* } */
+
+    &.b-minified {
+        > :not(.b-calendar-mode-button) {
+            display : none;
+        }
+    }
+
+    &:not(.b-minified) {
+        > .b-calendar-mode-button {
+            display : none;
+        }
+    }
+}
+
+.b-menu-item-key {
+    margin-inline-start : auto;
+    flex-basis          : 1em;
+    text-align          : center;
+}

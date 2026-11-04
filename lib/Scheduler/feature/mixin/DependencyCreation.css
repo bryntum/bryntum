@@ -1,0 +1,318 @@
+:root, :host {
+    /**
+     * Dependency terminal size
+     */
+    --b-dependency-terminal-size                     : 14px;
+
+    /**
+     * Dependency terminal offset from the event edge, negative values move away from the event
+     */
+    --b-dependency-terminal-offset                   : -4px;
+
+    /**
+     * Dependency terminal z-index
+     */
+    --b-dependency-terminal-z-index                  : calc(var(--b-event-resize-handle-zindex) + 1);
+
+    /**
+     * Dependency connector proxy z-index
+     */
+    --b-dependency-connector-z-index                 : 10;
+
+    /**
+     * Dependency terminal border width
+     */
+    --b-dependency-terminal-border-width             : 1px;
+
+    /**
+     * Dependency terminal border style
+     */
+    --b-dependency-terminal-border-style             : solid;
+
+    /**
+     * Dependency terminal border color. By default it matches event border color to match its look
+     */
+    --b-dependency-terminal-border-color             : inherit;
+
+    /**
+     * Color for a valid dependency line during creation
+     */
+    --b-dependency-valid-color                       : var(--b-color-green);
+
+    /**
+     * Color for an invalid dependency line during creation
+     */
+    --b-dependency-invalid-color                     : var(--b-color-red);
+
+    /**
+     * Color used in the header of the dependency creation tooltip when the dependency is valid
+     */
+    --b-dependency-tooltip-valid-header-color        : var(--b-dependency-valid-color);
+
+    /**
+     * Background used in the header of the dependency creation tooltip when the dependency is valid
+     */
+    --b-dependency-tooltip-valid-header-background   : color-mix(in srgb, var(--b-dependency-tooltip-valid-header-color), var(--b-mix) 90%);
+
+    /**
+     * Color used in the header of the dependency creation tooltip when the dependency is invalid
+     */
+    --b-dependency-tooltip-invalid-header-color      : var(--b-dependency-invalid-color);
+
+    /**
+     * Background used in the header of the dependency creation tooltip when the dependency is invalid
+     */
+    --b-dependency-tooltip-invalid-header-background : color-mix(in srgb, var(--b-dependency-tooltip-invalid-header-color), var(--b-mix) 90%);
+}
+
+/* .b-bryntum { */
+    /**
+     * Dependency terminal fill color
+     */
+    /*--b-dependency-terminal-color         : var(--b-primary-100);*/
+
+    /**
+     * Dependency terminal hover fill color
+     * @state Hovered
+     */
+    /*--b-dependency-terminal-hover-color   : var(--b-primary-90);*/
+
+    /**
+     * Color for a valid dependency terminal during creation
+     */
+    /*--b-dependency-terminal-valid-color   : color-mix(in oklab, var(--b-color-green), var(--b-mix) 70%);*/
+
+    /**
+     * Color for an invalid dependency terminal during creation
+     */
+    /*--b-dependency-terminal-invalid-color : color-mix(in oklab, var(--b-color-red), var(--b-mix) 70%);*/
+/* } */
+
+/* region Terminals */
+
+.b-dependencies {
+    .b-sch-event-wrap.b-hover {
+        z-index : calc(var(--b-events-zindex) + 101); /* Beat focused event */
+    }
+
+    .b-sch-event.b-sch-terminals-visible,
+    .b-gantt-task.b-sch-terminals-visible {
+        overflow : visible;
+    }
+
+    /* Highlight linked events */
+    &.b-highlighting {
+        /* Fade events and dependencies out, skipping segments since their parent will fade */
+        .b-sch-event-wrap .b-sch-event:where(:not(.b-sch-event-segment)),
+        .b-sch-dependency {
+            opacity : .3;
+
+            &.b-highlight {
+                opacity : 1;
+            }
+        }
+
+        .b-sch-resource-time-range {
+            opacity : .3;
+        }
+    }
+}
+
+/* The following rule is a workaround for a CSS inheritance limitation.
+   If `border-color` is set on a parent and the child uses a shorthand `border` property with `inherit`,
+   the child cannot inherit the parent's border color. This issue is reproducible in apps created by
+   `create-react-app`.*/
+.b-sch-terminals-visible .b-sch-terminal {
+    border-color : var(--b-dependency-terminal-border-color, inherit);
+}
+
+.b-sch-terminal {
+    border-style                   : var(--b-dependency-terminal-border-style);
+    border-radius                  : 50%;
+    position                       : absolute;
+    cursor                         : pointer;
+
+    background-color               : var(--b-dependency-terminal-color, var(--b-primary-100));
+    border-width                   : var(--b-dependency-terminal-border-width);
+    height                         : var(--b-dependency-terminal-size);
+    width                          : var(--b-dependency-terminal-size);
+
+    /* Push the terminals outside the event bar a little. */
+    --bi-terminal-start-end-offset : 80%;
+    z-index                        : var(--b-dependency-terminal-z-index);
+
+    @media (pointer : coarse) {
+        /* There has to be more separation for touch so that the terminal's */
+        /* extended touchable zone doesn't collide with the event's resizer handle. */
+        --bi-terminal-start-end-offset : 115%;
+
+        &::after {
+            content       : "";
+            height        : calc(var(--b-dependency-terminal-size) * 2);
+            width         : calc(var(--b-dependency-terminal-size) * 2);
+            border-radius : 50%;
+            position      : absolute;
+            transform     : translate(calc(var(--b-dependency-terminal-size) * -0.5 - 1), calc(var(--b-dependency-terminal-size) * -0.5 - 1));
+        }
+    }
+
+    &.b-sch-terminal:hover {
+        --b-dependency-terminal-color : var(--b-dependency-terminal-hover-color, var(--b-primary-90));
+    }
+
+    /* Not visible when the scheduler is dragging or resizing an event */
+    .b-dragging &,
+    .b-sch-event-resizing & {
+        display : none;
+    }
+}
+
+.b-creating-dependency {
+    .b-sch-terminal:hover,
+    .b-sch-terminal-active {
+        --b-dependency-terminal-color : var(--b-dependency-terminal-hover-color, var(--b-primary-90));
+
+        &.b-valid {
+            --b-dependency-terminal-border-color : var(--b-dependency-valid-color);
+            --b-dependency-terminal-color        : var(--b-dependency-terminal-valid-color, color-mix(in oklab, var(--b-color-green), var(--b-mix) 70%));
+        }
+
+        &.b-invalid {
+            --b-dependency-terminal-border-color : var(--b-dependency-invalid-color);
+            --b-dependency-terminal-color        : var(--b-dependency-terminal-invalid-color, color-mix(in oklab, var(--b-color-red), var(--b-mix) 70%));
+        }
+    }
+
+    * {
+        touch-action : none;
+    }
+}
+
+.b-sch-terminal-top {
+    top                : var(--b-dependency-terminal-offset);
+    inset-inline-start : 50%;
+    translate          : -50% -80%;
+}
+
+.b-sch-terminal-bottom {
+    bottom             : var(--b-dependency-terminal-offset);
+    inset-inline-start : 50%;
+    translate          : -50% 80%;
+}
+
+.b-sch-terminal-start {
+    inset-inline-start : var(--b-dependency-terminal-offset);
+    top                : 50%;
+    translate          : calc((var(--bi-terminal-start-end-offset) * -1) * var(--b-rtl-negate)) -50%;
+}
+
+.b-sch-terminal-end {
+    inset-inline-end : var(--b-dependency-terminal-offset);
+    top              : 50%;
+    translate        : calc(var(--bi-terminal-start-end-offset) * var(--b-rtl-negate)) -50%;
+}
+
+.b-sch-terminal-hover-area {
+    grid-area    : body;
+    width        : calc(100% + var(--b-dependency-terminal-offset) * -2 + var(--b-dependency-terminal-size) * 0.8);
+    height       : calc(100% + var(--b-dependency-terminal-offset) * -2 + var(--b-dependency-terminal-size) * 0.8);
+    justify-self : center;
+    align-self   : center;
+}
+
+/* Position left & right terminals differently for milestones, unless using milestone layout mode in which case they */
+/* are handled as normal events */
+.b-scheduler-base:not(.b-sch-layout-milestones) .b-milestone:not(.b-sch-event-with-icon),
+.b-gantt:not(.b-sch-layout-milestones) .b-milestone:not(.b-gantt-task-withicon) {
+    .b-sch-terminal-start {
+        .b-labels-topbottom & {
+            translate : calc(-0.35em * var(--b-rtl-negate)) -50%;
+        }
+    }
+
+    .b-sch-terminal-end {
+        .b-labels-topbottom & {
+            translate : calc(0.35em * var(--b-rtl-negate)) -50%;
+        }
+    }
+}
+
+/* https://github.com/bryntum/bryntum/issues/12927 — diamond overhangs the box by --b-event-size / 2 in this layout */
+.b-scheduler-base.b-sch-layout-milestones:not(.b-sch-vertical) .b-milestone-wrap:not(.b-sch-vertical) .b-milestone:not(.b-sch-event-with-icon) {
+    .b-sch-terminal-start {
+        inset-inline-start : calc(var(--b-dependency-terminal-offset) - var(--b-event-size) * 0.5px);
+    }
+
+    .b-sch-terminal-end {
+        inset-inline-end : calc(var(--b-dependency-terminal-offset) - var(--b-event-size) * 0.5px);
+    }
+}
+
+/* endregion */
+
+/* region Proxy */
+
+.b-sch-dependency-connector {
+    position         : absolute;
+    contain          : strict;
+    border-top       : 2px dashed var(--b-dependency-color);
+    transform-origin : 0 0;
+    pointer-events   : none;
+    z-index          : var(--b-dependency-connector-z-index);
+
+    &.b-removing {
+        transition : width 0.2s ease-out;
+    }
+
+    &.b-valid {
+        border-color     : var(--b-dependency-valid-color);
+        border-top-style : solid;
+    }
+}
+
+/* endregion */
+
+/* region Tooltip */
+
+.b-sch-dependency-creation-tooltip {
+    --b-panel-header-font-size    : 0.8em;
+    --b-panel-with-header-padding : 1em;
+    --b-panel-header-gap          : .5em;
+
+    &.b-popup {
+        max-width : none;
+    }
+
+    .b-popup-header {
+        padding    : 0.25em;
+
+        color      : var(--b-dependency-tooltip-valid-header-color);
+        background : var(--b-dependency-tooltip-valid-header-background);
+
+        /* https://github.com/bryntum/bryntum/issues/1388 */
+        .b-safari &,
+        .b-firefox & {
+            width : 1.5em;
+        }
+
+        i {
+            rotate        : 90deg;
+        }
+    }
+
+    .b-header-title {
+        justify-content : center;
+    }
+
+    &.b-invalid .b-popup-header {
+        color      : var(--b-dependency-tooltip-invalid-header-color);
+        background : var(--b-dependency-tooltip-invalid-header-background);
+
+    }
+
+    &.b-checking .b-popup-header {
+        background-color : var(--b-neutral-50);
+    }
+}
+
+/* endregion */

@@ -1,0 +1,657 @@
+:root, :host {
+    /**
+     * Calendar event focus z-index
+     */
+    --b-calendar-event-focus-z-index                  : 3;
+
+    /**
+     * Calendar event active z-index (above clusters)
+     */
+    --b-calendar-event-active-z-index                 : 10;
+
+    /**
+     * Calendar event wrap z-index (long running events atop following cells)
+     */
+    --b-calendar-event-wrap-z-index                   : 1;
+
+    /**
+     * Event bars inner gap
+     */
+    --b-calendar-event-bar-gap                       : .5em;
+
+    /**
+     * Event bars start padding
+     */
+    --b-calendar-event-bar-padding-start             : .5em;
+
+    /**
+     * Intraday event color
+     */
+    --b-calendar-intraday-event-color                : var(--b-primary-30);
+
+    /**
+     * Focused event color
+     * @state Focused
+     */
+    --b-calendar-focused-event-color                 : var(--b-neutral-100);
+
+    /**
+     * Focused event background color
+     * @state Focused
+     */
+    --b-calendar-focused-event-background            : var(--b-color-green);
+
+    /**
+     * Intraday event hover background
+     * @state Hovered
+     */
+    --b-calendar-intraday-event-hover-background     : var(--b-neutral-95);
+
+    /**
+     * Event icon size (font-size)
+     */
+    --b-calendar-event-icon-size                     : 1em;
+
+    /**
+     * Event circle icon size (font-size)
+     */
+    --b-calendar-event-circle-icon-size              : .5em;
+
+    /**
+     * Solid event bar opacity
+     */
+    --b-calendar-solid-bar-opacity                   : .8;
+
+    /**
+     * Event avatar size
+     */
+    --b-calendar-event-avatar-size                   : 2em;
+
+    /**
+     * Font-weight for solid event bars (used in the all day area)
+     */
+    --b-calendar-solid-bar-font-weight               : 500;
+
+    /**
+     * Font-size for solid event bars (used in the all day area)
+     */
+    --b-calendar-solid-bar-font-size                 : 1em;
+
+    /**
+     * Text color for solid event bars when selected (all day events)
+     * @state Selected
+     */
+    --b-calendar-solid-bar-selected-color            : var(--b-neutral-100);
+
+    /**
+     * Event font-size
+     */
+    --b-calendar-event-font-size                     : .9em;
+
+    /**
+     * Event font-weight
+     */
+    --b-calendar-event-font-weight                   : 500;
+
+    /**
+     * Background color for the "+n more" button that appears when there are overflowing events.
+     *
+     * This defaults to transparent.
+     */
+    --b-overflow-button-background                   : unset;
+
+    --bi-calendar-event-bar-background-fade          : linear-gradient(color-mix(in srgb, var(--b-neutral-100), transparent 20%), color-mix(in srgb, var(--b-neutral-100), transparent 20%));
+    --bi-calendar-event-bar-hover-background-fade    : linear-gradient(color-mix(in srgb, var(--b-neutral-100), transparent 30%), color-mix(in srgb, var(--b-neutral-100), transparent 30%));
+    --bi-calendar-event-bar-selected-background-fade : linear-gradient(color-mix(in srgb, var(--b-neutral-100), transparent 40%), color-mix(in srgb, var(--b-neutral-100), transparent 40%));
+    --b-calendar-event-reveal-color                  : #fff;
+}
+
+.b-colorize {
+    /**
+     * Event color
+     */
+    --b-calendar-event-color                   : var(--b-primary);
+
+    /**
+     * Solid event bar background color
+     */
+    --b-calendar-solid-bar-background          : var(--b-primary-90);
+
+    /**
+     * Selected solid event bar background color
+     * @state Selected
+     */
+    --b-calendar-solid-bar-selected-background : var(--b-primary-40);
+
+    /**
+    * All day event color
+    */
+    --b-calendar-solid-bar-color               : var(--b-primary-40);
+}
+
+.b-internal {
+    --bi-arrow-margin         : null;
+    --bi-arrow-width          : null;
+    --bi-event-count-dot-size : null;
+    --bi-event-count-dot-gap  : null;
+    --bi-event-height         : null;
+}
+
+.b-cal-view-readonly {
+    filter     : grayscale(75%);
+    transition : filter 0.5s;
+}
+
+.b-show-events-dots {
+    --bi-event-count-dot-size : 4px;
+}
+
+/* Base rendition of Calendar events whether they are in a cell, or in an overflow Popup */
+.b-cal-event-wrap {
+    /* The :before, .event and :after are layed out as a flexbox row */
+    display     : flex;
+    transition  : opacity var(--b-default-transition-duration);
+
+    font-size   : var(--b-calendar-event-font-size);
+    font-weight : var(--b-calendar-event-font-weight);
+
+    /* Make read-only events a bit paler using grayscale filter */
+    &.b-read-only {
+        filter     : grayscale(75%);
+        transition : filter 0.5s;
+    }
+
+    .b-grid-row & {
+        transition : opacity var(--b-default-transition-duration)s;
+    }
+
+    .b-draggable-started & {
+        &:not(.b-dragging-item) {
+            pointer-events : none;
+        }
+
+        &.b-dragging-item {
+            opacity        : 0.5;
+            outline        : none;
+            /* So that mousemove target returns the underlying cell */
+            pointer-events : none;
+        }
+    }
+
+    /* Mouse shows invitation on hover */
+    &:hover {
+        cursor : pointer;
+    }
+
+    /* Non all day events *which have no bar* get a bar on hover */
+    &.b-intraday:not(.b-solid-bar, .b-custom-event-background) .b-cal-event {
+        .b-cal-event-body {
+            --b-calendar-event-color : var(--b-calendar-intraday-event-color);
+        }
+
+        &:hover {
+            background : var(--b-calendar-intraday-event-hover-background);
+        }
+    }
+
+    /* Navigation active rendition */
+    &:focus-visible {
+        outline : none;
+        z-index : var(--b-calendar-event-focus-z-index) !important;
+
+        .b-cal-event {
+            /* The outline must not be clipped when the event has arrow ends */
+            clip-path      : none !important;
+            outline        : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+            outline-offset : calc(var(--b-widget-focus-outline-width) * -1);
+        }
+    }
+
+    &.b-active:not(.b-dragging-item, .b-cut-item) {
+        clip    : unset;
+        /* Need to override the b-overflow rule for opacity : 0 */
+        /* opacity : 1 !important; */
+
+        /* Need to jump above other events in DayView clusters. */
+        z-index : var(--b-calendar-event-active-z-index) !important;
+    }
+
+    &.b-continues-past {
+        /* If configured to do so, budged continued from the past events */
+        /* so that the arrow is left of normal rectangular bar start point. */
+        /* This makes icons line up */
+        .b-offset-continues-past & {
+            margin-inline-start : var(--bi-arrow-margin);
+        }
+
+        &:not(.b-rtl) {
+            .b-cal-event {
+                padding-left : calc(var(--bi-arrow-width) + var(--b-calendar-event-bar-padding-start));
+                clip-path    : polygon(var(--bi-left-arrow-clip-path));
+            }
+        }
+
+        &.b-rtl {
+            .b-cal-event {
+                padding-right : calc(var(--bi-arrow-width) + var(--b-calendar-event-bar-padding-start));
+                clip-path     : polygon(var(--bi-right-arrow-clip-path));
+            }
+        }
+    }
+
+    &.b-continues-future:not(.b-rtl) {
+        .b-cal-event {
+            padding-right : calc(var(--bi-arrow-width) + var(--b-calendar-event-bar-padding-start));
+            clip-path     : polygon(var(--bi-right-arrow-clip-path));
+        }
+    }
+
+    &.b-continues-future.b-rtl {
+        .b-cal-event {
+            padding-left : calc(var(--bi-arrow-width) + var(--b-calendar-event-bar-padding-start));
+            clip-path    : polygon(var(--bi-left-arrow-clip-path));
+        }
+    }
+
+    &.b-continues-past.b-continues-future {
+        .b-cal-event {
+            clip-path : polygon(var(--bi-arrow-left-arrow-right-clip-path));
+        }
+    }
+
+    /* When textColor is specified in an eventRenderer, use it for the event text */
+    &.b-use-text-color .b-cal-event {
+        &,
+        .b-cal-event-body,
+        .b-event-header,
+        .b-cal-event-desc {
+            color : var(--bi-calendar-event-text-color) !important;
+        }
+
+        .b-icon {
+            color: var(--bi-calendar-event-text-color);
+        }
+    }
+
+    /* Transient states last because they must override*/
+    &.b-focused {
+        .b-cal-event {
+            background-color : var(--b-calendar-focused-event-background) !important;
+            color            : var(--b-calendar-focused-event-color) !important;
+        }
+    }
+
+    /* The coloured bar representing the span of the event */
+    .b-cal-event {
+        display         : flex;
+        align-items     : center;
+        flex            : 1 1 auto;
+        overflow        : hidden;
+        line-height     : 1;
+        transition      : background var(--b-default-transition-duration), color var(--b-default-transition-duration);
+        contain         : content;
+
+        border-radius   : var(--b-calendar-event-border-radius);
+        color           : var(--b-calendar-intraday-event-color);
+
+        --b-avatar-size : var(--b-calendar-event-avatar-size);
+
+        .b-icon:where(:not(.b-tool)) {
+            flex-shrink : 0;
+            display     : flex;
+        }
+    }
+
+    /* Placeholder avatars (a transparent DIV to maintain element sizing) don't have borders. */
+    /* Only real avatar images have borders. */
+    img.b-resource-avatar {
+        border : var(--b-resource-avatar-border-width) solid var(--b-calendar-event-color);
+    }
+
+    /* The solidBar render property is set by default for allDay and inter day events */
+    /* but an eventRenderer may set it */
+    &.b-solid-bar {
+        .b-cal-event {
+            background  : var(--b-calendar-solid-bar-background);
+            font-weight : var(--b-calendar-solid-bar-font-weight);
+            font-size   : var(--b-calendar-solid-bar-font-size);
+        }
+        .b-resource-avatar {
+            border : var(--b-resource-avatar-border-width) solid var(--b-resource-avatar-border-color);
+        }
+    }
+
+    .b-cal-event-resource-avatars {
+        gap            : inherit;
+        display        : flex;
+        flex-direction : row;
+        flex-shrink    : 0;
+    }
+
+    /* Invitation to click. resource{eventName} events are fired. */
+    :not(.b-calendar-cell)[data-resource-id] {
+        cursor : pointer;
+    }
+
+    .b-cal-event-body {
+        white-space : nowrap;
+        overflow    : hidden;
+
+        line-height : var(--b-day-view-event-name-line-height);
+
+        .b-cal-event-desc {
+            overflow      : hidden;
+            text-overflow : ellipsis;
+            line-height   : 1.2;
+            /* Without this, at line-height:1, the browser miscalculates the shrinkwrap height */
+            /* of the text and crops the last pixel. */
+            /* padding-block-end : 1px; */
+        }
+    }
+
+    .b-draggable-active .b-calendar-cell {
+        user-select         : none;
+        -webkit-user-select : none;
+    }
+
+}
+
+.b-cal-event-name {
+    flex          : 1;
+    overflow      : hidden;
+    text-overflow : ellipsis;
+    line-height   : var(--b-day-view-event-name-line-height);
+    min-height    : 1lh;
+}
+
+/* If an eventRenderer returns children, we set the b-cal-event-desc to flexbox so they can lay out */
+.b-cal-event-desc-complex {
+    display     : flex;
+    align-items : center;
+    gap         : var(--b-calendar-event-bar-gap);
+}
+
+/* General purpose container container of horizontal event *bars* with fixed height (month view + calendar row in */
+/* week view,agenda view cell) */
+/* Default align-items is stretch. OverflowPopup relies on this. */
+/* All other widgets explicitly width their event bars. */
+.b-cal-event-bar-container {
+    --bi-left-arrow-clip-path                        : 0 50%, var(--bi-arrow-width) 0, 100% 0, 100% 100%, var(--bi-arrow-width) 100%;
+    --bi-right-arrow-clip-path                       : 0 0, calc(100% - var(--bi-arrow-width)) 0, 100% 50%, calc(100% - var(--bi-arrow-width)) 100%, 0 100%;
+    --bi-arrow-left-arrow-right-clip-path            : 0 50%, var(--bi-arrow-width) 0, calc(100% - var(--bi-arrow-width)) 0, 100% 50%, calc(100% - var(--bi-arrow-width)) 100%, var(--bi-arrow-width) 100%;
+
+    flex      : 1;
+    display   : flex;
+    flex-flow : column;
+    overflow  : visible;
+
+    /* "Selected" rendition. */
+    /* Only applies to non allDay events. */
+    /* AllDay already have a background */
+    .b-cal-event-wrap {
+        &:not(.b-solid-bar) {
+            &.b-cal-event-reveal,
+            &.b-editing,
+            &.b-selected,
+            &.b-active {
+                .b-cal-event {
+                    background : var(--b-calendar-event-color);
+
+                    &:hover {
+                        background : var(--b-calendar-event-color);
+                    }
+
+                    .b-cal-event-icon,
+                    .b-cal-recurrence-icon,
+                    .b-cal-event-body {
+                        color : var(--b-calendar-event-reveal-color);
+                    }
+                }
+            }
+        }
+
+        &.b-solid-bar {
+            opacity : var(--b-calendar-solid-bar-opacity);
+
+            &.b-cal-event-reveal,
+            &.b-editing,
+            &:hover {
+                opacity : 1;
+            }
+
+            /* A dragged solid-bar (all-day) event uses the drag-dimming opacity, see #13390 */
+            &.b-dragging-item {
+                opacity : 0.5;
+            }
+
+            &.b-selected {
+                --b-calendar-solid-bar-background : var(--b-calendar-solid-bar-selected-background);
+
+                .b-cal-event, .b-cal-event-body {
+                    --b-calendar-solid-bar-color : var(--b-calendar-solid-bar-selected-color);
+                }
+            }
+        }
+    }
+
+    /* Non solid bar events in DayCellRenderer + overflow uses color to pick out the icon */
+    .b-cal-event-wrap:not(.b-solid-bar) .b-cal-event .b-icon {
+        justify-content : center;
+        width           : var(--b-calendar-event-icon-size);
+
+        &::before {
+            font-size : var(--b-calendar-event-icon-size);
+        }
+
+        &.b-icon-circle::before {
+            font-size : var(--b-calendar-event-circle-icon-size);
+        }
+    }
+
+    .b-cal-event-wrap:not(.b-solid-bar, .b-use-text-color) .b-cal-event .b-icon {
+        color : var(--b-primary);
+    }
+
+    .b-cal-event {
+        /* Equal padding both ends so that text or trailing icons don't run right into the end */
+        padding : 0 var(--b-calendar-event-bar-padding-start);
+        gap     : var(--b-calendar-event-bar-gap);
+    }
+
+    .b-event-name {
+        display     : flex;
+        align-items : center;
+        gap         : 0.4em;
+    }
+
+    .b-solid-bar {
+        .b-event-time, .b-cal-event-desc, .b-icon {
+            color : var(--b-calendar-solid-bar-color);
+        }
+    }
+}
+
+.b-custom-event-background {
+    .b-cal-event {
+        background                      : var(--bi-calendar-event-bar-background-fade), var(--bi-calendar-event-bar-background);
+        --b-calendar-event-color        : var(--bi-calendar-event-bar-background-fade), var(--bi-calendar-event-bar-background);
+        --b-calendar-event-reveal-color : var(--b-neutral-0);
+    }
+
+    &:hover {
+        --bi-calendar-event-bar-background-fade : var(--bi-calendar-event-bar-hover-background-fade);
+    }
+
+    &.b-selected {
+        --bi-calendar-event-bar-background-fade : var(--bi-calendar-event-bar-selected-background-fade);
+    }
+}
+
+/* position : initial on ancestors of event bars is needed on Safari to prevent it converting
+  them to relative and thereby becoming offsetParent of event bars inside a .b-cal-event-bar-container */
+.b-day-cell-renderer .b-calendar-cell {
+    position : initial;
+}
+
+/* Day cell rendering specifics for horizontal event *bars* */
+.b-day-cell-renderer {
+    /*
+    * Height of the "+n more" button that appears when there are overflowing events.
+    *
+    * This defaults to the event height. This is private for now.
+    * Support for overflowButtonHeight is yet to be implemented in the API.
+    */
+    --b-overflow-button-height            : var(--bi-event-height);
+
+    .b-cal-event-bar-container {
+        /* It consumes the available cell height below the date/week number header */
+        flex-grow : 1;
+
+        /* Optimize DOM style computation. */
+        /* Cannot contain layout or size because OverflowPopups must shrinkwrap the event bars. */
+        contain   : style;
+        position  : initial;
+
+        /* The outer, positioning element */
+        .b-cal-event-wrap {
+            position      : absolute;
+
+            /* Width of 14.2857% (1/7th) of the .b-calendar row consumes the cell border. */
+            /* Pad the wrap so that the bar sits within the border. */
+            padding-right : calc(var(--b-month-view-cell-border-width) + var(--b-month-view-event-padding));
+            padding-left  : var(--b-month-view-event-padding);
+
+            /* long running events must sit atop following cells in the stacking order */
+            z-index       : var(--b-calendar-event-wrap-z-index);
+
+            /* If it is overflow from the previous cell, it must be invisible. */
+            /* They exist purely for accessibility. There must be accessible */
+            /* elements representing the data within the cells. */
+            &.b-overflow {
+                opacity        : 0;
+                pointer-events : none;
+                max-width      : 14%;
+
+                &:focus-visible {
+                    opacity        : 1;
+
+                    outline        : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+                    outline-offset : calc(var(--b-widget-focus-outline-width) * -1);
+
+                    .b-cal-event {
+                        outline : none;
+                    }
+                }
+            }
+        }
+    }
+
+    /* The +1 more button when it's not itself a day cell (YearView) */
+    /* or the "No events" button. */
+    .b-cal-cell-overflow:not(.b-calendar-cell), .b-cal-cell-no-content {
+        flex            : 0 0 auto;
+        align-self      : stretch;
+        text-align      : center;
+        white-space     : nowrap;
+        cursor          : pointer;
+        font-family     : inherit;
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        border          : 0 none;
+        background      : var(--b-overflow-button-background);
+        text-overflow   : ellipsis;
+        overflow        : hidden;
+
+        border-radius   : var(--b-calendar-cell-overflow-hover-border-radius);
+        color           : var(--b-calendar-cell-overflow-color);
+        line-height     : var(--b-overflow-button-height);
+        margin          : 0 var(--b-month-view-event-padding) var(--bi-event-spacing);
+        /* Same padding as event bars which it must match */
+        padding         : 0 var(--b-calendar-event-bar-padding-start);
+
+        &:hover, &:focus-within {
+            background : var(--b-calendar-cell-overflow-hover-background);
+            color      : var(--b-calendar-cell-overflow-hover-color);
+        }
+
+        &.b-active {
+            font-weight    : bold;
+            letter-spacing : normal;
+            color          : var(--b-calendar-cell-active-overflow-color);
+            outline-color  : var(--b-primary-30);
+        }
+
+        /* Compress on small UIs */
+        @media (max-width : 420px) {
+            font-size : 80%;
+        }
+    }
+
+    .b-cal-cell-no-content {
+        padding        : 0.1em 0;
+        white-space    : normal;
+        display        : inline-block;
+        line-height    : initial;
+        letter-spacing : 0.3px;
+    }
+
+    /* Last overflow item must not cause overflow */
+    .b-calendar-cell:last-child {
+        .b-cal-event-bar-container {
+            .b-cal-event-wrap.b-overflow {
+                right : 0;
+            }
+        }
+    }
+}
+
+/*
+ * Minimal event representation as dots within date picker cells
+ * It is docked to the bottom of the cell
+ */
+.b-cal-minimal-event-container {
+    flex-wrap       : wrap;
+    row-gap         : 1px;
+    opacity         : 0.6;
+    column-gap      : var(--bi-event-count-dot-gap);
+    min-height      : var(--bi-event-count-dot-size);
+    align-content   : end;
+
+    .b-cal-event-wrap {
+        position                          : static !important;
+        border-radius                     : 50%;
+        padding                           : 0 !important;
+
+        height                            : var(--bi-event-count-dot-size);
+        width                             : var(--bi-event-count-dot-size);
+
+        --b-calendar-solid-bar-background : var(--b-calendar-event-color);
+    }
+
+    .b-cal-event {
+        padding          : 0;
+
+        background-color : var(--b-calendar-event-color);
+    }
+
+    /* When the dots are striped, they are a single row of squares with no gaps, */
+    /* no rounding, and the ends of the stipe are rounded. */
+    .b-event-count-dots-striped & {
+        column-gap    : 0;
+        flex-wrap     : nowrap;
+        inset         : auto auto -2px auto;
+        border-radius : var(--bi-event-count-dot-size);
+        min-height    : fit-content;
+
+        .b-cal-event-wrap, .b-cal-event {
+            border-radius : 0;
+        }
+    }
+}
+
+/* Event highlighting - fades non-highlighted events */
+.b-calendar.b-is-highlighting .b-cal-event-wrap:not(.b-highlighted) {
+    transition : opacity 0.4s;
+    opacity    : .2;
+}

@@ -1,0 +1,33 @@
+:root, :host {
+    /**
+     * Resource menu item check icon (font icon)
+     */
+    --b-task-board-task-menu-resource-check-icon : "\f00c";
+}
+
+.b-resource-menu-item {
+    --b-avatar-size : 1.8em;
+
+    .b-resource-menu-item-inner {
+        display     : flex;
+        gap         : .5em;
+        align-items : center;
+    }
+
+    .b-resource-avatar {
+        opacity    : 0.5;
+        transition : opacity 0.2s;
+    }
+
+    &.b-checked .b-resource-avatar {
+        opacity : 1;
+    }
+
+    i.b-icon-unchecked::before {
+        content : '';
+    }
+
+    i.b-icon-checked::before {
+        content : var(--b-task-board-task-menu-resource-check-icon);
+    }
+}

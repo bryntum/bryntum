@@ -1,0 +1,11 @@
+/* Extends EventStyles from Scheduler, overriding some colors for Gantt */
+.b-gantt-task-wrap {
+    &.b-style-rounded {
+        --b-sch-event-background : var(--b-primary-85);
+        /* --b-percent-bar-background     : var(--b-primary-80); */
+    }
+
+    &.b-style-tonal {
+        --b-sch-event-font-weight : 500;
+    }
+}

@@ -1,0 +1,25 @@
+/* @after Core/widget/TextField.css */
+
+:root, :host {
+    /**
+     * Padding
+     */
+    --b-text-area-field-padding : var(--b-widget-padding);
+}
+
+.b-text-area-field {
+    height : auto;
+
+    .b-field-inner {
+        height                       : 100%;
+
+        --b-text-field-input-padding : var(--b-text-area-field-padding);
+    }
+
+    textarea {
+        font-family : inherit;
+        height      : 100%;
+
+        min-height  : var(--b-text-field-input-height);
+    }
+}

@@ -1,0 +1,557 @@
+:root, :host {
+    /**
+     * Event font weight (overridden by event styles)
+     */
+    --b-sch-event-font-weight          : 400;
+
+    /**
+     * Event padding inline
+     */
+    --b-sch-event-padding-inline       : var(--b-widget-padding);
+
+    /**
+     * Event padding block
+     */
+    --b-sch-event-padding-block        : 0em;
+
+    /**
+     * Event transitions that are always enabled (for hover effects)
+     */
+    --b-sch-event-transition           : border var(--b-default-transition-duration), border-radius var(--b-default-transition-duration), color var(--b-default-transition-duration), padding var(--b-default-transition-duration), opacity var(--b-default-transition-duration);
+
+    /**
+     * Event transitions that are enabled when Scheduler is animating
+     */
+    --b-sch-event-animating-transition : border var(--b-default-transition-duration), border-radius var(--b-default-transition-duration), background-color var(--b-default-transition-duration), color var(--b-default-transition-duration), padding var(--b-default-transition-duration), opacity var(--b-default-transition-duration), inset var(--b-default-transition-duration), width var(--b-default-transition-duration), height var(--b-default-transition-duration);
+
+    /**
+     * Event cursor
+     */
+    --b-sch-event-cursor               : pointer;
+
+    /**
+     * Event opacity (overridden by event styles)
+     */
+    --b-sch-event-opacity              : 1;
+
+    /**
+     * Event border-width. Must include a unit even when 0, for calculations to be correct  (overridden by event styles)
+     */
+    --b-sch-event-border-width         : 0px; /* Not 0, for milestone size to be correct */
+
+    /**
+     * Event width reduction, to leave a small gap between events that end / start at the same time
+     */
+    --b-sch-event-width-reduction      : 1px;
+
+    /**
+     * Events min-width (height in vertical mode), to ensure even very short events are visible
+     */
+    --b-sch-event-min-size             : 6px;
+
+    /**
+     * Event content width (when not using sticky events)
+     */
+    --b-sch-event-content-width        : 100%;
+
+    /**
+     * Event content height (when not using sticky events)
+     */
+    --b-sch-event-content-height       : 100%;
+
+    /**
+     * Event border radius (overridden by event styles)
+     */
+    --b-sch-event-border-radius        : null;
+
+    /**
+     * Event border style (overridden by event styles)
+     */
+    --b-sch-event-border-style         : null;
+
+    /**
+     * Event box-shadow (overridden by event styles)
+     */
+    --b-sch-event-box-shadow           : null;
+
+    /**
+     * Event font size (overridden by event styles)
+     */
+    --b-sch-event-font-size            : null;
+
+    /**
+     * Gap between milestone diamond and its label
+     */
+    --b-sch-milestone-gap              : 0.5em;
+
+    /**
+     * Milestone border width (overridden by event styles)
+     */
+    --b-sch-milestone-border-width     : var(--b-sch-event-border-width);
+
+    /**
+     * Event background color (overridden by event styles)
+     */
+    /* --b-sch-event-background          : null; */
+
+    /**
+     * Event border color (overridden by event styles)
+     */
+    --b-sch-event-border-color         : var(--b-sch-event-background);
+
+    /**
+     * Event text color (overridden by event styles)
+     */
+    /* --b-sch-event-color                     : null; */
+
+    /**
+     * Hovered event's background color (overridden by event styles)
+     * @state Hovered
+     */
+    /* --b-sch-event-hover-background    : null; */
+
+    /**
+     * Selected event's background color (overridden by event styles)
+     * @state Selected
+     */
+    /* --b-sch-event-selected-background : null; */
+
+    /**
+     * Event wrap z-index
+     */
+    --b-sch-event-wrap-z-index             : 1;
+
+    /**
+     * Scheduler event z-index (above dependency terminal hover area)
+     */
+    --b-sch-event-z-index                  : 1;
+
+    /**
+     * Active/focused event z-index
+     */
+    --b-sch-event-active-z-index           : 100;
+
+    /**
+     * Milestone diamond z-index
+     */
+    --b-sch-milestone-diamond-z-index      : 0;
+}
+
+.b-grid-row {
+    /* Applied programmatically when a resource has an eventColor defined, this is a fallback for when it does not */
+    --b-resource-event-color : var(--b-primary);
+}
+
+.b-scrolling {
+    --b-sch-event-transition : none;
+}
+
+.b-sch-event-wrap {
+    position              : absolute;
+    display               : grid;
+    outline               : none;
+    contain               : layout style;
+    align-items           : center;
+    pointer-events        : all;
+    /* top, bottom, before & after for labels */
+    /* first & last for travel time */
+    grid-template-areas   :
+      "top    top    top    top    top"
+      "before start  body   end  after"
+      "bottom bottom bottom bottom bottom";
+
+    grid-template-columns : 0 auto 1fr auto 0;
+    grid-template-rows    : min-content auto min-content;
+    z-index               : var(--b-sch-event-wrap-z-index);
+
+    opacity               : var(--b-sch-event-opacity);
+    transition            : var(--b-sch-event-transition);
+
+    &:where(:not(.b-milestone-wrap)) {
+        min-width : var(--b-sch-event-min-size);
+    }
+
+    .b-animating:not(.b-event-buffer-transition,.b-sub-grid-width-transition) &:not(.b-dragging, .b-sch-event-wrap-resizing, .b-reusing-own) {
+        --b-sch-event-transition : var(--b-sch-event-animating-transition);
+    }
+
+    &:hover,
+    &.b-hover,
+    &.b-sch-event-wrap-resizing {
+        --b-sch-event-background : var(--b-sch-event-hover-background);
+    }
+
+    &.b-selected {
+        --b-sch-event-background : var(--b-sch-event-selected-background);
+    }
+
+    .b-using-keyboard &.b-active .b-sch-event {
+        outline : var(--b-grid-cell-focused-outline-width) solid var(--b-grid-cell-focused-outline-color);
+    }
+
+    /* Event removed, fade out */
+    &.b-removing {
+        transition : opacity .3s;
+        opacity    : 0;
+    }
+
+    /* Row removed or collapsed away, fade and shrink */
+    &.b-remove-remove,
+    &.b-toggle-remove {
+        transition : opacity var(--b-default-transition-duration), max-height var(--b-default-transition-duration);
+        opacity    : 0;
+        max-height : 0;
+    }
+
+    &.b-toggle-add {
+        animation : b-anim-toggle-add .3s !important;
+    }
+
+    &.b-sch-vertical {
+        /* top, bottom, before & after for labels */
+        /* first & last for travel time */
+        grid-template-areas   :
+          "top    top    top"
+          "above  above  above"
+          "start  start  start"
+          "before body   after"
+          "end    end    end"
+          "below  below  below"
+          "bottom bottom bottom";
+
+        grid-template-columns : min-content auto min-content;
+        grid-template-rows    : 0 auto auto 1fr auto auto 0;
+
+        /* Non-milestone events in vertical mode */
+        &:where(:not(.b-milestone-wrap)) {
+            --b-sch-event-padding-inline : 1em;
+            --b-sch-event-padding-block  : 1em;
+
+            .b-sch-event-content {
+                white-space : normal;
+                line-height : normal;
+                align-items : flex-start;
+            }
+
+            .b-sch-event-narrow .b-sch-event-content {
+                flex-direction : column;
+                align-items    : center;
+            }
+        }
+
+        /* All events in vertical mode */
+        .b-sch-event-narrow {
+            .b-event-text-wrap {
+                white-space  : nowrap;
+                writing-mode : vertical-rl;
+            }
+        }
+    }
+
+    /* No mouse interactions during *vertical* scrolling. */
+    /* During horizontal scrolling we still need events to be present for the mouse */
+    /* so that hovering still applies when scrolling left/right and the EventTooltip stays visible. */
+    .b-grid-body-container.b-scrolling & {
+        pointer-events : none;
+    }
+
+    .b-timeline-base:not(.b-sch-vertical.b-event-layout-mixed,.b-dragging-event) & {
+        &.b-hover,
+        &.b-selected,
+        &:focus {
+            /*Need important to override milestone z-index below.*/
+            /*Active element of whatever type is always on top.*/
+            z-index : var(--b-sch-event-active-z-index) !important;
+        }
+    }
+
+    /*Focused event floats in the z-index stack to hover above the rest*/
+    .b-sch-vertical.b-event-layout-mixed & {
+        &:focus {
+            z-index : var(--b-sch-event-active-z-index) !important;
+        }
+    }
+}
+
+/* TODO Use the new way of transitioning from auto? */
+.b-sch-event-wrap:where(:not(.b-sch-vertical)) {
+    /* To be able to transition it on group collapse */
+    max-height : calc(var(--b-event-size) * 1px);
+}
+
+@keyframes b-anim-toggle-add {
+    0% {
+        opacity    : 0;
+        max-height : 0;
+    }
+    100% {
+        opacity    : 1;
+        max-height : calc(var(--b-event-size) * 1px);
+    }
+}
+
+.b-sch-event {
+    display      : flex;
+    align-items  : center;
+    white-space  : nowrap;
+    grid-area    : body;
+    position     : relative;
+    min-height   : 0;
+    height       : 100%;
+    opacity      : 1;
+    z-index      : var(--b-sch-event-z-index); /* Above dependency terminal hover area */
+    transition   : opacity var(--b-default-transition-duration); /* For highlighting */
+
+    border-color : var(--b-sch-event-border-color);
+    min-width    : var(--b-sch-event-min-size);
+    width        : calc(100% - var(--b-sch-event-width-reduction));
+
+    /* Style the event bar for normal events & "wide milestones", the pseudo diamond for milestones, */
+    /* or the content for icon milestones */
+    &:where(:not(.b-milestone)),
+    &.b-wide-milestone,
+    &.b-milestone .b-sch-event-content::before {
+        border-width : var(--b-sch-event-border-width);
+        border-style : var(--b-sch-event-border-style);
+        box-shadow   : var(--b-sch-event-box-shadow);
+        color        : var(--b-sch-event-color);
+        cursor       : var(--b-sch-event-cursor);
+        font-weight  : var(--b-sch-event-font-weight);
+        transition   : var(--b-sch-event-transition);
+    }
+
+    /* Rules that do not apply to wide milestones */
+    &:where(:not(.b-milestone)),
+    &.b-milestone .b-sch-event-content::before {
+        border-radius : var(--b-sch-event-border-radius);
+    }
+
+    /* Rules that only apply to wide milestones */
+    &.b-wide-milestone {
+        border-inline : none;
+    }
+
+    &:where(:not(.b-milestone)) {
+        overflow   : clip;
+
+        background : var(--b-sch-event-background);
+    }
+}
+
+.b-sch-event-content {
+    display       : flex;
+    overflow      : clip;
+    text-overflow : ellipsis;
+    position      : relative;
+    line-height   : 1.2em;
+    align-items   : center;
+    min-width     : 0; /* For flex to work as expected */
+    gap           : 0.5em;
+
+    font-size     : var(--b-sch-event-font-size);
+    margin-inline : var(--b-sch-event-padding-inline);
+    padding-block : var(--b-sch-event-padding-block);
+
+    width         : var(--b-sch-event-content-width);
+    height        : var(--b-sch-event-content-height);
+
+    > i {
+        line-height : inherit;
+    }
+}
+
+/* region Milestones */
+
+/* Milestone styling shared with Gantt found in Milestones.css */
+
+.b-milestone-wrap {
+    /* Vertical mode */
+    &:where(.b-sch-vertical) {
+        justify-items : center;
+
+        .b-milestone {
+            .b-sch-event-content {
+                display       : grid;
+                /* Not using a var here to make it harder for apps to accidentally break milestones*/
+                padding-block : 0;
+            }
+
+            label {
+                justify-self      : center;
+                inset-block-start : calc(var(--b-event-size) * .8px + var(--b-sch-milestone-border-width, 0));
+            }
+        }
+    }
+
+    /* The measuring element for milestones */
+    &.b-measure {
+        height             : 1em;
+        position           : fixed;
+        top                : -10000px;
+        inset-inline-start : -10000px;
+        visibility         : hidden;
+
+        label {
+            /* Needed to correct for fallback font. */
+            font-weight : 400;
+        }
+    }
+
+    /* When the Scheduler is using laid out milestones */
+    .b-sch-layout-milestones & {
+        margin         : 0;
+        min-width      : 0;
+        flex-direction : row;
+
+        /* Focus ring goes on the outermost element */
+        .b-using-keyboard &.b-active {
+            /* outline        : var(--b-grid-cell-focused-outline-width) solid var(--b-grid-cell-focused-outline-color); */
+            outline-offset : 3px;
+        }
+
+        &.b-active {
+            /* Not the first diamond or event element */
+            .b-sch-event.b-milestone,
+            .b-sch-event.b-milestone:before {
+                outline : none;
+            }
+        }
+
+        .b-sch-event.b-milestone {
+            position           : relative;
+            min-width          : 0;
+            padding            : 0;
+            align-self         : stretch;
+            display            : flex;
+            align-items        : center;
+            justify-content    : center;
+
+            background         : var(--b-sch-event-background);
+            inset-inline-start : calc(0.5 * var(--b-milestone-size));
+            width              : calc(100% - var(--b-milestone-size)); /* Diamonds stick out on each side */
+
+            .b-sch-event-content {
+                justify-content : center;
+                z-index         : var(--b-sch-event-z-index);
+
+                /* Hide default milestone diamond */
+                &::before {
+                    content : none;
+                }
+            }
+
+            &::before,
+            &::after {
+                /* Needs to inherit the background colour */
+                background   : inherit;
+
+                position     : absolute;
+                content      : ' ';
+                height       : calc(var(--b-milestone-size) * 0.707107);
+                aspect-ratio : 1 / 1;
+                /* border     : inherit; */
+                z-index      : var(--b-sch-milestone-diamond-z-index);
+            }
+
+            /* Reposition milestone diamond */
+            &::before {
+                top                : 50%;
+                inset-inline-start : 0;
+                transform-origin   : 50% 50%;
+                transform          : translate(-50%, -50%) rotate(45deg);
+            }
+
+            /* Need another diamond on right side which rotates anticlockwise */
+            /* from its 100%, 0 point which is at right:0. This makes it */
+            /* extend rightwards */
+            &::after {
+                top              : var(--bi-milestone-end-diamond-offset, 0);
+                inset-inline-end : 0;
+                rotate           : -45deg;
+                transform-origin : 100% 0;
+            }
+        }
+
+        /* The measuring element when we're using layout-milestones */
+        &.b-measure .b-sch-event.b-milestone {
+            width : calc(100% + var(--b-milestone-size));
+        }
+    }
+
+    /* Displaying text on the diamond instead of after */
+    .b-sch-layout-milestone-text-position-inside & .b-milestone {
+        label {
+            margin-inline-start : 0;
+            inset-inline-start  : 50%;
+            translate           : -50%;
+        }
+    }
+}
+
+/* endregion */
+
+/* region Initial animation */
+
+.b-initial-fade-in {
+    /* For the other initial animations it is enough with live drawing of dependencies, */
+    /* but for fading dependencies also need to fade in for it to look good */
+    .b-sch-dependency,
+    .b-sch-event-wrap {
+        opacity             : 0;
+        animation-name      : b-anim-initial-fade-in;
+        animation-duration  : .5s;
+        animation-fill-mode : forwards;
+    }
+}
+
+@keyframes b-anim-initial-fade-in {
+    0% {
+        opacity : 0;
+    }
+    100% {
+        opacity : 1;
+    }
+}
+
+.b-initial-zoom-in .b-sch-event-wrap {
+    animation-name            : b-anim-initial-zoom-in;
+    animation-duration        : .4s;
+    animation-timing-function : ease-in;
+}
+
+@keyframes b-anim-initial-zoom-in {
+    0% {
+        transform : scale(0.01);
+    }
+    100% {
+        transform : scale(1);
+    }
+}
+
+.b-initial-slide-from-left .b-sch-event-wrap {
+    transform           : translateX(-100vw);
+    animation-name      : b-anim-initial-slide-from-left;
+    animation-duration  : .7s;
+    animation-fill-mode : forwards;
+}
+
+@keyframes b-anim-initial-slide-from-left {
+    100% {
+        transform : translateX(0);
+    }
+}
+
+.b-initial-slide-from-top .b-sch-event-wrap {
+    transform           : translateY(-100vh);
+    animation-name      : b-anim-initial-slide-from-top;
+    animation-duration  : .7s;
+    animation-fill-mode : forwards;
+}
+
+@keyframes b-anim-initial-slide-from-top {
+    100% {
+        transform : translateY(0);
+    }
+}
+
+/* endregion */

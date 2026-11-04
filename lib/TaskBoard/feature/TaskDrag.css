@@ -1,0 +1,99 @@
+/* @after TaskBoard/view/TaskBoardBase.css */
+
+:root, :host {
+    /**
+     * Dragged cards box shadow
+     */
+    --b-task-board-task-drag-card-box-shadow    : 0 0 12px rgba(0, 0, 0, 0.2);
+
+    /**
+     * Dragged cards transform (slight rotation by default)
+     */
+    --b-task-board-task-drag-card-transform     : rotate(5deg);
+
+    /**
+     * Drop indicator background
+     */
+    --b-task-board-task-drag-drop-background    : var(--b-neutral-97);
+
+    /**
+     * Drop indicator border
+     */
+    --b-task-board-task-drag-drop-border        : 2px dashed var(--b-neutral-93);
+
+    /**
+     * Invalid drop indicator background
+     */
+    --b-task-board-task-drag-invalid-background : #c6282811;
+
+    /**
+     * Invalid drop indicator border color
+     */
+    --b-task-board-task-drag-invalid-color      : var(--b-color-red);
+
+    /**
+     * Task board task drag proxy z-index
+     */
+    --b-task-board-task-drag-proxy-z-index      : 3;
+}
+
+.b-task-board-card {
+    /* Hide original card */
+    &.b-drag-original {
+        display : none;
+    }
+}
+
+.b-task-board-drag-proxy {
+    position       : absolute;
+    pointer-events : none;
+    contain        : style layout size;
+    /* Override column styling */
+    border         : none;
+    box-shadow     : none;
+    border-radius  : 0;
+    z-index        : var(--b-task-board-task-drag-proxy-z-index);
+
+    .b-task-board-card {
+        /* Cancel out the b-selected scale animation, otherwise it wont transition rotation here */
+        animation  : none;
+
+        position   : absolute;
+        transition : transform .2s, left .2s, top .2s, color .2s, background-color .2s, border .2s;
+
+        transform  : var(--b-task-board-task-drag-card-transform);
+        box-shadow : var(--b-task-board-task-drag-card-box-shadow);
+
+        &:first-child {
+            transform : none;
+        }
+    }
+
+    /* Get rid of the rotation, otherwise it will be factored in when translating later */
+    &.b-pre-dropping .b-task-board-card {
+        transform  : none;
+        transition : none;
+    }
+
+    /* Will be translated to correct position, transition that */
+    &.b-dropping .b-task-board-card {
+        transition : top .2s, left .2s, box-shadow .2s, opacity .2s, scale .2s;
+        box-shadow : var(--b-task-board-card-box-shadow);
+
+        &.b-dropped-on-collapsed {
+            opacity : 0;
+            scale   : 0;
+        }
+    }
+}
+
+.b-task-board-card-drop-indicator {
+    border-radius : var(--b-task-board-card-border-top-radius) var(--b-task-board-card-border-top-radius) var(--b-task-board-card-border-bottom-radius) var(--b-task-board-card-border-bottom-radius);
+    background    : var(--b-task-board-task-drag-drop-background);
+    border        : var(--b-task-board-task-drag-drop-border);
+
+    &.b-invalid {
+        background   : var(--b-task-board-task-drag-invalid-background);
+        border-color : var(--b-task-board-task-drag-invalid-color);
+    }
+}

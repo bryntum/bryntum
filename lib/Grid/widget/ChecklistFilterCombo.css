@@ -1,0 +1,21 @@
+.b-checklist-filter-combo-picker.b-panel {
+    padding               : 0;
+    --b-panel-padding     : 0;
+    --b-list-item-padding : 0.75em var(--b-widget-padding);
+
+    [data-ref=searchField] {
+        width : 100%;
+    }
+
+    .b-list-item-content {
+        display : flex;
+    }
+
+    .b-checklist-filter-combo-item-text {
+        flex-grow : 1;
+    }
+
+    .b-bottom-toolbar {
+        --b-toolbar-padding : var(--b-widget-padding);
+    }
+}

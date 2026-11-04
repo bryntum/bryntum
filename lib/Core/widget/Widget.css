@@ -1,0 +1,871 @@
+:root, :host {
+    --bryntum-version                     : "8.0.1";
+
+    /* TODO Defined here since shared between checkbox & list */
+    --b-checkbox-checked-check-content    : "\f00c";
+
+    /* TODO Rename --b-widget-padding etc to --b-default-padding */
+
+    /**
+     * Inline size of the anchor for an anchored floating widget
+     */
+    --b-widget-anchor-width               : 1.2em;
+
+    /**
+     * Block size of the anchor for an anchored floating widget
+     */
+    --b-widget-anchor-height              : .6em;
+
+    /* --b-widget-border-radius           : .4em; */
+
+    /**
+     * Widget font-size. Defaults to 1em = the font size used by the parent element.
+     */
+    --b-widget-font-size                  : 1em;
+
+    /**
+     * Widget font-weight
+     */
+    --b-widget-font-weight                : 400;
+
+    /**
+     * The default themes use Font Awesome 6 Free for icons. If you use a different icon font, you can override this
+     * variable. Note that you will also have to override the individual icon classes.
+     */
+    --b-widget-icon-font-family           : "Font Awesome 6 Free";
+
+    /**
+     * The font-weight used for icons. The default themes use Font Awesome 6 Free solid icons which require
+     * font-weight 900.
+     */
+    --b-widget-icon-font-weight           : 900;
+
+    /**
+     * Which character of the icon font to use for sub-menu icons
+     */
+    --b-widget-sub-menu-icon              : "\f0da"; /* fa-caret-right */
+
+    /**
+     * Base color for text etc. Where it is applied may vary depending on theme
+     */
+    --b-widget-color                      : var(--b-text-1);
+
+    --b-widget-border-color               : var(--b-border-3);
+
+    /**
+     * Base color for disabled widgets. Where it is applied may vary depending on theme
+     * @state Disabled
+     */
+    --b-widget-disabled-color             : var(--b-text-3);
+
+    /**
+     * Base background for disabled widgets. Where it is applied may vary depending on theme
+     * @state Disabled
+     */
+    --b-widget-disabled-background        : var(--b-neutral-90);
+
+    /**
+     * Base padding. Where it is applied may vary depending on theme
+     */
+    --b-widget-padding                    : 1em;
+
+    /**
+     * Base padding for widgets that want a larger padding. Where it is applied may vary depending on theme
+     */
+    --b-widget-padding-large              : 1.5em;
+
+    /**
+     * Base gap. Where it is applied may vary depending on theme
+     */
+    --b-widget-gap                        : 1em;
+
+    /**
+     * Base focus outline width. Where it is applied may vary depending on theme
+     */
+    --b-widget-focus-outline-width        : 2px;
+
+    /**
+     * Base focus outline color. Where it is applied may vary depending on theme
+     */
+    --b-widget-focus-outline-color        : var(--b-primary);
+
+    /**
+     * Base box shadow used by floating widgets like popups and menus. Where it is applied may vary depending on theme
+     */
+    --b-widget-floating-box-shadow        : var(--b-elevation-2);
+
+    /**
+     * Box shadow used by floating widgets which are aligned above their target, so that the shadow extends above.
+     */
+    --b-aligned-above-floating-box-shadow : -3px -1px 6px rgba(0, 0, 0, 0.12), 3px -2px 6px rgba(0, 0, 0, 0.24);
+
+    /**
+     * Base border for floating widgets like popups and menus. Where it is applied may vary depending on theme
+     */
+    --b-widget-floating-border            : null;
+
+    /**
+     * Base label color. Defined in Widget since some widgets have labels that do not use the Label widget
+     */
+    --b-label-color                       : var(--b-widget-color);
+
+    --b-widget-scrollbar-border-color     : var(--b-border-7);
+
+    --b-widget-anchor-offset              : 1px;
+
+    /* Box shadows used for different elevations */
+    --b-elevation-0                       : none;
+    --b-elevation-1                       : 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.10), 0 2px 1px -1px rgba(0, 0, 0, 0.08);
+    --b-elevation-2                       : 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.10), 0 3px 1px -2px rgba(0, 0, 0, 0.08);
+    --b-elevation-3                       : 0 3px 6px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.24);
+    --b-elevation-4                       : 0 5px 6px -3px rgba(0, 0, 0, 0.16), 0 8px 10px 1px rgba(0, 0, 0, 0.10), 0 3px 14px 2px rgba(0, 0, 0, 0.08);
+
+    /**
+     * Default duration for transitions.
+     *
+     * This is used for transitions resulting from user interaction throughout Bryntum widgets and components.
+     *
+     * For example, it is used for selection rendition transitions in Grids and for
+     * task and event transitions in Scheduler, Calendar, Gantt and TaskBoard.
+     *
+     * This is ignored if user has requested reduced motion in OS settings
+     */
+    --b-default-transition-duration       : .15s;
+
+    /**
+     * Z-index of the float root element that contains floating widgets (popups, menus, etc.)
+     */
+    --b-float-root-z-index                : 14000;
+
+    /**
+     * Centered widget z-index
+     */
+    --b-widget-centered-z-index           : 1;
+
+    /**
+     * Floating widget z-index (inside float root)
+     */
+    --b-floating-z-index                  : 1;
+
+    
+}
+
+body:not(.b-siesta-testing) {
+    @media (prefers-reduced-motion : reduce) {
+        --b-default-transition-duration : 0s;
+    }
+}
+
+@property --bi-widget-grid-column {
+    syntax   : '*';
+    inherits : false;
+}
+
+.b-internal {
+    --bi-widget-grid-column : null;
+}
+
+.b-widget {
+    display      : flex;
+    position     : relative;
+    overflow     : hidden;
+
+    /* Deliberately without a fallback: themes rendering both modes leave the property unset, which makes this
+       declaration invalid at computed value time, and the widget then inherits the host application's scheme */
+    color-scheme : var(--b-widget-color-scheme);
+    font-weight  : var(--b-widget-font-weight);
+    font-size    : var(--b-widget-font-size);
+    grid-column  : var(--bi-widget-grid-column);
+
+    &,
+    &::before,
+    &::after,
+    *,
+    *::before,
+    *::after {
+        box-sizing : border-box;
+    }
+
+    &.b-hidden {
+        &.b-hide-mode-clip {
+            clip : rect(0, 0, 0, 0) !important;
+        }
+
+        &.b-hide-mode-opacity {
+            opacity        : 0 !important;
+            pointer-events : none;
+        }
+
+        &.b-hide-mode-display {
+            display : none !important; /* Ugly but needed since subclasses override display with more specificity */
+        }
+    }
+
+    &.b-positioned {
+        position           : absolute;
+        inset-inline-start : 0;
+        inset-block-start  : 0;
+    }
+
+    &.b-positionable {
+        position : absolute;
+    }
+
+    .b-aria-desc-element {
+        position  : absolute;
+        clip-path : polygon(0 0);
+        contain   : strict;
+    }
+
+    &.b-floating,
+    &.b-positioned {
+        box-shadow : var(--b-widget-floating-box-shadow);
+
+        &.b-centered {
+            top                : 50%;
+            inset-inline-start : 50%;
+            z-index            : var(--b-widget-centered-z-index);
+            translate          : calc(-50% * var(--b-rtl-negate)) -50%;
+        }
+    }
+
+    &.b-maximized {
+        position : fixed;
+        width    : 100% !important;
+        height   : 100% !important;
+
+        /* If not using maxWidth and maxHeight, then we are at position 0,0 and fullscreen */
+
+        &:not(.b-maximized-constrained) {
+            translate          : none !important;
+            max-width          : 100% !important;
+            max-height         : 100% !important;
+            top                : 0 !important;
+            inset-inline-start : 0 !important;
+        }
+
+        /* When maximized with maxWidth/maxHeight those will constrain the size
+         * And we are centered  */
+
+        &.b-maximized-constrained {
+            top                : 50% !important;
+            inset-inline-start : 50% !important;
+            translate          : calc(-50% * var(--b-rtl-negate)) -50% !important;
+        }
+
+        &.b-mobile {
+            /* Move bottom toolbar to the top */
+
+            .b-bottom-toolbar {
+                order      : -1;
+                min-height : 3.5em;
+
+                .b-toolbar-content {
+                    padding-block        : 0.5em 0;
+                    padding-inline-start : 1em !important;
+                }
+            }
+        }
+    }
+
+    > .b-focus-trap {
+        /* By default, these are not tabbable and use no resource. */
+        position : absolute;
+        display  : none;
+
+        /* When given layout, they are accessible but invisible. */
+        clip     : rect(0, 0, 0, 0);
+    }
+
+    /* Only make tabbable if the widget is tagged with the */
+    /* focus-trapped class *and* it contains focus. */
+
+    &.b-focus-trapped.b-contains-focus > .b-focus-trap {
+        display : inherit;
+    }
+
+    /* During construction, widgets must not animate */
+
+    &.b-initializing * {
+        transition : none !important;
+    }
+}
+
+/* The .b-anchor element is a bar which covers the full edge length of its aligned edge and occupies the gap between */
+/* aligned widget and its target. This means that moving between the target and the aligned widget immediately moves */
+/* into the widget with no gap. */
+.b-anchor {
+    position : absolute;
+
+    svg {
+        position       : absolute;
+        top            : 0;
+        pointer-events : none;
+        overflow       : visible; /* So that the shadow is visible */
+    }
+
+    /* Colours are sampled from the rendered styles when aligned */
+    path {
+        fill   : var(--bi-anchor-background);
+        stroke : var(--bi-anchor-border-color);
+    }
+
+    /* Top and bottom, it's a full width strip  */
+
+    &.b-anchor-top, &.b-anchor-bottom {
+        left   : 0;
+        /* if there is a y offset, the anchor height must include it */
+        height : calc(var(--b-widget-anchor-height) + var(--bi-align-offset-y, 0px));
+        width  : 100%;
+
+        svg {
+            width  : var(--b-widget-anchor-width);
+            height : var(--b-widget-anchor-height);
+        }
+    }
+
+    &.b-anchor-top {
+        bottom : calc(100% - var(--b-widget-anchor-offset));
+
+        svg {
+            top    : auto;
+            bottom : 0;
+        }
+    }
+
+    &.b-anchor-bottom {
+        top : calc(100% - var(--b-widget-anchor-offset));
+
+        svg {
+            rotate : 180deg;
+        }
+    }
+
+    /* Left and right, it's a full height strip. */
+
+    &.b-anchor-start, &.b-anchor-end {
+        top    : 0;
+        /* if there is an x offset, the anchor width must include it */
+        width  : calc(var(--b-widget-anchor-height) + var(--bi-align-offset-x, 0px));
+        height : 100%;
+
+        svg {
+            height : var(--b-widget-anchor-width);
+            width  : var(--b-widget-anchor-height);
+        }
+    }
+
+    &.b-anchor-start {
+        inset-inline-end : 100%;
+
+        svg {
+            rotate           : 270deg;
+            transform-origin : var(--b-widget-anchor-height) var(--b-widget-anchor-height);
+        }
+    }
+
+    &.b-anchor-end {
+        inset-inline-start : 100%;
+
+        svg {
+            rotate           : 90deg;
+            transform-origin : calc(var(--b-widget-anchor-height) / 2) calc(var(--b-widget-anchor-height) / 2);
+        }
+    }
+
+    &.b-anchor-right {
+        /* If at right edge, anchor has to be inset by the border width to cover the right border.
+         * But the intruding ends of the anchor arrow's own border lines must then be clipped */
+        inset-inline-start : calc(100% - var(--bi-border-width, 0px));
+        clip-path          : rect(0 100% 100% var(--bi-border-width, 0px));
+    }
+
+    &.b-anchor-left {
+        /* If at left edge, anchor has to be inset by the border width to cover the left border.
+         * But the intruding ends of the anchor arrow's own border lines must then be clipped */
+        inset-inline-end : calc(100% - var(--bi-border-width, 0px));
+        clip-path        : rect(0 calc(100% - var(--bi-border-width, 0px)) 100% 0);
+    }
+}
+
+.b-rtl > .b-anchor {
+    &.b-anchor-right {
+        /* Positioned at opposite edge when in RTL */
+        inset-inline-end   : calc(100% - var(--bi-border-width, 0px));
+        inset-inline-start : auto;
+    }
+
+    &.b-anchor-left {
+        /* Positioned at opposite edge when in RTL */
+        inset-inline-start : calc(100% - var(--bi-border-width, 0px));
+        inset-inline-end   : auto;
+    }
+}
+
+/* This is the element which lifts floating Widgets above the document.*/
+/* Within this, they rely on DOM order for visual stacking.*/
+/* A "to top" operation makes the Widget's element the last child in*/
+/* its owning .b-float-root.*/
+.b-float-root {
+    position       : fixed !important;
+    top            : 0;
+    left           : 0;
+    right          : 0;
+    bottom         : 0;
+    pointer-events : none;
+    overflow       : clip;
+    contain        : strict;
+    z-index        : var(--b-float-root-z-index);
+
+    /* Safari occasionally selects the float root when doing row reorder on iPhone*/
+
+    &.b-safari {
+        user-select         : none;
+        -webkit-user-select : none;
+    }
+
+    > .b-floating {
+        position           : absolute;
+        contain            : layout style;
+        pointer-events     : all;
+        transition         : opacity 0.2s;
+        top                : 0;
+        inset-inline-start : 0;
+        z-index            : var(--b-floating-z-index);
+
+        &:not(.b-popup) {
+            box-shadow    : var(--b-widget-floating-box-shadow);
+            border-radius : var(--b-widget-border-radius);
+            border        : var(--b-widget-floating-border);
+        }
+
+        .b-firefox & {
+            /* `contain : style;` is not supported by Firefox*/
+            contain : layout;
+        }
+
+        /* In Safari active buttons in button groups overlaps floating pickers unless this is set,*/
+        /* probably different z-index stacking rules*/
+        /*z-index        : $ float-root-z-index+1;*/
+        /* Opacity of floating Widgets is animated to 1 upon show.*/
+
+        &.b-hidden {
+            opacity : 0;
+        }
+
+        /* For Field dropdowns, it's visually desirable that the*/
+        /* shadow must not shade the field it's aligned to, so flip*/
+        /* the shadow orientation when aligned above.*/
+        /* Only when flush, not when there's an anchor separating the widget boundaries.*/
+
+        &.b-aligned-above:not(.b-anchored) {
+            box-shadow : var(--b-aligned-above-floating-box-shadow);
+        }
+    }
+}
+
+
+
+/* region Common classes */
+
+/* Default state of RTL negation for use in calc() expressions is 1 */
+:root, :host {
+    --b-rtl-negate : 1;
+}
+
+/* Within RTL elements, this allows calc expressions to be negated. */
+.b-rtl {
+    direction      : rtl;
+
+    --b-rtl-negate : -1;
+
+    .b-anchor {
+        &.b-anchor-start svg {
+            rotate           : 90deg;
+            transform-origin : calc(var(--b-widget-anchor-height) / 2) calc(var(--b-widget-anchor-height) / 2);
+        }
+
+        &.b-anchor-end svg {
+            rotate           : 270deg;
+            transform-origin : var(--b-widget-anchor-height) var(--b-widget-anchor-height);
+        }
+    }
+}
+
+.b-ltr {
+    direction : ltr;
+}
+
+.b-aria-live-el {
+    height             : 0;
+    width              : 0;
+    position           : absolute;
+    inset-inline-start : -9999px;
+    contain            : strict;
+}
+
+.b-released,
+.b-hide-display,
+.b-theme-info {
+    display : none !important;
+}
+
+.b-hide-visibility {
+    visibility : hidden !important;
+}
+
+.b-hide-offscreen {
+    visibility : hidden !important;
+    position   : absolute !important;
+    top        : -10000em;
+    left       : -10000em;
+}
+
+/* An element, which, when the owner has the class b-show-yscroll-padding added to it */
+/* emulates a y scroller without showing scrolling furniture. */
+/* By default these are hidden and only shown inside widgets which show a visible scrollbar. */
+.b-yscroll-pad {
+    display : none;
+}
+
+.b-visible-scrollbar {
+    /* Only show a yscroll pad element when on a scrollbar showing platform */
+    /* and the b-show-yscroll-padding class is added to the containing element. */
+
+    .b-show-yscroll-padding > .b-yscroll-pad {
+        display             : block;
+
+        /* In case DomSync moves it around, it always lays out at flex-end */
+        order               : 9999;
+
+        /* Look like a scrollbar */
+        border-inline-start : 1px solid var(--b-widget-scrollbar-border-color);
+
+        /* This gives it the correct size. */
+        /* Left margin makes it 1 narrower so that outer can display its left margin. */
+
+        .b-yscroll-pad-sizer {
+            overflow-x          : hidden;
+            overflow-y          : scroll;
+            margin-inline-start : -1px;
+            height              : 0;
+            max-width           : var(--bi-scrollbar-width);
+        }
+    }
+}
+
+/* endregion */
+
+/* region Scroller */
+
+/* This section is for handling overflowX/Y : 'hidden-scroll` in the Scroller utility class. */
+/* We hide scrollbars. This is only done if the other axis is either overflow:hidden or also hidden-scroll */
+/* because it hides *both* scrollbars. */
+.b-widget-scroller.b-hide-scroll {
+    /* Blink and WebKit support: https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar */
+
+    &::-webkit-scrollbar {
+        display : none;
+    }
+
+    /* Firefox support: https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width */
+    scrollbar-width : none;
+}
+
+.b-scroller-stretcher {
+    position           : absolute;
+    height             : 1px;
+    width              : 1px;
+    top                : 0;
+    inset-inline-start : 0;
+}
+
+/* endregion */
+
+/* region Colors */
+
+/* div, span is to ensure more specific than a primary color assigned to a single level selector */
+
+div, span, ul {
+    .b-color-red {
+        --b-primary : var(--b-color-red);
+    }
+
+    .b-color-pink {
+        --b-primary : var(--b-color-pink);
+    }
+
+    .b-color-magenta {
+        --b-primary : var(--b-color-magenta);
+    }
+
+    .b-color-purple {
+        --b-primary : var(--b-color-purple);
+    }
+
+    .b-color-deep-purple {
+        --b-primary : var(--b-color-deep-purple);
+    }
+
+    .b-color-violet {
+        --b-primary : var(--b-color-violet);
+    }
+
+    .b-color-indigo {
+        --b-primary : var(--b-color-indigo);
+    }
+
+    .b-color-blue {
+        --b-primary : var(--b-color-blue);
+    }
+
+    .b-color-light-blue {
+        --b-primary : var(--b-color-light-blue);
+    }
+
+    .b-color-cyan {
+        --b-primary : var(--b-color-cyan);
+    }
+
+    .b-color-teal {
+        --b-primary : var(--b-color-teal);
+    }
+
+    .b-color-green {
+        --b-primary : var(--b-color-green);
+    }
+
+    .b-color-light-green {
+        --b-primary : var(--b-color-light-green);
+    }
+
+    .b-color-lime {
+        --b-primary : var(--b-color-lime);
+    }
+
+    .b-color-yellow {
+        --b-primary : var(--b-color-yellow);
+    }
+
+    .b-color-amber {
+        --b-primary : var(--b-color-amber);
+    }
+
+    .b-color-orange {
+        --b-primary : var(--b-color-orange);
+    }
+
+    .b-color-deep-orange {
+        --b-primary : var(--b-color-deep-orange);
+    }
+
+    .b-color-brown {
+        --b-primary : var(--b-color-brown);
+    }
+
+    .b-color-lighter-gray {
+        --b-primary : var(--b-color-lighter-gray);
+    }
+
+    .b-color-light-gray {
+        --b-primary : var(--b-color-light-gray);
+    }
+
+    .b-color-gray {
+        --b-primary : var(--b-color-gray);
+    }
+
+    .b-color-black {
+        --b-primary : var(--b-color-black);
+    }
+}
+
+/* endregion */
+
+/* region Animations */
+
+@keyframes b-anim-fade-in {
+    0% {
+        opacity : 0;
+    }
+    100% {
+        opacity : 1;
+    }
+}
+
+@keyframes b-anim-fade-out {
+    0% {
+        opacity : 1;
+    }
+    100% {
+        opacity : 0;
+    }
+}
+
+@keyframes b-anim-slide-in-from-right {
+    30% {
+        translate : -50%;
+        opacity   : 0.5;
+    }
+    30.01% {
+        translate : 50%;
+    }
+    100% {
+        translate : 0;
+        opacity   : 1
+    }
+}
+
+@keyframes b-anim-slide-in-from-left {
+    30% {
+        translate : 50%;
+        opacity   : 0.5;
+    }
+    30.01% {
+        translate : -50%;
+    }
+    100% {
+        translate : 0;
+        opacity   : 1;
+    }
+}
+
+@keyframes b-anim-slide-in-from-below {
+    30% {
+        translate : 0 -50%;
+        opacity   : 0.5;
+    }
+    30.01% {
+        translate : 0 50%;
+    }
+    100% {
+        translate : 0;
+        opacity   : 1;
+    }
+}
+
+@keyframes b-anim-slide-in-from-above {
+    30% {
+        translate : 0 50%;
+        opacity   : 0.5;
+    }
+    30.01% {
+        translate : 0 -50%;
+    }
+    100% {
+        translate : 0;
+        opacity   : 1;
+    }
+}
+
+.b-slide-in-next,
+.b-slide-in-previous {
+    animation : b-anim-slide-in-from-left 0.3s ease 0s 1 normal
+}
+
+/* Vertical slide in is always next come from below and previous from above */
+.b-slide-vertical {
+    &.b-slide-in-next {
+        animation-name : b-anim-slide-in-from-below;
+    }
+
+    &.b-slide-in-previous {
+        animation-name : b-anim-slide-in-from-above;
+    }
+}
+
+/* Horizontal side in respects RTL. */
+/* In RTL, next comes from the left and previous from the right. */
+.b-slide-in-next:not(.b-slide-vertical) {
+    animation-name : b-anim-slide-in-from-right;
+}
+
+.b-slide-in-previous:not(.b-slide-vertical) {
+    animation-name : b-anim-slide-in-from-left;
+}
+
+.b-rtl {
+    &.b-slide-in-next:not(.b-slide-vertical) {
+        animation-name : b-anim-slide-in-from-left;
+    }
+
+    &.b-slide-in-previous:not(.b-slide-vertical) {
+        animation-name : b-anim-slide-in-from-right;
+    }
+}
+
+/* Class added to parent element of elements being slid around by the above classes. */
+/* While the animation is in flight, no overflow must appear in the parent element. */
+.b-sliding-child-element {
+    overflow : clip;
+}
+
+.b-transition-expand-collapse {
+    &.b-aligned-below {
+        animation : b-anim-expand-downwards 0.3s forwards;
+    }
+
+    &.b-aligned-above {
+        animation : b-anim-expand-upwards 0.3s forwards;
+    }
+
+    &.b-hiding {
+        &.b-aligned-below {
+            animation : b-anim-collapse-upwards 0.3s forwards;
+        }
+
+        &.b-aligned-above {
+            animation : b-anim-collapse-downwards 0.3s forwards;
+        }
+    }
+}
+
+/*
+ * Animations which expands and collapse vertically.
+ * The 25px extra is to allow for box-shadow / DateRangePicker nav buttons to be visible.
+ */
+@keyframes b-anim-expand-downwards {
+    0% {
+        clip-path : rect(-25px calc(100% + 25px) 0 -25px);
+        opacity   : 0;
+    }
+    100% {
+        clip-path : rect(-25px calc(100% + 25px) calc(100% + 25px) -25px);
+        opacity   : 1;
+    }
+}
+
+@keyframes b-anim-collapse-upwards {
+    0% {
+        clip-path : rect(-25px calc(100% + 25px) calc(100% + 25px) -25px);
+        opacity   : 1;
+    }
+    100% {
+        clip-path : rect(-25px calc(100% + 25px) 0 -25px);
+        opacity   : 0;
+    }
+}
+
+@keyframes b-anim-expand-upwards {
+    0% {
+        clip-path : rect(100% calc(100% + 25px) 100% -25px);
+        opacity   : 0;
+    }
+    100% {
+        clip-path : rect(-25px calc(100% + 25px) calc(100% + 25px) -25px);
+        opacity   : 1;
+    }
+}
+
+@keyframes b-anim-collapse-downwards {
+    0% {
+        clip-path : rect(-25px calc(100% + 25px) calc(100% + 25px) -25px);
+        opacity   : 1;
+    }
+    100% {
+        clip-path : rect(100% calc(100% + 25px) 100% -25px);
+        opacity   : 0;
+    }
+}
+
+/* endregion */

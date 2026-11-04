@@ -1,0 +1,13 @@
+/* @after Grid/view/SubGrid.css */
+
+:root, :host {
+    /**
+     * Cell background
+     */
+    --b-row-number-column-background                : var(--b-neutral-97);
+}
+
+/* High specificity to override border removal on group headers */
+.b-grid-base .b-grid-cell.b-row-number-cell {
+    --b-grid-cell-background                : var(--b-row-number-column-background);
+}

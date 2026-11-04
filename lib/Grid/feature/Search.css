@@ -1,0 +1,34 @@
+/* Vars shared with QuickFind are defined in base/SearchQuickFind.css */
+
+.b-search-hit-cell {
+    background : var(--b-quick-find-background, var(--b-primary-95));
+}
+
+.b-search-hit-text {
+    padding     : .3em 0;
+
+    --b-primary : var(--b-quick-find-primary);
+
+    font-weight : var(--b-quick-find-font-weight);
+    background  : var(--b-quick-find-background, var(--b-primary-95));
+}
+
+.b-search-hit-field {
+    position   : absolute;
+    top        : 0;
+    left       : 0;
+    bottom     : 0;
+    right      : 0;
+    padding    : .5em 0;
+    background : var(--b-quick-find-background, var(--b-primary-95));
+}
+
+.b-search-hit-cell-badge {
+    position         : absolute;
+    line-height      : 1;
+
+    color            : var(--b-quick-find-badge-color);
+    font-size        : var(--b-quick-find-badge-font-size);
+    inset-inline-end : var(--b-quick-find-badge-offset);
+    top              : var(--b-quick-find-badge-offset);
+}

@@ -1,0 +1,14 @@
+/* @after Core/widget/TextField.css */
+
+.b-display-field {
+    span {
+        display     : flex;
+        min-width   : 10em;
+        align-items : center;
+    }
+
+    /* Ensure empty DisplayField has the same height as one with text content */
+    .b-display-field-value:empty::before {
+        content : '\200b'; /* zero-width space */
+    }
+}

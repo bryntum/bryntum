@@ -1,0 +1,15 @@
+/* @after Core/widget/Toolbar.css */
+
+.b-paging-toolbar {
+    [data-ref="pageNumber"] {
+        width : auto;
+
+        .b-field-inner {
+            width : 3.5em;
+        }
+
+        input {
+            text-align : center;
+        }
+    }
+}

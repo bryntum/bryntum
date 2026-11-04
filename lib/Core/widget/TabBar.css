@@ -1,0 +1,82 @@
+/* @after Core/widget/Toolbar.css */
+
+:root, :host {
+    /**
+     * Tab bar bottom border width
+     */
+    --b-tab-bar-border-bottom-width : 1px;
+
+    /**
+     * Tab bar bottom border color
+     */
+    --b-tab-bar-border-bottom-color : var(--b-border-6);
+
+    /**
+     * Tab bar background color
+     */
+    --b-tab-bar-background          : transparent;
+
+    /**
+     * Tab bar padding
+     */
+    --b-tab-bar-padding             : 0;
+}
+
+.b-tab-bar {
+    --b-panel-bottom-toolbar-padding : var(--b-tab-bar-padding);
+    --b-toolbar-gap                  : 0;
+    --b-toolbar-padding              : var(--b-tab-bar-padding);
+    --b-toolbar-background           : var(--b-tab-bar-background);
+
+    transition             : border var(--b-default-transition-duration), background var(--b-default-transition-duration);
+    border-bottom          : var(--b-tab-bar-border-bottom-width) solid var(--b-tab-bar-border-bottom-color);
+
+    .b-overflow-button {
+        padding-inline : 1em;
+        margin-inline  : 0.5em;
+    }
+}
+
+.b-tab-bar.b-horizontal-tabs {
+    /* Move the border from bottom to the side edge facing the content panel */
+    border-bottom : none;
+
+    &.b-dock-left {
+        border-inline-end : var(--b-tab-bar-border-bottom-width) solid var(--b-tab-bar-border-bottom-color);
+    }
+
+    &.b-dock-right {
+        border-inline-start : var(--b-tab-bar-border-bottom-width) solid var(--b-tab-bar-border-bottom-color);
+    }
+
+    /* When horizontal tabs are used on a side-docked tab bar, reposition the indicator to the side edge */
+    .b-tab-indicator {
+        inset       : 0;
+        block-size  : auto;
+        inline-size : var(--b-tab-indicator-height);
+    }
+
+    /* Stretch tabs to fill the tab bar width so text and icons are consistently left-aligned */
+    .b-box-center.b-toolbar-content {
+        align-items : stretch;
+    }
+
+    /* Left-align tab content so icons and labels line up across tabs */
+    .b-tab {
+        justify-content : start;
+
+        /* Give all tab icons a uniform width so labels align consistently regardless of icon glyph width */
+        .b-button-icon {
+            width      : 1.25em;
+            text-align : center;
+        }
+    }
+
+    &.b-dock-left .b-tab-indicator {
+        inset-inline-start : auto;
+    }
+
+    &.b-dock-right .b-tab-indicator {
+        inset-inline-end : auto;
+    }
+}

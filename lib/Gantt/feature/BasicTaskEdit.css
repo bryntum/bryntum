@@ -1,0 +1,11 @@
+.b-basic-task-editor.b-event-editor {
+    width : 25em;
+}
+
+.b-basic-task-editor .b-event-editor-content {
+    [data-ref="percentDoneField"],
+    [data-ref="durationField"] {
+        grid-column : span 1;
+        min-width   : 10em;
+    }
+}

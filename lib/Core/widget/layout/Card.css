@@ -1,0 +1,97 @@
+:root, :host {
+    /* Not meant to be changed */
+    --bi-card-margin : 1em;
+}
+
+.b-card-container {
+    display     : flex;
+    flex-flow   : row nowrap;
+    align-items : stretch;
+    overflow    : hidden;
+    padding     : 0;
+    position    : relative;
+
+    /* Even if the app wants overflow to be visible, just during animated card change, because we have two */
+    /* visible at once to perform the visual trick, it has to be overflow : hidden */
+    &.b-animating {
+        overflow : hidden;
+    }
+
+    > .b-card-item {
+        flex        : 1 0 100%;
+        align-items : stretch;
+        max-width   : 100%;
+        min-width   : 100%;
+    }
+
+    /* Hide headers of immediate, inline child Panels if required */
+    &.b-hide-child-headers {
+        > .b-panel:not(.b-positioned) > .b-panel-header {
+            display : none;
+        }
+    }
+
+}
+
+.b-slide-in-left {
+    animation : b-anim-card-slide-in-left calc(var(--b-default-transition-duration) * 2) ease 0s 1;
+}
+
+/* In both selectors for cards sliding out below, the outgoing card becomes */
+/* non responsive to pointer events. This is because during slide out, the */
+/* card is logically hidden even though it is physically visible for the */
+/* animation duration. It should not be interactive during this short time. */
+
+.b-slide-out-right {
+    pointer-events : none;
+    /* Offset to clear the margin in a way that will not cause a ResizeObserver to fire */
+    left           : var(--bi-card-margin);
+    animation      : b-anim-card-slide-out-right calc(var(--b-default-transition-duration) * 2) ease 0s 1;
+}
+
+.b-slide-in-right {
+    animation : b-anim-card-slide-in-right calc(var(--b-default-transition-duration) * 2) ease 0s 1;
+}
+
+.b-slide-out-left {
+    pointer-events      : none;
+    margin-inline-start : calc(var(--bi-card-margin) * -1);
+    margin-inline-end   : var(--bi-card-margin);
+    animation           : b-anim-card-slide-out-left calc(var(--b-default-transition-duration) * 2) ease 0s 1;
+}
+
+@keyframes b-anim-card-slide-in-left {
+    0% {
+        translate : -100% 0;
+    }
+    100% {
+        translate : 0;
+    }
+}
+
+@keyframes b-anim-card-slide-out-right {
+    0% {
+        translate : -100% 0;
+    }
+    100% {
+        translate : 0;
+    }
+}
+
+@keyframes b-anim-card-slide-in-right {
+    0% {
+        translate : 0;
+    }
+    100% {
+        translate : -100% 0;
+    }
+}
+
+@keyframes b-anim-card-slide-out-left {
+    0% {
+        translate : 0;
+    }
+    100% {
+        translate : -100% 0;
+    }
+}

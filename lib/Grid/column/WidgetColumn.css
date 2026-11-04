@@ -1,0 +1,5 @@
+/* @after Grid/view/SubGrid.css */
+
+.b-widget-cell {
+    --b-button-max-height : 80%;
+}

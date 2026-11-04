@@ -1,0 +1,23 @@
+:root, :host {
+    /**
+     * Unfilled rating item color
+     */
+    --b-task-board-rating-item-color : var(--b-task-board-progress-item-background);
+}
+
+.b-colorize {
+    /**
+     * Filled rating item color
+     */
+    --b-task-board-rating-item-filled-color : var(--b-primary-80);
+}
+
+.b-task-board-rating {
+    i:not(.b-filled) {
+        color : var(--b-task-board-rating-item-color);
+    }
+
+    i.b-filled {
+        color : var(--b-task-board-rating-item-filled-color);
+    }
+}

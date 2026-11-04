@@ -1,0 +1,331 @@
+/* @after Core/widget/Checkbox.css */
+
+:root, :host {
+    /**
+     * SlideToggle border-width
+     */
+    --b-slide-toggle-border-width              : var(--b-checkbox-border-width);
+
+    /**
+     * SlideToggle width
+     */
+    --b-slide-toggle-width                     : 2.75em;
+
+    /**
+     * SlideToggle height
+     */
+    --b-slide-toggle-height                    : 1.75em;
+
+    /**
+     * SlideToggle thumb size (unchecked)
+     */
+    --b-slide-toggle-thumb-size                : 1em;
+
+    /**
+     * SlideToggle border-radius
+     */
+    --b-slide-toggle-border-radius             : calc(var(--b-slide-toggle-height) / 2);
+
+    /**
+     * SlideToggle checked thumb size
+     * @state Checked
+     */
+    --b-slide-toggle-checked-thumb-size        : 1em;
+
+    /**
+     * Thumb offset from the start (left)
+     */
+    --b-slide-toggle-thumb-offset              : 0.15em;
+
+    /**
+     * SlideToggle font-size
+     */
+    --b-slide-toggle-font-size                 : 1em;
+
+    /**
+     * Opacity when disabled
+     * @state Disabled
+     */
+    --b-slide-toggle-disabled-opacity          : 0.5;
+
+    /**
+     * Gap between SlideToggle and its text
+     */
+    --b-slide-toggle-inner-gap                 : 0.5em;
+
+    /**
+     * Label padding when displayed before the SlideToggle
+     */
+    --b-slide-toggle-label-before-padding      : 0 0.5em 0 0;
+
+    /**
+     * Ring color (used by material)
+     */
+    --b-slide-toggle-ring-color                : var(--b-neutral-60);
+
+    /**
+     * Background when disabled
+     * @state Disabled
+     */
+    --b-slide-toggle-disabled-background       : var(--b-neutral-85);
+
+    /**
+     * Thumb background when disabled
+     * @state Disabled
+     */
+    --b-slide-toggle-disabled-thumb-background : var(--b-neutral-100);
+
+    /* Read-only defaults to the disabled paint, resolved at the element in the `.b-read-only` rule below */
+
+    /**
+     * Background when read-only
+     * @state Read-only
+     */
+    /*--b-slide-toggle-read-only-background      : null;*/
+
+    /**
+     * Border color when read-only
+     * @state Read-only
+     */
+    /*--b-slide-toggle-read-only-border-color    : null;*/
+
+    /**
+     * Thumb background when read-only and checked
+     * @state Read-only
+     */
+    /*--b-slide-toggle-read-only-thumb-background : null;*/
+
+    /**
+     * Focus outline width
+     */
+    --b-slide-toggle-focus-outline-width       : var(--b-checkbox-focus-outline-width);
+
+    /**
+     * Focus outline offset
+     */
+    --b-slide-toggle-focus-outline-offset      : var(--b-checkbox-focus-outline-offset);
+
+    /**
+     * Thumb border
+     */
+    --b-slide-toggle-thumb-border              : null;
+
+    /**
+     * Thumb background when checked
+     * @state Checked
+     */
+    --b-slide-toggle-checked-thumb-border      : null;
+
+    /**
+     * Thumb color
+     */
+    --b-slide-toggle-thumb-color               : var(--b-primary);
+
+    /**
+     * Thumb background
+     */
+    --b-slide-toggle-thumb-background         : var(--b-neutral-100);
+
+    /**
+     * Thumb background when hovered
+     * @state Hovered
+     */
+    --b-slide-toggle-hovered-thumb-background : var(--b-neutral-95);
+
+    /**
+     * Thumb background when checked
+     * @state Checked
+     */
+    --b-slide-toggle-checked-thumb-background : var(--b-neutral-100);
+
+    /**
+     * Border color when checked
+     * @state Checked
+     */
+    --b-slide-toggle-checked-border-color      : var(--b-slide-toggle-checked-background);
+
+    /**
+     * Ring color when checked (used by material)
+     * @state Checked
+     */
+    --b-slide-toggle-checked-ring-color        : var(--b-primary);
+
+    /**
+     * Thumb offset when checked
+     * @state Checked
+     */
+    --b-slide-toggle-checked-thumb-offset      : 4px;
+}
+
+/* Internal vars that should not be set by themes */
+.b-internal {
+    --bi-slidetoggle-thumb-position         : null;
+    --bi-slidetoggle-read-only-background   : null;
+    --bi-slidetoggle-read-only-border-color : null;
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+    /**
+     * Background
+     */
+    /*--b-slide-toggle-background                       : null;*/
+
+    /**
+     * Border color
+     */
+    /*--b-slide-toggle-border-color                     : null;*/
+
+    /**
+     * Thumb background when checked and hovered
+     * @state Checked & hovered
+     */
+    /*--b-slide-toggle-checked-hovered-thumb-background : null;*/
+
+    /**
+     * Focus outline color
+     */
+    /*--b-slide-toggle-focus-outline-color      : var(--b-checkbox-focus-outline-color);*/
+
+    /**
+     * Background when checked
+     * @state Checked
+     */
+    /* --b-slide-toggle-checked-background        : var(--b-primary); */
+
+    /**
+     * Background when checked and hovered
+     * @state Checked & hovered
+     */
+    /* --b-slide-toggle-checked-hover-background  : var(--b-primary); */
+/* } */
+
+.b-slide-toggle {
+    --bi-slidetoggle-thumb-position   : calc(var(--b-slide-toggle-thumb-offset) + (var(--b-slide-toggle-checked-thumb-size) - var(--b-slide-toggle-thumb-size)) / 2);
+
+    --b-checkbox-inner-gap            : var(--b-slide-toggle-inner-gap);
+    --b-checkbox-label-before-padding : var(--b-slide-toggle-label-before-padding);
+
+    .b-field-inner {
+        grid-template-columns : max-content;
+    }
+
+    input {
+        width  : 100%;
+        height : 100%;
+    }
+
+    input:checked ~ .b-slide-toggle-toggle {
+        --b-slide-toggle-background       : var(--b-slide-toggle-checked-background, var(--b-primary));
+        --b-slide-toggle-thumb-background : var(--b-slide-toggle-checked-thumb-background);
+        --b-slide-toggle-thumb-border     : var(--b-slide-toggle-checked-thumb-border);
+        --b-slide-toggle-thumb-size       : var(--b-slide-toggle-checked-thumb-size);
+        --b-slide-toggle-border-color     : var(--b-slide-toggle-checked-border-color);
+        --b-slide-toggle-ring-color       : var(--b-slide-toggle-checked-ring-color);
+        --bi-slidetoggle-thumb-position   : calc(var(--b-slide-toggle-width) - var(--b-slide-toggle-checked-thumb-size) - var(--b-slide-toggle-checked-thumb-offset));
+    }
+
+    &:not(.b-disabled, .b-read-only) {
+        &:hover,
+        &.b-hover,
+        &:focus-within,
+        &.b-focus,
+        &.b-active,
+        &:active {
+            --b-slide-toggle-thumb-background : var(--b-slide-toggle-hovered-thumb-background);
+            --b-slide-toggle-background       : var(--b-slide-toggle-hover-background);
+
+            input:checked ~ .b-slide-toggle-toggle {
+                --b-slide-toggle-thumb-background : var(--b-slide-toggle-checked-hovered-thumb-background);
+                --b-slide-toggle-background       : var(--b-slide-toggle-checked-hover-background, var(--b-primary));
+            }
+        }
+    }
+
+    /* Read-only is still focusable, so it keeps the focus ring */
+    &:not(.b-disabled) {
+        &:focus-within,
+        &.b-focus {
+            &:has(:focus-visible) .b-slide-toggle-toggle,
+            &.b-focus .b-slide-toggle-toggle {
+                outline        : var(--b-slide-toggle-focus-outline-width) solid var(--b-slide-toggle-focus-outline-color, var(--b-checkbox-focus-outline-color));
+                outline-offset : var(--b-slide-toggle-focus-outline-offset);
+            }
+        }
+    }
+
+    /* `:not(.b-nothing)` only bumps specificity, so themes cannot override this on import order */
+    &.b-disabled:not(.b-nothing) {
+        --b-slide-toggle-opacity              : var(--b-slide-toggle-disabled-opacity);
+        --b-slide-toggle-background           : var(--b-slide-toggle-disabled-background);
+        --b-slide-toggle-border-color         : var(--b-slide-toggle-disabled-border-color);
+        --b-slide-toggle-checked-border-color : var(--b-slide-toggle-disabled-border-color);
+
+        input:checked ~ .b-slide-toggle-toggle {
+            --b-slide-toggle-background           : var(--b-slide-toggle-disabled-background);
+            --b-slide-toggle-thumb-background     : var(--b-slide-toggle-disabled-thumb-background);
+            --b-slide-toggle-checked-border-color : var(--b-slide-toggle-disabled-background);
+        }
+    }
+
+    &.b-read-only:not(.b-disabled) {
+        --bi-slidetoggle-read-only-background   : var(--b-slide-toggle-read-only-background, var(--b-slide-toggle-disabled-background));
+        --bi-slidetoggle-read-only-border-color : var(--b-slide-toggle-read-only-border-color, var(--b-slide-toggle-disabled-border-color));
+
+        --b-slide-toggle-background             : var(--bi-slidetoggle-read-only-background);
+        --b-slide-toggle-border-color           : var(--bi-slidetoggle-read-only-border-color);
+        --b-slide-toggle-checked-border-color   : var(--bi-slidetoggle-read-only-border-color);
+
+        input:checked ~ .b-slide-toggle-toggle {
+            --b-slide-toggle-background       : var(--bi-slidetoggle-read-only-background);
+            --b-slide-toggle-thumb-background : var(--b-slide-toggle-read-only-thumb-background, var(--b-slide-toggle-disabled-thumb-background));
+        }
+    }
+}
+
+.b-slide-toggle-toggle {
+    display        : flex;
+    align-items    : center;
+    pointer-events : none;
+    grid-area      : input;
+    transition     : background 0.2s, border 0.2s, opacity 0.2s;
+
+    font-size      : var(--b-slide-toggle-font-size);
+    width          : var(--b-slide-toggle-width);
+    height         : var(--b-slide-toggle-height);
+    background     : var(--b-slide-toggle-background);
+    border         : var(--b-slide-toggle-border-width) solid var(--b-slide-toggle-border-color);
+    border-radius  : var(--b-slide-toggle-border-radius);
+    opacity        : var(--b-slide-toggle-opacity, 1);
+}
+
+.b-slide-toggle-thumb {
+    aspect-ratio        : 1 / 1;
+    border-radius       : 50%;
+    transition          : background 0.2s ease, width 0.2s ease, margin 0.2s ease;
+    position            : relative;
+
+    background          : var(--b-slide-toggle-thumb-background);
+    border              : var(--b-slide-toggle-thumb-border);
+    color               : var(--b-slide-toggle-thumb-color);
+    width               : var(--b-slide-toggle-thumb-size);
+    margin-inline-start : var(--bi-slidetoggle-thumb-position);
+
+    /* Ring */
+    &::before {
+        border-radius      : 50%;
+        pointer-events     : none;
+        transition         : opacity 0.5s ease;
+        aspect-ratio       : 1 / 1;
+        display            : block;
+        position           : absolute;
+        top                : 50%;
+        inset-inline-start : 50%;
+        translate          : calc(-50% * var(--b-rtl-negate)) -50%;
+
+        content            : var(--b-checkbox-ring-content);
+        background         : var(--b-slide-toggle-ring-color);
+        opacity            : var(--bi-checkbox-ring-opacity);
+        width              : calc(var(--b-slide-toggle-checked-thumb-size) * 1.7);
+    }
+}

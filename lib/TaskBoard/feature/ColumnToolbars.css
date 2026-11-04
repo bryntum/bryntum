@@ -1,0 +1,48 @@
+:root, :host {
+    /**
+     * Primary color for buttons in column toolbars
+     */
+    --b-task-board-column-toolbars-color     : var(--b-neutral-50);
+
+    /**
+     * Font size for buttons in column toolbars
+     */
+    --b-task-board-column-toolbars-font-size : .9em;
+}
+
+.b-task-board-column-tbar.b-toolbar,
+.b-task-board-column-bbar.b-toolbar {
+    --b-primary            : var(--b-task-board-column-toolbars-color);
+    --b-toolbar-background : transparent;
+
+    .b-toolbar-content {
+        justify-content : center;
+        align-items     : center;
+
+        padding         : var(--b-task-board-column-padding);
+    }
+
+    .b-button {
+        font-size : var(--b-task-board-column-toolbars-font-size);
+
+        &:not(.b-text) {
+            border-radius : 50%;
+        }
+    }
+}
+
+.b-task-board-column.b-collapsed:not(.b-collapsing) {
+    .b-task-board-column-tbar.b-toolbar,
+    .b-task-board-column-bbar.b-toolbar {
+        display : none;
+    }
+}
+
+/* Toolbars are first added to taskboards body and then their element is moved to the column, */
+/* make sure the first step doesn't affect visuals */
+.b-task-board-body {
+    > .b-task-board-column-tbar.b-toolbar,
+    > .b-task-board-column-bbar.b-toolbar {
+        display : none;
+    }
+}

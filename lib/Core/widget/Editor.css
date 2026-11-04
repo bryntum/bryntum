@@ -1,0 +1,34 @@
+/* @after Core/widget/Container.css */
+
+:root, :host {
+    /**
+     * Editor background
+     */
+    --b-editor-background    : transparent;
+
+    --b-editor-border-radius : var(--b-widget-border-radius);
+}
+
+.b-editor {
+    display       : flex;
+    overflow      : visible; /* For editors that has popups etc. */
+
+    background    : var(--b-editor-background);
+    border-radius : var(--b-editor-border-radius);
+
+    .b-label {
+        display : none;
+    }
+
+    .b-field {
+        display                     : flex;
+        width                       : 100%;
+        height                      : 100%;
+
+        --b-text-field-input-height : 100%;
+    }
+
+    .b-field-inner {
+        height : 100%;
+    }
+}

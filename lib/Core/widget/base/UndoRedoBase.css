@@ -1,0 +1,6 @@
+/* @after Core/widget/Container.css */
+
+.b-undo-redo-base.b-toolbar {
+    gap         : 0.5em;
+    align-items : center;
+}

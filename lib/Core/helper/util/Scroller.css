@@ -1,0 +1,27 @@
+.b-widget-scroller {
+    overflow                   : hidden; /* overridden inline by the Scroller */
+    -webkit-overflow-scrolling : touch;
+    overflow-anchor            : none; /* without this we see weird issues in Mac Chrome <= 63 with no scrollbar, covered in Tree.t.js */
+    position                   : relative;
+}
+
+/* This section is for handling overflowX/Y : 'hidden-scroll` in the Scroller utility class. */
+/* We hide scrollbars. This is only done if the other axis is either overflow:hidden or also hidden-scroll */
+/* because it hides *both* scrollbars. */
+.b-hide-scroll {
+    /* Firefox support: https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-width */
+    scrollbar-width : none;
+
+    /* Blink and WebKit support: https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar */
+    &::-webkit-scrollbar {
+        display : none;
+    }
+}
+
+.b-scroller-stretcher {
+    position           : absolute;
+    height             : 1px;
+    width              : 1px;
+    top                : 0;
+    inset-inline-start : 0;
+}

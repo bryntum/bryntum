@@ -1,0 +1,197 @@
+/* @after Core/widget/List.css */
+
+:root, :host {
+    /**
+     * Gap between chips
+     */
+    --b-chip-view-gap                 : 0.25em;
+
+    /**
+     * Padding of the chip view
+     */
+    --b-chip-view-padding             : 0;
+
+    /**
+     * Chip border radius
+     */
+    --b-chip-view-chip-border-radius  : 1.5em;
+
+    /**
+     * Chip border width
+     */
+    --b-chip-view-chip-border-width   : 1px;
+
+    /**
+     * Chip font size
+     */
+    --b-chip-view-chip-font-size      : 1em;
+
+    /**
+     * Gap between chip content (chip's inner gap)
+     */
+    --b-chip-view-chip-gap            : 0.5em;
+
+    /**
+     * Chip padding block
+     */
+    --b-chip-view-chip-padding-block  : 0.25em;
+
+    /**
+     * Chip padding inline
+     */
+    --b-chip-view-chip-padding-inline : 0.75em;
+
+    /**
+     * Chip border color
+     */
+    --b-chip-view-chip-border-color   : transparent;
+
+    /**
+     * Chip text color
+     */
+    --b-chip-view-chip-color          : var(--b-text-1);
+
+    /**
+     * Selected (and active) chip text color
+     * @state Selected
+     */
+    --b-chip-view-chip-selected-color : var(--b-text-1);
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+/**
+ * Active chip background
+ * @state Active
+ */
+/*--b-chip-view-chip-active-background          : var(--b-primary-85);*/
+
+/**
+ * Active selected chip background
+ * @state Active
+ */
+/*--b-chip-view-chip-active-selected-background : var(--b-primary-75);*/
+
+/**
+ * Chip background
+ */
+/*--b-chip-view-chip-background                 : var(--b-primary-90);*/
+
+/**
+ * Hovered chip background
+ * @state Hovered
+ */
+/*--b-chip-view-chip-hover-background           : var(--b-primary-85);*/
+
+/**
+ * Selected chip background
+ * @state Selected
+ */
+/*--b-chip-view-chip-selected-background        : var(--b-primary-75);*/
+
+/**
+ * Focused chip border color
+ * @state Focused
+ */
+/*--b-chip-view-chip-focus-border-color         : var(--b-primary-35);*/
+/* } */
+
+.b-chip-view {
+    display                   : flex;
+    flex-flow                 : row wrap;
+    background                : transparent;
+    align-items               : center;
+
+    --b-list-multi-select-gap : var(--b-chip-view-gap);
+    gap                       : var(--b-chip-view-gap);
+    padding                   : var(--b-chip-view-padding);
+
+    &.b-transitioning-height {
+        transition : height 0.2s ease-in-out;
+    }
+
+    &.b-adding-item.b-prevent-scroll {
+        overflow : clip !important;
+    }
+}
+
+.b-chip {
+    display        : flex;
+    cursor         : pointer;
+    outline        : none;
+    overflow       : clip;
+    opacity        : 1;
+    transition     : opacity .2s linear, translate .2s ease-in, max-width .2s, background .2s;
+    translate      : 0 0;
+    max-width      : 15em;
+    align-items    : center;
+    line-height    : 1.2em;
+
+    border         : var(--b-chip-view-chip-border-width) solid var(--b-chip-view-chip-border-color);
+    background     : var(--b-chip-view-chip-background, var(--b-primary-90));
+    font-size      : var(--b-chip-view-chip-font-size);
+    border-radius  : var(--b-chip-view-chip-border-radius);
+    padding-block  : var(--b-chip-view-chip-padding-block);
+    padding-inline : var(--b-chip-view-chip-padding-inline);
+
+    &:hover {
+        --b-chip-view-chip-background : var(--b-chip-view-chip-hover-background, var(--b-primary-85));
+    }
+
+    &.b-selected {
+        --b-chip-view-chip-background : var(--b-chip-view-chip-selected-background, var(--b-primary-75));
+        --b-chip-view-chip-color      : var(--b-chip-view-chip-selected-color);
+    }
+
+    &.b-active {
+        --b-chip-view-chip-background : var(--b-chip-view-chip-active-background, var(--b-primary-85));
+        --b-chip-view-chip-color      : var(--b-chip-view-chip-selected-color);
+    }
+
+    &.b-selected.b-active {
+        --b-chip-view-chip-background : var(--b-chip-view-chip-active-selected-background, var(--b-primary-75));
+    }
+
+    &:focus-visible {
+        --b-chip-view-chip-border-color : var(--b-chip-view-chip-focus-border-color, var(--b-primary-35));
+    }
+
+    &.b-removing.b-anim-collapse {
+        transition : opacity .2s linear, max-width .2s ease-out;
+
+        opacity    : 0;
+        max-width  : 0;
+    }
+
+    &.b-adding.b-anim-slide-up {
+        opacity   : 0;
+        translate : 0 1em;
+    }
+
+    &.b-adding.b-anim-expand {
+        max-width : 0;
+        opacity   : 0;
+    }
+}
+
+.b-chip-content {
+    display     : flex;
+    overflow    : clip;
+    white-space : nowrap;
+    align-items : center;
+    min-width   : 0;
+
+    gap         : var(--b-chip-view-chip-gap);
+    color       : var(--b-chip-view-chip-color);
+
+    > :not(.b-chip-label) {
+        flex-shrink : 0;
+    }
+
+    > .b-chip-label {
+        min-width     : 0;
+        overflow      : clip;
+        text-overflow : ellipsis;
+    }
+}
+

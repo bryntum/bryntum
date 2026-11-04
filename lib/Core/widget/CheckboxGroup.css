@@ -1,0 +1,23 @@
+.b-panel.b-checkbox-group {
+    gap : var(--bi-field-gap);
+
+    .b-fieldset-content {
+        /* &:not(.b-inline) { */
+        /*     padding : var(--b-container-gap); */
+        /* } */
+
+        &.b-inline {
+            flex-wrap : wrap;
+
+            label {
+                white-space : nowrap;
+            }
+        }
+    }
+
+    &.b-invalid .b-checkbox label:before {
+        outline-offset : 2px;
+
+        outline        : 1px solid var(--b-color-red);
+    }
+}

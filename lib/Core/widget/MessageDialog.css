@@ -1,0 +1,62 @@
+/* @after Core/widget/Popup.css */
+
+:root, :host {
+    /**
+     * MessageDialog min-width
+     */
+    --b-message-dialog-min-width        : 20em;
+
+    /**
+     * MessageDialog button min-width
+     */
+    --b-message-dialog-button-min-width : 6.5em;
+
+    /* Internal var */
+    --bi-messagedialog-display          : none;
+}
+
+.b-message-dialog {
+    user-select         : none;
+    -webkit-user-select : none;
+
+    min-width           : var(--b-message-dialog-min-width);
+
+    .b-button {
+        min-width : var(--b-message-dialog-button-min-width);
+    }
+
+    /* All items are opt-in. Hidden by default*/
+
+    .b-message-dialog-input,
+    .b-message-dialog-ok-button,
+    .b-message-dialog-cancel-button {
+        display : var(--bi-messagedialog-display);
+    }
+
+    /* Confirm - Show OK/Cancel*/
+    &.b-message-dialog-prompt,
+    &.b-message-dialog-confirm {
+        .b-message-dialog-ok-button,
+        .b-message-dialog-cancel-button {
+            --bi-messagedialog-display : flex;
+        }
+    }
+
+    /* Prompt - Show input element with OK / Cancel buttons*/
+    &.b-message-dialog-prompt {
+        .b-message-dialog-input {
+            --bi-messagedialog-display : flex;
+        }
+    }
+
+    /* Alert - Show message with OK button*/
+    &.b-message-dialog-alert {
+        .b-message-dialog-ok-button {
+            --bi-messagedialog-display : flex;
+        }
+    }
+
+    .b-message-dialog-message {
+        display : block;
+    }
+}

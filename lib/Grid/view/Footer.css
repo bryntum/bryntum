@@ -1,0 +1,110 @@
+:root, :host {
+    /**
+     * Grid footer border width (uses outline to overlap row borders)
+     */
+    --b-grid-footer-outline-width : var(--b-grid-header-border-width);
+
+    /**
+     * Grid footer border color (uses outline to overlap row borders)
+     */
+    --b-grid-footer-outline-color : var(--b-grid-header-border-color);
+
+    /**
+     * Grid footer box-shadow
+     */
+    --b-grid-footer-box-shadow    : none;
+
+    /**
+     * Grid footer cell border-width
+     */
+    --b-grid-footer-border-width  : var(--b-grid-header-border-width);
+
+    /**
+     * Grid footer cell padding
+     */
+    --b-grid-footer-padding       : var(--b-grid-header-padding);
+
+    /**
+     * Grid footer text align
+     */
+    /*--b-grid-footer-text-align : null */
+
+    /**
+     * Grid footer font weight
+     */
+    /*--b-grid-footer-font-weight : null */
+
+    /**
+     * Grid footer background
+     */
+    --b-grid-footer-background    : var(--b-neutral-100);
+
+    /**
+     * Grid footer cell border color
+     */
+    --b-grid-footer-border-color  : var(--b-grid-header-border-color);
+
+    /**
+     * Grid footer text color
+     */
+    --b-grid-footer-color         : var(--b-grid-header-color);
+}
+
+.b-grid-footer-container {
+    /* Use outline to overlap last rows bottom border for nicer look */
+    outline    : var(--b-grid-footer-outline-width) solid var(--b-grid-footer-outline-color);
+    box-shadow : var(--b-grid-footer-box-shadow);
+
+    &.b-hidden {
+        display : none;
+    }
+}
+
+.b-grid-footer-scroller {
+    display     : flex;
+    position    : relative;
+    overflow    : clip;
+    flex-shrink : 0;
+    min-width   : 0;
+}
+
+.b-grid-footers {
+    display     : inline-flex;
+    align-items : stretch;
+    height      : 100%;
+    white-space : nowrap;
+    /* In case page uses its own line-height, it would break our rendering potentially */
+    line-height : initial;
+}
+
+.b-grid-footer {
+    display           : flex;
+    flex-shrink       : 0;
+    align-items       : stretch;
+    transition        : background-color .2s;
+
+    color             : var(--b-grid-footer-color);
+    background        : var(--b-grid-footer-background);
+    border-inline-end : var(--b-grid-footer-border-width) solid var(--b-grid-footer-border-color);
+    font-weight       : var(--b-grid-footer-font-weight);
+    padding           : var(--b-grid-footer-padding);
+    text-align        : var(--b-grid-footer-text-align);
+
+    &:last-child {
+        --b-grid-footer-border-width : 0;
+    }
+}
+
+.b-grid-footer-align-start,
+.b-grid-footer-align-left {
+    --b-grid-footer-text-align : start;
+}
+
+.b-grid-footer-align-center {
+    --b-grid-footer-text-align : center;
+}
+
+.b-grid-footer-align-end,
+.b-grid-footer-align-right {
+    --b-grid-footer-text-align : end;
+}

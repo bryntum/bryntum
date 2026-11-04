@@ -1,0 +1,440 @@
+/* @after Core/widget/Panel.css */
+
+:root, :host {
+    /**
+     * Transition duration for column operations such as showing, hiding and collapsing
+     */
+    --b-grid-column-transition-duration : var(--b-default-transition-duration);
+
+    /**
+     * Transition duration for row operations such as adding and removing
+     */
+    --b-grid-row-transition-duration    : var(--b-default-transition-duration);
+
+    /**
+     * Padding for the message shown when the grid is empty
+     */
+    --b-grid-empty-padding              : var(--b-widget-padding);
+
+    /**
+     * Text color for the message shown when the grid is empty
+     */
+    --b-grid-empty-color                : var(--b-text-2);
+
+    /**
+     * Padding for the grid panel header (when having a title or panel tools)
+     */
+    --b-grid-panel-header-padding       : var(--b-panel-header-padding);
+
+    /**
+     * Bottom border for the grid panel header (when having a title or panel tools)
+     */
+    --b-grid-panel-header-border-bottom : var(--b-grid-header-border-width) solid var(--b-grid-header-border-color);
+
+    /**
+     * Grid background color
+     */
+    --b-grid-background                 : var(--b-neutral-100);
+
+    /**
+     * Grid cell border width. By default also applies to headers
+     */
+    --b-grid-cell-border-width          : 1px;
+
+    /**
+     * Grid cell focused outline width
+     * @state Focused
+     */
+    --b-grid-cell-focused-outline-width : var(--b-widget-focus-outline-width);
+
+    /**
+     * Grid cell focused outline color
+     * @state Focused
+     */
+    --b-grid-cell-focused-outline-color : var(--b-widget-focus-outline-color);
+
+    /**
+     * Grid cell inner gap
+     */
+    --b-grid-cell-gap                   : 0.5em;
+
+    /**
+     * Grid cell padding block. Defaults to 0, since cells are sized programmatically and content is centered vertically
+     */
+    --b-grid-cell-padding-block         : 0;
+
+    /**
+     * Grid cell padding inline. By default also applies to headers
+     */
+    --b-grid-cell-padding-inline        : var(--b-widget-padding);
+
+    /**
+     * Grid cell font size
+     */
+    --b-grid-cell-font-size             : 1em;
+
+    /**
+     * Grid cell font weight
+     */
+    --b-grid-cell-font-weight           : var(--b-widget-font-weight);
+
+    /**
+     * Grid's default row height, if not set programmatically or through data
+     */
+    --b-grid-row-height                 : 45px;
+
+    /**
+     * Grid row border width (bottom border)
+     */
+    --b-grid-row-border-width           : 1px;
+
+    /**
+     * Grid row z-index
+     */
+    --b-grid-row-zindex                 : 1;
+
+    /**
+     * Grid empty text z-index
+     */
+    --b-grid-empty-text-z-index         : 10;
+
+    /**
+     * Grid editing cell z-index
+     */
+    --b-grid-editing-z-index            : 2;
+
+    /**
+     * Grid splitter width, when not using the RegionResize feature
+     */
+    --b-grid-splitter-width             : 1px;
+
+    /**
+     * Grid cell border color
+     */
+    --b-grid-cell-border-color          : var(--b-border-7);
+
+    /**
+     * Grid cell background
+     */
+    --b-grid-cell-background            : var(--b-neutral-100);
+
+    /**
+     * Grid cell color
+     */
+    --b-grid-cell-color                 : var(--b-widget-color);
+
+    /**
+     * Grid cell color when selected & hovered
+     * @state Selected
+     */
+    --b-grid-cell-selected-color        : var(--b-widget-color);
+
+    /**
+     * Grid row border color (defaults to use cell border color)
+     */
+    --b-grid-row-border-color           : var(--b-grid-cell-border-color);
+
+    /**
+     * Grid cell dirty indicator color
+     */
+    --b-grid-cell-dirty-color           : var(--b-color-red);
+
+    /**
+     * Grid splitter color, when not using the RegionResize feature
+     */
+    --b-grid-splitter-narrow-color      : var(--b-neutral-80);
+
+    /* Internal var */
+    --bi-grid-cell-overflow             : clip;
+
+    /**
+     * Row "Skeleton" background color when lazy loading
+     */
+    --b-grid-row-placeholder-color      : var(--b-neutral-95);
+
+    /**
+     * Background color for highlighted cells in color mode
+     */
+    --b-grid-cell-highlight-color       : color-mix(in srgb, var(--b-color-yellow) 20%, var(--b-neutral-100));
+
+    /**
+     * Controls overscroll behaviour on the grid's scrollers. Defaults to `none` to stop overscroll bounce detaching body content from the scroll edges
+     */
+    --b-grid-overscroll-behavior        : none;
+}
+
+/* .b-bryntum { */
+/**
+ * Background for hovered cells
+ * @state Hovered
+ */
+/*--b-grid-cell-hover-background          : var(--b-primary-98);*/
+
+/**
+ * Background for selected cells
+ * @state Selected
+ */
+/*--b-grid-cell-selected-background       : var(--b-primary-96);*/
+
+/**
+ * Background for hovered and selected cells
+ * @state Hovered & Selected
+ */
+/*--b-grid-cell-hover-selected-background : var(--b-primary-94);*/
+
+/*--b-grid-link-color                     : var(--b-primary-30);*/
+/*--b-grid-row-hover-link-color           : var(--b-primary-30);*/
+/* } */
+
+.b-grid-base {
+    overflow                            : clip;
+    min-width                           : 0; /* For flex to apply as it should, when in a flex container */
+
+    --b-panel-bottom-toolbar-padding    : var(--b-grid-header-padding);
+    --b-panel-background                : var(--b-grid-background);
+    --b-panel-top-toolbar-margin-inline : 0;
+    --b-panel-top-toolbar-border-radius : 0;
+
+    /* Only for the grid's own header (also the ones rendered when collapsing), not for headers of nested panels */
+    > :where(.b-panel-header),
+    > :where(.b-panel-collapser, .b-panel-overlay) > :where(.b-panel-header) {
+        --b-panel-header-border-bottom : var(--b-grid-panel-header-border-bottom);
+        --b-panel-header-padding       : var(--b-grid-panel-header-padding);
+    }
+
+    &:where(.b-outer:not(.b-auto-height)) {
+        height : 100%;
+    }
+
+    &.b-auto-height {
+        height : auto;
+        flex   : none;
+
+        .b-grid-vertical-scroller {
+            position : relative;
+        }
+
+        &.b-grid-empty .b-grid-body-container {
+            height : unset !important;
+            flex   : 1;
+        }
+    }
+
+    .b-empty-text {
+        display : none;
+    }
+
+    &.b-grid-empty {
+        .b-empty-text {
+            display  : block;
+            position : relative;
+            color    : var(--b-grid-empty-color);
+            padding  : var(--b-grid-empty-padding);
+            z-index  : var(--b-grid-empty-text-z-index);
+        }
+    }
+
+    /* Applies to both row and cell */
+    .b-editing {
+        overflow : visible;
+        contain  : unset;
+        z-index  : var(--b-grid-editing-z-index);
+    }
+
+    &.b-splicing-rows-toggle .b-grid-row:is(.b-adding, .b-removing, .b-repositioning),
+    &.b-splicing-rows-remove .b-grid-row:is(.b-removing, .b-repositioning),
+    &.b-splicing-rows-insert .b-grid-row:is(.b-adding, .b-repositioning) {
+        transition     : top var(--b-grid-row-transition-duration), left var(--b-grid-row-transition-duration);
+        /* Should not trigger and mouse events on a row being removed */
+        pointer-events : none;
+        z-index        : calc(var(--b-grid-row-zindex) - 1);
+    }
+
+    &.b-collapsing-column {
+        .b-collapsing,
+        .b-collapsing .b-grid-header:not(:first-child) {
+            min-width : 0 !important;
+            overflow  : clip !important;
+            padding   : 0;
+        }
+
+        .b-collapsing .b-grid-header:not(:first-child) {
+            width : 0 !important;
+        }
+    }
+
+    /* This class gets added and then removed, to let cells transition to their normal settings */
+    .b-expanding-start .b-grid-header:not(:first-child) {
+        min-width : 0 !important;
+        width     : 0 !important;
+        padding   : 0;
+    }
+
+    /* This class is kept during the expand */
+    &.b-expanding-column {
+        .b-expanding .b-grid-header:not(:first-child) {
+            min-width : 0 !important;
+        }
+    }
+
+    &.b-collapsing-column,
+    &.b-expanding-column,
+    &.b-showing-column,
+    &.b-hiding-column,
+    &.b-toggling-columns {
+        .b-grid-header {
+            transition-property : min-width, max-width, width, flex, padding;
+            transition-duration : var(--b-grid-column-transition-duration);
+        }
+
+        /* Cell widths automatically matches header widths, no need to transition */
+        .b-grid-cell {
+            transition-property : padding;
+            transition-duration : var(--b-grid-column-transition-duration);
+        }
+    }
+
+    /* Prevent transitions when datasets are refreshed (sort, load, filter etc). Also allow our own widgets to use */
+    /* transitions, such as a widget column with a SlideToggle. */
+    /* THIS RULE IS TOO EXPENSIVE, MOVING TO CELL */
+    /* &:not(.b-animating, :has(.b-widget-cell.b-focused)) .b-grid-row:not(.b-grid-row-updating) .b-grid-cell * { */
+    /*     &, */
+    /*     &::before, */
+    /*     &::after { */
+    /*         transition : none; */
+    /*     } */
+    /* } */
+
+    .b-grid-header:is(.b-showing, .b-hiding) {
+        min-width : 0 !important;
+        padding   : 0 !important;
+
+        &.b-flex {
+            flex : 0 !important;
+        }
+    }
+
+    /* Cells follow the animating header's width (set inline from the measured header), but their padding must
+       also give way for them to shrink all the way. Padding transitions per the rule above */
+    .b-grid-cell:is(.b-showing, .b-hiding) {
+        min-width : 0 !important;
+        padding   : 0 !important;
+    }
+
+    .b-toggling-all-expand {
+        &.b-grid-header {
+            width : 0 !important;
+        }
+    }
+}
+
+/*
+ * Implements the fillLastColumn config. It causes the last leaf header, and the last cell in each row to flex-grow to
+ * consume all available space when there are no configured flexed columns and rows are not wider than their container.
+ */
+.b-fill-last-column {
+    .b-grid-footers:not(.b-has-flex, .b-horizontal-overflow) .b-grid-footer:last-child,
+    .b-grid-headers:not(.b-has-flex, .b-horizontal-overflow) .b-last-parent,
+    .b-grid-headers:not(.b-has-flex, .b-horizontal-overflow) .b-last-leaf:not(.b-drop-placeholder) {
+        flex-grow               : 1;
+        border-inline-end-color : transparent;
+    }
+
+    .b-grid-headers:not(.b-has-flex, .b-horizontal-overflow) .b-last-parent > .b-grid-header-text {
+        border-inline-end-color : transparent;
+    }
+
+    .b-grid-cell.b-last-column,
+    .b-row-expander-row-expanded .b-grid-cell:nth-last-child(2) {
+        --b-grid-cell-border-width : 0;
+    }
+}
+
+.b-grid-panel-body {
+    display        : flex;
+    flex-direction : column;
+    flex           : 1;
+    position       : relative;
+    overflow       : hidden;
+
+    /* If we're not autoHeighting the grid, the scroller element must always be full height so that */
+    /* mouse wheel events are received from below the row content. */
+    &:not(.b-auto-height) {
+        > .b-grid-body-container {
+            /* Auto height does not work in edge if these styles are applied */
+            flex    : 1 1 0;
+            contain : strict;
+
+            > .b-grid-vertical-scroller {
+                min-height : 100%;
+            }
+        }
+    }
+}
+
+.b-grid-base {
+    > .b-panel-body-wrap {
+        /* Also let it have a different color than other toolbars*/
+        --b-toolbar-background : var(--b-grid-toolbar-background);
+
+        > .b-top-toolbar {
+            transition    : background-color var(--b-default-transition-duration), border var(--b-default-transition-duration);
+
+            /* If grid headers use a border, so should the top toolbar to distinguish it from them */
+            border-bottom : var(--b-grid-header-container-border-width) solid var(--b-grid-header-border-color);
+        }
+    }
+
+    &:not(.b-auto-height) > .b-panel-body-wrap > .b-bottom-toolbar {
+        /* If grid headers use a border, so should the bottom toolbar */
+        /* (not in an auto height grid, bottom rows border is enough) */
+        border-top : var(--b-grid-header-container-border-width) solid var(--b-grid-header-border-color);
+    }
+}
+
+.b-grid-body-container {
+    position : relative;
+
+    /* Stop vertical overscroll bounce detaching body from scroll edges */
+    overscroll-behavior-y : var(--b-grid-overscroll-behavior);
+}
+
+.b-grid-vertical-scroller {
+    display  : flex;
+    overflow : clip;
+}
+
+/* Icons inside a grid move the icon font to the pseudo, to preserve backwards compat styling a bit better */
+.b-grid-base .fa {
+    font-family : inherit;
+
+    &::before {
+        font-family : var(--b-widget-icon-font-family);
+        font-weight : var(--b-widget-icon-font-weight);
+    }
+}
+
+.b-no-transitions {
+    .b-grid-row {
+        transition : none !important;
+    }
+}
+
+/* Cell highlighting - fade mode */
+.b-grid-base.b-highlighting-fade .b-grid-cell:not(.b-highlighted) {
+    &::before {
+        content          : '';
+        position         : absolute;
+        inset            : 0;
+        opacity          : 0.8;
+        transition       : opacity 0.4s;
+        pointer-events   : none;
+        background-color : var(--b-grid-cell-background, var(--b-neutral-100));
+    }
+}
+
+/* Cell highlighting - color mode */
+.b-grid-base:not(.b-highlighting-fade) .b-grid-cell.b-highlighted {
+    transition       : background-color 0.4s;
+    background-color : var(--b-grid-cell-highlight-color);
+}

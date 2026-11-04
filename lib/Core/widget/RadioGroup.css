@@ -1,0 +1,79 @@
+/* @after Core/widget/FieldSet.css */
+
+:root, :host {
+    /**
+     * The gap between radio buttons in a group
+     */
+    --b-radio-group-gap : var(--b-widget-gap);
+}
+
+.b-radio-group {
+    width                       : fit-content;
+    gap                         : var(--bi-field-gap);
+    
+    --b-field-set-border-width  : 0;
+    --b-field-set-border-radius : 0;
+    --b-field-set-padding       : 0;
+    --b-field-label-above-gap   : 0;
+    --b-field-set-background    : transparent;
+    --b-panel-background        : transparent;
+
+    > .b-panel-header {
+        padding-inline : var(--b-field-set-padding);
+    }
+
+    &:not(:has(.b-inline)) {
+        --b-panel-gap : var(--b-radio-group-gap);
+        /* --b-field-set-padding : 1em; */
+
+        .b-radio-group-content {
+            width : fit-content;
+        }
+    }
+
+    &:has(.b-inline) {
+        /* Needed for materials radio focus ring */
+        overflow : visible;
+
+        > .b-label:not(.b-align-start) {
+            scale : var(--b-text-field-label-scale);
+        }
+
+        > div {
+            grid-area : inner;
+        }
+
+        .b-panel-body-wrap {
+            overflow : visible;
+        }
+    }
+
+    /* For Materials ring to show in full */
+    .b-radio-group-body-wrap,
+    fieldset.b-radio-group-content {
+        overflow : visible;
+    }
+
+    &.b-label-before {
+        flex-direction : row;
+        gap            : var(--b-field-label-before-gap);
+    }
+
+    &.b-label-above > .b-label {
+        /* scale         : var(--b-text-field-label-scale); */
+        align-self    : flex-start;
+        margin-bottom : 0.75em;
+    }
+
+    &.b-has-label > .b-label {
+        position       : static;
+        translate      : none;
+        padding-inline : 0;
+
+        font-size      : var(--b-label-font-size);
+
+        &::before {
+            content : none;
+        }
+    }
+}

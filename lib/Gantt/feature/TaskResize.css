@@ -1,0 +1,9 @@
+/* Gantt does not display any resize handles, but we still need enough inset to make the resize cursor zone usable */
+.b-gantt.b-task-resize {
+    --bi-event-resize-handle-inset-inline : 0;
+    --b-event-resize-handle-other-size : 6px;
+    
+    .b-gantt-task-wrap.b-over-end-handle .b-gantt-task {
+        cursor : ew-resize;
+    }
+}

@@ -1,0 +1,62 @@
+:root, :host {
+    /**
+     * Week number badge background color
+     */
+    --b-calendar-week-badge-background-color : var(--b-neutral-95);
+
+    /**
+     * Week number badge text color
+     */
+    --b-calendar-week-badge-color            : var(--b-text-1);
+
+    /**
+     * Week number badge font weight
+     */
+    --b-calendar-week-badge-font-weight      : 500;
+
+    /**
+     * Week number badge font size
+     */
+    --b-calendar-week-badge-font-size        : 0.6em;
+
+    /**
+     * Week number badge distance to its neighbor
+     */
+    --b-calendar-week-badge-gap              : 0.5em;
+    /**
+     * Week number badge padding
+     */
+    --b-calendar-week-badge-padding          : 0.3em 0.5em;
+
+    /**
+     * Week number badge border radius
+     */
+    --b-calendar-week-badge-border-radius    : 0.5em;
+}
+
+/* Keyed on the badge, not the mode name, since WeekView and ResourceView render it under any mode name.
+ * Flex must not apply to plain descriptions (breaks their ellipsis); :where() keeps master's specificity */
+.b-calendar-view-desc-text:where(:has(> .b-calendar-view-desc-week-badge)) {
+    display    : flex;
+
+    column-gap : var(--b-calendar-week-badge-gap);
+
+    .b-calendar-view-desc-range {
+        overflow      : hidden;
+        white-space   : nowrap;
+        text-overflow : ellipsis;
+    }
+
+    .b-calendar-view-desc-week-badge {
+        align-self       : center;
+        text-box-trim    : trim-both;
+        min-width        : fit-content;
+
+        padding          : var(--b-calendar-week-badge-padding);
+        border-radius    : var(--b-calendar-week-badge-border-radius);
+        color            : var(--b-calendar-week-badge-color);
+        background-color : var(--b-calendar-week-badge-background-color);
+        font-size        : var(--b-calendar-week-badge-font-size);
+        font-weight      : var(--b-calendar-week-badge-font-weight);
+    }
+}

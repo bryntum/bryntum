@@ -1,0 +1,113 @@
+.b-filter-bar-field {
+    margin : 0 0 var(--b-grid-header-padding) 0;
+    width  : 100%;
+}
+
+.b-filter-bar-compact {
+
+    /* More compact header when using filterbar, to not waste space */
+    .b-grid-header.b-filter-bar-enabled {
+        flex-direction : row;
+
+        .b-grid-header-text {
+            order      : 1;
+            min-height : 3.5em; /* Content hidden, we do not want it chaining height if an icon etc is shown */
+        }
+
+        .b-sort-icon {
+            margin-inline-start : 0;
+        }
+
+        /* Using placeholders instead of header text, to not get overlapping issues */
+        .b-grid-header-text-content {
+            display : none;
+        }
+
+        &.b-grid-header-align-end, &.b-grid-header-align-right {
+            /* Field should align to the far right, sort/group icons move before */
+            .b-field {
+                order : 100000;
+            }
+            input {
+                text-align : end;
+            }
+        }
+
+        &.b-grid-header-align-center input {
+            text-align : center;
+        }
+
+        &.b-grid-header-align-end {
+            /* Field should align to the far right, sort/group icons move before */
+            .b-field {
+                order : 100000;
+            }
+            input {
+                text-align : end;
+            }
+        }
+
+        &:hover .b-filter-bar-field {
+            input,
+            input::placeholder {
+                color : var(--b-grid-header-hover-color);
+            }
+        }
+    }
+
+    .b-filter-bar-field {
+        margin                          : 0;
+        height                          : 100%;
+        flex                            : 1;
+
+        --b-text-field-input-padding    : 0;
+        --b-text-field-border-width     : 0;
+        --b-text-field-border-radius    : 0;
+        --b-combo-chip-view-padding-top : 0;
+        --b-combo-chip-view-padding     : 0;
+        --b-text-field-background       : transparent;
+        /* Match other grid header icons */
+        --b-field-trigger-color         : var(--b-grid-header-icon-color);
+
+        input::placeholder {
+            color          : var(--b-grid-header-color);
+            font-size      : var(--b-grid-header-font-size);
+            font-weight    : var(--b-grid-header-font-weight);
+            text-transform : var(--b-grid-header-text-transform);
+        }
+
+        > .b-field-inner {
+            gap : 0.5em;
+
+            &::before {
+                transition : none; /* Nicer when border disappears directly */
+            }
+        }
+
+        /* Hide default triggers by default, until field is focused */
+        &:not(:focus-within) .b-field-trigger {
+            &[data-ref="expand"],
+            &[data-ref="clear"],
+            &[data-ref="spin"],
+            &[data-ref="back"],
+            &[data-ref="forward"] {
+                display : none;
+            }
+        }
+
+        /* Show them on focus */
+        &:focus-within:not(.b-empty) .b-icon-remove,
+        &:focus-within .b-field-trigger:not(.b-step-trigger,.b-icon-remove,.b-spintrigger) {
+            display : flex;
+        }
+
+        /* Hide placeholder for combo with chipview if it is displaying chips */
+        &:not(.b-empty) input::placeholder {
+            color : transparent;
+        }
+    }
+
+    &.b-dragging .b-filter-bar-field {
+        display : none;
+    }
+}

@@ -1,0 +1,321 @@
+/* @after Core/widget/Container.css */
+
+:root, :host {
+    /**
+     * ButtonGroup border width, overridden by `--b-button-outlined-border-width` when using outlined rendition
+     */
+    --b-button-group-border-width                    : 0px; /* px needed for calc rule below*/
+
+    /**
+     * ButtonGroup border-radius, should normally match Button border-radius (cannot hide overflow, since badges
+     * need to stay visible)
+     */
+    --b-button-group-border-radius                   : var(--b-button-border-radius);
+
+    /**
+     * ButtonGroup box-shadow, overridden by `--b-button-elevated-box-shadow` when using elevated rendition
+     */
+    --b-button-group-box-shadow                      : none;
+
+    /**
+     * ButtonGroup border color, overridden by `--b-button-outlined-border-color` when using outlined rendition
+     */
+    --b-button-group-border-color                    : transparent;
+
+    /**
+     * Padding when using "padded" rendition
+     */
+    --b-button-group-padded-padding                  : 0.3em;
+
+    /**
+     * Background when using "padded" rendition
+     */
+    --b-button-group-padded-background               : var(--b-neutral-95);
+
+    /**
+     * Background for active (held down) button when using "padded" rendition
+     */
+    --b-button-group-padded-active-background        : var(--b-neutral-97);
+
+    /**
+     * Background for pressed button when using "padded" rendition
+     */
+    --b-button-group-padded-pressed-background       : var(--b-neutral-100);
+
+    /**
+     * Background for hovered pressed button when using "padded" rendition (when not in a toggle group)
+     */
+    --b-button-group-padded-pressed-hover-background : var(--b-neutral-98);
+
+    /**
+     * Box-shadow for pressed button when using "padded" rendition
+     */
+    --b-button-group-padded-pressed-box-shadow       : 0 1px 3px 0 rgb(0 0 0 /0.05), 0 1px 1px 0 rgb(0 0 0 /0.04), 0 2px 1px -1px rgb(0 0 0 /0.03);
+
+    /**
+     * Border for pressed button when using "padded" rendition
+     */
+    --b-button-group-padded-pressed-border           : 1px solid transparent;
+
+    /**
+     * Opacity of the buttons in the group when using "padded" rendition
+     */
+    --b-button-group-padded-button-opacity           : 0.5;
+
+    /**
+     * Border for the button group when using "padded" rendition
+     */
+    --b-button-group-padded-border                   : null;
+
+    /**
+     * Text color for pressed button when using "padded-filled" rendition
+     */
+    --b-button-group-padded-filled-pressed-color     : var(--b-neutral-100);
+
+    /**
+     * ButtonGroup focused button z-index
+     */
+    --b-button-group-focus-z-index                   : 3;
+
+    /**
+     * ButtonGroup pressed button z-index
+     */
+    --b-button-group-pressed-z-index                 : 2;
+
+    /**
+     * Border for button when using "padded" rendition. Border width should match that of
+     * `--b-button-group-padded-pressed-border` to ensure buttons do not move when pressed
+     */
+    --b-button-group-padded-button-border            : 1px solid transparent;
+}
+
+.b-bryntum {
+    /**
+     * Background for pressed button when using "padded-filled" rendition
+     */
+    --b-button-group-padded-filled-pressed-background       : var(--b-primary-50);
+
+    /**
+     * Background for hovered pressed button when using "padded-filled" rendition (when not in a toggle group)
+     */
+    --b-button-group-padded-filled-pressed-hover-background : var(--b-primary-55);
+}
+
+/* Outer wrapper: thin flex container laying out [label?, content]. Carries the box-shadow (so the parent
+   container reserves room for it and it is not cropped), but no border/radius. */
+.b-button-group {
+    display             : flex;
+    align-items         : center; /* In case the ButtonGroup gets its height stretched */
+    flex-shrink         : 0; /* Prevent squishing when in a flex container (e.g. a Toolbar), so overflow is detected */
+    width               : min-content;
+    height              : min-content;
+
+    /* Box-shadow lives on the outer element the parent measures, so the elevated shadow is not cropped */
+    transition-property : box-shadow;
+    transition-duration : var(--b-default-transition-duration);
+    box-shadow          : var(--b-button-group-box-shadow);
+
+    &.b-columned {
+        width : 100%;
+    }
+
+    /* Labelable flex sibling, rendered before the content element so it sits outside the border */
+    > .b-label {
+        align-self : center;
+    }
+
+    /* "above" stacks the label on its own line above the content row */
+    &.b-label-above {
+        flex-direction : column;
+        align-items    : flex-start;
+
+        > .b-label {
+            align-self : flex-start;
+            width      : var(--b-label-above-width);
+        }
+
+        .b-button-group-content {
+            width : 100%;
+        }
+    }
+
+    /* Inner content element: the bordered box holding the joined button row */
+    .b-button-group-content {
+        display             : flex;
+        gap                 : 0;
+        flex-shrink         : 0; /* Prevent squishing buttons when in a flex container */
+        align-items         : center;
+        width               : min-content;
+        height              : 100%;
+        transition-property : border, opacity, background;
+
+        border              : var(--b-button-group-border-width) solid var(--b-button-group-border-color);
+        opacity             : var(--bi-button-group-opacity, 1);
+        transition-duration : var(--b-default-transition-duration);
+    }
+
+    /* When a label is present the outer element wraps [label][content] as flex siblings, so an outer
+       box-shadow would surround the label text too. Scope the shadow back onto the bordered content box
+       so the elevated shadow hugs only the buttons (matches master), while keeping the crop fix for the
+       no-label case. Re-declare the shadow transition on the content element so it still animates. */
+    &.b-has-label {
+        box-shadow : none;
+
+        .b-button-group-content {
+            transition-property : border, opacity, background, box-shadow;
+            box-shadow          : var(--b-button-group-box-shadow);
+        }
+    }
+
+    /* Button rules kept at group level (not nested under .b-button-group-content) so they stay easy to override */
+    .b-button {
+        --b-button-border-width : 0;
+        --b-button-box-shadow   : none;
+
+        /* Text buttons keep border-radius, since you cant "see" the other buttons in same group */
+        &:not(.b-button-text) {
+            --b-button-border-radius : 0;
+        }
+
+        &:not(.b-last-visible-child) {
+            border-inline-end : var(--bi-button-group-button-border-end-width) solid var(--b-button-group-border-color);
+        }
+
+        /* Icon only buttons look weird with 1 / 1 ratio in button groups */
+        &:not(.b-text, .b-button-text) {
+            aspect-ratio : unset;
+            min-width    : 3.25em;
+        }
+
+        &:focus {
+            z-index : var(--b-button-group-focus-z-index);
+        }
+    }
+
+    .b-pressed {
+        z-index : var(--b-button-group-pressed-z-index);
+    }
+
+    &.b-columned .b-button-group-content {
+        width     : 100%;
+        flex-wrap : wrap;
+    }
+
+    &.b-rotate-vertical .b-button-group-content {
+        flex-direction : column;
+    }
+
+    &.b-button-group-tonal .b-button {
+        --bi-button-group-button-border-end-width : 1px;
+        --b-button-group-border-color             : color-mix(in oklab, var(--b-button-tonal-color), transparent 80%);
+    }
+
+    &.b-button-group-elevated {
+        --b-button-group-box-shadow : var(--b-button-elevated-box-shadow);
+    }
+
+    &.b-button-group-outlined {
+        --b-button-group-border-color             : var(--b-button-outlined-border-color);
+        --b-button-group-border-width             : var(--b-button-outlined-border-width);
+        --bi-button-group-button-border-end-width : var(--b-button-outlined-border-width);
+    }
+
+    &.b-button-group-outlined.b-disabled {
+        --b-button-group-border-color : var(--b-button-outlined-disabled-border-color);
+        --bi-button-group-opacity     : var(--b-button-disabled-opacity);
+
+        .b-button {
+            --b-button-disabled-opacity : 1;
+        }
+    }
+
+    &:where(.b-no-gap:not(.b-button-group-text, .b-button-group-padded, .b-button-group-padded-filled)) {
+        border-radius : var(--b-button-group-border-radius);
+
+        .b-button-group-content {
+            border-radius : inherit;
+
+            .b-first-visible-child {
+                border-start-start-radius : calc(var(--b-button-group-border-radius) - var(--b-button-group-border-width));
+                border-end-start-radius   : calc(var(--b-button-group-border-radius) - var(--b-button-group-border-width));
+            }
+
+            .b-last-visible-child {
+                border-start-end-radius : calc(var(--b-button-group-border-radius) - var(--b-button-group-border-width));
+                border-end-end-radius   : calc(var(--b-button-group-border-radius) - var(--b-button-group-border-width));
+            }
+        }
+    }
+}
+
+.b-button-group-padded, .b-button-group-padded-filled {
+    .b-button-group-content {
+        background    : var(--b-button-group-padded-background);
+        border-radius : var(--b-button-group-border-radius);
+        padding       : var(--b-button-group-padded-padding);
+        border        : var(--b-button-group-padded-border);
+        gap           : 3px; /* Minimal gap to ensure button:active looks good */
+    }
+
+    .b-button {
+        background          : transparent;
+        transition-property : opacity, background, box-shadow, border-color;
+        transition-duration : var(--b-default-transition-duration);
+
+        border-radius       : calc(var(--b-button-group-border-radius) - 1px);
+        height              : calc(var(--b-button-height) - var(--b-button-group-padded-padding) * 2);
+        opacity             : var(--b-button-group-padded-button-opacity);
+
+        /* Always reserve space for a border to prevent size jitter on toggle */
+        border              : var(--b-button-group-padded-button-border);
+
+        /* Override the generic .b-button-group border-inline-end rule which has higher specificity */
+        &:not(.b-last-visible-child) {
+            border-inline-end : var(--b-button-group-padded-button-border);
+        }
+
+        &:hover,
+        &.b-pressed {
+            opacity : 1;
+        }
+
+        &:active {
+            background : var(--b-button-group-padded-active-background);
+        }
+
+        &.b-pressed {
+            border : var(--b-button-group-padded-pressed-border);
+        }
+    }
+
+    &:not(.b-toggle-group) .b-button-group-content {
+        gap : var(--b-button-group-padded-padding);
+    }
+}
+
+/* `padded` and `padded-filled` are mutually-exclusive renditions (JS applies a single
+   `b-button-group-${rendition}` class), so these selectors target disjoint elements; the
+   `.b-button-group-content` qualifier was simply redundant, not a specificity tiebreak (#13306). */
+.b-button-group-padded {
+    .b-button.b-pressed {
+        background : var(--b-button-group-padded-pressed-background);
+        box-shadow : var(--b-button-group-padded-pressed-box-shadow);
+    }
+
+    &:not(.b-toggle-group) .b-button.b-pressed:hover {
+        background : var(--b-button-group-padded-pressed-hover-background);
+    }
+}
+
+.b-button-group-padded-filled {
+    .b-button.b-pressed {
+        box-shadow : none;
+
+        background : var(--b-button-group-padded-filled-pressed-background);
+        color      : var(--b-button-group-padded-filled-pressed-color);
+    }
+
+    &:not(.b-toggle-group) .b-button.b-pressed:hover {
+        background : var(--b-button-group-padded-filled-pressed-hover-background);
+    }
+}

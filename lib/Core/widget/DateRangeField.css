@@ -1,0 +1,53 @@
+/* @after Core/widget/TextField.css */
+
+:root, :host {
+    /**
+     * Gap between the start and end date fields
+     */
+    --b-date-range-field-gap : 0.5em;
+}
+
+.b-date-range-field {
+    &:not(.b-has-width) {
+        width : auto;
+    }
+
+    .b-field-container-wrap {
+        grid-area : inner;
+    }
+
+    .b-field-container {
+        --b-container-gap : var(--b-date-range-field-gap);
+    }
+
+    /* The root element is itself the inline container; its grid `gap` would force --b-widget-gap
+       as the label-above row-gap, so override only row-gap, leaving the sub-field column gap intact */
+    &.b-field-container-inline.b-label-above {
+        row-gap : var(--b-field-label-above-gap);
+    }
+
+    .b-field {
+        /* Embedded fields have no label, but the field might, which interferes */
+        grid-template-areas   : "inner";
+        grid-template-columns : 1fr;
+        /* Collapse the inherited label-above two-row template so sub-fields shrink-wrap instead of stretching */
+        grid-template-rows    : auto;
+    }
+
+    .b-start-date {
+        /*flex  : 7 0 13em; /* end-date + 2em (for expand trigger) */
+        width : 13em;
+    }
+
+    .b-end-date {
+        /* flex  : 5 0 11em; */
+        width                 : 11em;
+
+        --b-field-trigger-gap : 0;
+    }
+
+    .b-end-time,
+    .b-start-time {
+        flex : 7 7 auto;
+    }
+}

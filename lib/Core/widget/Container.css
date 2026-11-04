@@ -1,0 +1,199 @@
+:root, :host {
+    /**
+     * Gap between container items
+     */
+    --b-container-gap         : var(--b-widget-gap);
+
+    /**
+     * Container padding
+     */
+    --b-container-padding     : 0;
+
+    /**
+     * Containers align-content setting
+     */
+    /*--b-container-align-content : null; */
+
+    /**
+     * Containers color setting
+     */
+    --b-container-color       : var(--b-widget-color);
+
+    /**
+     * Divider font size
+     */
+    --b-divider-font-size     : .9em;
+
+    /**
+     * Divider line color
+     */
+    --b-divider-line-color    : var(--b-border-5);
+
+    /**
+     * Divider text color
+     */
+    --b-divider-text-color    : var(--b-border-4);
+
+    /**
+     * Divider font weight
+     */
+    --b-divider-font-weight   : null;
+
+    /**
+     * Divider block margin
+     */
+    --b-divider-margin-block   : 1em;
+
+    /**
+     * Border width for bordered containers
+     */
+    --b-container-border-width : 1px;
+
+    /**
+     * Border color for bordered containers
+     */
+    --b-container-border-color : var(--b-border-7);
+
+    /**
+     * Divider text z-index (above divider line)
+     */
+    --b-divider-text-z-index   : 1;
+}
+
+.b-internal {
+    --bi-container-columns : null;
+}
+
+.b-container {
+    min-width     : 0;
+    min-height    : 0;
+
+    color         : var(--b-container-color);
+    gap           : var(--b-container-gap);
+    padding       : var(--b-container-padding);
+    align-content : var(--b-container-align-content);
+
+    &:where(:not(.b-panel)) {
+        display        : grid;
+        grid-auto-rows : min-content;
+
+        &.b-columns {
+            grid-template-columns : repeat(var(--bi-container-columns), auto);
+        }
+    }
+
+    &.b-vbox {
+        display        : flex;
+        flex-direction : column;
+
+        &.b-single-child:not(.b-toolbar-content) > .b-container {
+            align-self : stretch;
+            flex       : 1 1 auto;
+        }
+    }
+
+    &.b-hbox {
+        display   : flex;
+        flex-flow : row nowrap;
+
+        &.b-single-child:not(.b-toolbar-content) > .b-container {
+            align-self : stretch;
+            flex       : 1 1 auto;
+        }
+    }
+
+    /* aligns all inputs on the end side */
+    &.b-field-align-end .b-field-inner {
+        justify-content : flex-end;
+        justify-self    : end;
+    }
+
+    &.b-bordered {
+        border        : var(--b-container-border-width) solid var(--b-container-border-color);
+        border-radius : var(--b-widget-border-radius);
+    }
+}
+
+/*
+ * All Containers and subclasses such as Panel, Popup, Toolbar etc tag their content elements with this class
+ * so global rules for content elements can be applied here.
+ */
+.b-content-element {
+    &:has(> .b-splitter) {
+        gap : 0;
+    }
+
+    /* When dragging a splitter, disable transitions on all immediate child elements so widths move with pointer */
+
+    &:has(> .b-splitter.b-moving) {
+        * {
+            transition : none !important;
+        }
+    }
+}
+
+.b-container, .b-panel {
+    &.b-label-align-before {
+        --b-field-align-before-label-column : span 1;
+        /* Overridden in style when programmatically configured with span or column */
+        --b-field-align-before-field-column : span 1;
+    }
+}
+
+/* Panel's content is nested further than container's */
+.b-container.b-label-align-before,
+.b-panel.b-label-align-before > .b-panel-body-wrap > .b-panel-content,
+.b-panel.b-label-align-before > .b-panel-overlay > .b-panel-body-wrap > .b-panel-content {
+    grid-template-columns : repeat(var(--bi-container-columns, 1), max-content 1fr);
+    grid-auto-rows        : min-content;
+
+    > .b-has-label {
+        display                 : contents;
+
+        --b-field-label-padding : 0;
+
+        > label {
+            grid-row : auto;
+        }
+
+        > .b-field-inner {
+            grid-row : auto;
+        }
+    }
+}
+
+.b-content-element {
+    position : relative;
+
+    &.b-text-content {
+        display  : block;
+        overflow : auto;
+    }
+}
+
+.b-divider {
+    justify-content : center;
+    grid-column     : 1 / -1; /* Span full grid layouts by default */
+
+    margin-block    : var(--b-divider-margin-block);
+
+    &::before {
+        content       : '';
+        width         : 100%;
+        border-bottom : 1px solid var(--b-divider-line-color);
+        position      : absolute;
+        top           : 50%;
+    }
+
+    &[data-text]::after {
+        display     : flex;
+        padding     : 0 1em;
+        content     : attr(data-text);
+        z-index     : var(--b-divider-text-z-index);
+
+        color       : var(--b-divider-text-color);
+        background  : var(--b-parent-background-color, var(--b-panel-background));
+        font-size   : var(--b-divider-font-size);
+        font-weight : var(--b-divider-font-weight);
+    }
+}

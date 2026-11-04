@@ -1,0 +1,234 @@
+@charset "UTF-8";
+
+/* Themes need more specific rules than Widgets etc. to make sure the values are applied no matter the import order */
+:root:not(.b-nothing), :host(:not(.b-nothing)) {
+    --b-primary                                  : #0f6cbd; /* colorBrandBackground = brand[80] */
+    --b-secondary                                : var(--b-color-orange);
+
+    --b-mix                                      : #fff;
+    --b-opposite                                 : #000;
+
+    /* region Neutral shades
+     * Fluent UI 9 grey[N] is hsl(0 0% N%), the same scale as --b-neutral-N in Colors.css. These are the extra steps
+     * its alias tokens use
+     */
+    --b-neutral-88                               : hsl(0 0% 88%); /* colorNeutralStrokeDisabled */
+    --b-neutral-82                               : hsl(0 0% 82%); /* colorNeutralStroke1 */
+    --b-neutral-78                               : hsl(0 0% 78%); /* colorNeutralStroke1Hover */
+    --b-neutral-74                               : hsl(0 0% 74%); /* colorNeutralForegroundDisabled */
+    --b-neutral-38                               : hsl(0 0% 38%); /* colorNeutralForeground3, colorNeutralStrokeAccessible */
+    --b-neutral-34                               : hsl(0 0% 34%); /* colorNeutralStrokeAccessibleHover */
+    --b-neutral-26                               : hsl(0 0% 26%); /* colorNeutralForeground2 */
+    --b-neutral-14                               : hsl(0 0% 14%); /* colorNeutralForeground1 */
+
+    --b-text-1                                   : var(--b-neutral-14);
+    --b-text-2                                   : var(--b-neutral-26);
+    --b-text-3                                   : var(--b-neutral-38);
+    /* endregion */
+
+    --b-elevation-1                              : 0 0 2px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.14);
+    --b-elevation-2                              : 0 0 2px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.14);
+    --b-elevation-3                              : 0 0 8px rgba(0, 0, 0, 0.12), 0 14px 28px rgba(0, 0, 0, 0.14);
+
+    /* region Core */
+
+    --b-widget-color-scheme                      : light;
+    /* Fluent UI 9 sizes are fixed px on a 14px base font. Expressed in em so that the theme still scales with font-size */
+    --b-widget-border-radius                     : calc(4em / 14); /* borderRadiusMedium */
+    --b-widget-border-radius-large               : .8em;
+    --b-widget-padding                           : .8em;
+    --b-widget-gap                               : .8em;
+    --b-widget-border-color                      : var(--b-neutral-38); /* colorNeutralStrokeAccessible */
+    --b-widget-disabled-color                    : var(--b-neutral-74); /* colorNeutralForegroundDisabled */
+    --b-widget-disabled-background               : var(--b-neutral-94); /* colorNeutralBackgroundDisabled */
+    --b-widget-focus-outline-color               : #000; /* colorStrokeFocus2 */
+    --b-widget-sub-menu-icon                     : "\f105";
+
+    --b-icon-picker                              : "\f107";
+    --b-icon-spin-up                             : "\f077";
+    --b-icon-spin-down                           : "\f078";
+
+    --b-button-height                            : calc(32em / 14); /* Button medium */
+    --b-button-font-weight                       : 600; /* fontWeightSemibold */
+    --b-button-focus-outline-color               : #000; /* colorStrokeFocus2 */
+    --b-button-disabled-opacity                  : 1; /* Explicit disabled colors instead of opacity */
+    --b-button-disabled-color                    : var(--b-neutral-74); /* colorNeutralForegroundDisabled */
+    --b-button-outlined-disabled-border-color    : var(--b-neutral-88); /* colorNeutralStrokeDisabled */
+
+    --b-button-type-text-text-only-border-radius : 10em;
+    --b-button-icon-only-border-radius           : var(--b-widget-border-radius);
+
+    --b-checkbox-size                            : calc(16em / 14); /* Checkbox medium indicator */
+    --b-checkbox-check-font-size                 : .7em;
+    --b-checkbox-hover-border-color              : var(--b-neutral-34); /* colorNeutralStrokeAccessibleHover */
+
+    --b-chip-view-chip-border-radius             : var(--b-widget-border-radius);
+    --b-chip-view-chip-background                : var(--b-neutral-94);
+    --b-chip-view-chip-hover-background          : var(--b-neutral-92);
+    --b-chip-view-chip-selected-color            : var(--b-text-5);
+
+    --b-divider-line-color                       : var(--b-border-6);
+    --b-divider-text-color                       : var(--b-text-2);
+
+    --b-field-set-border-color                   : var(--b-neutral-80);
+
+    --b-list-item-border-radius                  : var(--b-widget-border-radius);
+    --b-list-item-focus-background               : var(--b-neutral-93);
+    --b-list-item-selected-background            : var(--b-neutral-96);
+
+    --b-menu-item-color                          : var(--b-text-2);
+    --b-menu-item-border-radius                  : var(--b-widget-border-radius);
+    --b-menu-item-padding                        : .5em .6em;
+    --b-menu-padding                             : .4em;
+    --b-menu-item-separator-height               : 9px;
+    --b-menu-item-separator-inset                : -.4em;
+
+    --b-panel-with-header-padding                : 0 var(--b-widget-padding-large) var(--b-widget-padding-large) var(--b-widget-padding-large);
+
+    --b-popup-background                         : var(--b-panel-background);
+    --b-popup-padding                            : var(--b-widget-padding);
+
+    --b-radio-check-gap                          : 0.25em;
+
+    --b-slide-toggle-border-color                : var(--b-border-5);
+    --b-slide-toggle-disabled-border-color       : transparent;
+    --b-slide-toggle-height                      : 1.5em;
+    --b-slide-toggle-thumb-background            : var(--b-neutral-40);
+    --b-slide-toggle-hovered-thumb-background    : var(--b-neutral-35);
+
+    --b-slider-thumb-border                      : .25em solid var(--b-neutral-100);
+    --b-slider-thumb-elevation                   : 0 0 1px 1px var(--b-border-5);
+    --b-slider-thumb-value-size                  : 1.9em;
+    --b-slider-track-color                       : var(--b-neutral-45);
+    --b-slider-step-border-radius                : 0;
+    --b-slider-step-width                        : 1px;
+    --b-slider-step-height                       : 100%;
+    --b-slider-step-color                        : var(--b-neutral-100);
+    --b-slider-step-opacity                      : 1;
+    --b-slider-thumb-focus-outline-color         : #000; /* colorStrokeFocus2 */
+
+    --b-splitter-color                           : var(--b-neutral-80);
+    --b-splitter-size                            : 1px;
+    --b-splitter-hover-size                      : 5px;
+    --b-splitter-hover-color                     : var(--b-neutral-90);
+
+    --b-tab-label-position                       : relative;
+    --b-tab-color                                : var(--b-neutral-26); /* colorNeutralForeground2 */
+    --b-tab-active-tab-color                     : var(--b-neutral-14); /* colorNeutralForeground1 */
+    --b-tab-font-weight                          : 400; /* body1 */
+    --b-tab-active-font-weight                   : 600; /* body1Strong */
+    --b-tab-indicator-border-radius              : 10em; /* borderRadiusCircular */
+    --b-tab-indicator-height                     : calc(3em / 14); /* strokeWidthThicker */
+    --b-tab-indicator-hidden-color               : var(--b-neutral-80);
+    --b-tab-hover-indicator-opacity              : 1;
+    --b-tab-hover-indicator-color                : var(--b-neutral-80);
+    --b-tab-hover-background                     : var(--b-neutral-100);
+    --b-tab-hover-color                          : var(--b-neutral-14); /* colorNeutralForeground2Hover */
+
+    --b-tab-bar-border-bottom-width              : 0;
+
+    --b-text-field-input-height                  : calc(32em / 14); /* Input medium */
+    --b-text-field-outlined-input-padding        : 0 calc(10em / 14); /* spacingHorizontalMNudge */
+    --b-date-time-field-inner-trigger-padding    : calc(5em / 14); /* Half the inline input padding */
+    --b-text-field-outlined-border-color         : var(--b-neutral-82) var(--b-neutral-82) var(--b-neutral-38) var(--b-neutral-82); /* colorNeutralStroke1, colorNeutralStrokeAccessible bottom */
+    --b-text-field-outlined-focus-border-width   : 1px 1px 2px 1px;
+    --b-text-field-disabled-opacity              : 1; /* Explicit disabled colors instead of opacity */
+    --b-text-field-disabled-color                : var(--b-neutral-74); /* colorNeutralForegroundDisabled */
+    --b-text-field-disabled-background           : transparent; /* colorTransparentBackground */
+    --b-text-field-disabled-border-color         : var(--b-neutral-88); /* colorNeutralStrokeDisabled */
+    --b-text-field-trigger-disabled-color        : var(--b-neutral-74);
+    --b-label-disabled-color                     : var(--b-neutral-74); /* colorNeutralForegroundDisabled */
+    --b-field-trigger-edge-gap                   : .8em;
+    --b-spin-trigger-font-size                   : .8em;
+
+    /* endregion */
+
+    /* Grid */
+    --b-grid-header-font-weight                  : 400;
+    --b-grid-header-color                        : var(--b-neutral-25);
+    --b-grid-header-icon-color                   : var(--b-neutral-35);
+
+    /* Gantt */
+    --b-scroll-button-border-width               : 1px;
+
+    /* TaskBoard */
+    --b-task-board-column-header-font-weight     : 600;
+}
+
+/* Shades of primary color have to be specified per widget, for color-mix to work as intended */
+.b-bryntum:not(.b-nothing) {
+    --bi-primary-shade                                : var(--b-primary-50);
+
+    /* region Core */
+
+    --b-button-focus-border-color                     : var(--b-border-6);
+
+    --b-button-filled-hover-background                : var(--b-primary-40);
+    --b-button-filled-pressed-background              : var(--b-primary-30);
+    --b-button-filled-active-background               : var(--b-primary-30);
+
+    --b-button-outlined-hover-border-color            : var(--b-border-5);
+    --b-button-outlined-hover-background              : var(--b-neutral-97);
+    --b-button-outlined-pressed-background            : var(--b-neutral-93);
+    --b-button-outlined-active-background             : var(--b-neutral-93);
+    --b-button-outlined-focused-background            : var(--b-neutral-100);
+
+    --b-checkbox-checked-background                   : var(--bi-primary-shade);
+    --b-checkbox-checked-border-color                 : var(--b-checkbox-checked-background);
+    --b-checkbox-checked-hover-background             : var(--b-primary-45);
+
+    --b-chip-view-chip-selected-background            : var(--b-primary);
+    --b-chip-view-chip-active-background              : var(--b-primary);
+    --b-chip-view-chip-active-selected-background     : var(--b-primary);
+
+    --b-list-checkbox-checked-background              : var(--b-primary);
+
+    --b-menu-background                               : var(--b-primary-100);
+
+    --b-menu-item-hover-background                    : var(--b-neutral-96);
+    --b-menu-item-focus-background                    : var(--b-neutral-96);
+    --b-menu-item-hover-icon-color                    : var(--b-primary-40);
+    --b-menu-item-focus-icon-color                    : var(--b-primary-40);
+
+    --b-radio-checked-color                           : var(--bi-primary-shade);
+    --b-radio-checked-background                      : var(--b-neutral-100);
+    --b-radio-checked-border-color                    : var(--b-widget-border-color);
+
+    --b-slide-toggle-background                       : var(--b-neutral-100);
+    --b-slide-toggle-hover-background                 : var(--b-neutral-100);
+    --b-slide-toggle-checked-hovered-thumb-background : var(--b-neutral-100);
+    --b-slide-toggle-checked-border-color             : transparent;
+    --b-slide-toggle-checked-background               : var(--bi-primary-shade);
+    --b-slide-toggle-checked-hover-background         : var(--b-primary-45);
+
+    --b-slider-color                                  : var(--bi-primary-shade);
+
+    --b-tab-indicator-color                           : var(--bi-primary-shade);
+
+    --b-text-field-outlined-hover-border-color        : var(--b-neutral-78) var(--b-neutral-78) var(--b-neutral-34) var(--b-neutral-78); /* colorNeutralStroke1Hover, colorNeutralStrokeAccessibleHover bottom */
+    --b-text-field-focus-border-color                 : var(--b-neutral-82) var(--b-neutral-82) var(--b-primary) var(--b-neutral-82); /* colorCompoundBrandStroke bottom */
+    --b-text-field-filled-hover-border-color          : var(--bi-primary-shade);
+
+    --b-toast-background                              : var(--b-neutral-100);
+
+    /* endregion */
+
+    /* Grid */
+
+    --b-grid-cell-hover-background                    : var(--b-neutral-96); /* colorSubtleBackgroundHover */
+    --b-grid-cell-selected-background                 : var(--b-primary-96); /* ~ colorBrandBackground2 */
+    --b-grid-cell-hover-selected-background           : var(--b-primary-91); /* ~ colorBrandBackground2Hover */
+
+    --b-rating-column-empty-color                     : var(--b-neutral-90);
+
+    --b-tree-expander-icon-font-size                  : 1em;
+}
+
+/* Theme meta data */
+.b-theme-info {
+    --b-theme-name             : "Fluent2Light";
+    --b-theme-filename         : "fluent2-light";
+    --b-theme-button-rendition : "outlined";
+    --b-theme-label-position   : "above";
+    --b-theme-overlap-label    : "false";
+}

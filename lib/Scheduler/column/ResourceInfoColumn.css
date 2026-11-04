@@ -1,0 +1,117 @@
+:root, :host {
+    /**
+     * Resource name font weight
+     */
+    --b-resource-info-column-name-font-weight     : 600;
+
+    /**
+     * Resource role font size
+     */
+    --b-resource-info-column-role-font-size       : 0.8em;
+
+    /**
+     * Resource role color
+     */
+    --b-resource-info-column-role-color           : var(--b-neutral-65);
+
+    /**
+     * Resource role color on a hovered row
+     */
+    --b-resource-info-column-role-row-hover-color : var(--b-neutral-65);
+}
+
+.b-colorize {
+    /**
+     * Avatar background color
+     */
+    --b-resource-info-column-avatar-background-color : var(--b-primary-85);
+}
+
+/* This get overridden in style when a resource has an eventColor defined */
+.b-grid-row {
+    --b-resource-event-color : var(--b-primary);
+}
+
+.b-resource-info-cell {
+    .b-icon-tree-leaf {
+        visibility : hidden;
+    }
+}
+
+.b-resource-info {
+    flex                  : 1;
+    height                : 100%;
+
+    display               : grid;
+    grid-template-columns : min-content 1fr;
+    overflow              : clip;
+    column-gap            : 1em;
+
+    /* Override default tree cell gap */
+    div& {
+        row-gap : .15em;
+    }
+
+    &.b-tree-cell-value {
+        /* When tree cell value contains grid-based content (like ResourceInfoColumn),
+         * preserve its grid display instead of forcing flex */
+        display               : grid;
+        grid-template-columns : min-content 1fr;
+        column-gap            : var(--b-tree-cell-gap);
+    }
+
+    align-items           : center;
+
+    /* Use event color as avatar background */
+    --b-primary           : var(--b-resource-event-color);
+    --b-avatar-background : var(--b-resource-info-column-avatar-background-color);
+
+    div {
+        overflow      : clip;
+        text-overflow : ellipsis;
+    }
+
+    .b-resource-avatar {
+        grid-column : 1;
+    }
+
+    &:has(.b-resource-role, .b-resource-events, .b-resource-meta) .b-resource-avatar {
+        grid-row : span 2;
+    }
+
+    .b-resource-name {
+        grid-column : 2;
+        align-self  : end;
+
+        font-weight : var(--b-resource-info-column-name-font-weight);
+    }
+
+    .b-resource-role,
+    .b-resource-events,
+    .b-resource-meta {
+        grid-column : 2;
+        align-self  : start;
+
+        font-size   : var(--b-resource-info-column-role-font-size);
+        color       : var(--b-resource-info-column-role-color);
+    }
+
+    .b-resource-meta {
+        display     : flex;
+        align-items : center;
+        gap         : 0.5em;
+    }
+
+    .b-resource-icon {
+        display     : grid;
+        place-items : center;
+    }
+}
+
+.b-grid-row,
+.b-grid-cell {
+    &.b-selected,
+    &.b-hover {
+        --b-resource-info-column-role-color : var(--b-resource-info-column-role-row-hover-color);
+    }
+}

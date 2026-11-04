@@ -1,0 +1,116 @@
+/* @after Calendar/view/CalendarEventRendering.css */
+:root, :host {
+    /**
+     * Selected date's background color in the day selector
+     */
+    --b-event-list-day-selector-selected-date-background : var(--b-calendar-today-background);
+
+    /**
+     * Selected date's color in the day selector
+     */
+    --b-event-list-day-selector-selected-date-color      : var(--b-calendar-today-color, var(--b-date-picker-today-color, var(--b-primary-50)));
+
+    /**
+     * Gap between resource avatars
+     */
+    --b-event-list-event-column-resource-row-gap         : 0.3em;
+
+    /**
+     * Event list settings button z-index
+     */
+    --b-event-list-settings-button-z-index               : 100;
+}
+
+@media print {
+    .b-cal-widget-settings-button {
+        display : none;
+    }
+}
+
+.b-event-list {
+    .b-grid-panel-body {
+        /*  Override Grid's idea about background */
+        background : var(--b-calendar-background);
+    }
+
+    /* If we have a vertical scrollbar, add extra margin to settings button */
+    &:has(.b-grid-body-container.b-vertical-overflow) {
+        --bi-settings-button-extra-inset : var(--bi-scrollbar-width);
+    }
+
+    .b-cal-widget-settings-button {
+        position           : absolute;
+        font-size          : 110%;
+        border-radius      : 50%;
+        inset-inline-start : auto;
+        inset-inline-end   : calc(1em + var(--bi-settings-button-extra-inset, 0px));
+        margin-top         : 1em;
+        width              : 3em;
+        height             : 3em;
+        box-shadow         : none;
+        z-index            : var(--b-event-list-settings-button-z-index);
+    }
+
+    [data-column="name"] .b-icon-circle::before {
+        font-size : var(--b-calendar-event-circle-icon-size);
+    }
+}
+
+.b-calendar-events-cell {
+    padding     : 1em;
+    gap         : 1em;
+    flex-wrap   : wrap;
+    align-items : flex-start;
+
+    .b-cal-event-resource-avatars {
+        flex-basis     : 30%;
+        flex-direction : column;
+
+        min-width      : var(--b-avatar-size);
+        gap            : var(--b-event-list-event-column-resource-row-gap);
+    }
+}
+
+.b-cal-event-resource-avatar-row {
+    display     : flex;
+    flex-flow   : row nowrap;
+    gap         : 1em;
+    align-items : center;
+}
+
+.b-cal-event-resource-avatar-desc {
+    display   : flex;
+    flex-flow : column;
+    gap       : 0.3em;
+}
+
+.b-cal-event-column-event-desc {
+    margin-inline-start : auto;
+    display             : flex;
+    flex-direction      : column !important;
+    flex-flow           : row nowrap;
+    justify-content     : center;
+
+    height              : var(--b-avatar-size);
+}
+
+.b-cal-event-column-times {
+    display        : flex;
+    flex-direction : column;
+}
+
+.b-event-column-resource-role {
+    font-size   : 80%;
+    font-weight : 300;
+}
+
+.b-cal-event-list-event-time {
+    display     : flex;
+    align-items : center;
+
+    min-height  : var(--b-avatar-size);
+}
+
+.b-cal-event-column-event-name {
+    font-weight : bold;
+}

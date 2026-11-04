@@ -1,0 +1,240 @@
+/* @after Core/widget/Button.css */
+
+:root, :host {
+    /**
+     * Tab border-radius
+     */
+    --b-tab-border-radius           : 0;
+
+    /**
+     * Indicator for active tab's border-radius
+     * @state Active
+     */
+    --b-tab-indicator-border-radius : 0;
+
+    /**
+     * Tab font-weight
+     */
+    --b-tab-font-weight             : 500;
+
+    /**
+     * Active tab font-weight
+     * @state Active
+     */
+    --b-tab-active-font-weight      : var(--b-tab-font-weight);
+
+    /**
+     * Tab padding
+     */
+    --b-tab-padding                 : 0 var(--b-widget-padding-large);
+
+    /**
+     * Icon-only tab padding
+     */
+    --b-tab-icon-only-padding       : 0 var(--b-widget-padding);
+
+    /**
+     * Display value for the active tab indicator
+     * @state Active
+     */
+    --b-tab-indicator-display       : block;
+
+    /**
+     * Tab indicator opacity when hovering an inactive tab
+     * @state Hovered
+     */
+    --b-tab-hover-indicator-opacity : 0;
+
+    /**
+     * Tab background
+     */
+    --b-tab-background              : transparent;
+
+    /**
+     * Tab color
+     */
+    --b-tab-color                   : var(--b-neutral-40);
+
+    /**
+     * Color of close icon for closeable tabs
+     */
+    --b-tab-close-color             : var(--b-neutral-50);
+
+    /**
+     * Hovered close icon color
+     * @state Hovered
+     */
+    --b-tab-close-hover-color       : var(--b-neutral-30);
+
+    /**
+     * Active tab's background
+     * @state Active
+     */
+    --b-tab-active-background       : var(--b-tab-background);
+
+    /**
+     * Tab border
+     */
+    --b-tab-border                  : null;
+
+    /**
+     * Active tab's border
+     * @state Active
+     */
+    --b-tab-active-border           : null;
+
+    /**
+     * Hovered tab's border
+     * @state Hovered
+     */
+    --b-tab-hover-border            : var(--b-tab-border);
+
+    /**
+     * Tab label position
+     */
+    --b-tab-label-position          : null;
+
+    /**
+     * Tab indicator height
+     */
+    --b-tab-indicator-height        : .2em;
+
+    /**
+     * Hovered tab's color
+     * @state Hovered
+     */
+    --b-tab-hover-color             : var(--b-neutral-20);
+
+    /**
+     * Active tab's color
+     * @state Active
+     */
+    --b-tab-active-tab-color        : var(--b-neutral-0);
+
+    --b-tab-invalid-indicator-color : var(--b-color-red);
+    --b-tab-indicator-hidden-color  : transparent;
+    --b-tab-invalid-border          : null;
+
+    /* Internal vars */
+    --bi-tab-indicator-opacity      : 0;
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+/**
+ * Tab background when hovered
+ * @state Hovered
+ */
+/*--b-tab-hover-background : var(--b-primary-95);*/
+
+/**
+ * Tab background when focused
+ * @state Focused
+ */
+/*--b-tab-focus-background : var(--b-primary-90);*/
+
+/**
+ * Tab indicator color
+ */
+/*--b-tab-indicator-color  : var(--b-tab-active-tab-color);*/
+
+/**
+ * Tab indicator color when hovering an inactive tab
+ * @state Hovered
+ */
+/*--b-tab-hover-indicator-color : transparent;*/
+/* } */
+
+/* We want to be sure we are more specific than a plain Button, no matter import order */
+.b-button.b-tab {
+    border                          : var(--b-tab-border);
+
+    --b-button-background           : var(--b-tab-background);
+    --b-button-border-radius        : var(--b-tab-border-radius);
+    --b-button-hover-background     : var(--b-tab-hover-background, var(--b-primary-95));
+    --b-button-focused-background   : var(--b-tab-focus-background, var(--b-primary-90));
+    --b-button-color                : var(--b-tab-color);
+    --b-button-font-weight          : var(--b-tab-font-weight);
+    --b-button-padding              : var(--b-tab-padding);
+    --b-tab-indicator-applied-color : var(--b-tab-indicator-hidden-color, transparent);
+
+    &.b-active {
+        --b-tab-border                  : var(--b-tab-active-border);
+        --b-button-background           : var(--b-tab-active-background);
+        --b-tab-color                   : var(--b-tab-active-tab-color);
+        --b-button-font-weight          : var(--b-tab-active-font-weight);
+        --b-tab-indicator-applied-color : var(--b-tab-indicator-color);
+        --bi-tab-indicator-opacity      : 1;
+    }
+
+    /* Needed to override tab not having an active color in Material - lower the specificity using :where */
+    &:hover:where(:not(.b-active)) {
+        --b-tab-color                   : var(--b-tab-hover-color);
+        --b-tab-border                  : var(--b-tab-hover-border);
+        --b-button-background           : var(--b-tab-hover-background, var(--b-primary-95));
+    }
+
+    &.b-invalid {
+        --b-tab-indicator-applied-color : var(--b-tab-invalid-indicator-color);
+        --bi-tab-indicator-opacity      : 1;
+        --b-tab-border                  : var(--b-tab-invalid-border);
+    }
+
+    /* Icon only */
+    &:not(.b-text) {
+        --b-button-icon-padding : var(--b-tab-icon-only-padding);
+    }
+
+    .b-button-label {
+        display     : grid;
+        place-items : center;
+        align-self  : stretch;
+
+        position    : var(--b-tab-label-position);
+    }
+}
+
+.b-tab-bar {
+    &.b-dock-top {
+        --b-tab-indicator-inset : auto 0 0 0;
+    }
+    &.b-dock-right {
+        --b-tab-indicator-inset : 0 auto 0 0;
+    }
+    &.b-dock-bottom {
+        --b-tab-indicator-inset : 0 0 auto 0;
+    }
+    &.b-dock-left {
+        --b-tab-indicator-inset : 0 auto 0 0;
+    }
+}
+
+.b-tab-indicator {
+    position      : absolute;
+    transition    : opacity .2s, background .2s;
+
+    opacity       : var(--bi-tab-indicator-opacity);
+    inset         : var(--b-tab-indicator-inset, auto 0 0 0);
+    display       : var(--b-tab-indicator-display);
+    background    : var(--b-tab-indicator-applied-color, var(--b-tab-active-tab-color));
+    block-size    : var(--b-tab-indicator-height);
+    border-radius : var(--b-tab-indicator-border-radius);
+}
+
+.b-tab-close {
+    font-size : .8em;
+    cursor    : pointer;
+
+    color     : var(--b-tab-close-color);
+
+    &:hover {
+        color : var(--b-tab-close-hover-color);
+    }
+}
+
+.b-tab.b-drag-proxy {
+    transition       : background-color 0.3s;
+    opacity          : 0.9;
+
+    background-color : var(--b-toolbar-background);
+}

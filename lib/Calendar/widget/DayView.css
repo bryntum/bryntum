@@ -1,0 +1,1322 @@
+/* @after Calendar/view/CalendarEventRendering.css */
+:root, :host {
+    /**
+     * Line height for the event description in the day view.
+     */
+    --b-day-view-event-desc-line-height             : null;
+
+    /**
+     * Padding for the event body in the day view.
+     */
+    --b-day-view-event-body-padding                 : .4em;
+
+    /**
+     * Padding for the event body in the day view for short events which have constrained height.
+     */
+    --b-day-view-short-event-body-padding           : 0.1em 0.4em;
+
+    --b-day-view-event-border                       : null;
+
+    /**
+     * Width of the border at the start of the event in the day view.
+     */
+    --b-day-view-event-border-inline-start-width    : 4px;
+
+    /**
+     * Border radius for events in the day view.
+     */
+    --b-day-view-event-border-radius                : var(--b-calendar-event-border-radius);
+
+    /**
+     * Line height for the event name in the day view.
+     */
+    --b-day-view-event-name-line-height             : 1.4;
+
+    /**
+     * Width of the split line in the day view.
+     */
+    --b-day-view-split-width                        : 1px;
+
+    /**
+     * Transition duration for the height of all-day view.
+     */
+    --b-day-view-all-day-height-transition-duration : 0.3s;
+
+    /**
+     * Border color for the day view.
+     */
+    --b-day-view-border-color                       : var(--b-calendar-border-color);
+
+    /**
+     * Color for hour lines in the day view.
+     */
+    --b-day-view-hour-line-color                    : var(--b-neutral-90);
+
+    /**
+     * Color for half-hour lines in the day view.
+     */
+    --b-day-view-half-hour-line-color               : var(--b-neutral-92);
+
+    /**
+     * Color for outside core hours in the day view.
+     */
+    --b-day-view-outside-core-hours-color           : color-mix(in srgb, var(--b-neutral-90), transparent 70%);
+
+    /**
+     * Foreground color for the day view.
+     */
+    --b-day-view-foreground-color                   : var(--b-text-2);
+
+    /**
+     * Background color for insets in the day view.
+     */
+    --b-day-view-inset-background                   : color-mix(in srgb, var(--b-neutral-90), transparent 80%);
+
+    /**
+     * Color for the time axis in the day view.
+     */
+    --b-day-view-time-axis-color                    : var(--b-neutral-60);
+
+    /**
+     * Color for the hour markers on the time axis in the day view.
+     */
+    --b-day-view-time-axis-hour-color               : var(--b-text-3);
+
+    /**
+     * Background for non-working days in the day view.
+     */
+    --b-day-view-non-working-day-background         : color-mix(in srgb, var(--b-neutral-90), transparent 80%);
+
+    /**
+     * Color for the current time indicator in the day view.
+     */
+    --b-day-view-time-indicator-color               : var(--b-color-deep-orange);
+
+    /**
+     * Color used to darken the body of an event on hover in the day view.
+     * @state Hovered
+     */
+    --b-day-view-body-hover-mask-color              : rgba(100, 100, 100, 0.1);
+
+    /**
+     * Color used to darken the body of an event using custom coloring when selected in the day view.
+     * @state Selected
+     */
+    --b-day-view-body-selected-mask-color           : rgba(50, 50, 50, 0.1);
+
+    /**
+     * Background color for the day view.
+     */
+    --b-day-view-background                         : var(--b-neutral-100);
+
+    /**
+     * Scale factor for resource avatars on hover in the day view.
+     * @state Hovered
+     */
+    --b-day-view-resource-avatar-hover-scale        : 1.1;
+
+    /**
+     * Background color for today in the day view.
+     */
+    --b-day-view-today-background                   : null;
+
+    /**
+     * Text color for an event in the day view when selected
+     * @state Selected
+     */
+    --b-day-view-event-selected-color               : var(--b-neutral-100);
+
+    /**
+     * Color of the day change line when dayStartShift is used
+     */
+    --b-day-view-day-change-line-color              : var(--b-neutral-70);
+
+    /**
+     * Day detail z-index (base stacking)
+     */
+    --b-day-view-detail-z-index                     : 0;
+
+    /**
+     * Day view inset z-index (behind content)
+     */
+    --b-day-view-inset-z-index                      : -1;
+
+    /**
+     * Event overflow indicator z-index
+     */
+    --b-day-view-event-overflow-z-index             : 1;
+
+    /**
+     * All day row z-index (above day section)
+     */
+    --b-day-view-all-day-row-z-index                : 2;
+
+    /**
+     * Event wrap z-index in day cells
+     */
+    --b-day-view-event-wrap-z-index                 : 2;
+
+    /**
+     * Editing event z-index
+     */
+    --b-day-view-editing-z-index                    : 3;
+
+    /**
+     * Time on top z-index (current time lines)
+     */
+    --b-day-view-time-on-top-z-index                : 3;
+
+    /**
+     * Day content z-index (above all day row border)
+     */
+    --b-day-view-content-z-index                    : 1;
+
+    /**
+     * Current time axis z-index
+     */
+    --b-day-view-time-axis-current-z-index          : 1;
+
+    /**
+     * Resource avatar hover z-index
+     */
+    --b-day-view-avatar-hover-z-index               : 1;
+
+    /**
+     * Tentative event z-index (above active events)
+     */
+    --b-day-view-tentative-z-index                  : 20;
+
+    /**
+     * Day change line z-index (behind content)
+     */
+    --b-day-view-day-change-line-z-index            : -1;
+}
+
+.b-colorize {
+    /**
+     * Default color for events in the day view.
+     */
+    --b-day-view-event-color                     : var(--b-primary-30);
+
+    /**
+     * Color of the border at the start of the event in the day view.
+     */
+    --b-day-view-event-border-inline-start-color : var(--b-primary-50);
+
+    /**
+     * Background color for the body of an event in the day view.
+     */
+    --b-day-view-body-background                 : var(--b-primary-95);
+
+    /**
+     * Background color for the body of an hovered event in the day view.
+     * @state Hovered
+     */
+    --b-day-view-event-hover-body-background     : var(--b-primary-90);
+
+    /**
+     * Background color for the body of a selected event in the day view.
+     * @state Selected
+     */
+    --b-day-view-event-selected-body-background  : var(--b-primary-50);
+
+    /**
+     * Color of the focus outline for an event in the day view, when using keyboard navigation.
+     * @state Focused
+     */
+    --b-day-view-focus-outline-color             : var(--b-primary-30);
+}
+
+.b-internal {
+    --bi-range-magnitude            : null;
+    --bi-current-time-seconds       : null;
+    --bi-current-time-position      : null;
+    --bi-current-time               : null;
+    --bi-second-height              : null;
+    --bi-time-axis-width            : null;
+    --bi-day-view-cell-gutter       : null;
+    --bi-day-view-cell-gutter-start : null;
+    --bi-day-view-cell-gutter-end   : null;
+    --bi-day-view-cell-inset-size   : null;
+    --bi-day-view-min-event-height  : null;
+    --bi-half-hour-height           : null;
+    --bi-hour-height                : null;
+    --bi-fifteen-minute-height      : null;
+    --bi-ten-minute-height          : null;
+    --bi-five-minute-height         : null;
+    --bi-twelve-minute-height       : null;
+    --bi-six-minute-height          : null;
+    --bi-subtick-background         : null;
+    --bi-tick-background            : null;
+    --bi-tick-height                : null;
+    --bi-leaf-tick-height           : null;
+    --bi-day-start-offset           : null;
+    --bi-day-height                 : null;
+    --bi-dashed-subtick-background  : null;
+    --bi-tick-rowspan               : null;
+    --bi-tick-index                 : null;
+    --bi-day-length                 : null;
+    --bi-event-spacing-top          : null;
+    --bi-event-spacing-bottom       : null;
+}
+
+.b-day-view {
+    --bi-subtick-count            : 1;
+
+    --b-panel-background          : var(--b-day-view-background);
+    --b-panel-gap                 : 0;
+    --b-panel-padding             : 0;
+    --b-panel-with-header-padding : 0;
+
+    /* Enable highlighted events to overflow their cell gutters so they can be seen clearly when highlighted */
+    --bi-cell-gutter-start-outset : calc(var(--bi-day-view-cell-gutter-start, 0) * -1);
+
+    &.b-day-view-with-day-selector {
+        &.b-has-all-day-events {
+            .b-calendar-row-body {
+                border-top-width : 0;
+            }
+        }
+
+        .b-day-view-content {
+            .b-calendar-row-header {
+                display : none;
+            }
+        }
+    }
+
+    .b-cal-event-desc {
+        /* Event block must not be stretched by unbroken text */
+        overflow-wrap : anywhere;
+        line-height   : var(--b-day-view-event-desc-line-height);
+    }
+
+    .b-event-action-buttons {
+        position          : absolute;
+        inset-inline-end  : 0.25em;
+        inset-block-start : 0;
+        display           : flex;
+        flex-flow         : row wrap;
+
+        .b-tool {
+            color     : inherit;
+            width     : 2em;
+            height    : 2em;
+            /* For 1 day, we want 125%, for > 1 day we want 100% */
+            font-size : calc(150% - 25% * min(var(--bi-range-magnitude), 2));
+        }
+    }
+
+    /* All days filtered out */
+    &.b-no-days {
+        .b-empty-text {
+            padding        : 1em;
+            pointer-events : none;
+        }
+
+        .b-time-axis-container {
+            display : none;
+        }
+
+        .b-day-view-day-container {
+            background-image : none;
+            --bi-day-height  : auto;
+            border           : 0 none;
+
+            &::before {
+                background-image : none;
+            }
+        }
+    }
+}
+
+/* Nesting required to win over other bundle themes */
+/* https://github.com/bryntum/bryntum/issues/2820 */
+.b-day-cell-collecter .b-day-view-content {
+    /* Default value if we are not zoomed in */
+    --bi-tick-height           : var(--bi-half-hour-height);
+
+    --bi-total-tick-count      : calc(var(--bi-subtick-count) * var(--bi-day-length));
+    --bi-leaf-tick-size        : calc(var(--bi-day-height) / var(--bi-total-tick-count));
+    --bi-current-time-position : calc(var(--bi-current-time-seconds) * var(--bi-second-height) - 1px);
+
+    display                    : flex;
+    align-items                : stretch;
+    padding                    : 0;
+    flex                       : 1 1 0;
+    overflow                   : hidden;
+    outline                    : none;
+
+    background                 : var(--b-day-view-background);
+    color                      : var(--b-day-view-foreground-color);
+
+    /* Zoom controls. As the hour height passes the hourHeightBreakpoints in the DayView the */
+    /* hourheight-level-n class changes from 0 to 1, 2, 3, 4 etc. This allows us to know */
+    /* when to show the subticks and how many subticks will exist within one hour. */
+
+    /* When hour grows beyond a certain height, we show first level of subticks */
+    &.b-day-view-hour-height-level-1 {
+        --bi-subtick-count : 2;
+
+        .b-day-view-tick-level-1 {
+            opacity : 1;
+        }
+    }
+
+    /* When hour grows a little more, we show level 2 subticks */
+    &.b-day-view-hour-height-level-2 {
+        /* Fifteen minute ticks */
+        --bi-subtick-count : 4;
+        --bi-tick-height   : var(--bi-fifteen-minute-height);
+
+        .b-day-view-tick-level-2 {
+            opacity : 1;
+        }
+    }
+
+    /* When hour grows a little more, we show level 3 subticks */
+    &.b-day-view-hour-height-level-3 {
+        /* Ten minute ticks */
+        --bi-subtick-count : 6;
+        --bi-tick-height   : var(--bi-ten-minute-height);
+
+        .b-day-view-tick-level-3 {
+            opacity : 1;
+        }
+    }
+
+    /* When hour is enormous, we show level 4 subticks */
+    &.b-day-view-hour-height-level-4 {
+        /* Five minute ticks */
+        --bi-subtick-count : 12;
+        --bi-tick-height   : var(--bi-five-minute-height);
+
+        .b-day-view-tick-level-4 {
+            opacity : 1;
+        }
+    }
+
+    /* Time subdivision line background for six minute intervals */
+    &.b-six-minute-ticks {
+        &.b-day-view-hour-height-level-2 {
+            /* Twelve minute ticks */
+            --bi-subtick-count : 6;
+            --bi-tick-height   : var(--bi-twelve-minute-height);
+        }
+
+        &.b-day-view-hour-height-level-3 {
+            /* Six minute ticks */
+            --bi-subtick-count : 10;
+            --bi-tick-height   : var(--bi-six-minute-height);
+        }
+    }
+
+    .b-day-view-subtick {
+        position     : absolute;
+        inset-inline : 0;
+
+        height       : calc(var(--bi-leaf-tick-size) * var(--bi-tick-rowspan, 1));
+        top          : calc(var(--bi-tick-index) * var(--bi-leaf-tick-size));
+    }
+
+    .b-virtual-scrollers {
+        padding-inline-start : var(--bi-time-axis-width);
+
+        .b-virtual-scroller {
+            flex                : 1 1 0;
+
+            border-inline-start : var(--b-day-view-split-width) solid var(--b-day-view-border-color);
+
+            .b-scroller-stretcher {
+                position : relative;
+            }
+        }
+    }
+
+    .b-day-view-day-detail {
+        position : relative;
+        z-index  : var(--b-day-view-detail-z-index);
+
+        &.b-day-view-inset-before {
+            .b-day-view-inset::before {
+                content : " ";
+                left    : 0;
+            }
+
+            .b-day-view-event-container {
+                margin-inline-start : calc(var(--bi-day-view-cell-inset-size));
+            }
+        }
+
+        &.b-day-view-inset-after {
+            .b-day-view-inset::after {
+                content : " ";
+                right   : 0;
+            }
+
+            .b-day-view-event-container {
+                margin-inline-end : calc(var(--bi-day-view-cell-inset-size));
+            }
+        }
+
+        /* These need to be overflow:clip to allow the .b-cal-event-body-content to be sticky */
+        .b-cal-event-body,.b-cal-event {
+            overflow : clip;
+        }
+
+        .b-cal-event-body-content {
+            position : sticky;
+            top      : 1px;
+        }
+    }
+
+    /*
+     * Containers for events and time ranges to position them absolutely within the day detail cell
+     */
+    .b-day-view-event-container, .b-day-view-inset {
+        position     : absolute;
+        inset-block  : 0;
+        inset-inline : var(--bi-day-view-cell-gutter-start, 0) var(--bi-day-view-cell-gutter-end, 0);
+    }
+
+    .b-day-view-inset {
+        &::after,
+        &::before {
+            position   : absolute;
+            top        : 0;
+            bottom     : 0;
+            z-index    : var(--b-day-view-inset-z-index);
+
+            background : var(--b-day-view-inset-background);
+            width      : var(--bi-day-view-cell-inset-size);
+        }
+    }
+
+    /* .b-day-view-inset-after { */
+    /*     width : calc(var(--b-day-view-cell-inset-after) * var(--b-day-view-cell-inset-after-enabled)); */
+    /* } */
+
+    .b-cal-event-wrap {
+        /* Reserve transparent space inside the event-wrap so events appear to start/finish */
+        /* before/after their true start/end time. Driven by DayView's eventSpacing config */
+        /* via the --bi-event-spacing-top / --bi-event-spacing-bottom CSS variables. */
+        padding-block : var(--bi-event-spacing-top, 0) var(--bi-event-spacing-bottom, 0);
+
+        &:is(.b-starts-above, .b-ends-below) {
+            &:before, &:after {
+                translate           : -50% -2px;
+                margin-inline-start : 50%;
+                position            : absolute;
+                font-size           : 80%;
+                opacity             : 0.7;
+                pointer-events      : none;
+                z-index             : var(--b-day-view-event-overflow-z-index);
+
+                font-family         : var(--b-widget-icon-font-family);
+                font-weight         : var(--b-widget-icon-font-weight);
+            }
+        }
+
+        /* The two overflow indicators have to be :before and :after because */
+        /* an event can overflow a day column at both ends. Multi day events */
+        /* can be displayed wrapped through day columns using showall-dayHeader : false */
+        &.b-starts-above {
+            &:before {
+                content : "\f106";
+                top     : 0;
+            }
+        }
+
+        &.b-ends-below {
+            &:after {
+                content : "\f107";
+                bottom  : 0;
+            }
+        }
+
+        /* When a base event changes start/end times,
+         * the occurrences which follow it animate into place */
+        &.b-occurrence {
+            transition : top 0.2s, height 0.2s !important;
+        }
+    }
+
+    /* When an event renderer produces DomConfig children array, we lay */
+    /* the items out column wise, left aligned. */
+    .b-cal-event-desc-complex {
+        display        : flex;
+        flex-direction : column;
+        flex           : 1;
+        align-items    : normal;
+    }
+}
+
+/* region Esbuild fails to produce correct CSS when this is nested above */
+
+.b-rtl .b-day-cell-collect .b-day-view-content {
+    .b-day-view-day-detail.b-day-view-inset-before .b-day-view-inset::before {
+        left  : unset;
+        right : 0;
+    }
+
+    .b-day-view-day-detail.b-day-view-inset-after .b-day-view-inset::after {
+        left  : 0;
+        right : unset;
+    }
+
+    .b-cal-event-wrap:is(.b-starts-above, .b-ends-below) {
+        &:before, &:after {
+            translate : 50% -2px;
+        }
+    }
+}
+
+/*endregion*/
+
+.b-day-view-all-day-row {
+    display    : flex;
+    flex-flow  : row nowrap;
+    max-height : 50%;
+    /* The all day row's box shadow must overlay the top of the day section */
+    z-index    : var(--b-day-view-all-day-row-z-index);
+
+    /* TODO: Upgrade to relative color syntax: rgba(from var(--b-calendar-border-color) r g b / 0.3) */
+    box-shadow : 0 3px 3px color-mix(in srgb, var(--b-calendar-border-color) 30%, transparent);
+}
+
+.b-day-view-day-detail .b-cal-event-wrap {
+    /* A default min height in case event is below the view's fifteen pixel duration to ensure it's never invisible */
+    min-height : var(--bi-day-view-min-event-height);
+
+    /* Dragging relies on being able to resize */
+    &.b-cal-tentative-event {
+        min-height : 10px;
+    }
+
+    &:focus-visible {
+        .b-cal-event {
+            outline : none;
+        }
+
+        .b-cal-event-body {
+            outline        : var(--b-widget-focus-outline-width) solid var(--b-day-view-focus-outline-color);
+            outline-offset : calc(var(--b-widget-focus-outline-width) * -1);
+        }
+    }
+}
+
+.b-day-view-all-day-row-start {
+    display         : flex;
+    flex-flow       : column nowrap;
+    align-items     : center;
+    justify-content : flex-end;
+    padding         : .5em 0;
+
+    flex            : 0 0 var(--bi-time-axis-width);
+    min-width       : var(--bi-time-axis-width);
+
+    /* Not currently showing for cleaner look */
+    .b-day-view-all-day-text {
+        flex            : 1 1 auto;
+        display         : none;
+        flex-flow       : column nowrap;
+        justify-content : center;
+        font-size       : .7em;
+
+        color           : var(--b-day-view-time-axis-color);
+    }
+
+    .b-expand-all-day-button {
+        display          : none;
+        height           : 1.5em;
+        width            : 1.5em;
+        justify-content  : center;
+        align-items      : center;
+        border-radius    : 50%;
+        cursor           : inherit;
+
+        /* Override user agent button styling */
+        border           : 0 none;
+        background-color : transparent;
+
+        color            : var(--b-day-view-time-axis-color);
+
+        &:focus {
+            outline          : none;
+            background-color : #e8e8e8;
+        }
+
+        :before {
+            /* line-height:1 in icon rendering breaks vertical centering */
+            line-height : inherit;
+        }
+    }
+
+    &.b-has-cell-overflow:not(.b-day-view-all-day-auto-height) {
+        cursor : pointer;
+
+        .b-expand-all-day-button {
+            display : flex;
+        }
+
+        &.b-expanded {
+            .b-expand-all-day-button {
+                rotate : -180deg;
+            }
+        }
+    }
+}
+
+.b-day-view-schedule-container {
+    flex                : 1 0 0;
+    contain             : style;
+
+    border-inline-start : var(--b-day-view-split-width) solid var(--b-day-view-border-color);
+}
+
+.b-day-view-day-content {
+    --bi-tick-background           : linear-gradient(to bottom,
+    transparent,
+    transparent calc(var(--bi-hour-height) - 1px),
+    var(--b-day-view-hour-line-color) 1px);
+
+    --bi-subtick-background        : repeating-linear-gradient(to bottom,
+    transparent,
+    transparent calc(var(--bi-tick-height)),
+    var(--b-day-view-half-hour-line-color) var(--bi-tick-height),
+    transparent calc(var(--bi-tick-height) + 1px));
+
+    /* This will be an x & y repeating block 10px wide (5px of line and 5px of gap) and */
+    /* tick-size + 1 pixels tall. */
+    /* The centre of the gradient is at [50%, 1px]. From there 75% of the turn is transparent. */
+    /* The last 90 degrees are the line colour making up a solid, 1 pixel high line at the start */
+    /* of the block. */
+    --bi-dashed-subtick-background : conic-gradient(at 50% 1px, transparent 75%, var(--b-day-view-hour-line-color) 0turn);
+
+    display                        : flex;
+    flex-flow                      : row nowrap;
+    flex                           : 1 1 0;
+    align-items                    : flex-start;
+    outline                        : none;
+    position                       : relative;
+    /* For some reason, on Chrome, when the all day row is auto heighted to subpixel hights, the */
+    /* all day row occludes the top pixel of the day view. The next element in the DOM */
+    /* - the day view's content element - actually begins beneath the all day row's element. */
+    /* This rule makes it stand above it to show its top border. */
+    z-index                        : var(--b-day-view-content-z-index);
+
+    border-top                     : 1px solid var(--b-day-view-border-color);
+
+    &:not(.b-hide-current-time) {
+        /* The today column shows a line and a blob */
+        .b-calendar-cell.b-today {
+            &::before {
+                content            : "";
+                position           : absolute;
+                width              : calc(100% + 1px);
+                inset-inline-start : -1px;
+
+                top                : var(--bi-current-time-position);
+                border-top         : 2px solid var(--b-day-view-time-indicator-color);
+            }
+            &:after {
+                content          : "";
+                position         : absolute;
+                height           : 10px;
+                width            : 10px;
+                border-radius    : 50%;
+                translate        : calc(-50% * var(--b-rtl-negate)) calc(-50% - 1px);
+
+                top              : calc(var(--bi-current-time-position) + 2px);
+                background-color : var(--b-day-view-time-indicator-color);
+            }
+        }
+    }
+
+    &.b-show-current-time {
+        /* Allow stub line from time ill to overlay the border of the first column */
+        .b-time-axis-container {
+            overflow : visible;
+            z-index  : var(--b-day-view-time-axis-current-z-index);
+        }
+        /* Hide blob in first column if showing current time */
+        .b-calendar-cell:first-of-type {
+            &::after {
+                display : none;
+            }
+        }
+    }
+
+    &.b-show-time-full-width:has(.b-today) {
+        /* Every column shows a current time line in show-time-full-width mode */
+        .b-calendar-cell {
+            &::before {
+                content            : "";
+                position           : absolute;
+                width              : calc(100% + 1px);
+                inset-inline-start : -1px;
+
+                border-top         : 2px solid var(--b-day-view-time-indicator-color);
+                top                : var(--bi-current-time-position);
+            }
+
+            &.b-past-date::before {
+                border-top-style : dashed;
+                width            : 100%;
+            }
+        }
+    }
+
+    /* If they want the lines on top */
+    &.b-show-time-on-top {
+        .b-calendar-cell {
+            &::before, &::after {
+                z-index : var(--b-day-view-time-on-top-z-index);
+            }
+        }
+    }
+
+    /* Showing the time axis time pill */
+    .b-time-axis-current-time {
+        position       : absolute;
+        pointer-events : none;
+        width          : 100%;
+        z-index        : var(--b-day-view-time-axis-current-z-index);
+
+        translate      : 0 calc(var(--bi-current-time-position) - 50% + 1px);
+
+        .b-current-time-text {
+            border-radius    : 0.7em;
+            display          : grid;
+            place-content    : center;
+            line-height      : 20px;
+
+            background-color : var(--b-day-view-time-indicator-color);
+
+            &::after {
+                color     : #fff;
+                font-size : 0.7em;
+                content   : var(--bi-current-time, "");
+            }
+
+            /*
+             * Desktop Safari explicitly clamps the font rendering to the browser's minimum (12px).
+             * Therefore the font-size : 0.7em above will be ignored.
+             * We scale the time-display element to 70% to get the font-size : 0.7em visuals.
+             */
+            .b-safari:not(.b-mobile) &::after {
+                scale : 0.7;
+            }
+        }
+
+        /* The time axis time element shows a single pixel line to link up with the first column */
+        &::after {
+            content            : "";
+            position           : absolute;
+            inset-inline-start : 100%;
+            width              : 1px;
+            top                : calc(50% - 1px);
+
+            border-top         : 2px solid var(--b-day-view-time-indicator-color);
+        }
+    }
+
+    &:not(.b-show-current-time) {
+        /* If we're not showing current time pill, hide it... */
+        .b-time-axis-current-time {
+            visibility : hidden;
+        }
+    }
+
+    /* showCurrentTime : false or indicator renderer */
+    /* Hide in-column pseudo elements */
+    &.b-hide-current-time, &.b-custom-current-time {
+        .b-calendar-cell.b-today {
+            &::before, &::after {
+                display : none;
+            }
+        }
+    }
+}
+
+.b-day-view-day-container {
+    flex                  : 1 0 0;
+    display               : flex;
+    flex-flow             : row nowrap;
+    align-items           : stretch;
+    overscroll-behavior   : contain auto;
+    /* contain:inline-size is important to force it to shrinkwrap the day columns */
+    contain               : layout style inline-size;
+    /* The background-size is defined as `100% {hourHeight}` in DayView#refreshDayBackground */
+    /* so it only has to repeat in the Y axis. */
+    background-repeat     : repeat-y;
+
+    border-inline-start   : var(--b-day-view-split-width) solid var(--b-day-view-border-color);
+    min-height            : max(100%, var(--bi-day-height, 100%));
+    /* The first background is on top, and they go down from there */
+    background-image      : var(--bi-subtick-background), var(--bi-tick-background);
+    background-size       : 100% var(--bi-hour-height);
+    background-position-y : var(--bi-day-start-offset);
+    clip-path             : polygon(0px 0px, 100% 0px, 100% var(--bi-day-height), 0px var(--bi-day-height));
+    /* Lets the day change line paint over the split border */
+    overflow-clip-margin  : border-box;
+
+    /* Dashed subticks are carried in an underlay pseudo because the background gradient image size */
+    /* has to be different when creating the repeating pattern using conic-gradient. */
+    &.b-dashed-subticks {
+        background-image : var(--bi-tick-background);
+
+        &::before {
+            content             : "";
+            position            : absolute;
+            inset               : 0;
+
+            background-image    : var(--bi-tick-background);
+            background          : var(--bi-dashed-subtick-background);
+            background-size     : 10px calc(var(--bi-tick-height) + 1px);
+            background-position : 1px var(--bi-tick-height);
+        }
+    }
+
+    /* The day change line when dayStartShift is used, also covering the split border so it meets the axis tick */
+    &::after {
+        content          : "";
+        position         : absolute;
+        top              : var(--bi-day-change-offset, -10000px);
+        inset-inline     : calc(-1 * var(--b-day-view-split-width)) 0;
+        height           : 1px;
+        background-color : var(--b-day-view-day-change-line-color);
+        z-index          : var(--b-day-view-day-change-line-z-index);
+    }
+
+    .b-overflow {
+        opacity : 0;
+    }
+
+    .b-cal-event-body {
+        transition : background-color 0.1s;
+    }
+
+    .b-cal-event-wrap.b-starts-above {
+        /* .b-cal-event-desc, */
+        .b-event-header {
+            visibility : hidden;
+        }
+    }
+
+    .b-calendar-cell {
+        /* Must exactly match flex of CalendarRow's .b-calendar-cell */
+        flex      : 1 1 100%;
+        position  : relative;
+        overflow  : visible;
+
+        height    : var(--bi-day-height);
+        min-width : var(--bi-min-day-width);
+
+        /* No right border on last cell. Widget has a border. */
+        /* last-of-type means the current time indicator, an <span> doesn't affect the rule. */
+        &:not(:last-of-type) {
+            border-inline-end : 1px solid var(--b-day-view-border-color);
+        }
+
+        .b-cal-tentative-event,
+        .b-cal-event-wrap {
+            position   : absolute;
+
+            /* Defaults to starting at the left. */
+            /* overlapping handling may add inline left. */
+            left       : 0;
+            z-index    : var(--b-day-view-event-wrap-z-index);
+
+            .b-rtl & {
+                left  : auto;
+                right : 0;
+            }
+
+            /* Defaults to 100% of day width. */
+            /* overlapping handling may add inline width. */
+            width      : 100%;
+
+            /* Vertical transitions are longer because they are wanted to be noticeable. */
+            /* The horizontal transitions are shorter because they are invoked on focus and edit and need to appear snappy. */
+            /* right style is manipulated in RTL mode */
+            transition : left 0.1s, right 0.1s, width 0.1s, opacity 0.1s, top 0.2s, height 0.2s;
+
+            /* Drag elements must not transition vertically */
+            &.b-cal-tentative-event {
+                transition : left 0.1s, right 0.1s, width 0.1s, opacity 0.1s;
+            }
+
+            /* Show the event full size if it's the subject of the EventTooltip */
+            /* or if it's being edited. */
+            &.b-editing {
+                /* Take over from layout */
+                left    : var(--bi-cell-gutter-start-outset) !important;
+                opacity : 1;
+                z-index : var(--b-day-view-editing-z-index);
+
+                width   : calc(100% + var(--bi-day-view-cell-gutter)) !important;
+
+                .b-rtl & {
+                    left  : auto !important;
+                    right : var(--bi-cell-gutter-start-outset) !important;
+                }
+            }
+
+            /* Lift events in a cluster above each other with a subtle, semi-opaque drop shadow */
+            &.b-cal-in-cluster {
+                .b-cal-event {
+                    box-shadow : #aaaaaa40 -2px 1px 3px, #aaaaaa40 0 -1px 3px;
+                }
+
+                /* Expand the event if in a multiple column DayView and the event is in a cluster */
+                .b-multi-day-view & {
+                    &.b-cal-event-reveal {
+                        /* Take over from layout */
+                        left    : var(--bi-cell-gutter-start-outset) !important;
+                        opacity : 1;
+                        z-index : var(--b-day-view-editing-z-index);
+
+                        width   : calc(100% + var(--bi-day-view-cell-gutter)) !important;
+
+                        .b-rtl & {
+                            left  : auto !important;
+                            right : var(--bi-cell-gutter-start-outset) !important;
+                        }
+                    }
+                }
+            }
+
+            /* Short events squeeze the time and desc into one row */
+            &.b-short-event {
+                /* Short event body has a smaller padding to allow more space for the content */
+                --b-day-view-event-body-padding : var(--b-day-view-short-event-body-padding);
+
+                .b-event-header {
+                    margin : 0 0 0 auto;
+
+                    .b-icon {
+                        margin-inline-start : auto;
+                    }
+                }
+
+                .b-cal-event-body-content {
+                    flex            : 1 1 0;
+                    display         : flex;
+                    padding-block   : 0;
+                    align-items     : center;
+                    /* Flip order of time and description in compact rendition */
+                    flex-flow       : row-reverse nowrap;
+                    justify-content : flex-end;
+                    gap             : 0.2em;
+                    contain         : inline-size;
+
+                    .b-cal-event-desc {
+                        font-size         : 0.8em;
+                        white-space       : nowrap;
+                        flex              : 0 1 auto;
+                        padding-block-end : 0;
+                    }
+                }
+
+                /* Make alphabetic parts of time (am/pm) lowercase in compact rendition */
+                .b-event-time {
+                    text-transform : lowercase;
+
+                    line-height    : var(--b-day-view-event-desc-line-height);
+
+                    &:not(:last-child) {
+                        display : none;
+                    }
+                }
+
+                .b-cal-event-footer, .b-cal-event-resource-avatars {
+                    display : none;
+                }
+
+                /*
+                 * When there's less space, shrink the buttons
+                 * and place them at the end of the bar. It is row-reverse, so order : -1.
+                 */
+                .b-event-action-buttons {
+                    order      : -1;
+                    flex-wrap  : nowrap;
+                    gap        : 0;
+                    margin-top : 0;
+
+                    .b-tool {
+                        font-size : 65%;
+                        height    : 1.4em;
+                    }
+                }
+
+                /* Make milestones clear */
+                &.b-milestone {
+                    .b-cal-event-body {
+                        /* margin  : var(--b-day-view-event-body-margin) 0 0 0; */
+                        padding : 0 0.5em 0 0.5em;
+                    }
+
+                    clip-path : polygon(0 0, 100% 0, calc(100% - 0.5em) 100%, 0.5em 100%);
+                }
+            }
+        }
+
+        .b-cal-tentative-event {
+            /* Must be greater than the .b-active z-index rule in eventrendering.scss which is 10 */
+            z-index : var(--b-day-view-tentative-z-index);
+        }
+
+        .b-cal-event {
+            align-items : stretch;
+            /* This is needed to work round an apparent Chrome bug where the */
+            /* .b-cal-event-wrap appears to be *above* the event in the stacking order */
+            /* causing Siesta to be unable to click it. */
+            position    : relative;
+
+            color       : var(--b-day-view-event-color);
+
+            /* Avatars lay out in a grid in DayView event blocks. */
+            .b-cal-event-resource-avatars {
+                display               : grid;
+                column-gap            : 0;
+                grid-template-columns : repeat(auto-fill, minmax(1.6em, 1fr));
+                padding-inline-end    : 0.6em;
+
+                padding-block         : var(--b-calendar-event-bar-gap);
+
+                .b-resource-avatar {
+                    width      : 2em;
+                    height     : 2em;
+                    transition : scale .2s;
+
+                    &:hover {
+                        z-index : var(--b-day-view-avatar-hover-z-index);
+
+                        scale   : var(--b-day-view-resource-avatar-hover-scale);
+                    }
+                }
+            }
+        }
+
+        .b-cal-event-body {
+            flex                : 1 1 0;
+            white-space         : normal;
+            display             : flex;
+            flex-direction      : column;
+            transition          : background .2s, color .2s;
+
+            background          : var(--b-day-view-body-background);
+            border              : var(--b-day-view-event-border);
+            border-inline-start : var(--b-day-view-event-border-inline-start-width) solid var(--b-day-view-event-border-inline-start-color);
+            border-radius       : var(--b-day-view-event-border-radius);
+            padding             : var(--b-day-view-event-body-padding);
+        }
+
+        .b-custom-event-background .b-cal-event-body {
+            background                                  : transparent;
+
+            --b-day-view-event-selected-body-background : transparent;
+            --b-day-view-event-hover-body-background    : transparent;
+        }
+
+        &.b-non-working-day {
+            background : var(--b-day-view-non-working-day-background);
+        }
+
+        &.b-today {
+            background : var(--b-day-view-today-background);
+        }
+    }
+
+    .b-event-header {
+        display     : flex;
+        align-items : center;
+        white-space : nowrap;
+        font-size   : .7em;
+
+        gap         : var(--b-calendar-event-bar-gap);
+
+        .b-event-time {
+            flex : 1;
+        }
+    }
+
+    .b-cal-event-wrap:hover .b-cal-event-body {
+        background : var(--b-day-view-event-hover-body-background);
+    }
+
+    .b-cal-event-wrap.b-selected:not(.b-dragging-item):hover,
+    .b-cal-event-wrap.b-selected:not(.b-dragging-item) {
+        .b-cal-event-body {
+            background : var(--b-day-view-event-selected-body-background);
+            color      : var(--b-day-view-event-selected-color, var(--b-day-view-event-color));
+        }
+    }
+
+    .b-cal-event-wrap.b-custom-body-color {
+        /* Darken bodyColor a little on hover */
+        &:hover .b-cal-event-body {
+            background : linear-gradient(var(--b-day-view-body-hover-mask-color), var(--b-day-view-body-hover-mask-color)) var(--b-day-view-body-background);
+        }
+
+        /* Darken bodyColor a little more on select or for the tentative (dragged) event */
+        &.b-selected:not(.b-dragging-item):hover,
+        &.b-selected:not(.b-dragging-item),
+        &.b-cal-tentative-event {
+            .b-cal-event-body {
+                background : linear-gradient(var(--b-day-view-body-selected-mask-color), var(--b-day-view-body-selected-mask-color)) var(--b-day-view-body-background);
+            }
+        }
+    }
+}
+
+/* Transitions blocked in certain scenarios, such as full refresh */
+.b-day-view.b-no-transitions {
+    * {
+        transition : none !important;
+    }
+}
+
+.b-time-axis-container {
+    display               : flex;
+    flex-flow             : column nowrap;
+    overflow              : hidden;
+    background-position-x : 100%;
+    flex                  : 0 0 var(--bi-time-axis-width);
+    min-width             : var(--bi-time-axis-width);
+    height                : var(--bi-day-height);
+    /* The first layer is the day change tick, drawn in the same color and at the same offset as the body's day change line */
+    background-image      : linear-gradient(var(--b-day-view-day-change-line-color) 0 0), var(--bi-subtick-background), var(--bi-tick-background);
+    background-size       : 0.5em 1px, 0.5em var(--bi-hour-height), 0.5em var(--bi-hour-height);
+    background-repeat     : no-repeat, repeat-y, repeat-y;
+    background-position-y : var(--bi-day-change-offset, -10000px), var(--bi-day-start-offset), var(--bi-day-start-offset);
+    position              : relative;
+
+    .b-rtl & {
+        background-position-x : 0;
+    }
+
+    /* Element to carry the core hours background */
+    .b-day-view-time-axis-background {
+        pointer-events : none;
+        position       : absolute;
+        inset          : 0;
+    }
+}
+
+.b-day-view-time-axis-tick {
+    opacity         : 0;
+    transition      : opacity 0.4s;
+    flex            : 1 0 0;
+    display         : flex;
+    flex-direction  : column;
+    justify-content : flex-end;
+    position        : relative;
+    top             : 1ex;
+
+    max-height      : calc(var(--bi-leaf-tick-height) + 1px);
+
+    /* When we flip to fitHours, no transition should be seen */
+    .b-fit-hours & {
+        transition : none;
+    }
+}
+
+/* This tick values are always visible and overlay the hour line */
+.b-day-view-hour-tick {
+    opacity : 1;
+
+    color   : var(--b-day-view-time-axis-hour-color);
+
+    /* When we shoehorn the day start hour in at the top */
+    &.b-day-view-start-hour {
+        position   : absolute;
+        max-height : fit-content;
+
+        /* Its technically correct top is 1ex as specified above for .b-day-view-time-axis-tick */
+        /* However that pushes it down too much, so we fix it at the top of its hour supertick. */
+        top        : -3px;
+    }
+}
+
+.b-day-view-time-axis-time {
+    display            : flex;
+    flex-flow          : column nowrap;
+    align-items        : flex-end;
+    font-size          : .7em;
+    white-space        : nowrap;
+    position           : relative;
+    padding-inline-end : 1em;
+    /* Don't waste cycles calculating mousemove/over/out events for all these. */
+    pointer-events     : none;
+
+    color              : var(--b-day-view-time-axis-color);
+    flex               : 0 0 var(--bi-hour-height, 0);
+    min-height         : var(--bi-hour-height, 0);
+
+    /* Ending hour tick hidden because it's clipped out of view */
+    &:last-child {
+        .b-day-view-hour-tick {
+            display : none;
+        }
+    }
+
+    /*
+     * Desktop Safari explicitly clamps the font rendering to the browser's minimum (12px).
+     * Therefore the font-size : 0.7em above will be ignored.
+     * So the em-based padding and font-size have to be overridden.
+     * We shrink the padding and scale the tick to 70% to get the font-size : 0.7em visuals.
+     */
+    .b-safari:not(.b-mobile) & {
+        padding-inline-end : 0.7em;
+
+        .b-day-view-time-axis-tick {
+            scale : 0.7;
+        }
+    }
+}
+
+/* Day cell headers */
+.b-day-column-header {
+    display : none;
+
+    .b-has-day-header & {
+        display    : flex;
+        flex-flow  : row nowrap;
+
+        border-top : 1px solid var(--b-calendar-border-color);
+
+        &::before {
+            content   : "";
+
+            min-width : var(--bi-time-axis-width);
+        }
+
+        .b-day-column-header-scroller {
+            flex                : 1 1 0;
+
+            border-inline-start : 1px solid var(--b-calendar-border-color);
+        }
+
+        .b-day-column-content {
+            flex      : 1 0 0;
+            display   : flex;
+            flex-flow : row nowrap;
+        }
+    }
+}
+
+.b-day-column-header-cell {
+    padding-inline-start : 0.5em;
+    display              : flex;
+    overflow             : hidden;
+    text-wrap            : nowrap;
+
+    flex                 : 1 0 var(--bi-min-day-width, 0);
+    min-width            : var(--bi-min-day-width, 0);
+
+    &:not(:last-of-type) {
+        border-inline-end : 1px solid var(--b-calendar-border-color);
+    }
+}

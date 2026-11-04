@@ -1,0 +1,62 @@
+/* @after Core/widget/Field.css */
+
+:root, :host {
+    /**
+     * Padding of the two triggers that face each other between the date and the time field. Defaults to half of
+     * `--b-text-field-input-padding`, which themes whose input padding has more than one value cannot express with
+     * `calc()`, so those define this instead
+     */
+    /*--b-date-time-field-inner-trigger-padding : null;*/
+}
+
+.b-date-time-field {
+    width                        : unset;
+
+    --b-text-field-default-width : 22em;
+
+    &.b-field > div.b-field-inner {
+        display : flex;
+
+        &:has(.b-field-trigger.b-align-start),
+        &:has(.b-field-trigger.b-align-end) {
+            padding-inline : 0;
+        }
+    }
+
+    .b-date-field,
+    .b-time-field {
+        border-top-left-radius    : 0;
+        border-bottom-left-radius : 0;
+        /* The inner fields will have no labels, let them occupy full width */
+        grid-template-areas       : "inner";
+        grid-template-columns     : 1fr;
+        /* Collapse the inherited label-above two-row template so sub-fields shrink-wrap instead of stretching */
+        grid-template-rows        : auto;
+
+        --b-text-field-background : transparent;
+
+        .b-label {
+            display : none;
+        }
+
+        .b-field-inner::before {
+            content : none;
+        }
+    }
+
+    .b-date-field {
+        flex : 1 1 53%;
+
+        .b-step-trigger-forward.b-align-end {
+            padding-inline-end : var(--b-date-time-field-inner-trigger-padding, calc(var(--b-text-field-input-padding) / 2));
+        }
+    }
+
+    .b-time-field {
+        flex : 1 1 46%;
+
+        .b-field-trigger.b-align-start {
+            padding-inline-start : var(--b-date-time-field-inner-trigger-padding, calc(var(--b-text-field-input-padding) / 2));
+        }
+    }
+}

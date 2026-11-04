@@ -1,0 +1,283 @@
+/* @after Scheduler/view/mixin/SchedulerEventRendering.css */
+
+:root, :host {
+    /**
+     * Event wrap resizing z-index
+     */
+    --b-event-resize-wrap-resizing-z-index          : 2;
+
+    /**
+     * Resize handle width in horizontal mode, height in vertical mode. Must use px values
+     */
+    --b-event-resize-handle-other-size       : 3px; /* Px required, parsed by EventResize */
+
+    /**
+     * Resize handle size when hovered. Width in horizontal mode, height in vertical mode. Must use px values
+     * @state Hovered
+     */
+    --b-event-resize-handle-hover-other-size : 3px; /* Px required, parsed by EventResize */
+
+    /**
+     * Resize handle border-radius
+     */
+    --b-event-resize-handle-border-radius    : 3px;
+
+    /**
+     * Resize handle inset from event edge. Must use px values
+     */
+    --b-event-resize-handle-inset            : 7px; /* Px required, parsed by EventResize */
+
+    /**
+     * Resize handle height in horizontal mode, width in vertical mode
+     */
+    --b-event-resize-handle-size             : 60%;
+
+    /**
+     * Resize handle height in horizontal mode, width in vertical mode when hovered
+     * @state Hovered
+     */
+    --b-event-resize-handle-hover-size       : 70%;
+
+    /**
+     * Resize handle max height in horizontal mode, max width in vertical mode
+     */
+    --b-event-resize-handle-max-size         : 3em;
+
+    /**
+     * Resize handle z-index
+     */
+    --b-event-resize-handle-zindex           : 1;
+
+    /**
+     * Resize handle background color
+     */
+    --b-event-resize-handle-background       : #ffffff70;
+
+    /**
+     * Resize handle background color when hovered
+     * @state Hovered
+     */
+    --b-event-resize-handle-hover-background : #ffffffdd;
+
+    /* Vars to allow using same sizes etc in horizontal & vertical mode */
+    --bi-event-resize-handle-content         : '';
+    --bi-event-resize-handle-start-translate : 0 -50%;
+    --bi-event-resize-handle-end-translate   : 0 50%;
+    --bi-event-resize-handle-inset-inline    : var(--b-event-resize-handle-inset);
+    --bi-event-resize-handle-inset-block     : 50%;
+    --bi-event-resize-handle-height          : var(--b-event-resize-handle-size);
+    --bi-event-resize-handle-width           : var(--b-event-resize-handle-other-size);
+    --bi-event-resize-handle-hover-height    : var(--b-event-resize-handle-hover-size);
+    --bi-event-resize-handle-hover-width     : var(--b-event-resize-handle-hover-other-size);
+    --bi-event-resize-handle-cursor          : ew-resize;
+}
+
+.b-event-resize {
+    .b-sch-event-wrap.b-hover,
+    .b-sch-event-wrap:hover,
+    .b-sch-event-wrap.b-unhover,
+    .b-sch-event-wrap-resizing {
+        /* Shared between both handles, > to not propagate into nested events */
+        > .b-sch-event-resizable-true,
+        > .b-sch-event-resizable-start,
+        > .b-sch-event-resizable-end {
+            &::before,
+            &::after {
+                position      : absolute;
+                transition    : background .2s, height .3s, width .3s, opacity .2s;
+                opacity       : 1;
+
+                background    : var(--b-event-resize-handle-background);
+                border-radius : var(--b-event-resize-handle-border-radius);
+                height        : var(--bi-event-resize-handle-height);
+                /* max-height    : var(--bi-event-resize-handle-max-height); */
+                width         : var(--bi-event-resize-handle-width);
+                /* max-width     : var(--bi-event-resize-handle-max-width); */
+                z-index       : var(--b-event-resize-handle-zindex);
+
+                /* Ideal syntax, but not handled well by esbuild. See bloated syntax further down */
+                /* @starting-style { */
+                /*     height  : 0; */
+                /*     opacity : 0; */
+                /* } */
+            }
+        }
+
+        /* Left / top resize handle */
+        > .b-sch-event-resizable-true,
+        > .b-sch-event-resizable-start {
+            &::before {
+                content            : var(--bi-event-resize-handle-content);
+
+                inset-inline-start : var(--bi-event-resize-handle-inset-inline);
+                inset-block-start  : var(--bi-event-resize-handle-inset-block);
+                translate          : var(--bi-event-resize-handle-start-translate);
+            }
+        }
+
+        /* Right / bottom resize handle */
+        > .b-sch-event-resizable-true,
+        > .b-sch-event-resizable-end {
+            &::after {
+                content          : var(--bi-event-resize-handle-content);
+
+                inset-inline-end : var(--bi-event-resize-handle-inset-inline);
+                inset-block-end  : var(--bi-event-resize-handle-inset-block);
+                translate        : var(--bi-event-resize-handle-end-translate);
+            }
+        }
+
+        &.b-over-start-handle {
+            --b-sch-event-cursor : var(--bi-event-resize-handle-cursor);
+
+            > ::before {
+                --b-event-resize-handle-background : var(--b-event-resize-handle-hover-background);
+                --b-event-resize-handle-width      : var(--bi-event-resize-handle-hover-width);
+                --b-event-resize-handle-height     : var(--bi-event-resize-handle-hover-height);
+            }
+        }
+
+        &.b-over-end-handle {
+            --b-sch-event-cursor : var(--bi-event-resize-handle-cursor);
+
+            > ::after {
+                --b-event-resize-handle-background : var(--b-event-resize-handle-hover-background);
+                --b-event-resize-handle-width      : var(--bi-event-resize-handle-hover-width);
+                --b-event-resize-handle-height     : var(--bi-event-resize-handle-hover-height);
+            }
+        }
+
+        /* Handles in vertical mode */
+        &:where(.b-sch-vertical) {
+            --bi-event-resize-handle-inset-inline    : 50%;
+            --bi-event-resize-handle-inset-block     : var(--b-event-resize-handle-inset);
+            --bi-event-resize-handle-start-translate : calc(-50% * var(--b-rtl-negate)) 0;
+            --bi-event-resize-handle-end-translate   : calc(50% * var(--b-rtl-negate)) 0;
+            --bi-event-resize-handle-height          : var(--b-event-resize-handle-other-size);
+            --bi-event-resize-handle-width           : var(--b-event-resize-handle-size);
+            --bi-event-resize-handle-hover-height    : var(--b-event-resize-handle-hover-other-size);
+            --bi-event-resize-handle-hover-width     : var(--b-event-resize-handle-hover-size);
+            --bi-event-resize-handle-cursor          : ns-resize;
+        }
+    }
+}
+
+/* Esbuild does not transpile @starging-style when using the more elegant nested syntax further above */
+@starting-style {
+    .b-event-resize.b-sch-horizontal {
+        .b-sch-event-wrap.b-hover,
+        .b-sch-event-wrap:hover,
+        .b-sch-event-wrap.b-unhover,
+        .b-sch-event-wrap-resizing {
+            /* Shared between both handles, > to not propagate into nested events */
+            > .b-sch-event-resizable-true,
+            > .b-sch-event-resizable-start,
+            > .b-sch-event-resizable-end {
+                &::before,
+                &::after {
+                    height  : 0;
+                    opacity : 0;
+                }
+            }
+        }
+    }
+
+    .b-event-resize.b-sch-vertical {
+        .b-sch-event-wrap.b-hover,
+        .b-sch-event-wrap:hover,
+        .b-sch-event-wrap.b-unhover,
+        .b-sch-event-wrap-resizing {
+            /* Shared between both handles, > to not propagate into nested events */
+            > .b-sch-event-resizable-true,
+            > .b-sch-event-resizable-start,
+            > .b-sch-event-resizable-end {
+                &::before,
+                &::after {
+                    width   : 0;
+                    opacity : 0;
+                }
+            }
+        }
+    }
+}
+
+/* Hide handles in read-only Scheduler */
+.b-scheduler-base.b-read-only .b-sch-event-wrap {
+    --bi-event-resize-handle-content : null;
+}
+
+.b-sch-event-wrap.b-unhover {
+    .b-sch-event-resizable-true,
+    .b-sch-event-resizable-start,
+    .b-sch-event-resizable-end {
+        &::before,
+        &::after {
+            transition : opacity .2s;
+            opacity    : 0;
+        }
+    }
+}
+
+/* @starting-style { */
+/*     !* Handle entry transition in horizontal mode *! */
+/*     .b-sch-event-wrap:where(:not(.b-sch-vertical)) { */
+/*         &.b-hover, */
+/*         &:hover { */
+/*             .b-sch-event-resizable-true, */
+/*             .b-sch-event-resizable-start, */
+/*             .b-sch-event-resizable-end { */
+/*                 &::before, */
+/*                 &::after { */
+/*                     height  : 0; */
+/*                     opacity : 0; */
+/*                 } */
+/*             } */
+/*         } */
+/*     } */
+
+/*     !* Handle entry transition in vertical mode *! */
+/*     .b-sch-event-wrap:where(.b-sch-vertical) { */
+/*         &.b-hover, */
+/*         &:hover { */
+/*             .b-sch-event-resizable-true, */
+/*             .b-sch-event-resizable-start, */
+/*             .b-sch-event-resizable-end { */
+/*                 &::before, */
+/*                 &::after { */
+/*                     width   : 0; */
+/*                     opacity : 0; */
+/*                 } */
+/*             } */
+/*         } */
+/*     } */
+/* } */
+
+.b-resizing-event {
+    cursor : ew-resize;
+
+    &.b-sch-vertical {
+        cursor : ns-resize;
+    }
+
+    .b-sch-time-axis-cell,
+    .b-sch-event-wrap {
+        /* prevent drag create */
+        pointer-events : none;
+    }
+}
+
+.b-sch-event-wrap-resizing {
+    z-index : var(--b-event-resize-wrap-resizing-z-index);
+}
+
+.b-sch-event-resize-tip {
+    .b-tooltip-content > div {
+        display        : flex;
+        flex-direction : column;
+        gap            : 0.5em;
+    }
+
+    .b-sch-tip-message:empty {
+        display : none;
+    }
+}

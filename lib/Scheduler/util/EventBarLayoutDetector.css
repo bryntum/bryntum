@@ -1,0 +1,68 @@
+/* Two classes, to beat the `outline : none` .b-sch-event-wrap carries whichever order the sheets load in */
+.b-sch-event-wrap.b-event-layout-warning {
+    outline        : 0.15em solid var(--b-color-red);
+    outline-offset : 0.1em;
+
+    /* Lift above neighbouring bars so the whole outline is visible */
+    z-index        : 10;
+}
+
+.b-event-layout-warning-popup {
+    /* All of the advice has to be readable in one screenshot, so the popup is wide and never scrolls. This also
+       lifts the cap a text only popup otherwise gets from .b-text-popup. */
+    --b-popup-text-popup-width : 44em;
+
+    inline-size : min(44em, 92vw);
+
+    .b-panel-content {
+        padding             : 1em;
+
+        /* The snippets are meant to be selected and copied, and the float root blocks that on Safari */
+        user-select         : text;
+        -webkit-user-select : text;
+    }
+
+    /* A text only popup centers its content, which reads badly for a block of prose and code */
+    .b-popup-content {
+        align-items : stretch;
+    }
+
+    p {
+        margin-block : 0;
+        line-height  : 1.4;
+    }
+
+    code {
+        padding       : 0.15em 0.4em;
+        border-radius : 0.3em;
+        background    : var(--b-neutral-95);
+        font-family   : monospace;
+    }
+
+    .b-event-layout-warning-issue {
+        margin-block-end : 0.8em;
+
+        h4 {
+            display      : flex;
+            align-items  : center;
+            gap          : 0.4em;
+            margin-block : 0 0.2em;
+        }
+
+        .b-icon-warning {
+            color : var(--b-color-red);
+        }
+
+        code {
+            display      : block;
+            margin-block : 0.3em 0;
+            padding      : 0.3em 0.5em;
+        }
+    }
+
+    .b-event-layout-warning-off {
+        padding-block-start : 0.8em;
+        border-block-start  : 1px solid var(--b-border-5);
+        opacity             : 0.8;
+    }
+}

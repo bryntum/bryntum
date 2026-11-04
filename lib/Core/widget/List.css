@@ -1,0 +1,265 @@
+:root, :host {
+    /**
+     * Gap between list items in a multi select list
+     */
+    --b-list-multi-select-gap              : 0;
+
+    /**
+     * Gap within list items
+     */
+    --b-list-item-gap                      : 0.75em;
+
+    /**
+     * List item padding
+     */
+    --b-list-item-padding                  : 0.75em;
+
+    /**
+     * List item padding in a multi select list
+     */
+    --b-list-multi-select-item-padding     : var(--b-list-item-padding);
+
+    /**
+     * List item border radius
+     */
+    --b-list-item-border-radius            : 0;
+
+    /**
+     * Padding for group child items
+     */
+    --b-list-item-group-padding            : 0.75em 0.75em 0.75em 2em;
+
+    /**
+     * Selection icon size (checkmark)
+     */
+    --b-list-selected-icon-size            : 1.25em;
+
+    /**
+     * Selection icon content (checkmark)
+     */
+    --b-list-selected-icon-content         : var(--b-checkbox-checked-check-content);
+
+    --b-list-checkbox-checked-check-color  : var(--b-text-5);
+
+    /**
+     * Group header font-weight
+     */
+    --b-list-item-group-header-font-weight : calc(var(--b-widget-font-weight) + 200);
+
+    /**
+     * List background
+     */
+    --b-list-background                    : transparent;
+
+    /*
+     * List title background, title is sticky and needs a background to cover items scrolling under it.
+     * Also applied to the select all item background.
+     */
+    --b-list-title-background              : var(--b-neutral-100);
+
+    /**
+     * List item background
+     */
+    /*--b-list-item-background                      : null;*/
+
+    /**
+     * List item font-weight
+     */
+    /*--b-list-item-font-weight                     : null;*/
+
+    /**
+     * Group header item font-weight
+     */
+    /*--b-list-item-group-header-font-weight        : null;*/
+
+    /**
+     * List item color
+     */
+    --b-list-item-color                    : var(--b-widget-color);
+
+    /**
+     * List title (& select all) font-weight
+     */
+    --b-list-title-font-weight             : 500;
+
+    /**
+     * List sticky item z-index (select all, title)
+     */
+    --b-list-sticky-z-index                : 1;
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+/**
+ * Border-color for checked list items
+ * @state Selected
+ */
+/*--b-list-checkbox-checked-border-color : var(--b-list-checkbox-checked-background);*/
+
+/**
+ * Background for selected items
+ * @state Selected
+ */
+/*--b-list-item-selected-background      : var(--b-primary-95);*/
+
+/**
+ * Background for floating lists
+ */
+/*--b-list-floating-background           : var(--b-primary-100);*/
+
+/**
+ * Background for focused items
+ * @state Focused
+ */
+/*--b-list-item-focus-background         : var(--b-primary-85);*/
+/* } */
+
+.b-list {
+    display        : flex;
+    flex-direction : column;
+    padding        : 0;
+    margin         : 0;
+
+    background     : var(--b-list-background);
+    border-radius  : var(--b-list-border-radius);
+
+    &.b-floating {
+        --b-list-border-radius : var(--b-widget-border-radius);
+        --b-list-background    : var(--b-list-floating-background, var(--b-primary-100));
+    }
+
+    .b-empty-text {
+        pointer-events : none;
+    }
+
+    .b-select-all-item {
+        /* border-bottom    : 1px solid; */
+        position    : sticky;
+        top         : 0;
+        z-index     : var(--b-list-sticky-z-index);
+
+        background  : var(--b-list-title-background);
+        font-weight : var(--b-list-title-font-weight);
+
+        :has(.b-list-title) > & {
+            top : 2em;
+        }
+    }
+
+    &.b-multi-select {
+        gap : var(--b-list-multi-select-gap);
+    }
+}
+
+.b-list-item {
+    display             : flex;
+    cursor              : pointer;
+    overflow            : clip;
+    user-select         : none;
+    -webkit-user-select : none;
+    flex-shrink         : 0;
+
+    background          : var(--b-list-item-background);
+    color               : var(--b-list-item-color);
+    font-weight         : var(--b-list-item-font-weight);
+    padding             : var(--b-list-item-padding);
+    border-radius       : var(--b-list-item-border-radius);
+
+    .b-selected-icon {
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        transition      : all var(--b-default-transition-duration);
+
+        width           : var(--b-list-selected-icon-size);
+        height          : var(--b-list-selected-icon-size);
+        border-radius   : var(--b-checkbox-border-radius);
+        border          : var(--b-checkbox-border-width) solid var(--b-checkbox-border-color);
+        background      : var(--b-checkbox-background);
+
+        &::before {
+            transition : scale var(--b-default-transition-duration) ease;
+            scale      : 0;
+
+            content    : var(--b-checkbox-checked-check-content);
+            color      : var(--b-list-checkbox-checked-check-color);
+            font-size  : var(--b-checkbox-check-font-size);
+        }
+    }
+
+    .b-multi-select > & {
+        --b-list-item-padding : var(--b-list-multi-select-item-padding);
+
+        &.b-selected {
+
+            .b-selected-icon::before {
+                scale : 1;
+            }
+
+            .b-list-item-content {
+                --b-checkbox-background   : var(--b-list-checkbox-checked-background);
+                --b-checkbox-border-color : var(--b-list-checkbox-checked-border-color, var(--b-list-checkbox-checked-background));
+            }
+        }
+    }
+
+    &:focus {
+        outline : none;
+    }
+
+    &.b-list-item-group-header {
+        --b-list-item-font-weight : var(--b-list-item-group-header-font-weight);
+    }
+
+    /* Match height with list items that has content */
+
+    &.b-out-of-view::before {
+        content : '...';
+    }
+
+    /* Group and tree child items get extra padding */
+    .b-grouped > & {
+        &:not(.b-list-item-group-header, .b-list-item-tree-parent) {
+            --b-list-item-padding : var(--b-list-item-group-padding);
+        }
+    }
+
+    &.b-selected {
+        --b-list-item-background : var(--b-list-item-selected-background, var(--b-primary-95));
+    }
+
+    &.b-active,
+    &:focus-visible {
+        --b-list-item-background : var(--b-list-item-focus-background, var(--b-primary-85));
+    }
+}
+
+/* After b-list-item to override it */
+.b-list-title {
+    position    : sticky;
+    top         : 0;
+    z-index     : var(--b-list-sticky-z-index);
+    /* height           : 2em; */
+
+    font-weight : var(--b-list-title-font-weight);
+    background  : var(--b-list-title-background);
+}
+
+.b-list-expander-icon {
+    pointer-events : all;
+    width          : 1.1em;
+    height         : 1em;
+
+    .b-list-item:is(.b-list-item-group-header,.b-list-item-tree-parent) & {
+        margin-inline-start : auto;
+        margin-inline-end   : 0;
+    }
+}
+
+.b-list-item-content {
+    display     : flex;
+    align-items : center;
+    flex        : 1;
+
+    gap         : var(--b-list-item-gap);
+}

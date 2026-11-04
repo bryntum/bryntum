@@ -1,0 +1,74 @@
+:root, :host {
+    /**
+     * Font size for badge showing event count
+     */
+    --b-date-picker-cell-badge-font-size   : 0.7em;
+
+    /**
+     * Background color for badge showing event count
+     */
+    --b-date-picker-cell-badge-background  : var(--b-color-red);
+
+    /**
+     * Text color for badge showing event count
+     */
+    --b-date-picker-cell-badge-color       : #fff;
+
+    /**
+     * Size of badge showing event count
+     */
+    --b-date-picker-cell-badge-size        : 1.7em;
+
+    --b-date-picker-dots-padding-bottom     : 0.75em;
+}
+
+.b-date-picker {
+    /*
+     * The `.b-cell-events-badge` styling and the `b-has-bullet` /
+     * `b-has-badge` cell-inner adjustments live in the shared
+     * Core/widget/DatePickerCell.css so YearView and the DatePicker family
+     * render them identically.
+     */
+
+    .b-show-events-heatmap {
+        .b-calendar-panel-cell:not(:hover) {
+            .b-date-picker-cell-inner {
+                /* Constrain the event count to a 1-10 range for the purposes of the heatmap calculation,
+                 * treating anything above 10 as 10 to avoid excessively bright colors.
+                 * The count is reduced by 1 at the low end to give a better visual distinction between 0 and 1 events,
+                 * so that even a single event will show a noticeable color instead of being almost indistinguishable
+                 * from zero events. */
+                --bi-input : clamp(0, (var(--bi-event-count) - 1) / 9, 1);
+
+                /* We mix the "End" color into the "Start" color.
+                 * At count 1, it's 0% of the end color.
+                 * At count 10, it's 100% of the end color. */
+                --bi-bg-color: color-mix(
+                    in oklab, 
+                    var(--b-heatmap-end)   calc(var(--bi-input) * 100%), 
+                    var(--b-heatmap-start) calc((1 - var(--bi-input)) * 100%)
+                );
+
+                &:not([data-event-count="0"]) {
+                    background-color : var(--bi-bg-color);
+                    font-weight      : calc(var(--b-calendar-panel-cell-font-weight) + 100);
+                }
+            }
+        }
+    }
+
+    /*
+     * The shared cell padding / flex-column / inner-height adjustments for
+     * `b-show-events-dots` mode live in Core/widget/DatePickerCell.css (so
+     * YearView can reuse them). What's left here is DatePicker-specific:
+     * the range-selection background needs to shrink so it doesn't extend
+     * under the dot row.
+     */
+    .b-show-events-dots {
+        .b-calendar-panel-cell {
+            &:is(.b-in-range, .b-range-start, .b-range-end)::before {
+                height : calc(100% - var(--bi-extra-cell-padding));
+            }
+        }
+    }
+}

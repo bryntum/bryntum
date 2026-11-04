@@ -1,0 +1,634 @@
+/* @after Calendar/view/CalendarEventRendering.css */
+:root, :host {
+    /**
+     * Month view day number z-index (above content)
+     */
+    --b-month-view-day-num-z-index                 : 10;
+
+    /**
+     * Month view background
+     */
+    --b-month-view-background                      : var(--b-calendar-background);
+
+    /**
+     * Week container border inline width
+     */
+    --b-month-view-border-inline-width             : 1px;
+
+    /**
+     * Month view calendar cell border width
+     */
+    --b-month-view-cell-border-width               : 1px;
+
+    /**
+     * Month view calendar cell border color
+     */
+    --b-month-view-border-color                    : var(--b-calendar-border-color);
+
+    /**
+     * Month view event padding
+     */
+    --b-month-view-event-padding                   : 1px; /* Used from CalenderEventRendering.css */
+
+    /**
+     * Month view padding
+     */
+    --b-month-view-padding                         : 0.6em 0 0 0;
+
+    /**
+     * Event bar font size
+     */
+    --b-month-view-event-bar-font-size             : 0.9em;
+
+    /**
+     * Text color in weekday header cells
+     */
+    --b-month-view-header-cell-color               : var(--b-calendar-foreground-color);
+
+    /**
+     * Text color in weekend header cells
+     */
+    --b-month-view-header-cell-weekend-color       : var(--b-calendar-view-header-cell-weekend-color);
+
+    /**
+     * Week number cell background color
+     */
+    --b-month-view-week-cell-background            : var(--b-calendar-week-cell-background);
+
+    /**
+     * Week number cell color
+     */
+    --b-month-view-week-cell-color                 : var(--b-calendar-week-cell-color);
+
+    /**
+     * Week number cell hover background color
+     * @state Hovered
+     */
+    --b-month-view-week-cell-hover-background      : var(--b-calendar-week-cell-hover-background);
+
+    /**
+     * Week number cell hover color
+     * @state Hovered
+     */
+    --b-month-view-week-cell-hover-color           : var(--b-calendar-week-cell-hover-color);
+
+    /**
+     * Week number cell hover border radius
+     * @state Hovered
+     */
+    --b-month-view-week-cell-hover-border-radius   : var(--b-calendar-week-cell-hover-border-radius);
+
+    /**
+     * Week column width
+     */
+    --b-month-view-week-column-width               : 2em;
+
+    /**
+     * Hovering the row toggle tool shows circle of this colour.
+     */
+    --b-month-view-weekrow-toggle-tool-hover-color : rgba(90, 90, 90, 0.2);
+
+    /**
+     * Cell header padding
+     */
+    --b-month-view-cell-header-padding             : 0 2px 0 0;
+
+    /**
+     * Cell header background color
+     */
+    --b-month-view-cell-header-background          : null;
+
+    /**
+     * Cell header color
+     */
+    --b-month-view-cell-header-color               : var(--b-text-2);
+
+    /**
+     * Cell header hover background color
+     * @state Hovered
+     */
+    --b-month-view-cell-header-hover-background    : var(--b-calendar-date-hover-background);
+
+    /**
+     * Cell header hover color
+     * @state Hovered
+     */
+    --b-month-view-cell-header-hover-color         : null;
+
+    /**
+     * Cell header hover border radius
+     * @state Hovered
+     */
+    --b-month-view-cell-header-hover-border-radius : 3px;
+
+    /**
+     * Cell header week number color
+     */
+    --b-month-view-cell-header-week-color          : var(--b-calendar-week-cell-color);
+
+    /**
+     * Cell header content height
+     */
+    --b-month-view-cell-header-content-height      : 2em;
+
+    /**
+     * Cell header date height
+     */
+    --b-month-view-cell-header-day-num-font-size   : 0.9em;
+
+    /**
+     * Cell header day name height
+     */
+    --b-month-view-cell-header-dayname-height      : 1.8em;
+
+    /**
+     * Text color in day cells
+     */
+    --b-month-view-cell-color                      : var(--b-calendar-foreground-color);
+
+    /**
+     * Text color in day cells for weekends
+     */
+    --b-month-view-cell-weekend-color              : var(--b-calendar-foreground-color);
+
+    /**
+     * Text color in day cells for days not in current month
+     */
+    --b-month-view-cell-other-month-color          : var(--b-calendar-other-month-foreground-color);
+
+    /**
+     * Day number label in "today" cell
+     */
+    --b-month-view-today-day-num-font-weight       : var(--b-calendar-today-font-weight);
+
+    /**
+     * Non-working day background color
+     */
+    --b-month-view-non-working-day-background      : var(--b-calendar-non-working-day-background);
+}
+
+.b-internal {
+    --bi-visible-week-count : null;
+    --bi-min-row-height     : null;
+    --bi-week-length        : null;
+    --bi-min-column-width   : null;
+}
+
+/* .b-bryntum { */
+    /**
+     * Today day number background color
+     */
+    /*--b-month-view-today-day-num-background : var(--b-calendar-today-background);*/
+
+    /**
+     * Today day number color
+     */
+    /*--b-month-view-today-day-num-color      : var(--b-calendar-today-color);*/
+
+    /**
+     * Today day number border
+     */
+    /*--b-month-view-today-day-num-border     : var(--b-calendar-today-border);*/
+/* } */
+
+.b-month-view {
+    background                        : transparent;
+
+    --bi-week-length                  : 7;
+    --bi-min-column-width             : calc(100% / var(--bi-week-length, 7));
+    --b-calendar-panel-weeks-gap      : 0;
+    --bi-week-column-decrement : 0px;
+
+    .b-calendar.b-bordered & {
+        --b-month-view-border-inline-width : 0;
+    }
+
+    /* When showing week number column, reduce min column width to allow
+     * the week number column to take up its defined width */
+    &.b-show-week-column {
+        --bi-week-column-decrement : calc(var(--b-month-view-week-column-width) / var(--bi-week-length));
+    }
+
+
+    /* No borders are shown. All we need is the width, so hide display. */
+    .b-visible-scrollbar & {
+        .b-show-yscroll-padding > .b-yscroll-pad {
+            visibility : hidden;
+        }
+    }
+
+    /* Implement hideOtherMonthCells */
+    &.b-hide-other-month-cells {
+        .b-calendar-panel-row[data-row-index="0"] {
+            /* First-of-month cells which are not at column 0 must have a left border */
+            /* because month cells have only right borders by default. */
+            .b-calendar-cell[data-date$="-01"]:not([data-column-index="0"]) {
+                border-inline-start : var(--b-month-view-cell-border-width) solid var(--b-month-view-border-color);
+                margin-inline-start : calc(var(--b-month-view-cell-border-width) * -1);
+            }
+        }
+    }
+
+    &.b-disable-other-month-cells {
+        .b-calendar-cell.b-other-month {
+            /* Event root element in the other month must not be opacity 0.8*0.7 */
+            .b-cal-event-wrap:not(.b-overflow) {
+                opacity        : 1;
+                pointer-events : all;
+            }
+        }
+    }
+
+    .b-calendar-panel-row.b-calendar-week-days {
+        flex : 0 0 auto;
+
+        .b-week-number-cell {
+            flex : 0 0 var(--b-month-view-week-column-width);
+        }
+    }
+
+    .b-calendar-day-header {
+        flex               : 1;
+        min-width          : calc(var(--bi-min-column-width) - var(--bi-week-column-decrement));
+        display            : flex;
+        justify-content    : flex-end;
+        padding-inline-end : .5em;
+        padding-bottom     : .25em;
+
+        color              : var(--b-month-view-header-cell-color);
+
+        &.b-weekend {
+            color : var(--b-month-view-header-cell-weekend-color);
+        }
+        &.b-non-working-day {
+            color : var(--b-calendar-view-header-cell-non-working-day-color);
+        }
+    }
+
+    .b-week-number-cell, .b-calendar-cell:not(.b-grid-cell) {
+        flex-direction : column;
+        /* Optimize DOM style computation and layout */
+        contain        : size style;
+
+        &.b-other-month {
+            .b-day-num {
+                color : var(--b-month-view-cell-other-month-color);
+            }
+        }
+    }
+
+    /* Month start cells prefix the day number with the month name, both slightly bolder */
+    .b-day-num[data-start-of] {
+        padding-inline : 0.5em;
+        font-weight    : 500;
+        &::before {
+            content           : attr(data-start-of);
+            margin-inline-end : 0.5em;
+        }
+    }
+
+    /*
+     * On small screens, squeeze the month name in the first cell
+     * if the week number is shown
+     */
+    @media screen and (max-width: 450px) {
+        &.b-show-week-number {
+            .b-calendar-cell:first-child .b-day-num[data-start-of] {
+                padding-inline : 0 0.2em;
+                &::before {
+                    margin-inline-end : 0.1em;
+                }
+            }
+        }
+    }
+
+    .b-week-num, .b-day-num {
+        margin-inline-end : 0;
+        align-self        : flex-end;
+        display           : flex;
+        align-items       : center;
+        justify-content   : center;
+
+        font-size         : var(--b-month-view-cell-header-day-num-font-size);
+        height            : var(--b-month-view-cell-header-content-height);
+        min-width         : var(--b-month-view-cell-header-content-height);
+
+        &:focus-visible {
+            outline        : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+            outline-offset : calc(var(--b-widget-focus-outline-width) * -1);
+        }
+    }
+
+    .b-week-num {
+        display : none;
+    }
+
+    &.b-show-week-number .b-week-num {
+        display : flex;
+    }
+
+    .b-calendar-cell {
+        display        : flex;
+        flex-direction : column;
+
+        .b-week-num {
+            /* Pushes the .b-day-num el all the way across. */
+            margin-inline-end : auto;
+
+            color             : var(--b-month-view-cell-header-week-color);
+        }
+    }
+
+    .b-weeks-container {
+        flex                   : 1 0 0%;
+
+        --bi-min-week-height   : max(var(--bi-min-row-height, 0px), var(--bi-two-event-row-height, 0px));
+
+        --bi-flexed-row-height : max(
+            calc(100% / var(--bi-visible-week-count)),
+            var(--bi-min-week-height)
+        );
+
+        border-inline          : var(--b-month-view-border-inline-width) solid var(--b-month-view-border-color);
+        border-block           : var(--b-month-view-cell-border-width) solid var(--b-month-view-border-color);
+
+        .b-calendar-panel-row {
+            /* All height changes are animated. */
+            transition    : flex-basis 0.5s, min-height 0.5s;
+
+            /* By default, use 1/6 of the available space (for 6 week months) */
+            flex          : 0 0 var(--bi-flexed-row-height);
+
+            /* Row must stretch when min-column-width is set */
+            min-width     : max(calc(var(--bi-min-column-width) * var(--bi-week-length)), 100%);
+
+            border-bottom : var(--b-month-view-cell-border-width) solid var(--b-month-view-border-color);
+
+            &:last-child {
+                border-bottom : 0 none;
+            }
+
+            /* In a shrinkwrapped week row, no overflow indicator is visible */
+            &.b-shrinkwrapped {
+                /* It's shrinkwrapping content, so must never overflow */
+                overflow : hidden;
+
+                /* If the shrinkwrapped row has not been clipped to the maxEventsPerCell setting, the */
+                /* overflow button is hidden. */
+                &:not(.b-has-overflow) {
+                    .b-cal-cell-overflow {
+                        display : none;
+                    }
+                }
+
+                /* Show it again when it's moving back to being in flexed mode */
+                &.b-flexing {
+                    .b-cal-cell-overflow {
+                        display : initial;
+                    }
+                }
+            }
+
+            &.b-empty-row {
+                /*
+                 * Empty row would like to be flexed-row-height, but is willing to shrink
+                 * To a minimum of a one event row height or configured minRowHeight, whichever is larger.
+                 */
+                flex       : 1 1 var(--bi-flexed-row-height);
+                min-height : max(var(--bi-one-event-row-height), var(--bi-min-row-height, 0px));
+            }
+
+            .b-week-number-cell, .b-calendar-cell {
+                flex              : 1;
+
+                color             : var(--b-month-view-cell-color);
+                border-inline-end : var(--b-month-view-cell-border-width) solid var(--b-month-view-border-color);
+
+                &:last-child {
+                    border-inline-end : 0 none;
+                }
+
+                &.b-weekend {
+                    color : var(--b-month-view-cell-weekend-color);
+                }
+
+                /* We use a "+ 2 more" clickable indicator */
+                overflow          : hidden;
+
+                &.b-today {
+                    .b-day-num {
+                        border-radius : 50%;
+                        /* When a solid background colour, it can overflow the day header bar. */
+                        /* Make the "today" circle a little smaller. */
+                        font-size     : 85%;
+
+                        background    : var(--b-month-view-today-day-num-background, var(--b-calendar-today-background));
+                        border        : var(--b-month-view-today-day-num-border, var(--b-calendar-today-border, var(--b-date-picker-today-border, 1px solid var(--b-date-picker-today-color, var(--b-primary-50)))));
+                        color         : var(--b-month-view-today-day-num-color, var(--b-calendar-today-color, var(--b-date-picker-today-color, var(--b-primary-50))));
+                        font-weight   : var(--b-month-view-today-day-num-font-weight);
+                    }
+                }
+
+                &.b-non-working-day {
+                    background : var(--b-month-view-non-working-day-background);
+
+                    /* If the hidden state was set dynamically, and not from the */
+                    /* configured state, then the cell must remain visible to keep */
+                    /* column arrangement correct. */
+                    &.b-dynamic-non-working-day {
+                        display : flex !important;
+                    }
+                }
+            }
+
+            .b-week-number-cell {
+                padding-top     : 5px;
+                text-align      : center;
+                cursor          : pointer;
+                flex            : 0 0 auto;
+                flex-flow       : column nowrap;
+                justify-content : space-between;
+
+                min-width       : var(--b-month-view-week-column-width);
+                background      : var(--b-month-view-week-cell-background);
+                color           : var(--b-month-view-week-cell-color);
+
+                /* Clickable appearance. */
+                &:hover {
+                    background    : var(--b-month-view-week-cell-hover-background);
+                    color         : var(--b-month-view-week-cell-hover-color);
+                    border-radius : var(--b-month-view-week-cell-hover-border-radius);
+                }
+            }
+        }
+
+        /* !important to have fixed week height and no transitions when measuring */
+        &.b-measuring-container-height {
+            .b-calendar-panel-row {
+                transition  : none !important;
+                flex-shrink : 0 !important;
+                min-height  : var(--bi-flexed-row-height) !important;
+            }
+        }
+
+        .b-calendar-panel-days {
+            /* So that this acts as the offsetParent for the position:absolute */
+            /* events, and %age widths are relative to the week width. */
+            position : relative;
+        }
+    }
+
+    /* When we're hiding non working days, the last working day is the last visible */
+    /* cell. That must not border-collide with the .b-weeks-container's border */
+    .b-hide-non-working-days {
+        .b-weeks-container {
+            .b-last-working-day {
+                border-inline-end : 0 none;
+            }
+        }
+    }
+
+    .b-cal-cell-header {
+        display         : flex;
+        flex            : 0 0 auto;
+        align-items     : center;
+        /* Week number, when present has margin-inline-end:auto which pushes the .b-day-num to the end. */
+        /* Day number, when present, has margin-inline-start:auto. */
+        justify-content : center;
+
+        background      : var(--b-month-view-cell-header-background);
+        color           : var(--b-month-view-cell-header-color);
+        padding         : var(--b-month-view-cell-header-padding);
+        max-height      : var(--b-month-view-cell-header-dayname-height);
+
+        .b-day-name {
+            display       : flex;
+            align-items   : center;
+            white-space   : nowrap;
+            text-overflow : ellipsis;
+            overflow      : hidden;
+
+            height        : var(--b-month-view-cell-header-dayname-height);
+        }
+
+        /* This class means it's the day number. */
+        /* It must be circular. */
+        /* And when a filled circle, it must be above content. */
+        .b-day-num {
+            margin-inline-start : auto;
+            position            : relative;
+            overflow            : visible;
+            z-index             : var(--b-month-view-day-num-z-index);
+
+            height              : var(--b-month-view-cell-header-content-height);
+
+            /* External month name when present */
+            strong {
+                position         : absolute;
+                inset-inline-end : calc(100% + 0.3em);
+                color            : initial;
+            }
+        }
+    }
+
+    /* By default, number is end justified using justify-content : flex-end. */
+    /* If centered, the week number column should be used, otherwise the week number's */
+    /* margin-inline-end will always end-justify the .b-day-num. */
+    &.b-day-number-center {
+        .b-cal-cell-header {
+            justify-content : center;
+        }
+    }
+
+    /* When we're showing the week number column, hide the week number in column zero */
+    &.b-show-week-column {
+        .b-week-num {
+            display : none;
+        }
+
+        /* Whole cell header has a clickable appearance if showing week number column */
+        /* as a clickable week selector */
+        .b-cal-cell-header {
+            cursor : pointer;
+
+            &:hover {
+                background    : var(--b-month-view-cell-header-hover-background);
+                color         : var(--b-month-view-cell-header-hover-color);
+                border-radius : var(--b-month-view-cell-header-hover-border-radius);
+            }
+        }
+    }
+
+    /* If not showing the week number column, week number and date are clickable */
+    &:not(.b-show-week-column) {
+        /* Always gets a pointer cursor */
+        .b-day-name {
+            cursor : pointer;
+        }
+
+        /* Only gets a border radius if its an actual number */
+        .b-week-num, .b-day-num {
+            &:hover, &:focus-visible {
+                cursor        : pointer;
+
+                background    : var(--b-month-view-cell-header-hover-background);
+                color         : var(--b-month-view-cell-header-hover-color);
+                border-radius : calc(var(--b-month-view-cell-header-content-height) / 2);
+            }
+        }
+    }
+
+    .b-month-view-content {
+        /* contain : strict MUST NOT be used here. It triggered Sarafi's buggy
+         * handling of percentage heights in contained elements. */
+
+        /* Overrides from Panel, otherwise week rows grow with content and uses space-between */
+        flex-basis      : 0;
+        justify-content : flex-start;
+
+        background      : var(--b-month-view-background);
+        padding         : var(--b-month-view-padding);
+    }
+
+    .b-cal-event-bar-container,
+    .b-cal-cell-overflow {
+        font-size : var(--b-month-view-event-bar-font-size);
+    }
+}
+
+.b-cal-event-list {
+    .b-panel-header .b-header-title {
+        font-size : 1em;
+        cursor    : pointer;
+    }
+}
+
+/* Kill row height transition when transitions are not wanted */
+.b-notransition .b-month-view .b-weeks-container .b-calendar-panel-row {
+    transition : none;
+}
+
+/* When `dayNameInCellHeader` is set, hide the shared weekday header row; the day name is instead
+   rendered before the day number inside each cell header. */
+.b-day-name-in-cell-header {
+    .b-calendar-week-days {
+        display : none;
+    }
+
+    .b-cal-cell-header {
+        .b-cell-header-day-name {
+            display              : flex;
+            align-items          : center;
+            white-space          : nowrap;
+            overflow             : hidden;
+            padding-inline-start : 0.5em;
+            color                : var(--b-month-view-cell-header-color);
+        }
+
+        /* The full weekday name ('dddd' format) is the widest form, so shrink it slightly. */
+        .b-cell-header-day-name-long {
+            font-size            : 90%;
+            padding-inline-start : 0.25em;
+        }
+    }
+}

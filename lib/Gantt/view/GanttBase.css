@@ -1,0 +1,386 @@
+:root, :host {
+    /**
+     * Task inline padding (for content in the task bar)
+     */
+    --b-gantt-task-padding-inline       : .5em;
+
+    /**
+     * Task border radius
+     */
+    --b-gantt-task-border-radius        : .25em;
+
+    /**
+     * Max height for parent tasks. Set to `null` to let them always grow with the height of the row
+     */
+    --b-gantt-parent-task-max-height    : 1.2em;
+
+    /**
+     * Task font weight (for content in the task bar)
+     */
+    --b-gantt-task-font-weight          : 400;
+
+    /**
+     * Task font size (for content in the task bar)
+     */
+    --b-gantt-task-font-size            : 1em;
+
+    /**
+     * Task border width. Should always include a unit (e.g. `0px`, not `0`)
+     */
+    --b-gantt-task-border-width         : 0px; /* px important for calculations */
+
+    /**
+     * Task border style
+     */
+    --b-gantt-task-border-style         : null;
+
+    /**
+     * Task z-index
+     */
+    --b-gantt-task-z-index              : 5;
+
+    /**
+     * Task content z-index (above percent bar)
+     */
+    --b-gantt-task-content-z-index      : 1;
+
+    /**
+     * Task transitions that are always applied
+     */
+    --b-gantt-task-transition           : border var(--b-default-transition-duration), border-radius var(--b-default-transition-duration), background-color var(--b-default-transition-duration), padding var(--b-default-transition-duration), opacity var(--b-default-transition-duration);
+
+    /**
+     * Task transitions that are applied when animating changes
+     */
+    --b-gantt-task-animating-transition : border var(--b-default-transition-duration), border-radius var(--b-default-transition-duration), background-color var(--b-default-transition-duration), color var(--b-default-transition-duration), padding var(--b-default-transition-duration), opacity var(--b-default-transition-duration), inset var(--b-default-transition-duration), width var(--b-default-transition-duration), height var(--b-default-transition-duration);
+
+    /**
+     * Task box shadow
+     */
+    --b-gantt-task-box-shadow           : null;
+
+    /**
+     * Task min width
+     */
+    --b-gantt-task-min-width            : 6px;
+
+    /**
+     * Task primary color, applied to normal task bars (not milestones or parents). A shade of it is then used for the
+     * bar, determined by the current theme & task style
+     */
+    --b-gantt-task-primary              : var(--b-color-green);
+
+    /**
+     * Parent task primary color
+     */
+    --b-gantt-parent-task-primary       : var(--b-color-blue);
+
+    /**
+     * Milestone primary color
+     */
+    --b-gantt-milestone-primary         : var(--b-color-blue);
+
+    /**
+     * Color for the icon used to illustrate unscheduled tasks
+     */
+    --b-gantt-unscheduled-task-color    : var(--b-neutral-80);
+
+    /**
+     * Cell color for inactive tasks
+     */
+    --b-gantt-inactive-cell-color       : var(--b-neutral-50);
+
+    /**
+     * Task primary color for inactive tasks
+     */
+    --b-gantt-inactive-task-color       : var(--b-neutral-80);
+}
+
+.b-colorize {
+    /**
+     * Task background color (overridden by event styles). Styling is shared with Scheduler, hence the name
+     */
+    /* --b-sch-event-background : null; */
+
+    /**
+     * Task border color (overridden by event styles). Styling is shared with Scheduler, hence the name
+     */
+    /* --b-sch-event-border-color : null */
+
+    /**
+     * Task text color (overridden by event styles). Styling is shared with Scheduler, hence the name
+     */
+    /* --b-sch-event-color : null; */
+
+    /**
+     * Hovered task's background color (overridden by event styles). Styling is shared with Scheduler, hence the name
+     * @state Hovered
+     */
+    /* --b-sch-event-hover-background : null; */
+
+    /**
+     * Selected task's background color (overridden by event styles). Styling is shared with Scheduler, hence the name
+     * @state Selected
+     */
+    /* --b-sch-event-selected-background : null; */
+
+    /* --b-gantt-percent-bar-background          : var(--b-primary-65); */
+    /* --b-gantt-percent-bar-hover-background    : var(--b-primary-60); */
+    /* --b-gantt-percent-bar-selected-background : var(--b-primary-55); */
+}
+
+.b-gantt-task-wrap {
+    display               : grid;
+    position              : absolute;
+    pointer-events        : all;
+    outline               : none;
+    grid-template-areas   :
+            "top    top    top   "
+            "before body   after "
+            "void1  rollup void2"
+            "bottom bottom bottom";
+    grid-template-columns : 0 1fr 0;
+    grid-template-rows    : min-content minmax(0, 100%) min-content min-content;
+    opacity               : 1;
+
+    z-index               : var(--b-gantt-task-z-index);
+    height                : calc(var(--b-event-size) * 1px);
+    max-height            : calc(var(--b-event-size) * 1px);
+    transition            : var(--b-gantt-task-transition);
+
+    --b-primary           : var(--b-gantt-task-primary);
+
+    .b-animating &,
+    .b-splicing-rows & {
+        --b-gantt-task-transition : var(--b-gantt-task-animating-transition);
+    }
+
+    &.b-gantt-task-hover:not(.b-style-none),
+    &:hover:not(.b-style-none) {
+        --b-sch-event-background : var(--b-sch-event-hover-background);
+        /* --b-percent-bar-background     : var(--b-percent-bar-hover-background); */
+    }
+
+    &.b-selected:not(.b-style-none) {
+        --b-sch-event-background : var(--b-sch-event-selected-background);
+        /* --b-percent-bar-background     : var(--b-percent-bar-selected-background); */
+
+        .b-sch-event-segment {
+            --b-sch-event-background : var(--b-sch-event-selected-background);
+        }
+    }
+
+    /* Gantt does not have its own PercentBar feature, putting styling here */
+    &.b-style-none {
+        &:hover {
+            --b-sch-event-background : var(--b-gantt-task-hover-background);
+        }
+
+        &.b-selected {
+            --b-sch-event-background : var(--b-gantt-task-selected-background);
+        }
+
+        /* .b-task-percent-bar-outer { */
+        /*     --b-percent-bar-background          : var(--b-gantt-percent-bar-background); */
+        /*     --b-percent-bar-hover-background    : var(--b-gantt-percent-bar-hover-background); */
+        /*     --b-percent-bar-selected-background : var(--b-gantt-percent-bar-selected-background); */
+        /* } */
+    }
+
+    &:where(.b-milestone-wrap) {
+        --b-sch-milestone-border-width : 0px;
+
+        --b-primary                    : var(--b-gantt-milestone-primary);
+
+        overflow                       : visible;
+    }
+
+    /* Icon only for unscheduled tasks */
+    &.b-unscheduled {
+        .b-gantt-task {
+            background   : transparent;
+            border-color : var(--b-gantt-unscheduled-task-color);
+            color        : var(--b-gantt-unscheduled-task-color);
+
+            .b-gantt-task-content {
+                padding : 0;
+            }
+        }
+    }
+
+    &.b-active:focus-visible .b-gantt-task {
+        outline-offset : 3px;
+        outline        : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+    }
+
+    /* region Task bar transitions */
+
+    /* Task removed, fade out */
+    &.b-removing {
+        transition : opacity .3s;
+        opacity    : 0;
+    }
+
+    /* Row removed or collapsed away, fade and shrink */
+    &.b-remove-remove,
+    &.b-toggle-remove {
+        transition : opacity var(--b-default-transition-duration), max-height var(--b-default-transition-duration);
+        opacity    : 0;
+        max-height : 0;
+    }
+
+    &.b-toggle-add {
+        animation : b-anim-toggle-task-add var(--b-default-transition-duration);
+    }
+
+    /* endregion */
+}
+
+@keyframes b-anim-toggle-task-add {
+    0% {
+        opacity    : 0;
+        max-height : 0;
+    }
+    100% {
+        opacity    : 1;
+        max-height : calc(var(--b-event-size) * 1px);
+    }
+}
+
+.b-gantt-task {
+    display             : flex;
+    position            : relative;
+    grid-area           : body;
+    align-items         : center;
+    user-select         : none;
+    -webkit-user-select : none;
+    overflow            : clip;
+    cursor              : pointer;
+
+    background          : var(--b-sch-event-background);
+    font-size           : var(--b-gantt-task-font-size);
+    min-width           : var(--b-gantt-task-min-width);
+    border-color        : var(--b-sch-event-border-color);
+
+    /* Style the task bar for normal tasks, the pseudo diamond for milestones, or the content for icon milestones */
+    &:where(:not(.b-milestone)),
+    &.b-milestone .b-gantt-task-content::before {
+        border-width  : var(--b-sch-event-border-width);
+        border-style  : var(--b-sch-event-border-style);
+        border-radius : var(--b-sch-event-border-radius);
+        box-shadow    : var(--b-gantt-task-box-shadow);
+        color         : var(--b-sch-event-color);
+    }
+
+    &:where(:not(.b-milestone)) .b-gantt-task-content {
+        padding-inline : var(--b-gantt-task-padding-inline);
+    }
+}
+
+.b-gantt-task-content {
+    overflow      : clip;
+    text-overflow : ellipsis;
+    white-space   : nowrap;
+    width         : 100%;
+    z-index       : var(--b-gantt-task-content-z-index); /* Above percent bar */
+
+    font-weight   : var(--b-sch-event-font-weight);
+    font-size     : var(--b-sch-event-font-size);
+}
+
+/* region Parent tasks */
+
+.b-gantt-task-parent:where(:not(.b-milestone-wrap, .b-unscheduled)) {
+    align-items : center;
+
+    --b-primary : var(--b-gantt-parent-task-primary);
+
+    .b-gantt-task {
+        height     : 100%;
+        max-height : var(--b-gantt-parent-task-max-height);
+
+        /* Fallback for browsers without clip-path: shape() support */
+        clip-path  : polygon(
+            -20px 0,
+            calc(100% + 20px) 0,
+            calc(100% + 20px) 100%,
+            100% 100%,
+            calc(100% - 8px) calc(100% - 8px),
+            8px calc(100% - 8px),
+            0 100%,
+            -20px 100%
+        );
+
+        @supports (border-shape: shape(from 0 0, line to 100% 100%)) {
+            --bi-shape-border-radius : calc(var(--b-sch-event-border-radius) - var(--b-sch-event-border-width, 0px));
+
+            clip-path    : shape(
+                from -20px 0,
+                hline to calc(100% + 20px),
+                vline to 100%,
+                hline to 100%,
+                line to calc(100% - 8px) calc(100% - 8px),
+                hline to 8px,
+                line to 0 100%,
+                hline to -20px,
+                close
+            );
+            border-shape : shape(
+                from var(--bi-shape-border-radius) 0,
+                /* Top edge, then round the top-right corner */
+                hline to calc(100% - var(--bi-shape-border-radius)),
+                arc to 100% var(--bi-shape-border-radius) of var(--bi-shape-border-radius) cw,
+                /* Right side down to the right foot, notch, left foot */
+                vline to 100%,
+                line to calc(100% - 8px) calc(100% - 8px),
+                hline to 8px,
+                line to 0 100%,
+                /* Left side up, then round the top-left corner */
+                vline to var(--bi-shape-border-radius),
+                arc to var(--bi-shape-border-radius) 0 of var(--bi-shape-border-radius) cw,
+                close
+            );
+        }
+    }
+}
+
+/* Faked focus outline for parent tasks (clips the real one) */
+.b-gantt-task-parent.b-active:focus-visible {
+    &::before {
+        content        : "";
+        position       : absolute;
+        width          : 100%;
+        height         : 100%;
+        outline-offset : 3px;
+
+        outline        : var(--b-widget-focus-outline-width) solid var(--b-widget-focus-outline-color);
+        border-radius  : var(--b-gantt-task-border-radius);
+    }
+
+    .b-gantt-task {
+        outline : none;
+    }
+}
+
+/* endregion */
+
+/* region Inactive tasks */
+
+.b-grid-row.b-inactive .b-grid-cell {
+    /* Only format specific columns */
+    &[data-column="name"], &[data-column="startDate"], &[data-column="endDate"], &[data-column="earlyStartDate"], &[data-column="earlyEndDate"],
+    &[data-column="lateStartDate"], &[data-column="lateEndDate"], &[data-column="wbsValue"], &[data-column="fullDuration"], &[data-column="fullEffort"],
+    &[data-column="schedulingMode"], &[data-column="constraintType"], &[data-column="calendar"], &[data-column="deadline"],
+    &[data-column="totalSlack"], &[data-column="note"], &[data-column="predecessors"], &[data-column="successors"] {
+        text-decoration       : line-through;
+
+        --b-grid-cell-color   : var(--b-gantt-inactive-cell-color);
+        --b-tree-parent-color : var(--b-gantt-inactive-cell-color);
+    }
+}
+
+.b-gantt-task-wrap.b-inactive {
+    --b-primary : var(--b-gantt-inactive-task-color);
+}
+
+/* endregion */

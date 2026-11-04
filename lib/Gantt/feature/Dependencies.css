@@ -1,0 +1,25 @@
+.b-gantt-base {
+    /* .b-sch-terminal { */
+    /*     cursor : pointer !important; */
+    /* } */
+
+    svg.b-sch-dependencies-canvas {
+        .b-sch-dependency:not(.b-click-area) {
+            marker-end   : none;
+            marker-start : var(--b-dependency-marker);
+
+            &.b-sch-dependency-markerless,
+            &.b-sch-dependency-ends-outside {
+                marker-start : none;
+            }
+        }
+    }
+}
+
+/* Terminals must hide when unhovered */
+/* .b-gantt-task-wrap:not(.b-gantt-task-hover) { */
+/*     .b-sch-terminal { */
+/*         display : none; */
+/*     } */
+/* } */
+

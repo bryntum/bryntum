@@ -1,0 +1,48 @@
+.b-resource-combo {
+    .b-resource-icon {
+        display       : none;
+        margin-inline : var(--b-text-field-input-padding) 0;
+        color         : var(--b-primary);
+    }
+
+    > .b-field-inner {
+        padding-inline-start : 0;
+    }
+
+    /* Only show the colour if it's not multiselecting */
+    &.b-show-event-color:not(.b-uses-chip-view) {
+        .b-resource-icon {
+            display : block;
+        }
+    }
+}
+
+/* Resource picker list in EventEditor */
+.b-resource-combo-picker {
+    .b-icon {
+        display        : none;
+        pointer-events : all; /* To please a test */
+    }
+
+    &.b-multi-select,
+    &.b-show-event-color {
+        .b-icon {
+            display : block;
+        }
+
+        /* Show checked square if item is selected. */
+        .b-selected .b-icon-square:before {
+            content : "\f14a";
+        }
+    }
+
+    &.b-show-event-color .b-icon {
+        color : var(--b-primary);
+
+        &::before {
+            background : radial-gradient(var(--b-neutral-100) 60%,  transparent 60%);
+
+            font-size : var(--b-list-selected-icon-size);
+        }
+    }
+}

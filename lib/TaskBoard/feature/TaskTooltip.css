@@ -1,0 +1,41 @@
+:root, :host {
+    /**
+     * Label font size
+     */
+    --b-task-board-tooltip-label-font-size   : .8em;
+
+    /**
+     * Label font weight
+     */
+    --b-task-board-tooltip-label-font-weight : null;
+
+    /**
+     * Title font size
+     */
+    --b-task-board-tooltip-title-font-size   : 1.1em;
+
+    /**
+     * Title font weight
+     */
+    --b-task-board-tooltip-title-font-weight : var(--b-panel-header-font-weight);
+}
+
+.b-task-board-tooltip {
+    --b-tooltip-content-display : grid;
+
+    .b-tooltip-content {
+        grid-template-columns : auto 1fr;
+        gap                   : .5em 1em;
+    }
+}
+
+.b-task-board-tooltip-title {
+    grid-column : span 2;
+    font-size   : var(--b-task-board-tooltip-title-font-size);
+    font-weight : var(--b-task-board-tooltip-title-font-weight);
+}
+
+.b-task-board-tooltip-label {
+    font-size   : var(--b-task-board-tooltip-label-font-size);
+    font-weight : var(--b-task-board-tooltip-label-font-weight);
+}

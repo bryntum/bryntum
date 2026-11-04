@@ -1,0 +1,7 @@
+.b-task-board-separator {
+    width         : 100%;
+    border        : none;
+    margin-block  : .5em;
+
+    border-bottom : var(--b-task-board-card-border, 1px solid var(--b-border-7));
+}

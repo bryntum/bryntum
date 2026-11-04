@@ -1,0 +1,54 @@
+:root, :host {
+    /**
+     * Font-size
+     */
+    --b-label-font-size      : var(--b-widget-font-size);
+
+    /**
+     * Font-weight
+     */
+    --b-label-font-weight    : 400;
+
+    /**
+     * Color when disabled
+     * @state Disabled
+     */
+    --b-label-disabled-color : var(--b-neutral-50);
+
+    /**
+     * Width of label when shown above the field. Defaults to 100% to fill the available space, but overridden
+     * in material since the label overlaps the field there.
+     */
+    --b-label-above-width : 100%;
+
+    /**
+     * Fixed label width, also applied to min-width to prevent shrinking when width is set.
+     *
+     * Can be set programmatically on a container or directly on a field using the `labelWidth ` config. When setting
+     * it programmatically, it also applies the `.b-has-label-width` class to allow text wrapping.
+     */
+    --b-label-width : null;
+}
+
+.b-label {
+    white-space         : nowrap;
+    align-items         : center;
+    transition          : color var(--b-default-transition-duration);
+    user-select         : none;
+    -webkit-user-select : none;
+
+    color               : var(--b-label-color);
+    font-size           : var(--b-label-font-size);
+    font-weight         : var(--b-label-font-weight);
+    width : var(--b-label-width);
+    min-width : var(--b-label-width);
+
+    /* Allow text to wrap when labels have fixed width */
+    &.b-has-label-width {
+        white-space : normal;
+    }
+}
+
+.b-disabled > .b-label {
+    --b-label-color : var(--b-label-disabled-color);
+}

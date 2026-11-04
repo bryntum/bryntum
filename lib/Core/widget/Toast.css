@@ -1,0 +1,119 @@
+:root, :host {
+    /**
+     * Toast padding
+     */
+    --b-toast-padding             : var(--b-widget-padding);
+
+    /**
+     * Toast border radius
+     */
+    --b-toast-border-radius       : var(--b-widget-border-radius);
+
+    /**
+     * Toast transition duration
+     */
+    --b-toast-transition-duration : .25s;
+
+    /**
+     * Toast progress bar height
+     */
+    --b-toast-progress-height     : 0.25em;
+
+    /**
+     * Toast color
+     */
+    --b-toast-color               : var(--b-widget-color);
+}
+
+.b-internal {
+    /* Internal vars */
+    --bi-toast-side : null;
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+    /**
+     * Toast background
+     */
+    /*--b-toast-background     : var(--b-primary-98);*/
+
+    /**
+     * Toast progress bar color
+     */
+    /*--b-toast-progress-color : var(--b-primary-50);*/
+/* } */
+
+.b-float-root > .b-toast {
+    display            : block;
+    overflow-x         : clip;
+    overflow-y         : auto;
+    top                : auto;
+    inset-inline-end   : 2em;
+    inset-inline-start : auto;
+    max-width          : 60%;
+    max-height         : 60%;
+    line-height        : 1.4em;
+    cursor             : pointer;
+
+    /* When its translate and side are set, it will animate into place */
+    transition         : var(--bi-toast-side) var(--b-toast-transition-duration) ease-in, translate var(--b-toast-transition-duration) ease-in, background .2s, color .2s;
+
+    background         : var(--b-toast-background, var(--b-primary-98));
+    color              : var(--b-toast-color);
+    padding            : var(--b-toast-padding);
+    border-radius      : var(--b-toast-border-radius);
+
+    /* Position at top if requested at top-start or top-end */
+    &:is(.b-side-top-start, .b-side-top-end) {
+        top : 0;
+    }
+
+    /* Switch to inline-start side if required */
+    &:is(.b-side-top-start, .b-side-bottom-start) {
+        inset-inline-start : 2em;
+        inset-inline-end   : auto;
+    }
+
+    &.b-toast-hide {
+        &.b-side-bottom-end,
+        &.b-side-bottom-start {
+            /* Using important to override values set in style */
+            bottom    : 0 !important;
+            translate : 0 100% !important;
+        }
+
+        &.b-side-top-end,
+        &.b-side-top-start {
+            /* Using important to override values set in style */
+            top       : 0 !important;
+            translate : 0 -100% !important;
+        }
+    }
+
+    &.b-icon:before {
+        margin-inline-end : .5em;
+    }
+
+}
+
+.b-toast-progress {
+    position                  : absolute;
+    top                       : 0;
+    inset-inline-start        : 0;
+    animation-name            : b-toast-progress;
+    animation-timing-function : linear;
+
+    height                    : var(--b-toast-progress-height);
+    background                : var(--b-toast-progress-color, var(--b-primary-50));
+}
+
+@keyframes b-toast-progress {
+    0% {
+        width : 0;
+    }
+    100% {
+        width : 100%;
+    }
+}
+
+

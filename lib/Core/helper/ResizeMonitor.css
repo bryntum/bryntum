@@ -1,0 +1,53 @@
+/*
+ * DomHelper size monitoring polyfill for when ResizeObserver not available
+ * now only necessary on Salesforce.
+ */
+.b-no-resize-observer.b-resize-monitored {
+    /* This rule needs to be more specific, because in bundled CSS this style gets overridden by the Widget CSS */
+    &:not(.b-floating) {
+        position : relative;
+    }
+
+    .b-resize-monitors {
+        position   : absolute;
+        left       : 0;
+        top        : 0;
+        width      : 100%;
+        height     : 100%;
+        visibility : hidden;
+        overflow   : hidden;
+        /* Restarts (firing animationstart) whenever the element goes from not rendered to rendered */
+        animation  : b-anim-resize-monitor 1ms;
+
+        > * {
+            width    : 100%;
+            height   : 100%;
+            overflow : hidden;
+        }
+
+        > .b-resize-monitor-expand:after {
+            content : '';
+            display : block;
+            width   : 100000px;
+            height  : 100000px;
+        }
+
+        > .b-resize-monitor-shrink:after {
+            content    : '';
+            display    : block;
+            width      : 200%;
+            height     : 200%;
+            min-width  : 1px;
+            min-height : 1px;
+        }
+    }
+}
+
+@keyframes b-anim-resize-monitor {
+    from {
+        opacity : .99;
+    }
+    to {
+        opacity : 1;
+    }
+}

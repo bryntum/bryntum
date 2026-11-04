@@ -1,0 +1,915 @@
+/* @after Core/widget/Field.css */
+
+:root, :host {
+    /**
+     * Field's font-weight
+     */
+    --b-text-field-font-weight                    : normal;
+
+    /**
+     * Field's padding
+     */
+    --b-text-field-padding                        : 0;
+
+    /**
+     * Input font-size
+     */
+    --b-text-field-input-font-size                : var(--b-widget-font-size);
+
+    /**
+     * Input padding
+     */
+    --b-text-field-input-padding                  : 0;
+
+    /**
+     * Field's border-style
+     */
+    --b-text-field-border-style                   : solid;
+
+    /**
+     * Field's border-style when focused
+     * @state Focused
+     */
+    --b-text-field-focus-border-style             : solid;
+
+    /**
+     * Field's opacity when disabled
+     * @state Disabled
+     */
+    --b-text-field-disabled-opacity               : 0.4;
+
+    /**
+     * Input color when disabled. Themes that de-emphasise disabled fields with explicit colors instead of
+     * `--b-text-field-disabled-opacity` define this, otherwise the normal input color is used
+     * @state Disabled
+     */
+    /*--b-text-field-disabled-color                             : null;*/
+
+    /**
+     * Field background when disabled, defaults to the normal background
+     * @state Disabled
+     */
+    /*--b-text-field-disabled-background                        : null;*/
+
+    /**
+     * Field border-color when disabled, defaults to the normal border-color
+     * @state Disabled
+     */
+    /*--b-text-field-disabled-border-color                      : null;*/
+
+    /**
+     * Outlined field's border-radius
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-border-radius         : var(--b-widget-border-radius);
+
+    /**
+     * Field trigger's gap (applied as padding to be clickable)
+     */
+    --b-field-trigger-gap                         : 0.75em;
+
+    /**
+     * Gap between first / last field trigger and field edge (applied as padding to be clickable)
+     */
+    --b-field-trigger-edge-gap                    : 1em;
+
+    /**
+     * Template areas to use when no `labelPosition` is set
+     */
+    --b-text-field-default-template-areas         : "before inner";
+
+    /**
+     * Template columns to use when no `labelPosition` is set
+     */
+    --b-text-field-default-template-columns       : auto 1fr;
+
+    /**
+     * Template rows to use when no `labelPosition` is set
+     */
+    --b-text-field-default-template-rows          : minmax(0, 1fr);
+
+    /**
+     * Label padding to use when no `labelPosition` is set
+     */
+    --b-text-field-default-label-padding          : 0 var(--b-widget-padding) 0 0;
+
+    /**
+     * Field's border-radius
+     */
+    /*--b-text-field-border-radius                              : null;*/
+
+    /**
+     * Label grid-area, normally determined by used rendition
+     */
+    --b-text-field-label-grid-area                : before;
+
+    /**
+     * Label padding
+     */
+    /*--b-text-field-label-padding                              : null;*/
+
+    /**
+     * Label color
+     */
+    --b-text-field-label-color                    : var(--b-widget-color);
+
+    /**
+     * Field background, normally determined by used rendition
+     */
+    /*--b-text-field-background                                 : null;*/
+
+    /**
+     * Input color (color of entered text)
+     */
+    --b-text-field-input-color                    : var(--b-widget-color);
+
+    /**
+     * Input height
+     */
+    /*--b-text-field-input-height                               : null;*/
+
+    /**
+     * Field border-color
+     */
+    --b-text-field-border-color                   : var(--b-widget-border-color);
+
+    /**
+     * Label grid-area when the label is placed above the field
+     */
+    --b-text-field-label-above-grid-area          : above;
+
+    /**
+     * Label font-size
+     */
+    --b-text-field-label-font-size                : var(--b-label-font-size);
+
+    /**
+     * Label font-size when field is empty
+     */
+    --b-text-field-empty-label-font-size          : var(--b-text-field-label-font-size);
+
+    /**
+     * Label background
+     */
+    /*--b-text-field-label-background                           : null;*/
+
+    /**
+     * Label scale (used by material)
+     */
+    --b-text-field-label-scale                    : 1;
+
+    /**
+     * Label scale when empty (used by material)
+     */
+    --b-text-field-empty-label-scale              : 1;
+
+    /**
+     * Field trigger's color when readonly
+     * @state Read-only
+     */
+    --b-text-field-trigger-read-only-color        : var(--b-neutral-85);
+
+    /**
+     * Field trigger's color when disabled
+     * @state Disabled
+     */
+    --b-text-field-trigger-disabled-color         : var(--b-neutral-40);
+
+    /**
+     * Field border-color when hovered
+     * @state Hovered
+     */
+    /*--b-text-field-hover-border-color                         : null;*/
+
+    /**
+     * Field background, when using filled rendition
+     * @rendition Filled
+     */
+    --b-text-field-filled-background              : var(--b-neutral-95);
+
+    /**
+     * Hovered field's background, when using filled rendition
+     * @rendition Filled
+     * @state Hovered
+     */
+    --b-text-field-filled-hover-background        : var(--b-neutral-90);
+
+    /**
+     * Focused field's background, when using filled rendition
+     * @rendition Filled
+     * @state Focused
+     */
+    --b-text-field-filled-focus-background        : var(--b-neutral-90);
+
+    /**
+     * Field border-width, when using filled rendition
+     * @rendition Filled
+     */
+    --b-text-field-filled-border-width            : 0;
+
+    /**
+     * Field border-radius, when using filled rendition
+     * @rendition Filled
+     */
+    --b-text-field-filled-border-radius           : var(--b-widget-border-radius);
+
+    /**
+     * Input padding, when using filled rendition
+     * @rendition Filled
+     */
+    --b-text-field-filled-input-padding           : 1em;
+
+    /**
+     * Input padding for field without label, when using filled rendition
+     * @rendition Filled
+     */
+    --b-text-field-filled-no-label-input-padding  : 1em;
+
+    /**
+     * Focused field's border-width, when using filled rendition
+     * @rendition Filled
+     * @state Focused
+     */
+    --b-text-field-filled-focus-border-width      : 0;
+
+    /**
+     * Focused field's label color, when using filled rendition
+     * @rendition Filled
+     * @state Focused
+     */
+    --b-text-field-filled-focus-label-color       : var(--b-widget-color);
+
+    /**
+     * Label padding, when using filled rendition
+     * @rendition Filled
+     */
+    /*--b-text-field-filled-label-padding                       : null;*/
+
+    /**
+     * Padding for label positioned before the field, when using filled rendition
+     * @rendition Filled
+     */
+    /*--b-text-field-filled-label-before-padding                : null;*/
+
+    /**
+     * Padding for label positioned above the field, when using filled rendition
+     * @rendition Filled
+     */
+    /*--b-text-field-filled-label-above-padding                 : null;*/
+
+    /**
+     * Padding for label of an empty field, when using filled rendition
+     * @rendition Filled
+     */
+    /* --b-text-field-filled-empty-label-padding                 : 0; */ /* Remove? */
+
+    /**
+     * Field background, when using outlined rendition
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-background            : var(--b-neutral-100);
+
+    /**
+     * Field border-radius, when using outlined rendition
+     * @rendition Outlined
+     */
+    /*--b-text-field-outlined-border-radius                     : null;*/
+
+    /**
+     * Field border-width, when using outlined rendition
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-border-width          : 1px;
+
+    /**
+     * Field border-color, when using outlined rendition
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-border-color          : var(--b-border-5);
+
+    /**
+     * Field input padding, when using outlined rendition
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-input-padding         : var(--b-widget-padding);
+
+    /**
+     * Focused field's border-width, when using outlined rendition
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-focus-border-width    : var(--b-widget-focus-outline-width);
+
+    /**
+     * Label background, when using outlined rendition
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-label-background      : transparent;
+
+    /**
+     * Label padding, when using outlined rendition
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-label-padding         : 0; /* Overridden by material */
+
+    /**
+     * Padding for label positioned before the field, when using outlined rendition
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-label-before-padding  : 0;
+
+    /**
+     * Padding for label positioned above the field, when using outlined rendition
+     * @rendition Outlined
+     */
+    --b-text-field-outlined-label-above-padding   : 0;
+
+    /**
+     * Border color for hovered field, when using outlined rendition
+     * @rendition Outlined
+     * @state Hovered
+     */
+    --b-text-field-outlined-hover-border-color    : var(--b-border-4);
+
+    /**
+     * Background for hovered field, when using outlined rendition
+     * @rendition Outlined
+     * @state Hovered
+     */
+    --b-text-field-outlined-hover-background      : var(--b-neutral-100);
+
+    /**
+     * Background for focused field, when using outlined rendition
+     * @rendition Outlined
+     * @state Focused
+     */
+    --b-text-field-outlined-focus-background      : var(--b-neutral-100);
+
+    /**
+     * Label color for focused field, when using outlined rendition
+     * @rendition Outlined
+     * @state Focused
+     */
+    --b-text-field-outlined-focus-label-color     : var(--b-widget-color);
+
+    /**
+     * Padding for label of an empty field, when using outlined rendition
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-empty-label-padding               : 0; */ /* Remove? */
+
+    /**
+     * Label position (material)
+     */
+    /*--b-text-field-material-label-position                    : null;*/
+
+    /**
+     * Label top (material)
+     */
+    /*--b-text-field-material-label-top                         : null;*/
+
+    /**
+     * Label left (material)
+     */
+    /*--b-text-field-material-label-left                        : null;*/
+
+    /**
+     * Label cursor (material)
+     */
+    /*--b-text-field-material-label-cursor                      : null;*/
+
+    /**
+     * Label position property, using filled rendition in material
+     * @rendition Filled
+     */
+    --b-text-field-filled-material-label-position : static;
+
+    /**
+     * Label top, using filled rendition in material
+     * @rendition Filled
+     */
+    /* --b-text-field-filled-material-label-top                  : null; */
+
+    /**
+     * Label left, using filled rendition in material
+     * @rendition Filled
+     */
+    /* --b-text-field-filled-material-label-left                 : null; */
+
+    /**
+     * Label cursor, using filled rendition in material
+     * @rendition Filled
+     */
+    /* --b-text-field-filled-material-label-cursor               : null; */
+
+    /**
+     * Font-size for empty field's label, using filled rendition in material
+     * @rendition Filled
+     */
+    /* --b-text-field-filled-material-empty-label-font-size      : null; */
+
+    /**
+     * Label top for empty field, using filled rendition in material
+     * @rendition Filled
+     */
+    /* --b-text-field-filled-material-empty-label-top            : null; */
+
+    /**
+     * Label left for empty field, using filled rendition in material
+     * @rendition Filled
+     */
+    /* --b-text-field-filled-material-empty-label-left           : null; */
+
+    /**
+     * Label left for field with trigger, using filled rendition in material
+     * @rendition Filled
+     */
+    /* --b-text-field-filled-material-trigger-label-left         : null; */
+
+    /**
+     * Label left for empty field with trigger, using filled rendition in material
+     * @rendition Filled
+     */
+    /* --b-text-field-filled-material-trigger-empty-label-left   : null; */
+
+    /**
+     * Label position property, using outlined rendition in material
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-material-label-position : static; */
+
+    /**
+     * Label top, using outlined rendition in material
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-material-label-top                : null; */
+
+    /**
+     * Label left, using outlined rendition in material
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-material-label-left               : null; */
+
+    /**
+     * Label cursor, using outlined rendition in material
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-material-label-cursor             : null; */
+
+    /**
+     * Background for empty field's label, using outlined rendition in material
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-material-empty-label-background   : null; */
+
+    /**
+     * Label top for empty field, using outlined rendition in material
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-material-empty-label-top          : null; */
+
+    /**
+     * Label left for empty field, using outlined rendition in material
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-material-empty-label-left         : null; */
+
+    /**
+     * Label left for field with trigger, using outlined rendition in material
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-material-trigger-empty-label-left : null; */
+
+    /**
+     * Label padding for empty field, using outlined rendition in material
+     * @rendition Outlined
+     */
+    /* --b-text-field-outlined-material-empty-label-padding      : null; */
+
+    /**
+     * Field trigger color
+     */
+    --b-field-trigger-color                       : var(--b-neutral-60);
+
+    /**
+     * Spin trigger icon font-size (number field)
+     */
+    --b-spin-trigger-font-size                    : 1em;
+
+    /**
+     * Invalid field's border-color
+     * @state Invalid
+     */
+    --b-text-field-invalid-border-color           : var(--b-color-red);
+
+    /**
+     * Invalid field's label color
+     * @state Invalid
+     */
+    --b-text-field-invalid-label-color            : var(--b-color-red);
+
+    /**
+     * Field color
+     */
+    --b-text-field-color                          : var(--b-primary);
+
+    /**
+     * Focused field's border-color
+     * @state Focused
+     */
+    --b-text-field-focus-border-color             : var(--b-primary);
+
+    /**
+     * Default width applied to a text field's is used in a toolbar, or not used in a Bryntum container
+     * (includes the label)
+     */
+    --b-text-field-default-width                  : 12.5em;
+
+    /* Internal var */
+    --bi-text-field-input-width                   : 100%;
+
+    /**
+     * Text field border pseudo z-index
+     */
+    --b-text-field-border-z-index                 : 1;
+
+    /**
+     * Text field label z-index (above border pseudo)
+     */
+    --b-text-field-label-z-index                  : 2;
+
+    /**
+     * Text field outlined label background z-index
+     */
+    --b-text-field-outlined-label-bg-z-index      : -1;
+}
+
+.b-internal {
+    /* Internals vars */
+    --b-text-field-opacity              : null;
+    --b-text-field-border-width         : null;
+    --b-text-field-focus-border-width   : null;
+    --b-text-field-focus-label-color    : null;
+    --bi-text-field-empty-label-padding : null;
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+/**
+ * Background for selected text
+ */
+/*--b-text-field-selection-background : var(--b-primary-85);*/
+/* } */
+
+.b-text-field,
+.b-number-field,
+.b-date-time-field,
+.b-text-area-field {
+    position                           : relative;
+    height                             : fit-content;
+    width                              : fit-content;
+    overflow                           : visible;
+
+    border-radius                      : var(--b-text-field-border-radius);
+    color                              : var(--b-text-field-color);
+
+    --b-field-label-grid-area          : var(--b-text-field-label-grid-area);
+    --b-field-label-padding            : var(--b-text-field-label-padding);
+
+    --b-field-default-template-areas   : var(--b-text-field-default-template-areas);
+    --b-field-default-template-columns : var(--b-text-field-default-template-columns);
+    --b-field-default-template-rows    : var(--b-text-field-default-template-rows);
+    --b-field-default-label-padding    : var(--b-text-field-default-label-padding);
+
+    --b-label-color                    : var(--b-text-field-label-color);
+
+    &:where(:not(.b-has-width)) {
+        width : var(--b-text-field-default-width);
+    }
+
+    > .b-field-inner {
+        display       : flex;
+        min-width     : 0;
+        position      : relative;
+        overflow      : hidden;
+        transition    : background var(--b-default-transition-duration);
+
+        background    : var(--b-text-field-background);
+        border-radius : var(--b-text-field-border-radius);
+        padding       : var(--b-text-field-padding);
+        opacity       : var(--b-text-field-opacity);
+        width         : var(--bi-text-field-input-width);
+
+        /* Pseudo border element, to not offset layout when border-width varies */
+        &::before {
+            content        : '';
+            position       : absolute;
+            inset          : 0;
+            background     : transparent;
+            border-radius  : inherit;
+            pointer-events : none;
+            transition     : border 0.1s;
+            z-index        : var(--b-text-field-border-z-index);
+
+            border-width   : var(--b-text-field-border-width);
+            border-style   : var(--b-text-field-border-style);
+            border-color   : var(--b-text-field-border-color);
+        }
+    }
+
+    /* DisplayField uses span.b-display-field-value instead of input, TextAreaField uses a textarea */
+    bry-time,
+    input,
+    textarea,
+    .b-display-field-value {
+        border      : none;
+        background  : transparent;
+        width       : 100%;
+        font-family : inherit;
+        outline     : none;
+        text-align  : inherit;
+
+        color       : var(--b-text-field-input-color);
+        font-weight : var(--b-text-field-font-weight);
+        height      : var(--b-text-field-input-height);
+        font-size   : var(--b-text-field-input-font-size);
+        padding     : var(--b-text-field-input-padding);
+
+        &::selection {
+            background : var(--b-text-field-selection-background, var(--b-primary-85));
+        }
+    }
+
+    input::placeholder {
+        color      : var(--bi-text-field-placeholder-color, var(--b-text-4));
+        font-style : var(--b-text-field-placeholder-font-style);
+    }
+
+    &.b-label-above {
+        border-top-left-radius    : 0;
+        border-top-right-radius   : 0;
+
+        --b-field-label-grid-area : var(--b-text-field-label-above-grid-area);
+    }
+
+    label {
+        line-height      : 1em;
+        align-self       : start;
+        transition       : top 0.2s ease, left 0.2s ease, font-size 0.2s ease, padding 0.2s ease, scale 0.2s ease;
+        transform-origin : top left;
+        z-index          : var(--b-text-field-label-z-index); /* Above border pseudo */
+
+        font-size        : var(--b-text-field-label-font-size);
+    }
+
+    /* Material only */
+    &.b-has-label:not(.b-label-before, .b-label-align-before) {
+        /* Material themes uses transparent color for placeholder when label is shown above, since they overlap */
+        --bi-text-field-placeholder-color : var(--b-text-field-label-above-placeholder-color, var(--b-text-4));
+
+        label {
+            scale              : var(--b-text-field-label-scale);
+            position           : var(--b-text-field-material-label-position);
+            top                : var(--b-text-field-material-label-top);
+            inset-inline-start : var(--b-text-field-material-label-left);
+            cursor             : var(--b-text-field-material-label-cursor);
+        }
+    }
+
+    .b-field-trigger {
+        display         : flex;
+        flex-direction  : column;
+        align-self      : stretch;
+        align-items     : center;
+        justify-content : center;
+        cursor          : pointer;
+        flex            : 0 0 auto;
+        min-width       : 1em;
+        gap             : 0;
+
+        color           : var(--b-field-trigger-color);
+
+        &.b-align-start {
+            padding-inline-start : var(--b-field-trigger-gap);
+
+            &:first-child {
+                padding-inline-start : var(--b-field-trigger-edge-gap);
+            }
+        }
+
+        &.b-align-end {
+            padding-inline-end : var(--b-field-trigger-gap);
+
+            &:last-child, &.b-last-trigger {
+                padding-inline-end : var(--b-field-trigger-edge-gap);
+            }
+        }
+    }
+
+    .b-spin-trigger .b-icon {
+        font-size : var(--b-spin-trigger-font-size);
+    }
+
+    .b-field-container-wrap {
+        grid-row : 1;
+    }
+
+    &.b-disabled {
+        --b-text-field-opacity     : var(--b-text-field-disabled-opacity);
+        --b-text-field-label-color : var(--b-widget-disabled-color);
+
+        /* Explicit disabled colors, for themes that define them. Others fall back to the normal values */
+        > .b-field-inner {
+            background : var(--b-text-field-disabled-background, var(--b-text-field-background));
+
+            &::before {
+                border-color : var(--b-text-field-disabled-border-color, var(--b-text-field-border-color));
+            }
+        }
+
+        bry-time,
+        input,
+        textarea,
+        .b-display-field-value {
+            color : var(--b-text-field-disabled-color, var(--b-text-field-input-color));
+        }
+
+        .b-field-trigger {
+            cursor : auto;
+            color  : var(--b-text-field-trigger-disabled-color);
+        }
+    }
+
+    &.b-read-only {
+        .b-field-trigger {
+            cursor : auto;
+            color  : var(--b-text-field-trigger-read-only-color);
+        }
+    }
+
+    /* Only useful for materials filled text field when it is no using a label */
+    &:not(.b-has-label) {
+        input,
+        span.b-display-field-value {
+            padding : var(--b-text-field-no-label-input-padding, var(--b-text-field-input-padding));
+        }
+    }
+
+    &.b-text-field-filled {
+        --b-text-field-background                     : var(--b-text-field-filled-background);
+        --b-text-field-hover-background               : var(--b-text-field-filled-hover-background);
+        --b-text-field-border-width                   : var(--b-text-field-filled-border-width);
+        --b-text-field-border-radius                  : var(--b-text-field-filled-border-radius);
+        --b-text-field-input-padding                  : var(--b-text-field-filled-input-padding);
+        --b-text-field-no-label-input-padding         : var(--b-text-field-filled-no-label-input-padding);
+        --b-text-field-focus-border-width             : var(--b-text-field-filled-focus-border-width);
+        /* --b-text-field-label-padding                  : var(--b-text-field-filled-label-padding); */
+        --b-text-field-label-before-padding           : var(--b-text-field-filled-label-before-padding);
+        --b-text-field-label-above-padding            : var(--b-text-field-filled-label-above-padding);
+        --b-text-field-hover-border-color             : var(--b-text-field-filled-hover-border-color);
+        --b-text-field-focus-background               : var(--b-text-field-filled-focus-background);
+        /* --b-text-field-empty-label-padding            : var(--b-text-field-filled-empty-label-padding); */
+        --b-text-field-focus-label-color              : var(--b-text-field-filled-focus-label-color);
+
+        --b-text-field-material-label-position        : var(--b-text-field-filled-material-label-position);
+        --b-text-field-material-label-top             : var(--b-text-field-filled-material-label-top);
+        --b-text-field-material-label-left            : var(--b-text-field-filled-material-label-left);
+        --b-text-field-material-label-cursor          : var(--b-text-field-filled-material-label-cursor);
+        --b-text-field-material-empty-label-font-size : var(--b-text-field-filled-material-empty-label-font-size);
+        --b-text-field-material-empty-label-top       : var(--b-text-field-filled-material-empty-label-top);
+        --b-text-field-material-empty-label-left      : var(--b-text-field-filled-material-empty-label-left);
+
+        &:where(.b-has-start-trigger:not(.b-no-steppers)),
+        &:has(.b-has-start-trigger:not(.b-no-steppers)) {
+            --b-text-field-material-label-left       : var(--b-text-field-filled-material-trigger-label-left);
+            --b-text-field-material-empty-label-left : var(--b-text-field-filled-material-trigger-empty-label-left);
+        }
+    }
+
+    &.b-text-field-outlined {
+        --b-text-field-background                      : var(--b-text-field-outlined-background);
+        --b-text-field-border-radius                   : var(--b-text-field-outlined-border-radius);
+        --b-text-field-border-width                    : var(--b-text-field-outlined-border-width);
+        --b-text-field-border-color                    : var(--b-text-field-outlined-border-color);
+        --b-text-field-input-padding                   : var(--b-text-field-outlined-input-padding);
+        --b-text-field-focus-border-width              : var(--b-text-field-outlined-focus-border-width);
+        --b-text-field-label-before-padding            : var(--b-text-field-outlined-label-before-padding);
+        --b-text-field-label-above-padding             : var(--b-text-field-outlined-label-above-padding);
+        --b-text-field-hover-border-color              : var(--b-text-field-outlined-hover-border-color);
+        --b-text-field-hover-background                : var(--b-text-field-outlined-hover-background);
+        --b-text-field-focus-label-color               : var(--b-text-field-outlined-focus-label-color);
+        --b-text-field-focus-background                : var(--b-text-field-outlined-focus-background);
+        /* --b-text-field-empty-label-padding             : var(--b-text-field-outlined-empty-label-padding); */
+
+        --b-text-field-material-label-position         : var(--b-text-field-outlined-material-label-position, static);
+        --b-text-field-material-label-top              : var(--b-text-field-outlined-material-label-top);
+        --b-text-field-material-label-left             : var(--b-text-field-outlined-material-label-left);
+        --b-text-field-material-label-cursor           : var(--b-text-field-outlined-material-label-cursor);
+        --b-text-field-material-empty-label-background : var(--b-text-field-outlined-material-empty-label-background);
+        --b-text-field-material-empty-label-top        : var(--b-text-field-outlined-material-empty-label-top);
+        --b-text-field-material-empty-label-left       : var(--b-text-field-outlined-material-empty-label-left);
+
+        &:where(.b-has-start-trigger:not(.b-no-steppers)) {
+            --b-text-field-material-empty-label-left : var(--b-text-field-outlined-material-trigger-empty-label-left);
+        }
+
+        &:where(:not(.b-label-before, .b-label-align-before)) {
+            --b-text-field-label-padding : var(--b-text-field-outlined-label-padding);
+
+            /* TODO Give outlined fields a background and invert inset? See FieldSet */
+            label::before {
+                content    : '';
+                position   : absolute;
+                inset      : 0;
+                z-index    : var(--b-text-field-outlined-label-bg-z-index);
+                /* clip-path  : inset(0 0 calc(.5em - var(--b-text-field-border-width) - 2px) 0); */
+                background : var(--b-text-field-outlined-label-background);
+            }
+        }
+    }
+
+    &:hover:where(:not(.b-disabled)) {
+        --b-text-field-background   : var(--b-text-field-hover-background);
+        --b-text-field-border-color : var(--b-text-field-hover-border-color);
+    }
+
+    &:focus-within,
+    &.b-contains-focus {
+        --b-text-field-background   : var(--b-text-field-focus-background);
+        --b-text-field-border-width : var(--b-text-field-focus-border-width);
+        --b-text-field-border-style : var(--b-text-field-focus-border-style);
+        --b-text-field-border-color : var(--b-text-field-focus-border-color);
+
+        &:not(.b-label-before, .b-label-align-before) {
+            --b-text-field-label-color : var(--b-text-field-focus-label-color);
+        }
+    }
+
+    &.b-widget.b-empty:not(:focus-within) {
+        --b-text-field-label-font-size              : var(--b-text-field-empty-label-font-size);
+        --b-text-field-label-padding                : var(--b-text-field-empty-label-padding);
+        --b-text-field-label-scale                  : var(--b-text-field-empty-label-scale);
+        --b-text-field-outlined-label-above-padding : var(--b-text-field-outlined-material-empty-label-padding);
+        /* Material only */
+        --b-text-field-label-background             : var(--b-text-field-material-empty-label-background);
+        --b-text-field-material-label-top           : var(--b-text-field-material-empty-label-top);
+        --b-text-field-material-label-left          : var(--b-text-field-material-empty-label-left);
+        --b-text-field-outlined-label-background    : var(--b-text-field-outlined-material-empty-label-background);
+    }
+
+    &.b-invalid:where(:not(.b-disabled)) {
+        --b-text-field-border-color      : var(--b-text-field-invalid-border-color);
+        --b-text-field-label-color       : var(--b-text-field-invalid-label-color);
+        --b-text-field-focus-label-color : var(--b-text-field-invalid-label-color);
+    }
+
+    .b-field-clear-clone {
+        position  : absolute;
+        animation : b-shrink-width .3s;
+    }
+}
+
+.b-theme-transition .b-text-field .b-field-inner::before {
+    transition-duration : var(--b-default-transition-duration);
+}
+
+.b-field-hint {
+    /* This causes the element to occupy no width (leaving it for the input el) and have its text overflow to the */
+    /* left (instead of right). */
+    align-self     : stretch;
+    overflow       : visible;
+    pointer-events : none;
+    position       : relative;
+    white-space    : nowrap;
+    width          : 0;
+
+    .b-field-no-hint & {
+        display : none;
+    }
+}
+
+.b-field-hint-content {
+    position         : absolute;
+    inset-inline-end : 0.6em;
+    top              : 50%;
+    translate        : 0 -50%;
+
+    color            : var(--b-text-field-input-color);
+    font-size        : var(--b-label-font-size);
+    font-weight      : var(--b-label-font-weight);
+}
+
+.b-container:where(:not(.b-toolbar)) > .b-field,
+.b-panel:where(:not(.b-toolbar)) > .b-panel-body-wrap > .b-panel-content > .b-field,
+.b-panel:where(:not(.b-toolbar)) > .b-panel-overlay > .b-panel-body-wrap > .b-panel-content > .b-field,
+.b-grid-header > .b-field {
+    --b-text-field-default-width : 100%;
+}
+
+@keyframes b-shrink-width {
+    0% {
+        max-width : 200px;
+    }
+    100% {
+        max-width : 0;
+    }
+}

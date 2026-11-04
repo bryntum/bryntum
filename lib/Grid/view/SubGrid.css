@@ -1,0 +1,335 @@
+:root {
+    --bi-grid-cell-dirty-indicator-clip-path     : polygon(0% 50%, 0% 0%, 50% 0%);
+    --bi-grid-cell-dirty-indicator-clip-path-rtl : polygon(100% 50%, 50% 0%, 100% 0%);
+    --b-grid-cell-auto-height-padding-block      : var(--b-grid-cell-padding-inline);
+
+    /**
+     * Grid dirty indicator z-index
+     */
+    --b-grid-dirty-indicator-z-index             : 2;
+
+    /**
+     * Grid virtual scrollers z-index
+     */
+    --b-grid-virtual-scrollers-z-index           : 3;
+}
+
+.b-no-column-lines,
+.b-no-column-lines .b-grid-sub-grid {
+    --b-grid-cell-border-width   : 0;
+    --b-grid-header-border-width : 0;
+}
+
+.b-no-row-lines {
+    --b-grid-row-border-width : 0;
+}
+
+.b-grid-sub-grid {
+    position : relative;
+
+    /* Stop horizontal overscroll bounce detaching body from scroll edges */
+    overscroll-behavior-x : var(--b-grid-overscroll-behavior);
+
+    &.b-hidden {
+        display : none;
+    }
+}
+
+.b-grid-sub-grid-collapsed {
+    width     : 0;
+    min-width : 0 !important; /* Needs to override min-width in style */
+    overflow  : hidden !important;
+}
+
+.b-animating {
+    .b-grid-header-scroller,
+    .b-grid-sub-grid {
+        transition-property : width, flex, min-width;
+        transition-duration : .3s;
+    }
+}
+
+.b-grid-row {
+    position           : absolute;
+    display            : flex;
+    flex-direction     : row;
+    align-items        : stretch;
+    inset-inline-start : 0;
+    overflow           : clip;
+    /* Blink-only right now. Layouts triggered inside the row won't cause document layout. */
+    /* Must be "layout", not "strict", otherwise the cell won't "stretch" the row. */
+    contain            : layout;
+
+    /* Default row height, will be read during initial render, but after that rows set height in style */
+    height             : var(--b-grid-row-height);
+    z-index            : var(--b-grid-row-zindex);
+
+    .b-grid-sub-grid & {
+        min-width : 100%;
+    }
+
+    &.b-hover .b-grid-cell {
+        --b-grid-cell-applied-background : var(--b-grid-cell-hover-background, var(--b-primary-98));
+        --b-grid-cell-color              : var(--b-grid-cell-selected-color);
+        --b-grid-link-color              : var(--b-grid-row-hover-link-color, var(--b-primary-30));
+    }
+
+    .b-grid-cell {
+        .b-selected &, &.b-selected {
+            --b-grid-cell-applied-background : var(--b-grid-cell-selected-background, var(--b-primary-96));
+            --b-grid-cell-color              : var(--b-grid-cell-selected-color);
+            --b-grid-link-color              : var(--b-grid-row-hover-link-color, var(--b-primary-30));
+            transition                       : background-color var(--b-default-transition-duration), color var(--bi-grid-cell-selected-color-transition-duration, var(--b-default-transition-duration));
+        }
+    }
+
+    &.b-hover.b-selected .b-grid-cell {
+        --b-grid-cell-applied-background : var(--b-grid-cell-hover-selected-background, var(--b-primary-94));
+    }
+
+    /* TimeRanges for example use `cls: '.fa .fa-xx'` to apply an icon. If that range is used as a row of a grid, */
+    /* the fa rule will mess up the row */
+    &.fa {
+        display : flex;
+
+        &::before {
+            /* Ditch icon */
+            content : none;
+        }
+    }
+
+    &.b-row-placeholder {
+        .b-grid-cell {
+            color : transparent; /* Could be overridden by style */
+
+            > *:not(.b-editor) {
+                display : none;
+            }
+
+            &::after {
+                content       : '';
+                position      : absolute;
+
+                inset         : 1.2em var(--b-grid-cell-padding-inline);
+                border-radius : var(--b-widget-border-radius);
+                background    : var(--b-grid-row-placeholder-color);
+            }
+        }
+    }
+}
+
+.b-hide-row-hover {
+    /* No hover & selection styling */
+    --b-grid-cell-hover-background          : var(--b-grid-cell-background);
+    --b-grid-cell-selected-background       : var(--b-grid-cell-background);
+    --b-grid-cell-hover-selected-background : var(--b-grid-cell-background);
+}
+
+/* No border on last row if we have scroll, to avoid double borders at bottom */
+.b-grid-body-container.b-vertical-overflow .b-grid-row.b-last .b-grid-cell {
+    --b-grid-row-border-color : transparent;
+}
+
+.b-grid-cell {
+    position          : absolute;
+    display           : flex;
+    flex-shrink       : 0;
+    contain           : strict;
+    align-items       : center;
+    white-space       : nowrap;
+    height            : 100%;
+
+    background        : var(--b-grid-cell-applied-background, var(--b-grid-cell-background));
+    color             : var(--b-grid-cell-color);
+    border-inline-end : var(--b-grid-cell-border-width) solid var(--b-grid-cell-border-color);
+    border-bottom     : var(--b-grid-row-border-width) solid var(--b-grid-row-border-color);
+    font-size         : var(--b-grid-cell-font-size);
+    font-weight       : var(--b-grid-cell-font-weight);
+    gap               : var(--b-grid-cell-gap);
+    overflow          : var(--bi-grid-cell-overflow);
+    padding-inline    : var(--b-grid-cell-padding-inline);
+    padding-block     : var(--b-grid-cell-padding-block);
+
+    /* Prevent transitions for content by default */
+    &:not(.b-focused) {
+        *, *::before, *::after {
+            transition : none;
+        }
+    }
+
+    .b-theme-transition & {
+        transition : background-color var(--b-default-transition-duration), border var(--b-default-transition-duration);
+    }
+
+    .b-chrome &, .b-windows & {
+        /* Subpixel rendering issues on windows with `strict`, column lines get overlapped by cells */
+        contain : layout;
+    }
+
+    &.b-focused:focus-visible {
+        outline        : var(--b-grid-cell-focused-outline-width) solid var(--b-grid-cell-focused-outline-color);
+        outline-offset : var(--b-grid-cell-focused-outline-offset, calc(var(--b-grid-cell-focused-outline-width) * -1));
+    }
+
+    &.b-hover {
+        --b-grid-cell-applied-background : var(--b-grid-cell-hover-background, var(--b-primary-98));
+        --b-grid-cell-color              : var(--b-grid-cell-selected-color);
+    }
+
+    &.b-selected {
+        --b-grid-cell-applied-background : var(--b-grid-cell-selected-background, var(--b-primary-96));
+        --b-grid-cell-color              : var(--b-grid-cell-selected-color);
+    }
+
+    /* Cell selection needs the combined state too, the same way rows have it above */
+    &.b-hover.b-selected {
+        --b-grid-cell-applied-background : var(--b-grid-cell-hover-selected-background, var(--b-primary-94));
+    }
+
+    &.b-auto-height {
+        white-space : normal;
+
+        &:not(.b-tree-cell) {
+            --b-grid-cell-padding-block : var(--b-grid-cell-auto-height-padding-block);
+        }
+    }
+
+    &.b-measuring-auto-height {
+        contain    : paint style layout; /* Replaces strict, cannot use size since we want it to grow */
+        align-self : baseline;
+        height     : auto; /* Absolute positioned with 100% height to fill row by default */
+    }
+
+    .b-grid-no-text-selection & {
+        user-select         : none;
+        -webkit-user-select : none;
+    }
+
+    a {
+        color : var(--b-grid-link-color, var(--b-primary-30));
+    }
+}
+
+/* Support for cell / header ellipsis when text overflows */
+.b-supports-has.b-use-ellipsis:not(.b-grid-measuring) {
+    .b-grid-row {
+        height : var(--b-grid-row-height);
+
+        .b-grid-cell:not(.b-auto-height, .b-row-reorder-grip, :has(*)) {
+            display       : block;
+            text-overflow : ellipsis;
+
+            line-height   : var(--b-grid-row-height);
+        }
+    }
+}
+
+/* Use start and end to be LTR/RTL neutral */
+.b-grid-cell-align-right,
+.b-grid-cell-align-end {
+    justify-content : flex-end;
+    text-align      : end;
+}
+
+.b-grid-cell-align-center {
+    justify-content : center;
+    text-align      : center;
+}
+
+.b-rtl {
+    --bi-grid-cell-dirty-indicator-clip-path : var(--bi-grid-cell-dirty-indicator-clip-path-rtl)
+}
+
+.b-show-dirty .b-cell-dirty:not(.b-editing):after,
+.b-show-dirty-during-edit .b-cell-dirty:after {
+    content            : "";
+    position           : absolute;
+    top                : 0;
+    inset-inline-start : 1px;
+    width              : 1.2em;
+    height             : 1.2em;
+    z-index            : var(--b-grid-dirty-indicator-z-index);
+
+    background-color   : var(--b-grid-cell-dirty-color);
+    clip-path          : var(--bi-grid-cell-dirty-indicator-clip-path);
+}
+
+.b-grid-splitter {
+    transition : background var(--b-default-transition-duration);
+
+    background : var(--b-grid-splitter-color, var(--b-grid-splitter-narrow-color));
+    /* When not a draggable splitter, it's just a narrow line. */
+    flex       : 0 0 var(--b-grid-splitter-width);
+
+    .b-grid-splitter-inner {
+        /* When not a draggable splitter, it's just a narrow line with no internal structure. */
+        display : none;
+    }
+}
+
+/* region Virtual scrollers */
+
+.b-virtual-scrollers {
+    /* Must be above footer element */
+
+    display        : flex;
+    flex-direction : row;
+    contain        : paint style layout;
+    z-index        : var(--b-grid-virtual-scrollers-z-index);
+
+    .b-firefox & {
+        contain : paint layout;
+    }
+
+    /* Horizontal scrollbar should remain reachable in FireFox on Windows */
+    .b-overlay-scrollbar.b-firefox.b-windows & {
+        pointer-events : auto;
+
+        .b-virtual-scroller {
+            pointer-events : auto;
+        }
+    }
+
+    /* If it's an overlaying scrollbar, make it absolutely positioned, docked to */
+    /* the bottom of the grid. */
+    /* */
+    /* If it's an overlaying scrollbar, it should not interact with pointers. */
+    /* The "wheel" event will go directly to the scrollable content, and mouseovers */
+    /* should go through to the grid content. */
+    /* */
+    /* We need to force a height if the platform is using overlaying scrollbars */
+    /* and therefore will not "stretch" the overflowing element with a permanent scrollbar. */
+    .b-overlay-scrollbar & {
+        position       : absolute;
+        left           : 0;
+        right          : 0;
+        bottom         : 0;
+        pointer-events : none;
+
+        .b-virtual-scroller {
+            height         : 16px;
+            pointer-events : none;
+        }
+    }
+
+    .b-virtual-scroller {
+        overflow-x : scroll;
+        overflow-y : hidden;
+    }
+
+    .b-virtual-width {
+        height : 1px;
+    }
+}
+
+/* Overlaid scrollbars are interactive when scrolling */
+.b-overlay-scrollbar {
+    .b-virtual-scroller:hover,
+    .b-virtual-scroller.b-show-virtual-scroller {
+        pointer-events : all;
+        opacity        : 1;
+        transition     : opacity .5s;
+    }
+}
+
+/* endregion */

@@ -1,0 +1,283 @@
+/* @after Grid/view/SubGrid.css */
+
+:root, :host {
+    /**
+     * Icon to display when loading children (font icon)
+     */
+    --b-tree-loading-icon             : "\f110";
+
+    /**
+     * Width of the tree icon
+     */
+    --b-tree-icon-width               : 1.25em; /* Most fa icons fit in 1em, but some are wider */
+
+    /**
+     * Gap between the internals of a tree cell
+     */
+    --b-tree-cell-gap                 : var(--b-widget-gap);
+
+    /**
+     * Parent row's font-weight
+     */
+    --b-tree-parent-font-weight       : 500;
+
+    /**
+     * Amount to indent each level of the tree
+     */
+    --b-tree-indent-size              : 1.7em;
+
+    /**
+     * Size of the leaf icon (font icon)
+     */
+    --b-tree-leaf-icon-font-size      : 0.3em;
+
+    /**
+     * Size of the expander icon (font icon)
+     */
+    --b-tree-expander-icon-font-size  : 1em;
+
+    /**
+     * Color of the expander icon
+     */
+    --b-tree-expander-color           : var(--b-text-3);
+
+    --b-tree-expander-row-hover-color : var(--b-tree-expander-color);
+
+    /**
+     * Parent row's color
+     */
+    --b-tree-parent-color             : var(--b-grid-cell-color);
+
+    /**
+     * Color of a tree icon
+     */
+    --b-tree-icon-color               : var(--b-tree-expander-color);
+
+    --b-tree-icon-row-hover-color     : var(--b-tree-expander-color);
+
+    /**
+     * Width of a tree line
+     */
+    --b-tree-line-width               : 2px;
+
+    /**
+     * Color of a tree line
+     */
+    --b-tree-line-color               : var(--b-neutral-85);
+
+    /**
+     * Offset of the tree line (adjust to align with the apps collapse/expand icon)
+     */
+    --b-tree-line-offset              : .45em;
+
+    /**
+     * Opacity of the expand/collapse icon for empty parent nodes (those with no children).
+     * Set to `0` to fully hide the icon
+     */
+    --b-tree-empty-parent-icon-opacity : .5;
+}
+
+.b-internal {
+    --b-tree-level : null;
+}
+
+.b-tree-expander {
+    position    : relative;
+    top         : 1px;
+    cursor      : pointer;
+    display     : grid;
+    place-items : center;
+}
+
+.b-loading-children .b-tree-expander.b-icon:before {
+    animation : b-anim-rotate 2s infinite linear;
+
+    content   : var(--b-tree-loading-icon);
+}
+
+.b-grid-cell.b-tree-cell {
+    align-items : stretch;
+    gap         : 0;
+
+    &.b-selected,
+    &.b-hover {
+        --b-grid-cell-color : var(--b-grid-cell-selected-color);
+    }
+}
+
+.b-tree-cell-inner {
+    gap : var(--b-tree-cell-gap);
+}
+
+.b-tree-leaf-cell .b-tree-cell-inner:before {
+    margin-inline-end : .6em;
+    text-align        : center;
+
+    font-family       : var(--b-widget-icon-font-family);
+    font-weight       : var(--b-widget-icon-font-weight);
+    color             : var(--b-tree-expander-color);
+    width             : var(--b-tree-icon-width);
+    min-width         : var(--b-tree-icon-width);
+}
+
+.b-tree-icon,
+.b-icon-tree-leaf,
+.b-icon-tree-folder,
+.b-icon-tree-folder-open,
+.b-icon-tree-expand,
+.b-icon-tree-collapse {
+    text-align : center;
+
+    color      : var(--b-tree-expander-color);
+    width      : var(--b-tree-icon-width);
+    min-width  : var(--b-tree-icon-width);
+}
+
+.b-tree-icon {
+    color : var(--b-tree-icon-color);
+}
+
+.b-icon-tree-leaf:before {
+    vertical-align : middle;
+    width          : 100%;
+
+    font-size      : var(--b-tree-leaf-icon-font-size);
+}
+
+.b-icon-tree-folder:before,
+.b-icon-tree-folder-open:before {
+    margin-inline-start : .1em;
+}
+
+.b-icon-tree-expand,
+.b-icon-tree-collapse {
+    &.b-empty-parent {
+        pointer-events : none;
+
+        opacity        : var(--b-tree-empty-parent-icon-opacity);
+    }
+
+    &:before {
+        font-size : var(--b-tree-expander-icon-font-size);
+    }
+}
+
+.b-tree:not(.b-show-tree-lines) {
+    .b-tree-cell-inner {
+        padding-inline-start : calc(var(--b-tree-indent-size) * var(--b-tree-level));
+    }
+
+    /* Line up leaf icons with parent icons when used */
+    .b-tree-leaf-cell .b-tree-parent-has-icon {
+        padding-inline-start : calc(var(--b-tree-indent-size) * var(--b-tree-level) + var(--b-tree-icon-width) + var(--b-tree-cell-gap));
+    }
+}
+
+.b-tree-line {
+    flex-shrink  : 0;
+    transition   : border-color var(--b-default-transition-duration);
+
+    border-color : var(--b-tree-line-color);
+    width        : var(--b-tree-indent-size);
+
+    &::before {
+        content                   : "";
+        display                   : block;
+        border-inline-start-color : inherit;
+        border-inline-start-style : solid;
+        height                    : 100%;
+        position                  : relative;
+
+        border-inline-start-width : var(--b-tree-line-width);
+        inset-inline-start        : var(--b-tree-line-offset);
+    }
+}
+
+.b-tree-cell-inner {
+    display       : flex;
+    align-items   : center;
+    flex-shrink   : 0;
+    flex-grow     : 1;
+    padding-block : 0.5em;
+
+    /* When we re containing text, it must be truncated when too long */
+    &.b-text-value {
+        flex-shrink : 1;
+        overflow    : hidden;
+
+        .b-tree-cell-value {
+            display       : initial;
+            overflow      : hidden;
+            text-overflow : ellipsis;
+        }
+    }
+
+    .b-tree-cell.b-auto-height & {
+        /* Let cell shrink when using auto-height  */
+        flex-shrink : 1;
+    }
+}
+
+.b-tree-cell.b-auto-height {
+    /* Let cell shrink when using auto-height */
+    flex-shrink : 1;
+}
+
+a.b-tree-cell-inner {
+    text-decoration : none;
+
+    &:hover {
+        .b-tree-cell-value {
+            text-decoration : underline;
+        }
+    }
+}
+
+.b-tree-parent-row .b-grid-cell {
+    font-weight         : var(--b-tree-parent-font-weight);
+    /* color       : var(--b-tree-parent-color); */
+    --b-grid-cell-color : var(--b-tree-parent-color);
+
+    &.b-selected,
+    &.b-hover {
+        --b-grid-cell-color : var(--b-grid-cell-selected-color);
+    }
+}
+
+.b-tree-cell-value {
+    flex        : 1;
+    display     : flex;
+    align-items : center;
+
+    /* flex-direction : var(--b-grid-cell-flex-direction); */
+    gap         : var(--b-grid-cell-gap);
+}
+
+.b-touch {
+    .b-tree-expander {
+        width : 1.1em;
+    }
+
+    .b-icon-tree-expand:before,
+    .b-icon-tree-collapse:before {
+        font-size : 1.8em;
+    }
+
+    .b-icon-tree-leaf:before {
+        font-size : .6em;
+    }
+
+    .b-tree-icon,
+    .b-tree-leaf-cell:not(.b-tree-parent-cell):before {
+        font-size : 1.2em;
+    }
+}
+
+.b-grid-row,
+.b-grid-cell {
+    &.b-hover,
+    &.b-selected {
+        --b-tree-expander-color : var(--b-tree-expander-row-hover-color);
+        --b-tree-icon-color     : var(--b-tree-icon-row-hover-color);
+    }
+}

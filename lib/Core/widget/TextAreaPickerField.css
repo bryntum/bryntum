@@ -1,0 +1,37 @@
+/* @after Core/widget/TextField.css */
+
+:root, :host {
+    /**
+     * Picker color
+     */
+    --b-text-area-picker-field-picker-color : var(--b-neutral-20);
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+    /**
+     * Picker background
+     */
+    /*--b-text-area-picker-field-picker-background : var(--b-primary-98);*/
+/* } */
+
+.b-text-area-picker-field-picker {
+    min-height : 10em;
+
+    &:is(textarea) {
+        display : flex;
+        border  : none;
+        outline : none;
+        padding : 1em;
+
+        &:focus {
+            border-color : var(--b-primary);
+        }
+    }
+
+    &:is(textarea),
+    textarea {
+        background : var(--b-text-area-picker-field-picker-background, var(--b-primary-98));
+        color      : var(--b-text-area-picker-field-picker-color);
+    }
+}

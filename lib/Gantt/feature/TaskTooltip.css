@@ -1,0 +1,17 @@
+:root, :host {
+    /**
+     * Task tooltip title font weight
+     */
+    --b-task-tooltip-title-font-weight : 600;
+}
+
+/* No clock/date shown in Gantt */
+.b-gantt-task-tooltip {
+    td:last-child {
+        text-align : end;
+    }
+
+    .b-gantt-task-title {
+        font-weight : var(--b-task-tooltip-title-font-weight);
+    }
+}

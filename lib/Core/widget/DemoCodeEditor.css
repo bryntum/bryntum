@@ -1,0 +1,97 @@
+/* @after Core/widget/Panel.css */
+
+.b-demo-code-editor {
+    width                       : 490px;
+    flex                        : unset;
+
+    --b-toolbar-padding         : 0.5em;
+    --b-panel-padding           : 0;
+    --b-panel-background        : var(--b-neutral-100);
+    --b-text-field-input-height : 3em;
+    --b-panel-overlay-border    : none;
+    --b-toolbar-background      : transparent;
+
+    .b-top-toolbar {
+        height          : 58px;
+
+        --b-toolbar-gap : 0;
+    }
+
+    /* When on a large screen*/
+    @media (min-width : 2000px) {
+        width : 700px;
+    }
+
+    &:not(.b-collapsed) {
+        border-inline-start : var(--b-splitter-size, 4px) solid var(--b-border-7);
+    }
+
+    /* When collapsed, do not show the placeholder */
+    &.b-collapsed, &.b-collapsing {
+        .b-panel-collapse-revealer {
+            display : none;
+        }
+    }
+
+    &:not(.b-resizing) {
+        transition : border-width .1s;
+    }
+
+    .b-code-editor-body-wrap, .b-panel-overlay {
+        overflow : hidden;
+    }
+
+    .b-panel-content {
+        direction : ltr;
+    }
+
+    &.b-resizing * {
+        user-select         : none;
+        -webkit-user-select : none;
+    }
+
+    &.b-over-resize-handle {
+        cursor : ew-resize;
+    }
+
+    &.b-hidden {
+        display                   : flex !important;
+        border-inline-start-width : 0;
+    }
+
+    /* status  */
+    .b-bottom-toolbar {
+        transition : background-color .2s;
+
+        .readonly & {
+            background-color : #ff8d46;
+        }
+
+        [data-ref="cursorPos"] {
+            margin-inline-start : auto;
+        }
+
+        .b-toolbar-content {
+            padding : 1em !important;
+        }
+    }
+
+    &.invalid {
+        .b-bottom-toolbar {
+            color      : #fff;
+            background : #b71c1c;
+        }
+    }
+
+    [data-ref="filesCombo"] {
+        margin-inline-end : .5em;
+    }
+}
+
+.b-demo-code-editor-file-picker {
+    --b-list-item-gap : 0;
+
+    .b-editor-file-type {
+        margin-inline-end : 0.5em;
+    }
+}

@@ -1,0 +1,118 @@
+:root, :host {
+    /**
+     * The background color of the vertical time axis column (time axis in vertical mode)
+     */
+    --b-vertical-time-axis-background : var(--b-neutral-100);
+}
+
+.b-vertical-time-axis-column {
+    flex-flow         : column nowrap;
+    align-items       : stretch;
+    padding           : 0;
+    border-inline-end : none;
+    /* Using !important to override rules for hover, selected, focused cell etc. in a single line */
+    background-color  : var(--b-vertical-time-axis-background) !important;
+
+    /* No size containment, Firefox does not stick the header texts in a strictly contained cell until it reflows */
+    &.b-grid-cell {
+        contain : layout paint style;
+    }
+
+    &.b-grid-cell.b-focused:after {
+        display : none;
+    }
+}
+
+.b-vertical-time-axis {
+    flex    : 1 0 100%;
+    contain : strict;
+
+    .b-sch-header-row {
+        flex-direction : column;
+        flex           : 1;
+    }
+
+    .b-sch-header-time-axis-cell {
+        width               : 100%;
+        padding             : 0;
+        border-inline-start : 0 none;
+        overflow            : visible;
+
+        text-transform      : var(--b-grid-header-text-transform);
+    }
+
+    .b-sch-header-row.b-lowest {
+        .b-sch-header-time-axis-cell {
+            border-inline-end : none;
+            border-bottom     : none;
+            justify-content   : flex-end;
+            align-items       : flex-start;
+            contain           : unset; /* Allow overflow */
+
+            .b-sch-header-text {
+                padding-inline-end : 0.5em;
+                margin-top         : -0.75em;
+            }
+
+            /* First tick label is always clipped by the container due to the negative margin,
+               so hide it to avoid showing a truncated label */
+            &:first-child .b-sch-header-text {
+                margin-top : 0;
+            }
+        }
+    }
+
+    .b-sch-header-row:not(.b-lowest) {
+        --b-grid-header-hover-background : var(--b-vertical-time-axis-background);
+    }
+
+    /* Rotate text in all but the lowest level header */
+    .b-sch-header-row:not(.b-lowest) {
+        flex : 0 0 2em;
+
+        .b-sch-header-time-axis-cell {
+            align-items       : flex-start;
+            border-inline-end : 1px solid var(--b-grid-header-border-color);
+        }
+
+        .b-sch-header-text {
+            padding-inline    : 0.5em;
+            writing-mode     : vertical-lr;
+            -ms-writing-mode : tb-lr;
+            rotate           : 180deg;
+
+            /* TODO RTL */
+        }
+    }
+
+    .b-sticky-header .b-sch-header-text {
+        top           : 0;
+        margin-bottom : 1em;
+    }
+}
+
+.b-firefox .b-sticky-headers .b-resource-header {
+    contain: style paint layout;
+}
+
+.b-sch-vertical {
+    /* It's the scheduler content element that carries this class in vertical mode. */
+    /* All containing elements have to be overflow: visible */
+    .b-sticky-headers {
+        .b-sch-header-row,
+        .b-sch-header-time-axis-cell {
+            overflow : visible;
+        }
+
+        .b-content-element,
+        .b-grid-sub-grid-locked,
+        .b-vertical-time-axis-row,
+        .b-vertical-time-axis-column,
+        .b-vertical-time-axis,
+        .b-resource-header,
+        .b-resource-header-group-cell,
+        .b-resource-header-group-text-wrap {
+            overflow : clip;
+        }
+    }
+}

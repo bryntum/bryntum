@@ -1,0 +1,101 @@
+:root, :host {
+    /**
+     * Resize handle width (positioned between columns)
+     */
+    --b-column-resize-handle-width               : 1em;
+
+    /**
+     * Resize handle width for touch devices
+     */
+    --b-column-resize-touch-handle-width         : 1.5em;
+
+    /**
+     * Background color of the header during resize
+     */
+    --b-column-resize-header-resizing-background : var(--b-grid-header-hover-background);
+
+    /**
+     * Icon to show when resizing a column on touch devices (font icon char)
+     */
+    --b-column-resize-touch-resizing-icon        : '\f07e'; /* fa-arrows-left-right */
+
+    /**
+     * Column resize handle z-index
+     */
+    --b-column-resize-handle-z-index             : 3;
+
+    /**
+     * Column resize touch indicator z-index
+     */
+    --b-column-resize-touch-z-index              : 100;
+
+    /**
+     * Column resize touch icon z-index
+     */
+    --b-column-resize-touch-icon-z-index         : 1;
+}
+
+/* Resize handle only displayed if the grid has the column resizer and the column itself is resizable */
+.b-column-resize {
+    /* Allow resize handles from last leaf within a parent to overflow the parent */
+    .b-grid-header-parent {
+        overflow : visible;
+    }
+
+    .b-grid-header-resizable {
+        /* Allow resize handle to overlap the boundary unless we're the last leaf. */
+        /* Last leaf must not have any overflow because that would cause extra scrollWidth. */
+        &:not(.b-last-leaf) {
+            overflow : visible;
+        }
+
+        .b-grid-header-resize-handle {
+            position         : absolute;
+            inset-block      : 0;
+            background       : transparent; /* Assign a color to debug resize handles */
+            cursor           : col-resize;
+            display          : block;
+            z-index          : var(--b-column-resize-handle-z-index);
+
+            /* Overlap edge between columns. This approach works in ltr & rtl */
+            inset-inline-end : calc(-1 * var(--b-column-resize-handle-width) / 2);
+            width            : var(--b-column-resize-handle-width);
+        }
+    }
+
+    /* Show resize indicator on touch */
+    &.b-touch {
+        --b-column-resize-handle-width : var(--b-column-resize-touch-handle-width);
+
+        .b-grid-header.b-resizing {
+            overflow : visible;
+            z-index  : var(--b-column-resize-touch-z-index);
+
+            &::before {
+                position         : absolute;
+                top              : 50%;
+                inset-inline-end : 0;
+                translate        : calc(50% * var(--b-rtl-negate)) -50%;
+                border-radius    : 50%;
+                padding          : 1em;
+                z-index          : var(--b-column-resize-touch-icon-z-index);
+
+                background       : var(--b-neutral-90);
+                content          : var(--b-column-resize-touch-resizing-icon);
+                font-family      : var(--b-widget-icon-font-family);
+                font-weight      : var(--b-widget-icon-font-weight);
+            }
+        }
+    }
+}
+
+.b-grid-header.b-resizing {
+    /* Prevents background from flickering during resize */
+    --b-grid-header-background : var(--b-column-resize-header-resizing-background);
+}
+
+/* The "Fit to data" checkbox draws a focus outline outside its input, which the popup content element clips by
+   default. Allow it to overflow so the outline is not cropped. */
+.b-column-resize-dialog .b-popup-content {
+    overflow : visible;
+}

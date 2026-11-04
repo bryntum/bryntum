@@ -1,0 +1,67 @@
+/* @after Grid/view/SubGrid.css */
+
+:root, :host {
+    /**
+     * Icon size (applied as font-size)
+     */
+    --b-rating-column-icon-size   : 1.2em;
+
+    /**
+     * Empty icon color
+     */
+    --b-rating-column-empty-color : var(--b-neutral-95);
+
+    /**
+     * Filled icon color
+     */
+    --b-rating-column-filled-color : var(--b-color-yellow);
+}
+
+.b-rating-cell {
+    .b-rating-icon {
+        font-size  : var(--b-rating-column-icon-size);
+
+        color      : var(--bi-rating-column-icon-color);
+        opacity    : var(--bi-rating-column-icon-opacity, 1);
+        transition : var(--bi-rating-column-icon-transition, all var(--b-default-transition-duration) linear);
+
+        .b-theme-transition & {
+            transition : color var(--b-default-transition-duration);
+        }
+    }
+
+    .b-empty {
+        --bi-rating-column-icon-color   : var(--b-rating-column-empty-color);
+        --bi-rating-column-icon-opacity : var(--bi-rating-column-empty-opacity, 1);
+    }
+
+    .b-filled {
+        --bi-rating-column-icon-color : var(--b-rating-column-filled-color);
+    }
+}
+
+.b-rating-cell-inner {
+    display : flex;
+}
+
+.b-grid-base:not(.b-read-only) .b-rating-cell-inner:not(.b-not-editable) {
+
+    .b-rating-icon {
+        cursor : pointer;
+
+        &:hover ~ .b-icon {
+            --bi-rating-column-icon-color    : var(--b-rating-column-empty-color);
+            --bi-rating-column-empty-opacity : 1;
+        }
+    }
+
+    &:hover .b-rating-icon {
+        --bi-rating-column-icon-color    : var(--b-rating-column-filled-color);
+        --bi-rating-column-empty-opacity : 0.4;
+    }
+}
+
+.b-grid-body-container.b-scrolling .b-rating-icon {
+    --bi-rating-column-icon-transition : none;
+}
+

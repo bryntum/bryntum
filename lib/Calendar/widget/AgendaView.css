@@ -1,0 +1,306 @@
+/* @after Calendar/widget/EventList.css */
+
+:root, :host {
+    /**
+     * Agenda date sticky z-index
+     */
+    --b-agenda-view-date-sticky-z-index : 12;
+
+    /* When in an agenda view, it must be visually equivalent but with no transparency */
+    /* so that when position:sticky;top:0, it occludes scrolling content. */
+
+    /**
+     * Non-working day background
+     */
+    --b-agenda-view-non-working-day-background  : var(--b-neutral-98);
+
+    /**
+     * Cell color
+     */
+    --b-agenda-view-cell-color                  : var(--b-calendar-foreground-color);
+
+    /**
+     * Cell padding inline
+     */
+    --b-agenda-view-cell-padding-inline         : 0;
+
+    /**
+     * Cell padding block
+     */
+    --b-agenda-view-cell-padding-block          : 1.5em;
+
+    /**
+     * Date width
+     */
+    --b-agenda-view-date-width                  : 14em;
+
+    /**
+     * Time width
+     */
+    --b-agenda-view-time-width                  : 12em;
+
+    /**
+     * Time width in small viewport
+     */
+    --b-agenda-view-time-width-small            : 7.5em;
+
+    /**
+     * Date padding
+     */
+    --b-agenda-view-date-padding                : .2em 1em 0 1em;
+
+    /**
+     * Date number margin
+     */
+    --b-agenda-view-date-number-margin          : 0 .1em 0 0;
+
+    /**
+     * Date number font size
+     */
+    --b-agenda-view-date-number-font-size       : 3em;
+
+    /**
+     * Today date number font size
+     */
+    --b-agenda-view-today-date-number-font-size : 75%;
+
+    /**
+     * Header padding
+     */
+    --b-agenda-view-header-padding              : .5em 0 .5em .5em;
+
+    /**
+     * Date margin
+     */
+    --b-agenda-view-date-margin                 : 0px; /* Has to have px for calc to work below */
+}
+
+.b-internal {
+    --bi-event-row-spacing : null;
+}
+
+.b-agenda-view {
+    /* Sticky date block. */
+    &.b-grid-base {
+        .b-grid-sub-grid,
+        .b-grid-row,
+        .b-grid-cell {
+            overflow : clip !important;
+        }
+
+        /* Obviously, with overflow:visible it cannot do its horizontal scrolling */
+        /* So its fake scrollbars are always hidden. */
+        .b-virtual-scrollers {
+            display : none !important;
+        }
+
+        .b-cal-agenda-date {
+            position : sticky;
+            top      : calc(var(--b-agenda-view-cell-padding-block) + var(--b-agenda-view-date-margin));
+            z-index  : var(--b-agenda-view-date-sticky-z-index);
+        }
+
+        /* If we're narrow, it goes at the top. */
+        &.b-responsive-small {
+            --b-agenda-view-cell-padding-inline : 1em;
+            --b-agenda-view-cell-padding-block  : 1em;
+
+            .b-agenda-cell {
+                /* padding-block : 0; */
+                border : 0 none;
+
+                .b-cal-agenda-date {
+                    top           : 0;
+                    min-height    : 4em;
+
+                    /* Expand left and right to occupy the full width, minus the padding of the cell. */
+                    margin-inline : calc(var(--b-agenda-view-cell-padding-inline) * -1);
+
+                    background    : var(--b-panel-background);
+
+                }
+                &.b-non-working-day .b-cal-agenda-date {
+                    /* This must occlude the scrolling content, so must not be a the transparent color */
+                    /* which allows DayView background lines to show through. It must be the solid visual equivalent. */
+                    background : var(--b-agenda-view-non-working-day-background);
+                }
+            }
+            .b-cal-agenda-event-row:last-of-type {
+                padding-bottom : calc(var(--b-agenda-view-cell-padding-block) / 2);
+            }
+        }
+    }
+
+    .b-cal-event-bar-container {
+        contain : inline-size;
+
+        /* Making it display : block allows text-overflow : ellipsis to work.
+         * Not needed if it's a complex layout with child elements produced by a renderer,
+         * or if showResourceAvatars is true, so only apply for the simple case. */
+        .b-cal-event-desc:not(.b-cal-event-desc-complex) {
+            display : block;
+        }
+    }
+
+    /* Make it so that the padding is included in the scrollHeight measuring that we do to auto height the cells. */
+    .b-grid-cell::after {
+        content : "";
+        display : table;
+        clear   : both;
+    }
+
+    .b-cal-event-list-event-time {
+        min-height  : auto;
+        white-space : nowrap;
+
+        flex        : 0 0 var(--b-agenda-view-time-width);
+    }
+
+    &.b-responsive-small {
+        .b-cal-event-list-event-time {
+            flex : 0 0 var(--b-agenda-view-time-width-small);
+        }
+
+        .b-cal-agenda-grid-row {
+            .b-calendar-cell {
+                display : block;
+            }
+        }
+    }
+
+    &.b-grid-empty .b-empty-text {
+        position : static;
+    }
+}
+
+/* Ensure visual separation when month changes during scrolling */
+.b-new-month {
+    .b-cal-agenda-date-date-text :nth-child(2) {
+        font-weight : bold;
+    }
+}
+
+.b-agenda-view-day-selector {
+    .b-calendar-row-body {
+        display : none;
+    }
+}
+
+.b-cal-agenda-grid-row {
+    /* Enable content-visibility for better performance with many rows.
+     * Use contain-intrinsic-size to provide a placeholder size for off-screen rows
+     * to avoid layout shifts and browser-specific quirks in focus / a11y / find-in-page.
+     */
+    content-visibility    : auto;
+    contain-intrinsic-size: auto var(--b-grid-row-height);
+
+    /* No hover or selection colors for the row */
+    &.b-selected,
+    .b-grid-body-container:focus &.b-selected,
+    .b-grid-base &.b-grid-row.b-hover .b-grid-cell.b-calendar-cell,
+    .b-grid-base &.b-grid-row.b-hover .b-grid-cell.b-calendar-cell:not(.b-non-working-day):hover {
+        background-color : transparent;
+
+        .b-calendar-cell.b-non-working-day {
+            background : var(--b-agenda-view-non-working-day-background);
+        }
+    }
+
+    .b-agenda-view & {
+        .b-calendar-cell {
+            flex-direction : row;
+            contain        : style;
+            font-weight    : inherit;
+            flex           : 1 1 100%;
+            margin         : 0;
+            align-items    : flex-start;
+
+            color          : var(--b-agenda-view-cell-color);
+            padding-inline : var(--b-agenda-view-cell-padding-inline);
+            padding-block  : var(--b-agenda-view-cell-padding-block);
+
+            &.b-non-working-day {
+                background : var(--b-agenda-view-non-working-day-background);
+            }
+
+            &:focus-within {
+                outline : 0 none !important;
+            }
+
+            .b-agenda-view-with-day-selector & {
+                padding-inline-start : 1.5em;
+            }
+        }
+    }
+    .b-cal-event-bar-container .b-cal-event-wrap {
+        position : relative;
+        overflow : hidden;
+    }
+}
+
+.b-cal-agenda-event-row {
+    flex       : 1;
+    display    : flex;
+    flex-flow  : row nowrap;
+    align-self : stretch;
+
+    &:not(:last-child) {
+        margin-bottom : var(--bi-event-row-spacing);
+    }
+}
+
+.b-cal-agenda-date {
+    display     : flex;
+    flex-flow   : row nowrap;
+    align-items : center;
+    height      : 2.6em;
+
+    flex        : 0 0 var(--b-agenda-view-date-width);
+    padding     : var(--b-agenda-view-date-padding);
+    margin      : var(--b-agenda-view-date-margin);
+
+    .b-agenda-view-with-day-selector & {
+        display : none
+    }
+}
+
+.b-cal-agenda-date-date-number {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    cursor          : pointer;
+    width           : 1.5em;
+    height          : 1.5em;
+    border-radius   : 50%;
+
+    margin          : var(--b-agenda-view-date-number-margin);
+    font-size       : var(--b-agenda-view-date-number-font-size);
+
+    &:hover {
+        background : var(--b-calendar-date-hover-background);
+    }
+
+    .b-today & {
+        background : var(--b-calendar-today-background);
+        border     : var(--b-calendar-today-border, var(--b-date-picker-today-border, 1px solid var(--b-date-picker-today-color, var(--b-primary-50))));
+        color      : var(--b-calendar-today-color, var(--b-date-picker-today-color, var(--b-primary-50)));
+    }
+}
+
+.b-cal-agenda-header {
+    flex            : 1;
+    display         : flex;
+    flex-flow       : row nowrap;
+    justify-content : flex-start;
+
+    padding         : var(--b-agenda-view-header-padding);
+}
+
+/* The elements inside the AgendaColumn header element must match the date and time inside the agenda. */
+.b-cal-agenda-header-date {
+    width : var(--b-agenda-view-date-width);
+}
+
+.b-cal-agenda-header-time {
+    width : var(--b-agenda-view-time-width);
+}

@@ -1,0 +1,4 @@
+.b-file-picker {
+    /* Allow button badge to overflow */
+    overflow : visible;
+}

@@ -1,0 +1,9 @@
+.b-float-root > .b-gantt-task-drag-tooltip {
+    pointer-events : none;
+}
+
+.b-gantt-task-drag-tooltip .b-tooltip-content > div {
+    display        : flex;
+    flex-direction : column;
+    gap            : 0.5em;
+}

@@ -1,0 +1,94 @@
+/* @after Core/widget/Panel.css */
+
+:root, :host {
+    /**
+     * Gap between the years in the year picker, and months in the month picker.
+     */
+    --b-year-picker-gap               : 0.5em;
+
+    /**
+     * Padding inside the year picker and the month picker.
+     */
+    --b-year-picker-padding           : var(--b-year-picker-gap);
+
+    /**
+     * Font weight for the title of the year picker and the month picker
+     */
+    --b-year-picker-title-font-weight : 600;
+
+    /**
+     * Font weight for the years in the year picker and the months in the month picker
+     */
+    --b-year-picker-year-font-weight  : var(--b-widget-font-weight);
+
+    /**
+     * Color for the years in the year picker and the months in the month picker
+     */
+    --b-year-picker-year-color        : var(--b-neutral-30);
+}
+
+/* Colors have to be specified per widget, for color-mix to work as intended with overridden primary color */
+/* .b-bryntum { */
+    /* --b-date-picker-title-color         : var(--b-date-picker-title-color); */
+
+    /**
+     * Background for the selected year in the year picker and the selected month in the month picker
+     * @state Selected
+     */
+    /*--b-year-picker-selected-background : var(--b-date-picker-selected-background);*/
+
+    /**
+     * Color for the selected year in the year picker and the selected month in the month picker
+     * @state Selected
+     */
+    /*--b-year-picker-selected-color      : var(--b-date-picker-selected-color);*/
+
+    /**
+     * Background for the hovered year in the year picker and the hovered month in the month picker
+     * @state Hovered
+     */
+    /*--b-year-picker-hover-background    : var(--b-date-picker-date-hover-background);*/
+/* } */
+
+.b-month-picker-body-wrap,
+.b-year-picker-body-wrap {
+    height : 100%;
+}
+
+.b-month-picker-content,
+.b-year-picker-content {
+    grid-template-columns : repeat(4, 1fr);
+    grid-auto-rows        : auto; /* Override Panel's setting */
+    place-items           : center;
+    height                : 100%;
+
+    gap                   : var(--b-year-picker-gap);
+    padding               : var(--b-year-picker-padding);
+
+    .b-button {
+        width                       : 100%;
+        padding                     : 0.5em 0;
+
+        --b-button-font-weight      : var(--b-year-picker-year-font-weight);
+        --b-button-color            : var(--b-year-picker-year-color);
+        --b-button-hover-background : var(--b-year-picker-hover-background, var(--b-date-picker-date-hover-background, var(--b-primary-95)));
+
+        &.b-selected {
+            --b-button-background  : var(--b-year-picker-selected-background, var(--b-date-picker-selected-background, var(--b-primary-90)));
+            --b-button-color       : var(--b-year-picker-selected-color);
+            --b-button-font-weight : var(--b-year-picker-title-font-weight);
+        }
+    }
+}
+
+.b-month-picker-title,
+.b-year-picker-title {
+    flex        : 1;
+    background  : transparent;
+
+    font-weight : var(--b-year-picker-title-font-weight);
+
+    .b-button-label {
+        font-size : 1.1em;
+    }
+}

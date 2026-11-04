@@ -1,0 +1,424 @@
+/* @after Scheduler/view/mixin/SchedulerEventRendering.css */
+
+/* Shared with Gantt */
+
+.b-style-gantt {
+    &,
+    .b-segment-inherit-style {
+        --b-sch-event-border-radius       : 0.25em;
+        --b-sch-event-color               : var(--b-color-white);
+        --b-sch-event-background          : color-mix(in srgb, var(--b-primary), var(--b-mix) 50%);
+        --b-sch-event-hover-background    : color-mix(in srgb, var(--b-primary), var(--b-mix) 40%);
+        --b-sch-event-selected-background : color-mix(in srgb, var(--b-primary), var(--b-mix) 30%);
+        --b-sch-event-border-color        : color-mix(in srgb, var(--b-primary), var(--b-mix) 20%);
+
+        @supports not (color: color-mix(in srgb, red, blue)) {
+            --b-sch-event-background          : var(--b-primary-75);
+            --b-sch-event-hover-background    : var(--b-primary-70);
+            --b-sch-event-selected-background : var(--b-primary-65);
+        }
+    }
+}
+
+.b-style-tonal {
+    --b-sch-event-border-radius       : 0.5em;
+    --b-sch-event-color               : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+    --b-sch-event-background          : var(--b-sch-event-tonal-background);
+    --b-sch-event-hover-background    : var(--b-sch-event-tonal-hover-background);
+    --b-sch-event-selected-background : color-mix(in srgb, var(--b-primary), var(--b-mix) 50%);
+    --b-sch-event-font-weight         : 600;
+    --b-sch-event-border-color        : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+
+    @supports not (color: color-mix(in srgb, red, blue)) {
+        --b-sch-event-color               : var(--b-primary-40);
+        --b-sch-event-background          : var(--b-primary-93);
+        --b-sch-event-hover-background    : var(--b-primary-85);
+        --b-sch-event-selected-background : var(--b-primary-75);
+    }
+}
+
+.b-style-filled,
+.b-style-plain /* Deprecated, remove in 8.0 */
+{
+    &,
+    .b-segment-inherit-style {
+        --b-sch-event-border-radius       : 0.25em;
+        --b-sch-event-color               : var(--b-color-white);
+        --b-sch-event-background          : var(--b-primary);
+        --b-sch-event-hover-background    : color-mix(in srgb, var(--b-primary), var(--b-opposite) 20%);
+        --b-sch-event-selected-background : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+        --b-sch-event-border-color        : var(--b-sch-event-background);
+
+        @supports not (color: color-mix(in srgb, red, blue)) {
+            --b-sch-event-hover-background    : var(--b-primary-40);
+            --b-sch-event-selected-background : var(--b-primary-30);
+        }
+    }
+}
+
+.b-style-traced {
+    &,
+    .b-segment-inherit-style {
+        --b-sch-event-border-radius       : 0.75em;
+        --b-sch-event-color               : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+        --b-sch-event-background          : color-mix(in srgb, var(--b-primary), var(--b-mix) 90%);
+        --b-sch-event-hover-background    : color-mix(in srgb, var(--b-primary), var(--b-mix) 86%);
+        --b-sch-event-selected-background : color-mix(in srgb, var(--b-primary), var(--b-mix) 70%);
+        --b-sch-event-font-weight         : 600;
+        --b-sch-event-border-width        : 1px;
+        --b-sch-event-border-color        : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+        --b-sch-event-border-style        : solid;
+
+        --b-sch-milestone-border-width    : 1px;
+
+        @supports not (color: color-mix(in srgb, red, blue)) {
+            --b-sch-event-background          : var(--b-primary-95);
+            --b-sch-event-hover-background    : var(--b-primary-93);
+            --b-sch-event-selected-background : var(--b-primary-85);
+        }
+    }
+}
+
+.b-style-bordered,
+.b-style-border /* Deprecated, remove in 8.0 */
+{
+    &,
+    .b-segment-inherit-style {
+        --b-sch-event-border-radius       : 0.5em;
+        --b-sch-event-color               : var(--b-color-white);
+        --b-sch-event-background          : color-mix(in srgb, var(--b-primary), var(--b-mix) 20%);
+        --b-sch-event-hover-background    : var(--b-primary);
+        --b-sch-event-selected-background : color-mix(in srgb, var(--b-primary), var(--b-opposite) 10%);
+        --b-sch-event-font-weight         : 600;
+        --b-sch-event-border-width        : 1px;
+        --b-sch-event-border-color        : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+        --b-sch-event-border-style        : solid;
+
+        --b-sch-milestone-border-width    : 1px;
+
+        --b-percent-bar-background        : color-mix(in srgb, var(--b-primary), transparent 30%);
+
+        @supports not (color: color-mix(in srgb, red, blue)) {
+            --b-sch-event-background          : var(--b-primary-60);
+            --b-sch-event-selected-background : var(--b-primary-45);
+        }
+    }
+}
+
+.b-style-outlined,
+.b-style-hollow /* Deprecated, remove in 8.0 */
+{
+    --b-sch-event-border-radius       : 0.5em;
+    --b-sch-event-color               : color-mix(in srgb, var(--b-primary), var(--b-opposite) 20%);
+    --b-sch-event-background          : transparent;
+    --b-sch-event-hover-background    : color-mix(in srgb, var(--b-primary), var(--b-mix) 90%);
+    --b-sch-event-selected-background : color-mix(in srgb, var(--b-primary), var(--b-mix) 70%);
+    --b-sch-event-border-width        : 2px;
+    --b-sch-event-border-color        : color-mix(in srgb, var(--b-primary), var(--b-opposite) 20%);
+    --b-sch-event-border-style        : solid;
+
+    --b-sch-milestone-border-width    : 2px;
+
+    @supports not (color: color-mix(in srgb, red, blue)) {
+        --b-sch-event-hover-background    : var(--b-primary-95);
+        --b-sch-event-selected-background : var(--b-primary-85);
+    }
+
+    .b-segmented {
+        --b-sch-event-background : color-mix(in srgb, var(--b-primary), var(--b-mix) 98%);
+    }
+}
+
+.b-style-indented,
+.b-style-colored /* Deprecated, remove in 8.0 */
+{
+    &,
+    .b-segment-inherit-style {
+        --b-sch-event-border-radius       : 0.15em;
+        --b-sch-event-color               : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+        --b-sch-event-background          : var(--b-sch-event-indented-background);
+        --b-sch-event-hover-background    : var(--b-sch-event-indented-hover-background);
+        --b-sch-event-selected-background : var(--b-sch-event-indented-selected-background);
+        --b-sch-event-border-width        : 0 0 0 6px;
+        --b-sch-event-border-color        : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+        --b-sch-event-border-style        : solid;
+        --b-sch-milestone-border-width    : 6px;
+
+        .b-sch-vertical & {
+            --b-sch-event-border-width : 6px 0 0 0;
+        }
+
+        @supports not (color: color-mix(in srgb, red, blue)) {
+            --b-sch-event-background          : var(--b-primary-95);
+            --b-sch-event-hover-background    : var(--b-primary-91);
+            --b-sch-event-selected-background : var(--b-primary-85);
+        }
+    }
+
+    .b-wide-milestone {
+        border-block       : none;
+
+        --b-milestone-size : calc(var(--b-event-size) * 1px);
+
+        &::before {
+            border                  : var(--b-sch-event-border-width) var(--b-sch-event-border-style) var(--b-sch-event-border-color);
+            border-inline-end       : none;
+            border-block-start      : none;
+
+            border-end-start-radius : var(--b-sch-event-border-radius);
+        }
+    }
+}
+
+/* To look like events in Calendar */
+.b-style-calendar {
+    --b-sch-event-border-radius       : var(--b-calendar-event-border-radius, .5em);
+    --b-sch-event-color               : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+    --b-sch-event-background          : color-mix(in srgb, var(--b-primary), var(--b-mix) 90%);
+    --b-sch-event-hover-background    : color-mix(in srgb, var(--b-primary), var(--b-mix) 80%);
+    --b-sch-event-selected-background : var(--b-primary);
+    --b-sch-event-border-width        : 0 0 0 var(--b-day-view-event-border-inline-start-width, 4px);
+    --b-sch-event-border-color        : var(--b-primary);
+    --b-sch-event-border-style        : solid;
+    --b-sch-milestone-border-width    : 6px;
+    --b-sch-event-padding-inline      : var(--b-day-view-event-body-padding, .35em);
+    --b-sch-event-padding-block       : var(--b-day-view-event-body-padding, .35em);
+    --b-sch-event-font-weight         : var(--b-calendar-event-font-weight, 500);
+    --b-sch-event-font-size           : var(--b-calendar-event-font-size, .9em);
+
+    @supports not (color: color-mix(in srgb, red, blue)) {
+        --b-sch-event-background          : var(--b-primary-97);
+        --b-sch-event-hover-background    : var(--b-primary-95);
+        --b-sch-event-selected-background : var(--b-primary-90);
+    }
+
+    .b-sch-vertical & {
+        --b-sch-event-border-width : var(--b-day-view-event-border-inline-start-width, 4px) 0 0 0;
+    }
+
+    .b-sch-event-content {
+        align-items : flex-start;
+    }
+
+    &.b-selected {
+        --b-sch-event-color : var(--b-neutral-100);
+    }
+}
+
+/* To look like inter-day events in Calendar. Uses variables from Calendar when available */
+.b-style-interday {
+    --b-sch-event-border-radius       : 0.25em;
+    --b-sch-event-color               : var(--b-primary);
+    --b-sch-event-background          : color-mix(in srgb, var(--b-primary), var(--b-mix) 80%);
+    --b-sch-event-hover-background    : color-mix(in srgb, var(--b-primary), var(--b-mix) 80%);
+    --b-sch-event-selected-background : color-mix(in srgb, var(--b-primary), var(--b-opposite) 20%);
+    --b-sch-event-border-color        : var(--b-sch-event-background);
+    --b-sch-event-opacity             : var(--b-calendar-event-solid-bar-opacity, 0.8);
+    --b-sch-event-font-weight         : var(--b-calendar-solid-bar-font-weight, 500);
+    --b-sch-event-font-size           : var(--b-calendar-solid-bar-font-size, .9em);
+
+    @supports not (color: color-mix(in srgb, red, blue)) {
+        --b-sch-event-hover-background    : var(--b-primary-40);
+        --b-sch-event-selected-background : var(--b-primary-30);
+    }
+
+    &.b-selected {
+        --b-sch-event-color : var(--b-neutral-100);
+    }
+
+    &:hover {
+        --b-sch-event-opacity : 1;
+    }
+}
+
+.b-style-rounded {
+    --b-sch-event-border-radius       : 1000em;
+    --b-sch-event-color               : color-mix(in srgb, var(--b-primary), var(--b-opposite) 40%);
+    --b-sch-event-background          : color-mix(in srgb, var(--b-primary), var(--b-mix) 86%);
+    --b-sch-event-hover-background    : color-mix(in srgb, var(--b-primary), var(--b-mix) 60%);
+    --b-sch-event-selected-background : var(--b-primary);
+    --b-sch-event-font-weight         : 500;
+
+    --b-percent-bar-background        : color-mix(in srgb, var(--b-primary), transparent 70%);
+
+    @supports not (color: color-mix(in srgb, red, blue)) {
+        --b-sch-event-background       : var(--b-primary-93);
+        --b-sch-event-hover-background : var(--b-primary-80);
+    }
+
+    &.b-selected {
+        --b-sch-event-color : color-mix(in srgb, var(--b-primary), var(--b-mix) 90%);
+    }
+
+    &.b-sch-vertical {
+        --b-sch-event-border-radius : 2em;
+    }
+}
+
+.b-style-line {
+    --b-sch-event-background       : transparent;
+    --b-sch-event-padding-inline   : 0;
+    --b-sch-event-border-width     : 5px 0 0 0;
+    --b-sch-event-border-color     : color-mix(in srgb, var(--b-primary), var(--b-mix) 20%);
+    --b-sch-event-border-style     : solid;
+    --b-sch-event-font-size        : 0.8em;
+
+    --b-sch-milestone-border-width : 5px;
+
+    &:is(.b-hover, .b-gantt-task-hover) {
+        --b-sch-event-border-color : var(--b-primary);
+    }
+
+    &.b-selected {
+        --b-sch-event-border-color : color-mix(in srgb, var(--b-primary), var(--b-opposite) 30%);
+    }
+
+    /* Style specific overrides */
+    &:not(.b-milestone-wrap, .b-sch-vertical, .b-sch-event-segment) {
+        translate : 0 .7em;
+
+        .b-sch-event {
+            justify-content : center;
+            height          : calc(1.5em + 5px);
+        }
+    }
+
+    .b-sch-vertical & {
+        --b-sch-event-border-width : 0 0 0 5px;
+
+        .b-sch-event {
+            height : 100%;
+        }
+    }
+}
+
+.b-style-dashed {
+    --b-sch-event-background       : transparent;
+    --b-sch-event-padding-inline   : 0;
+    --b-sch-event-border-width     : 5px 0 0 0;
+    --b-sch-event-border-color     : color-mix(in srgb, var(--b-primary), var(--b-mix) 20%);
+    --b-sch-event-border-style     : dashed;
+    --b-sch-event-font-size        : 0.8em;
+
+    --b-sch-milestone-border-width : 5px;
+
+    &:is(.b-hover, .b-gantt-task-hover) {
+        --b-sch-event-border-color : var(--b-primary);
+    }
+
+    &.b-selected {
+        --b-sch-event-border-color : color-mix(in srgb, var(--b-primary), var(--b-opposite) 30%);
+    }
+
+    /* Style specific overrides */
+    &:not(.b-milestone-wrap, .b-sch-vertical, .b-sch-event-segment) {
+        translate : 0 .7em;
+
+        .b-sch-event {
+            justify-content : center;
+            height          : calc(1.5em + 5px);
+        }
+    }
+
+    .b-sch-vertical & {
+        --b-sch-event-border-width : 0 0 0 5px;
+
+        .b-sch-event {
+            height : 100%;
+        }
+    }
+}
+
+/* Bars shrunk by the pack layout get a share of the row height, fit a thinner line and as much of the text as there
+is room for */
+:is(.b-style-line, .b-style-dashed).b-packed:not(.b-milestone-wrap) {
+    --b-sch-event-border-width : 2px 0 0 0;
+    --b-sch-event-font-size    : 0.7em;
+
+    translate : none;
+
+    .b-sch-event {
+        height      : 100%;
+        overflow    : hidden;
+        line-height : 1;
+    }
+}
+
+.b-style-minimal {
+    --b-sch-event-background       : transparent;
+    --b-sch-event-padding-inline   : 0;
+    --b-sch-event-border-width     : 0 0 1px 0;
+    --b-sch-event-border-color     : color-mix(in srgb, var(--b-primary), var(--b-mix) 20%);
+    --b-sch-event-border-style     : solid;
+    --b-sch-event-font-size        : 0.9em;
+
+    --b-sch-milestone-border-width : 1px;
+
+    &:is(.b-hover, .b-gantt-task-hover) {
+        --b-sch-event-border-color : var(--b-primary);
+    }
+
+    &.b-selected {
+        --b-sch-event-border-color : color-mix(in srgb, var(--b-primary), var(--b-opposite) 30%);
+    }
+
+    .b-sch-vertical & {
+        --b-sch-event-border-width : 0 0 0 1px;
+    }
+
+    > .b-sch-event {
+        height : 60%;
+    }
+
+    .b-milestone.b-wide-milestone {
+        --b-milestone-size : calc(var(--b-event-size) * 0.6 * 1px);
+    }
+}
+
+.b-sch-event-wrap, .b-gantt-task-wrap {
+    --b-sch-event-tonal-background             : color-mix(in srgb, var(--b-primary), var(--b-mix) 86%);
+    --b-sch-event-tonal-hover-background       : color-mix(in srgb, var(--b-primary), var(--b-mix) 70%);
+    --b-sch-event-indented-background          : color-mix(in srgb, var(--b-primary), var(--b-mix) 90%);
+    --b-sch-event-indented-hover-background    : color-mix(in srgb, var(--b-primary), var(--b-mix) 82%);
+    --b-sch-event-indented-selected-background : color-mix(in srgb, var(--b-primary), var(--b-mix) 70%);
+}
+
+/* Highlighting */
+.b-time-axis-sub-grid.b-is-highlighting .b-sch-canvas {
+    & > .b-sch-event-wrap, & > .b-gantt-task-wrap {
+        &:not(.b-highlighted) {
+            transition : opacity 0.4s;
+            opacity    : .2;
+        }
+    }
+}
+
+/* Shared styling for milestones with text content */
+.b-style-traced,
+.b-style-bordered,
+.b-style-outlined,
+.b-style-hollow,
+.b-style-line,
+.b-style-dashed,
+.b-style-minimal {
+    .b-wide-milestone {
+        --b-milestone-size                : calc(var(--b-event-size) * 1px);
+        --bi-milestone-end-diamond-offset : calc(var(--b-sch-event-border-width) * -1);
+
+        &::before, &::after {
+            border : var(--b-sch-event-border-width) var(--b-sch-event-border-style) var(--b-sch-event-border-color);
+        }
+
+        &::before {
+            border-inline-end  : none;
+            border-block-start : none
+        }
+
+        &::after {
+            border-inline-start : none;
+            border-block-start  : none;
+        }
+    }
+}
+
+

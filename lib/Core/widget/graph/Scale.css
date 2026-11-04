@@ -1,0 +1,46 @@
+:root, :host {
+    /**
+     * Scale stroke color
+     */
+    --b-scale-line-color  : var(--b-neutral-60);
+
+    /**
+     * Scale label color
+     */
+    --b-scale-label-color : var(--b-neutral-30);
+}
+
+.b-scale {
+    contain : strict;
+
+    svg {
+        * {
+            vector-effect : non-scaling-stroke;
+        }
+    }
+
+    &.b-scale-vertical {
+        text.b-scale-tick-label {
+            translate : 0 0.3em;
+        }
+
+        &.b-align-right {
+            text-anchor : end;
+        }
+    }
+
+    &.b-scale-horizontal {
+        text.b-scale-tick-label {
+            text-anchor : middle;
+        }
+    }
+
+    path {
+        stroke         : var(--b-scale-line-color);
+        pointer-events : none;
+    }
+
+    text {
+        fill : var(--b-scale-label-color);
+    }
+}

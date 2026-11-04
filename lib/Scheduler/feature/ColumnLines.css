@@ -1,0 +1,84 @@
+:root, :host {
+    /**
+     * Column lines z-index
+     */
+    --b-column-lines-zindex         : 2; /* Directly above row */
+
+    /**
+     * Major column line z-index
+     */
+    --b-column-lines-major-z-index   : 1;
+
+    /**
+     * Column lines tick style (border-style)
+     */
+    --b-column-lines-tick-style     : solid;
+
+    /**
+     * Column lines major tick style (border-style)
+     */
+    --b-column-lines-major-style    : solid;
+
+    /**
+     * Column lines tick color
+     */
+    --b-column-lines-tick-color     : var(--b-neutral-95);
+
+    /**
+     * Column lines major tick color
+     */
+    --b-column-lines-major-color    : var(--b-grid-cell-border-color);
+
+    /**
+     * Column lines resource line color (used in vertical mode)
+     */
+    --b-column-lines-resource-color : var(--b-grid-cell-border-color);
+}
+
+.b-column-lines-canvas {
+    z-index : var(--b-column-lines-zindex);
+}
+
+.b-column-line,
+.b-column-line-major {
+    height                    : 100%;
+    position                  : absolute;
+    border-inline-start-width : 1px;
+
+    .b-theme-transition & {
+        transition : border-color var(--b-default-transition-duration);
+    }
+}
+
+.b-column-line {
+    border-color              : var(--b-column-lines-tick-color);
+    border-inline-start-style : var(--b-column-lines-tick-style);
+}
+
+.b-column-line-major {
+    z-index                   : var(--b-column-lines-major-z-index);
+
+    border-color              : var(--b-column-lines-major-color);
+    border-inline-start-style : var(--b-column-lines-major-style);
+}
+
+.b-resource-column-line {
+    border-color : var(--b-column-lines-resource-color);
+}
+
+
+.b-sch-vertical {
+    .b-column-line:not(.b-resource-column-line),
+    .b-column-line-major {
+        height              : auto;
+        width               : 100%;
+        position            : absolute;
+        border-inline-start : none;
+        border-top-width    : 1px;
+        border-top-style    : var(--b-column-lines-tick-style);
+    }
+
+    .b-resource-group-divider {
+        border-color : var(--b-grid-header-border-color);
+    }
+}

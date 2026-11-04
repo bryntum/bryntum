@@ -1,0 +1,16 @@
+.b-new-column-combo {
+    position                    : absolute;
+    inset                       : 0;
+    height                      : 100%;
+
+    --b-text-field-input-height : 100%;
+
+    .b-field-inner {
+        background : transparent;
+        border     : none;
+
+        &::before {
+            content : none;
+        }
+    }
+}

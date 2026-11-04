@@ -1,0 +1,7 @@
+.b-rotate-title:not(.b-collapsing) .b-column-header-button {
+    display : none;
+}
+
+.b-column-header-button {
+    order : 400;
+}

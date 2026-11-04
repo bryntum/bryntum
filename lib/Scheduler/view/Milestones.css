@@ -1,0 +1,110 @@
+/* @after Scheduler/view/EventStyles.css */
+
+/* Shared with Gantt */
+
+.b-milestone-wrap {
+    /* z-index : $entity-milestone-zindex; */
+    justify-content    : center;
+
+    --b-milestone-size : calc(var(--b-event-size) * 1px - var(--b-sch-milestone-border-width, 0) * 2);
+
+    &.b-sch-event-wrap,
+    &.b-sch-event-wrap.b-sch-vertical,
+    &.b.gantt-task-wrap {
+        --b-sch-event-border-width : var(--b-sch-milestone-border-width);
+    }
+
+    /* Milestone event bar must overlay the milestone diamond. */
+    /* It is 1em*1em to allow it to receive mouse events. */
+    .b-milestone {
+        overflow         : visible;
+        box-shadow       : none;
+        background-color : transparent;
+        width            : var(--b-milestone-size);
+
+        &.b-sch-event-with-icon {
+            .b-sch-event-content {
+                overflow        : visible;
+                justify-content : center;
+            }
+
+            i {
+                font-size : var(--b-milestone-size);
+            }
+        }
+
+        label {
+            position : absolute;
+        }
+
+        /* Show a diamond by default unless implementer has provided an icon */
+        &:not(.b-sch-event-with-icon) {
+            /* Make milestone diamond smaller but still centred if there are top or bottom labels */
+            .b-labels-topbottom & {
+                --b-milestone-size : calc(var(--b-event-size) * 0.4px);
+            }
+
+            .b-gantt-task-content::before,
+            .b-sch-event-content::before {
+                position      : absolute;
+                translate     : 20%;
+                content       : '';
+                border-radius : 0;
+                background    : inherit;
+
+                /* The magic number here is the ratio of the hypotenuse of a */
+                /* squared triangle to the equal length of the other two sides. */
+                /* eg, a 1 by 1 square has a ratio of Math.sqrt(2)/2 which is 0.707107 */
+                /* So to get a diamond of height 40px, we create a square of */
+                /* height and width 0.707107em with font-size:40px */
+                height        : calc(var(--b-milestone-size) * 0.707107);
+                /* Width is currently needed because aspect-ratio is buggy on Safari */
+                /* width            : calc(var(--b-event-size) * 0.707107px); */
+                aspect-ratio  : 1/ 1;
+                rotate        : 45deg;
+            }
+        }
+    }
+
+    /* Horizontal mode (Vertical in SchedulerEventRendering.css) */
+    &:where(:not(.b-sch-vertical)) {
+        .b-milestone {
+            label {
+                margin-inline-start : 0.5em;
+
+                inset-inline-start  : var(--b-milestone-size); /*calc(var(--b-event-size) * 1px + var(--b-sch-milestone-border-width, 0));*/
+            }
+        }
+    }
+
+    /* Event content in milestone */
+    .b-gantt-task-content,
+    .b-sch-event-content {
+        overflow         : visible;
+        margin           : 0;
+        height           : 0;
+        width            : 100%;
+        display          : flex;
+        align-items      : center;
+
+        background : var(--b-sch-event-background);
+    }
+
+    /* .fa, .b-icon { */
+    /*     margin-inline-end : 1em; */
+    /*     !* color             : $entity-milestone-color; *! */
+    /*     font-size         : inherit; */
+    /* } */
+
+    /* Icon milestones, focus is on the event element */
+    .b-using-keyboard &.b-active .b-sch-event.b-sch-event-with-icon {
+        /* outline        : $grid-cell-focused-outline-width $grid-cell-focused-outline-style $grid-cell-focused-outline-color; */
+        outline-offset : 3px;
+    }
+
+    /* Non-icon milestones, focus is on the diamond */
+    .b-using-keyboard &.b-active .b-sch-event:not(.b-sch-event-with-icon) .b-sch-event-content:before {
+        /* outline        : $grid-cell-focused-outline-width $grid-cell-focused-outline-style $grid-cell-focused-outline-color; */
+        outline-offset : 3px;
+    }
+}

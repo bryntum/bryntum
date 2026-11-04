@@ -1,0 +1,90 @@
+/* @after Core/widget/Checkbox.css */
+
+:root, :host {
+    /**
+     * Gap between field filter picker rows
+     */
+    --b-field-filter-picker-group-gap : 4em;
+}
+
+.b-field-filter-picker-group {
+    /* Hide empty container to remove gap */
+    .b-no-visible-children {
+        display : none;
+    }
+
+    [data-ref="pickers"] {
+        --b-container-gap : 0;
+    }
+}
+
+.b-field-filter-picker-group-row {
+    position       : relative;
+    flex-shrink    : 0;
+    align-items    : baseline;
+    overflow       : visible;
+
+    padding-top    : var(--b-field-filter-picker-group-gap); /* Space for --- and ---*/
+    padding-bottom : .5em; /* Space for checkbox outline */
+
+    &:first-child {
+        --b-field-filter-picker-group-gap : 0; /* --- and --- not displayed for first row */
+
+        &::before {
+            display : none;
+        }
+    }
+
+    &::before {
+        content             : attr(data-separator-text);
+        font-size           : 85%;
+        position            : absolute;
+        text-align          : center;
+        width               : 100%;
+        top                 : 0.15em;
+        background-position : 0 50%;
+        background-size     : 100% 1px;
+        background-repeat   : no-repeat;
+
+        background-image    : linear-gradient(
+            to right,
+            var(--b-border-5),
+            var(--b-border-5) 44%,
+            transparent 44%,
+            transparent 56%,
+            var(--b-border-5) 56%);
+        height              : var(--b-field-filter-picker-group-gap);
+        line-height         : var(--b-field-filter-picker-group-gap);
+    }
+
+    &:not(.b-field-filter-picker-group-row-removable) {
+        padding-inline-end : 2.25em;
+    }
+
+    [data-ref="pickers"] {
+        gap : 0;
+    }
+}
+
+.b-field-filter-picker-group-filter-active {
+    width      : 2.3em;
+    align-self : center;
+    /* margin-top : .25em; !* Attempt to center vertically with fields *! */
+
+    /* When rendered as a slide toggle, we need a little more */
+    &.b-slide-toggle {
+        width : 3.5em;
+    }
+}
+
+.b-field-filter-picker-group-other-filters {
+    padding : 0.5em 0;
+}
+
+.b-field-filter-picker-group-add-button {
+    align-self : center;
+}
+
+.b-field-filter-picker-group-remove {
+    margin-inline-start : 0.25em;
+}

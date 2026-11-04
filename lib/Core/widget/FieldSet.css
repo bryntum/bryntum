@@ -1,0 +1,128 @@
+/* @after Core/widget/Panel.css */
+
+:root, :host {
+    /**
+     * Fieldset border-radius
+     */
+    --b-field-set-border-radius   : var(--b-widget-border-radius);
+
+    /**
+     * Fieldset border-width
+     */
+    --b-field-set-border-width    : 1px;
+
+    /**
+     * Fieldset padding
+     */
+    --b-field-set-padding         : var(--b-panel-padding);
+
+    /**
+    * Fieldset border-color
+    */
+    --b-field-set-border-color    : var(--b-border-3);
+
+    /**
+     * Fieldset background
+     */
+    --b-field-set-background      : var(--b-neutral-100);
+
+    /**
+     * Fieldset label font size
+     */
+    --b-field-set-label-font-size : 0.8em;
+
+    /**
+     * Fieldset label z-index
+     */
+    --b-field-set-label-z-index   : 1;
+
+    /**
+     * Fieldset label background z-index (behind label text)
+     */
+    --b-field-set-label-bg-z-index : -1;
+}
+
+.b-field-set {
+    position    : relative;
+    overflow    : visible;
+    /* When it has a label, it gets b-field added. Prevent some of that cls rules */
+    align-items : stretch;
+    gap         : 0;
+
+    color       : var(--b-primary);
+
+    --b-panel-with-header-padding : var(--b-field-set-padding);
+
+    fieldset {
+        background    : var(--b-field-set-background);
+        border        : var(--b-field-set-border-width) solid var(--b-field-set-border-color);
+        border-radius : var(--b-field-set-border-radius);
+        padding       : var(--b-field-set-padding);
+
+        /* Clear UA <fieldset> min-content sizing that breaks flex children (#13157) */
+        min-width     : 0;
+        min-height    : 0;
+
+        margin        : 0;
+    }
+
+    /* FieldSet suppresses `b-vbox` on its host, which severs the
+     * `.b-vbox > .b-box-center` flex cascade that normally makes a panel body fill
+     * the remaining height. Restore it here. `min-*: 0` lets the body-wrap shrink so its
+     * `overflow: hidden` can clip (canonical flex-shrink pattern). (#13157) */
+    > .b-panel-body-wrap {
+        flex       : 1 1 auto;
+        min-width  : 0;
+        min-height : 0;
+    }
+
+    &.b-columns fieldset {
+        grid-template-columns : repeat(var(--bi-container-columns), auto);
+    }
+
+    &:not(.b-label-align-before) > .b-label {
+        position           : absolute;
+        inset-block-start  : 0;
+        inset-inline-start : 0;
+        translate          : calc(1em * var(--b-rtl-negate)) -50%;
+        padding-inline     : 0.5em;
+        line-height        : 1em;
+        /* Not stretched by label above, would cover the top border */
+        width              : auto;
+        z-index            : var(--b-field-set-label-z-index);
+
+        font-size          : var(--b-field-set-label-font-size);
+
+        &::before {
+            content    : '';
+            position   : absolute;
+            inset      : 0;
+            z-index    : var(--b-field-set-label-bg-z-index);
+            clip-path  : inset(calc(.5em - var(--b-field-set-border-width)) 0 0 0);
+            background : var(--b-field-set-background);
+        }
+    }
+
+    &.b-label-align-before:not(:has(.b-inline)) > .b-label {
+        align-self : start;
+    }
+
+    &.b-label-above {
+        --b-label-above-width : fit-content;
+    }
+
+    /* Match toolbar color when used directly in a toolbar */
+    /* .b-toolbar-content > & { */
+    /*     --b-field-set-background : var(--b-toolbar-background); */
+    /* } */
+}
+
+legend.b-field-set-legend {
+    position : absolute;
+    top      : -10000px;
+    clip     : rect(0, 0, 0, 0);
+}
+
+.b-toolbar-content > .b-field-set {
+    --b-field-set-background : var(--b-toolbar-background, var(--b-neutral-100));
+}

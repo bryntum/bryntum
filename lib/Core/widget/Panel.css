@@ -1,0 +1,682 @@
+/* @after Core/widget/Container.css */
+
+/* TODO Update collapsing CSS to use vars where applicable */
+
+:root, :host {
+    /**
+     * Gap between items in the panel
+     */
+    --b-panel-gap                                : var(--b-widget-gap);
+
+    /**
+     * Panel background-color
+     */
+    --b-panel-background                         : var(--b-neutral-100);
+
+    /**
+     * Header color
+     */
+    --b-panel-header-color                       : var(--b-widget-color);
+
+    /**
+     * Box-shadow for overlaid panel
+     */
+    --b-panel-overlay-box-shadow                 : var(--b-elevation-1);
+
+    /**
+     * Box-shadow for drawer panels
+     */
+    --b-panel-drawer-box-shadow                  : var(--b-elevation-4);
+
+    /**
+     * Header font-size
+     */
+    --b-panel-header-font-size                   : 1.2em;
+
+    /**
+     * Header font-weight
+     */
+    --b-panel-header-font-weight                 : calc(var(--b-widget-font-weight) + 100);
+
+    /**
+     * Header text-align
+     */
+    --b-panel-header-text-align                  : start;
+
+    /**
+     * Gap between the header's different parts
+     */
+    --b-panel-header-gap                         : var(--b-widget-gap);
+
+    /**
+     * Panel padding
+     */
+    --b-panel-padding                            : var(--b-widget-padding-large);
+
+    /**
+     * Panel padding when there is a header
+     */
+    --b-panel-with-header-padding                : var(--b-panel-padding);
+
+    /**
+     * Bottom toolbar padding
+     */
+    --b-panel-bottom-toolbar-padding             : var(--b-widget-padding-large);
+
+    /**
+     * Bottom toolbar background
+     */
+    --b-panel-bottom-toolbar-background          : transparent;
+
+    /**
+     * Top toolbar margin-inline (only applies when there is no header)
+     */
+    --b-panel-top-toolbar-margin-inline          : null;
+
+    /**
+     * Top toolbar border-radius (only applies when there is a header)
+     */
+    --b-panel-top-toolbar-border-radius          : null;
+
+    --b-panel-with-header-top-toolbar-background : var(--b-neutral-97);
+
+    /**
+     * Header padding
+     */
+    --b-panel-header-padding                     : var(--b-widget-padding-large);
+
+    /**
+     * Header bottom border
+     */
+    /*--b-panel-header-border-bottom : null;*/
+
+    /**
+     * Panel border
+     */
+    --b-panel-border                             : null;
+
+    /**
+     * Header background
+     */
+    --b-panel-header-background                  : transparent;
+
+    /* When used as a docked drawer, we need to set a size in the dock direction */
+    --b-drawer-size                              : 30em;
+
+    /**
+     * Panel border when overlaid
+     */
+    --b-panel-overlay-border                     : null;
+
+    /**
+     * The default set of transitions which applies to the panel's encapulating element
+     *
+     * Subclasses may add their own using this variable followed by their own transitions.
+     */
+    --b-default-panel-transition                  : background var(--b-default-transition-duration), color var(--b-default-transition-duration), border-color var(--b-default-transition-duration);
+
+    /**
+     * Panel body wrap z-index (locks items below header)
+     */
+    --b-panel-body-wrap-z-index                   : 0;
+
+    /**
+     * Panel header z-index
+     */
+    --b-panel-header-z-index                      : 1;
+
+    /**
+     * Panel overlay/expanding z-index
+     */
+    --b-panel-overlay-z-index                     : 1;
+
+    /**
+     * Panel collapsing header z-index (behind content)
+     */
+    --b-panel-collapsing-header-z-index           : -1;
+
+    /**
+     * Panel collapser z-index
+     */
+    --b-panel-collapser-z-index                   : 0;
+}
+
+/* .b-bryntum { */
+/*--b-panel-top-toolbar-button-type-text-color : var(--b-primary-20);*/
+/* } */
+
+.b-panel {
+    display        : flex;
+    flex-direction : column;
+    gap            : 0;
+    outline        : none;
+    transition     : var(--b-default-panel-transition);
+    overflow       : clip;
+
+    background     : var(--b-panel-background);
+    border         : var(--b-panel-border);
+
+    &.b-columns .b-panel-content {
+        display               : grid;
+        grid-auto-rows        : min-content;
+        grid-template-columns : repeat(var(--bi-container-columns), auto);
+    }
+
+    /* When the panel has a header, apply special styles to *its own* top toolbar, not any nested ones. */
+    &.b-panel-has-header > .b-panel-body-wrap > .b-top-toolbar:not(.b-tab-bar) {
+        margin-inline : var(--b-panel-top-toolbar-margin-inline);
+        border-radius : var(--b-panel-top-toolbar-border-radius);
+        background : var(--b-panel-with-header-top-toolbar-background);
+    }
+
+    > .b-panel-overlay,
+    > .b-panel-body-wrap {
+        z-index : var(--b-panel-body-wrap-z-index); /* Lock all items inside the panel below the header */
+    }
+
+    > .b-panel-collapse-size-locker {
+        position : absolute !important;
+    }
+
+    .b-panel-overlay-right {
+        border-inline-start : var(--b-panel-overlay-border);
+    }
+
+    &:not(.b-panel-collapsible-overlay) {
+        &.b-collapsed > .b-panel-collapse-size-locker {
+            clip : rect(0, 0, 0, 0);
+        }
+
+        &.b-panel-collapse-down:not(.b-panel-has-header),
+        &.b-header-dock-bottom.b-panel-collapse-down,
+        &.b-header-dock-bottom.b-panel-collapse-up {
+            > .b-panel-collapse-size-locker {
+                top : 0;
+            }
+        }
+
+        &.b-panel-collapse-up:not(.b-panel-has-header),
+        &.b-header-dock-top.b-panel-collapse-up,
+        &.b-header-dock-top.b-panel-collapse-down {
+            > .b-panel-collapse-size-locker {
+                bottom : 0;
+            }
+        }
+
+        &.b-panel-collapse-left:not(.b-panel-has-header),
+        &.b-header-dock-left.b-panel-collapse-left,
+        &.b-header-dock-left.b-panel-collapse-right {
+            > .b-panel-collapse-size-locker {
+                right : 0;
+            }
+        }
+
+        &.b-panel-collapse-right:not(.b-panel-has-header),
+        &.b-header-dock-right.b-panel-collapse-left,
+        &.b-header-dock-right.b-panel-collapse-right {
+            > .b-panel-collapse-size-locker {
+                left : 0;
+            }
+        }
+    }
+
+    &.b-panel-collapsible-overlay {
+        /* Panel background must be transparent - only the .b-panel-overlay child has the background */
+        /* This prevents a static rectangle showing during reveal/unreveal animations */
+        background : transparent;
+
+        &:not(.b-collapsing,.b-expanding,.b-panel-overlay-revealed,.b-panel-overlay-revealing) > .b-panel-overlay > .b-panel-overlay-header {
+            display : none;
+        }
+
+        &.b-panel-overlay-revealed > .b-panel-overlay {
+            box-shadow : var(--b-panel-overlay-box-shadow);
+            overflow   : visible;
+        }
+
+        > .b-panel-header {
+            transition : translate 0.2s ease-in-out;
+        }
+
+        &.b-collapsed > .b-panel-header > .b-collapsify-hide {
+            display : none;
+        }
+
+        /* We need to "hide" the extra panel header because we go to overflow:visible during expand/collapse */
+        /* to allow the overlay to remain visible */
+        &.b-collapsing,
+        &.b-expanding {
+            > .b-panel-header {
+                opacity : 0;
+            }
+        }
+
+        &:not(.b-collapsed,.b-collapsing) > .b-panel-overlay > .b-panel-overlay-header {
+            display : none;
+        }
+
+        &.b-collapsing, &.b-expanding, &.b-panel-overlay-revealing, &.b-panel-overlay-revealed {
+            overflow : visible;
+            /* Push collapsing/expanding/revealed panels above their normal siblings */
+            z-index  : var(--b-panel-overlay-z-index);
+        }
+
+        &.b-collapsing {
+            overflow : visible;
+
+            > .b-panel-header {
+                z-index : var(--b-panel-collapsing-header-z-index);
+            }
+
+            &.b-panel-collapse-up > .b-panel-header {
+                translate : 0 -100%;
+            }
+
+            &.b-panel-collapse-down > .b-panel-header {
+                translate : 0 100%;
+            }
+
+            &.b-panel-collapse-right > .b-panel-header {
+                translate : 100% 0;
+            }
+
+            &.b-panel-collapse-left > .b-panel-header {
+                translate : -100% 0;
+            }
+        }
+
+        &.b-collapsed:not(.b-expanding) {
+            /* Remove border when collapsed, to ensure overlay fills full height */
+            border : none;
+
+            > .b-panel-collapse-size-locker {
+                /* Easing functions favour fast start to avoid appearance of delays */
+                transition : translate 0.2s cubic-bezier(0.06, 1.1, 0.58, 1),
+                clip-path 0.2s ease-out,
+                top 0.2s ease-out,
+                right 0.2s ease-out,
+                bottom 0.2s ease-out,
+                left 0.2s ease-out;
+            }
+
+            &.b-panel-collapse-up {
+                > .b-panel-collapse-size-locker {
+                    translate : 0 -100%;
+                }
+
+                &.b-panel-overlay-revealed > .b-panel-collapse-size-locker {
+                    clip-path : inset(0 0 -20px 0); /* -20px bottom for box-shadow */
+                    translate : 0 0;
+                }
+            }
+
+            &.b-panel-collapse-down {
+                > .b-panel-collapse-size-locker {
+                    translate : 0 100%;
+                }
+
+                &.b-panel-overlay-revealed > .b-panel-collapse-size-locker {
+                    clip-path : inset(-20px 0 0 0); /* -20px top for box-shadow */
+                    translate : 0 0;
+                }
+            }
+
+            &.b-panel-collapse-left {
+                > .b-panel-collapse-size-locker {
+                    translate : -100% 0;
+                }
+
+                &.b-panel-overlay-revealed > .b-panel-collapse-size-locker {
+                    clip-path : inset(0 -20px 0 0); /* -20px right for box-shadow */
+                    translate : 0 0;
+                }
+            }
+
+            &.b-panel-collapse-right {
+                > .b-panel-collapse-size-locker {
+                    translate : 100% 0;
+                }
+
+                &.b-panel-overlay-revealed > .b-panel-collapse-size-locker {
+                    clip-path : inset(0 0 0 -20px); /* -20px left for box-shadow */
+                    translate : 0 0;
+                }
+            }
+        }
+
+        &.b-expanding {
+            flex     : none !important;
+            overflow : visible;
+        }
+    }
+
+    /* When we collapse a panel, the header needs to stick to the desired edge: */
+    &.b-header-dock-right, &.b-header-dock-bottom {
+        justify-content : flex-end;
+    }
+
+    &.b-collapsed {
+        &:not(.b-expanding, .b-panel-overlay-revealed, .b-panel-overlay-revealing) {
+            /* Remove from tabbing sequence when collapsed */
+            visibility : hidden;
+
+            /* Ensure it's zero-sized by flexbox when collapsed */
+            flex       : 0 1 0;
+        }
+
+        /* But this must be visible */
+        > .b-panel-collapse-revealer {
+            visibility : visible;
+            cursor     : pointer;
+
+            &.b-dock-right, .b-dock-left {
+                height             : 100%;
+
+                border-block-width : 0;
+            }
+        }
+
+        /* Hide following splitter when panel is collapsed */
+        /* & ~ .b-splitter { */
+        /*     display : none; */
+        /* } */
+    }
+
+    .b-panel-collapser-header {
+        display : none;
+    }
+
+    &.b-collapse-unflex {
+        /* We must refuse to give away any space when collapsed */
+        flex-grow   : unset !important;
+        flex-basis  : unset !important;
+        flex-shrink : 0 !important;
+    }
+
+    &.b-collapsed, &.b-collapsing {
+        .b-panel-collapser-header {
+            display : flex;
+        }
+
+        &.b-header-dock-top, &.b-header-dock-bottom {
+            min-height : auto !important;
+
+            &.b-panel-collapsible-overlay:not(.b-panel-overlay-revealed, .b-panel-overlay-revealing) {
+                /* Override configured height on these panels and allow their header alone to determine their height */
+                height : unset !important;
+            }
+
+            .b-vbox > & {
+                /* All collapse modes need to ignore flex in this case */
+                flex : none !important;
+            }
+        }
+
+        &.b-header-dock-right, &.b-header-dock-left {
+            min-width : auto !important;
+
+            &.b-panel-collapsible-overlay:not(.b-panel-overlay-revealed, .b-panel-overlay-revealing) {
+                /* Override configured width on these panels and allow their header alone to determine their width */
+                width : unset !important;
+            }
+
+            .b-hbox > & {
+                /* All collapse modes need to ignore flex in this case */
+                flex : none !important;
+            }
+        }
+    }
+
+    &.b-collapsed:not(.b-expanding, .b-panel-overlay-revealed, .b-panel-overlay-revealing) {
+        &.b-header-dock-right, &.b-header-dock-left {
+            width : unset !important;
+            flex  : unset !important;
+        }
+    }
+}
+
+/* An overlay drawer's overlay has its own shadow (--b-panel-drawer-box-shadow). The shadow floating widgets get would be
+   on the panel element itself, which stays in place while the overlay slides out when hiding the drawer */
+.b-widget.b-drawer-panel.b-panel-collapsible-overlay,
+.b-float-root > .b-widget.b-drawer-panel.b-panel-collapsible-overlay {
+    box-shadow : none;
+}
+
+/* When used as a floating drawer, the panel needs a side in the collapse direction */
+.b-drawer-panel {
+    --b-panel-overlay-box-shadow : var(--b-panel-drawer-box-shadow);
+
+    /* Inline drawer must be sized by the drawer-size, not flex */
+    &:not(.b-positioned,.b-floating) {
+        flex : unset;
+    }
+
+    /* When revealed, the revealer header must be hidden for drawers */
+    &.b-panel-overlay-revealed {
+        > header.b-panel-collapse-revealer {
+            display : none;
+        }
+    }
+    > header.b-panel-collapse-revealer {
+        display : none;
+    }
+
+    &.b-panel-collapse-up {
+        min-height : var(--b-drawer-size);
+        height     : auto;
+        inset      : 0 0 auto 0;
+    }
+
+    &.b-panel-collapse-right {
+        width : var(--b-drawer-size);
+        inset : 0 0 0 auto;
+    }
+
+    &.b-panel-collapse-down {
+        min-height : var(--b-drawer-size);
+        height     : auto;
+        inset      : auto 0 0 0;
+    }
+
+    &.b-panel-collapse-left {
+        width : var(--b-drawer-size);
+        inset : 0 auto 0 0;
+    }
+}
+
+.b-panel-overlay {
+    background : var(--b-panel-background);
+}
+
+.b-panel-header {
+    display        : flex;
+    flex-direction : row;
+    align-items    : center;
+    flex-shrink    : 0;
+    z-index        : var(--b-panel-header-z-index);
+    /* Only border-color transitions, so collapsed/expanded border width changes snap while theme colours still fade */
+    transition     : background var(--b-default-transition-duration), color var(--b-default-transition-duration), border-color var(--b-default-transition-duration);
+
+    background     : var(--b-panel-header-background);
+    color          : var(--b-panel-header-color);
+    padding        : var(--b-panel-header-padding);
+    gap            : var(--b-panel-header-gap);
+    border-bottom  : var(--b-panel-header-border-bottom);
+
+    .b-panel-collapsible > & {
+        cursor : pointer;
+    }
+
+    &.b-dock-top {
+        border-top-left-radius  : inherit;
+        border-top-right-radius : inherit;
+    }
+
+    &.b-dock-right {
+        flex-flow               : column nowrap;
+        border-start-end-radius : inherit;
+        border-end-end-radius   : inherit;
+        order                   : 100;
+    }
+
+    &.b-dock-right, &.b-dock-bottom {
+        order : 100;
+    }
+
+    &.b-dock-left {
+        flex-flow                 : column-reverse nowrap;
+        border-start-start-radius : inherit;
+        border-end-start-radius   : inherit;
+
+        .b-header-title {
+            rotate : 180deg;
+            /* `rotate` is physical, so in LTR `end` anchors glyphs to the visual top; RTL flips `end` and needs the override below */
+            text-align : end;
+        }
+
+        .b-rtl & .b-header-title {
+            text-align : start;
+        }
+    }
+
+    &.b-dock-right, &.b-dock-left {
+        .b-header-title {
+            writing-mode : vertical-lr;
+        }
+    }
+
+    .b-header-title {
+        align-items   : center;
+        flex          : 1;
+        white-space   : nowrap;
+        text-overflow : ellipsis;
+        overflow      : hidden;
+        margin        : 0;
+        font-size     : var(--b-panel-header-font-size);
+        font-weight   : var(--b-panel-header-font-weight);
+        text-align    : var(--b-panel-header-text-align);
+        gap           : var(--b-panel-header-gap);
+
+        &.b-header-html-title,
+        &.b-panel-ui-toolbar {
+            display : flex;
+        }
+    }
+}
+
+.b-panel-body-wrap {
+    overflow                   : hidden;
+    border-bottom-left-radius  : inherit;
+    border-bottom-right-radius : inherit;
+
+    .b-top-toolbar {
+        .b-button.b-button-text {
+            --b-button-type-text-color : var(--b-panel-top-toolbar-button-type-text-color, var(--b-primary-20));
+        }
+    }
+
+    .b-bottom-toolbar {
+        background          : var(--b-panel-bottom-toolbar-background);
+
+        --b-toolbar-padding : var(--b-panel-bottom-toolbar-padding);
+    }
+}
+
+/* When a bordered panel contains bordered toolbars, remove side borders on the tbar
+ * to avoid doubling with the panel's own border, and remove rounded corners on the bbar
+ * since it sits flush inside the panel */
+.b-panel.b-bordered {
+    > .b-panel-body-wrap {
+        > .b-toolbar {
+            border-radius : 0;
+
+            &.b-bordered {
+                &.b-top-toolbar,
+                &.b-bottom-toolbar {
+                    border-inline-width : 0;
+                }
+            }
+        }
+    }
+}
+
+.b-panel-collapser {
+    z-index : var(--b-panel-collapser-z-index);
+}
+
+.b-panel-content {
+    /* Use grid layout by default */
+    flex                       : 1;
+    overflow                   : clip;
+    border-bottom-left-radius  : inherit;
+    border-bottom-right-radius : inherit;
+
+    gap                        : var(--b-panel-gap);
+    padding                    : var(--b-panel-padding);
+
+    &:where(:not(.b-vbox, .b-hbox)) {
+        display        : grid;
+        grid-auto-rows : min-content;
+        align-items    : center;
+    }
+
+    &.b-vbox {
+        --b-text-field-default-width : 100%;
+    }
+}
+
+/* Apply panel-with-header-padding when there's a header but no top toolbar */
+/* Body wrap might be wrapped in a collapser element, added when collapsing transverse to the header */
+.b-panel-has-header:where(:not(:has(.b-top-toolbar:not(.b-hidden, .b-tab-bar)))) {
+    > .b-panel-body-wrap > .b-panel-content,
+    > :where(.b-panel-collapser) > .b-panel-body-wrap > .b-panel-content {
+        padding : var(--b-panel-with-header-padding);
+    }
+}
+
+/* Remove bottom padding when the next sibling is a visible bottom toolbar with no border */
+.b-panel .b-panel-content:has(+ .b-bottom-toolbar:not(.b-bordered, .b-hidden)) {
+    padding-block-end: 0;
+}
+
+.b-collapse-tool {
+    &::before {
+        rotate : var(--b-panel-collapse-tool-rotate);
+    }
+
+    &:not(.b-collapsing):before {
+        transition : all 0.2s ease-in-out;
+    }
+
+    /* Normal tools rotate 90/270 when their panel headers are rotated, but this is not desired for the collapse tool */
+    /* since it points in the direction of collapse. */
+    &.b-rotate-left,
+    &.b-rotate-right {
+        --b-panel-collapse-tool-rotate : 0deg;
+    }
+
+    &.b-collapsed {
+        --b-panel-collapse-tool-rotate : 180deg;
+    }
+
+    /* .b-panel-ui-toolbar.b-panel-collapse-right .b-collapsible-tr.b-dock-right & { */
+    /*     margin-block-start : 0.6em; */
+    /* } */
+
+    /* .b-panel-ui-toolbar.b-panel-collapse-right .b-collapsible-tr.b-dock-top & { */
+    /*     margin-inline-end : 0.7em; */
+    /* } */
+}
+
+.b-panel-ui-plain {
+    --b-panel-header-background : var(--b-panel-background);
+    --b-panel-header-color      : var(--b-widget-color);
+}
+
+.b-panel-ui-toolbar {
+    --b-panel-header-background    : var(--b-grid-header-background, var(--b-toolbar-background));
+    --b-panel-header-color         : var(--b-widget-color);
+    --b-panel-header-font-size     : var(--b-widget-font-size);
+    --b-panel-header-padding       : 1em;
+    --b-panel-header-border-bottom : 1px solid var(--b-grid-header-border-color, var(--b-border-5));
+}

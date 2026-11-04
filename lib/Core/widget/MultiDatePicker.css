@@ -1,0 +1,86 @@
+/* @after Core/widget/Carousel.css */
+
+:root, :host {
+    /**
+     * Multi date picker nav button z-index
+     */
+    --b-multi-date-picker-nav-z-index : 1;
+}
+
+.b-multi-date-picker {
+    &.b-widget.b-floating {
+        border-radius : var(--b-popup-border-radius);
+
+        .b-carousel-inner-ct {
+            border-radius : var(--b-popup-border-radius);
+        }
+    }
+
+    .b-top-toolbar {
+        --b-toolbar-gap : var(--b-date-range-field-gap);
+
+    }
+
+    [data-ref="yearButton"],
+    [data-ref="monthButton"] {
+        /* Override disabled button styling */
+        color   : var(--b-button-type-text-color);
+        opacity : 1;
+    }
+}
+
+.b-multi-date-picker-nav-floating {
+    overflow : visible;
+
+    > .b-multi-date-picker-nav-button {
+        position                              : absolute;
+        top                                   : 50%;
+        z-index                               : var(--b-multi-date-picker-nav-z-index);
+        box-shadow                            : var(--b-elevation-1);
+
+        --b-button-type-text-background       : var(--b-panel-background);
+        --b-button-type-text-hover-background : var(--b-primary-97);
+    }
+
+    > .b-multi-date-picker-next-button {
+        inset-inline-end : 0;
+        translate        : calc(50% * var(--b-rtl-negate)) -50%;
+    }
+
+    > .b-multi-date-picker-prev-button {
+        inset-inline-start : 0;
+        translate          : calc(-50% * var(--b-rtl-negate)) -50%;
+    }
+}
+
+.b-multi-date-picker-content > .b-carousel-inner-ct {
+    .b-date-picker-content {
+        .b-calendar-week,
+        .b-calendar-week-days {
+            padding-inline : 1.5em;
+        }
+    }
+
+    [data-ref="nextMonth"],
+    [data-ref="prevMonth"],
+    [data-ref="prevYear"],
+    [data-ref="nextYear"] {
+        display : none;
+    }
+
+    .b-date-picker.b-carousel-visible.b-carousel-first > .b-top-focus-trap,
+    .b-date-picker.b-carousel-visible.b-carousel-last > .b-end-focus-trap {
+        display : none;
+    }
+
+    .b-date-picker.b-carousel-reserve {
+        /* prevents focusing these fellows via tab key (in case inert is unsupported)  */
+        [data-ref="monthField"] {
+            pointer-events : none;
+        }
+
+        [data-ref="yearButton"] {
+            display : none;
+        }
+    }
+}

@@ -1,0 +1,92 @@
+:root, :host {
+    /**
+     * Column header sort icon (font icon)
+     */
+    --b-sort-header-icon                    : '\f062';
+
+    /**
+     * Column header sorter index font size (displayed when multi-sorting)
+     */
+    --b-sort-header-index-font-size         : 0.6em;
+
+    /**
+     * Column header sorter index color (displayed when multi-sorting)
+     */
+    --b-sort-header-index-color             : inherit;
+
+    /* Internal vars */
+    --bi-grid-sort-icon-rotate              : 0;
+    --bi-grid-sort-icon-opacity             : 0;
+    --bi-grid-sort-icon-size                : 0;
+    --bi-grid-sort-icon-margin-inline-start : 0;
+
+    /**
+     * Sort index badge z-index
+     */
+    --b-sort-index-z-index                  : 30;
+}
+
+.b-sort-hover-icon .b-grid-header.b-sortable {
+    cursor : pointer;
+
+    &:not(.b-sort, .b-resizing):hover {
+        --bi-grid-sort-icon-opacity             : 0.5;
+        --bi-grid-sort-icon-size                : var(--b-grid-header-icon-font-size);
+        --bi-grid-sort-icon-margin-inline-start : var(--b-grid-header-gap);
+    }
+}
+
+/* Prevent showing sort icon during column reorder */
+.b-grid-base.b-sort.b-dragging-header .b-grid-header:not(.b-sort) {
+    --bi-grid-sort-icon-opacity             : 0;
+    --bi-grid-sort-icon-size                : 0;
+    --bi-grid-sort-icon-margin-inline-start : 0;
+}
+
+/* Sort icon uses same icon, but is rotate depending on sorting direction */
+.b-sort-icon {
+    transition-property : opacity, color, font-size, margin;
+    overflow            : hidden;
+    white-space         : nowrap;
+
+    color               : var(--b-grid-header-icon-color);
+    opacity             : var(--bi-grid-sort-icon-opacity);
+    font-size           : var(--bi-grid-sort-icon-size);
+    margin-inline-start : var(--bi-grid-sort-icon-margin-inline-start);
+    transition-duration : var(--b-grid-header-icon-transition-duration);
+
+    &::before {
+        display     : inline-block;
+        transition  : rotate .2s;
+
+        content     : var(--b-sort-header-icon);
+        font-family : var(--b-widget-icon-font-family);
+        font-weight : var(--b-widget-icon-font-weight);
+        rotate      : var(--bi-grid-sort-icon-rotate);
+    }
+}
+
+.b-grid-header.b-asc,
+.b-grid-header.b-desc {
+    .b-sort-icon {
+        --bi-grid-sort-icon-opacity             : 1;
+        --bi-grid-sort-icon-size                : var(--b-grid-header-icon-font-size);
+        --bi-grid-sort-icon-margin-inline-start : var(--b-grid-header-gap);
+    }
+}
+
+.b-grid-header.b-desc .b-sort-icon {
+    --bi-grid-sort-icon-rotate : 180deg;
+}
+
+/* Display sort index badge next to icon when using multiple sorters */
+.b-sort .b-grid-header-text[data-sort-index]::before {
+    content   : attr(data-sort-index);
+    position  : relative;
+    top       : 1em;
+    order     : 1; /* Place last */
+    z-index   : var(--b-sort-index-z-index);
+
+    color     : var(--b-sort-header-index-color);
+    font-size : var(--b-sort-header-index-font-size);
+}

@@ -1,0 +1,56 @@
+/* @after Core/widget/Checkbox.css */
+
+:root, :host {
+    /**
+     * Size of the radio button "checkmark" (the dot)
+     */
+    --b-radio-check-gap            : 0.2em;
+
+    /**
+     * Radio button background
+     */
+    --b-radio-background           : var(--b-neutral-100);
+
+    /**
+     * Background of the radio button when checked
+     * @state Checked
+     */
+    --b-radio-checked-background   : var(--b-radio-background);
+
+    /**
+     * Radio button's border-color when checked
+     * @state Checked
+     */
+    --b-radio-checked-border-color : var(--b-radio-checked-color);
+}
+
+/* .b-bryntum { */
+    /**
+     * Color of the radio button "checkmark" (when checked)
+     * @state Checked
+     */
+    /* --b-radio-checked-color        : var(--b-primary); */
+/* } */
+
+/* More specific than checkbox, to win no matter the import order */
+.b-radio.b-checkbox {
+    --b-checkbox-border-radius            : 50%;
+    --b-checkbox-checked-check-content    : '';
+    --b-checkbox-checked-check-color      : var(--b-primary);
+    --b-checkbox-background               : var(--b-radio-background);
+    --b-checkbox-checked-background       : var(--b-radio-checked-background);
+    --b-checkbox-checked-border-color     : var(--b-radio-checked-border-color);
+    --b-checkbox-checked-hover-background : var(--b-radio-checked-background);
+    --b-checkbox-check-font-size          : 1em;
+    --b-checkbox-disabled-opacity         : 0.4;
+
+    .b-checkbox-box::after {
+        border-radius : 50%;
+        aspect-ratio  : 1 / 1;
+        width         : 100%;
+
+        background    : var(--b-radio-checked-color, var(--b-primary));
+        /* Outlining using border seems to "align" better than centering dot, at least in chrome */
+        border        : var(--b-radio-check-gap) solid var(--b-radio-checked-background);
+    }
+}

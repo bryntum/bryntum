@@ -1,0 +1,187 @@
+:root, :host {
+    /**
+     * ChatButton color
+     */
+    --b-chat-button-color      : #FFF;
+
+    /**
+     * ChatButton z-index
+     */
+    --b-chat-button-z-index    : 10000;
+}
+
+.b-bryntum {
+    /**
+     * ChatButton background
+     */
+    --b-chat-button-background : var(--b-primary);
+}
+
+.b-chat-button.b-button {
+    position         : absolute;
+    bottom           : 1em;
+    inset-inline-end : 1em;
+    border           : none;
+    border-radius    : 50%;
+    font-size        : 1em;
+    width            : 2.75em;
+    height           : 2.75em;
+    display          : grid;
+    place-items      : center;
+    padding          : 0;
+    margin           : 0;
+    box-shadow       : 0 2px 8px 0 rgba(99, 99, 99, 0.2);
+    scale            : 1;
+    transition       : scale .2s;
+    min-height       : 0;
+    outline          : none;
+    z-index          : var(--b-chat-button-z-index);
+    color            : var(--b-chat-button-color);
+    background       : var(--b-chat-button-background);
+
+    .b-button-menu-icon {
+        display : none;
+    }
+
+    i {
+        position    : relative;
+        display     : grid;
+        place-items : center;
+        font-size   : 1.3em;
+    }
+
+    &:hover {
+        scale : 1.1;
+    }
+
+    &:active {
+        scale : 1;
+    }
+
+    .b-using-keyboard &:focus:not(:active) {
+        box-shadow : 0 0 0.8em #3183fe;
+    }
+
+    &.b-chat-button-animating i::before {
+        animation : b-anim-chat-button-icon-transition .2s;
+    }
+
+    &.b-chat-closed {
+        --bi-content : "\f27a";
+    }
+
+    &.b-chat-closed-previous {
+        --bi-previous-content : "\f27a";
+    }
+
+    &.b-chat-open {
+        --bi-content : "\f00d";
+    }
+
+    &.b-chat-open-previous {
+        --bi-previous-content : "\f00d";
+    }
+
+    &.b-voice-speaking {
+        --bi-content : "\e473";
+
+        & i {
+            animation : b-anim-voice-speaking .7s infinite;
+        }
+    }
+
+    &.b-voice-speaking-previous {
+        --bi-previous-content : "\e473";
+    }
+
+    &.b-voice-waiting {
+        --bi-content : "\f110";
+        animation : b-anim-rotate 2s infinite linear;
+    }
+
+    &.b-voice-waiting-previous {
+        --bi-previous-content : "\f110";
+    }
+
+    &.b-voice-active {
+        --bi-content : "\f130";
+
+        & i {
+            animation : b-anim-voice-active 0.9s ease-out infinite;
+        }
+    }
+
+    &.b-voice-active-previous {
+        --bi-previous-content : "\f130";
+    }
+
+    &.b-voice-inactive {
+        --bi-content  : "\f130";
+        background : #AAAAAA;
+    }
+
+    &.b-voice-inactive-previous {
+        --bi-previous-content : "\f130";
+    }
+
+
+    .b-button-icon::before {
+        content : var(--bi-content);
+    }
+}
+
+@keyframes b-anim-voice-speaking {
+    0% {
+        transform : none;
+        opacity   : 1;
+    }
+    49.9% {
+        transform : none;
+    }
+    50% {
+        transform : scaleX(-1);
+        opacity   : .5;
+    }
+    100% {
+        transform : scaleX(-1);
+        opacity   : 1;
+    }
+}
+
+@keyframes b-anim-voice-active {
+    0%, 100% {
+        transform : scale(1);
+        opacity   : 1;
+    }
+    25% {
+        transform : scale(0.95);
+    }
+    60% {
+        transform : scale(1.05);
+        opacity   : .8;
+    }
+}
+
+@keyframes b-anim-chat-button-icon-transition {
+    0% {
+        font-size : 1em;
+        content   : var(--bi-previous-content);
+    }
+    50% {
+        font-size : 0.1em;
+    }
+    100% {
+        font-size : 1em;
+        content   : var(--bi-content);
+    }
+}
+
+@starting-style {
+    .b-chat-button.b-button {
+        scale : 0;
+
+        i:after {
+            opacity : 0;
+        }
+    }
+}

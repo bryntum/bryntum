@@ -1,0 +1,320 @@
+/* Vars apply also for dragged column headers = in float root */
+:root, :host {
+    /**
+     * Grid header font size
+     */
+    --b-grid-header-font-size                : inherit;
+
+    /**
+     * Grid header font weight
+     */
+    --b-grid-header-font-weight              : 500;
+
+    /**
+     * Grid header padding. By default uses grid cells inline padding value (for both block & inline)
+     */
+    --b-grid-header-padding                  : var(--b-grid-cell-padding-inline);
+
+    /**
+     * Grid header text transform
+     */
+    --b-grid-header-text-transform           : none;
+
+    /**
+     * Grid header text align
+     */
+    --b-grid-header-text-align               : start;
+
+    /**
+     * Grid header inner gap
+     */
+    --b-grid-header-gap                      : 0.5em;
+
+    /**
+     * Grid header icon font size
+     */
+    --b-grid-header-icon-font-size           : 1em;
+
+    /**
+     * Grid header border width (for header "cells"). By default same as cell border width
+     */
+    --b-grid-header-border-width             : var(--b-grid-cell-border-width);
+
+    /**
+     * Grid header container border width (the entire header)
+     */
+    --b-grid-header-container-border-width   : 1px;
+
+    /**
+     * Grid header z-index
+     */
+    --b-grid-header-zindex                   : 1;
+
+    /**
+     * Grid header icon transition duration (for example when fading icons in/out on hover)
+     */
+    --b-grid-header-icon-transition-duration : var(--b-default-transition-duration);
+
+    /**
+     * Grid header background color
+     */
+    --b-grid-header-background               : var(--b-neutral-100);
+
+    /**
+     * Grid header box-shadow
+     */
+    --b-grid-header-box-shadow               : var(--b-elevation-0);
+
+    /**
+     * Grid header text color
+     */
+    --b-grid-header-color                    : var(--b-widget-color);
+
+    /**
+     * Grid header icon color
+     */
+    --b-grid-header-icon-color               : var(--b-grid-header-color);
+
+    /**
+     * Grid header border color
+     */
+    --b-grid-header-border-color             : var(--b-grid-cell-border-color);
+
+    /**
+     * Grid header text color when hovered
+     * @state Hovered
+     */
+    --b-grid-header-hover-color              : var(--b-widget-color);
+}
+
+/* .b-bryntum { */
+    /**
+     * Background color for the header when hovered
+     * @state Hovered
+     */
+    /*--b-grid-header-hover-background : var(--b-primary-98);*/
+/* } */
+
+.b-grid-headers,
+.b-grid-footers {
+    contain : paint style layout;
+    flex    : 1 1 auto;
+
+    z-index : var(--b-grid-header-zindex);
+}
+
+/* Using tag name to increase specificity, otherwise rule gets overridden by salesforce styles */
+div.b-grid-header-container,
+.b-grid-footer-container {
+    display : flex;
+    z-index : var(--b-grid-header-zindex);
+}
+
+div.b-grid-header-container {
+    /* Clipped out of visibility, but still present foy A11Y purposes when hideHeaders is used*/
+    &.b-hidden {
+        /* Make zero height */
+        clip-path     : inset(0 0 100% 0);
+        contain       : strict;
+        border-bottom : none;
+    }
+
+    .b-yscroll-pad {
+        border-bottom : var(--b-grid-header-container-border-width) solid var(--b-grid-header-border-color);
+    }
+}
+
+.b-grid-header-scroller {
+    display    : flex;
+    position   : relative;
+    overflow   : clip;
+    min-width  : 0;
+
+    box-shadow : var(--b-grid-header-box-shadow);
+}
+
+.b-grid-headers {
+    display     : flex;
+    flex-flow   : row nowrap;
+    align-items : stretch;
+    overflow    : clip;
+    /* In case page uses its own line-height, it would break our rendering potentially */
+    line-height : initial;
+    /* If position is specified absolutely positioned elements inside the header in Firefox pick wrong parent as offsetParent */
+    position    : relative;
+}
+
+.b-grid-header {
+    position                           : relative;
+    display                            : flex;
+    user-select                        : none;
+    -webkit-user-select                : none;
+    flex-direction                     : column;
+    flex-shrink                        : 0;
+    align-items                        : stretch;
+    justify-content                    : center;
+    overflow                           : clip;
+    transition                         : background-color var(--b-default-transition-duration), border var(--b-default-transition-duration);
+    contain                            : style;
+
+    /* Allows manipulating header-background & header-hover-background separately in HorizontalTimeAxis.css */
+    --b-grid-header-applied-background : var(--b-grid-header-background);
+
+    background                         : var(--b-grid-header-applied-background);
+    border-inline-end                  : var(--b-grid-header-border-width) solid var(--b-grid-header-border-color);
+    color                              : var(--b-grid-header-color);
+    font-size                          : var(--b-grid-header-font-size);
+    font-weight                        : var(--b-grid-header-font-weight);
+    text-transform                     : var(--b-grid-header-text-transform);
+
+    &.b-depth-0:hover {
+        /* Not setting the var here on purpose, makes it easier to handle in HorizontalTimeAxis */
+        color                              : var(--b-grid-header-hover-color);
+
+        --b-grid-header-applied-background : var(--b-grid-header-hover-background, var(--b-primary-98));
+        --b-grid-header-icon-color         : var(--b-grid-header-hover-color);
+    }
+
+    &.b-focused:focus-visible {
+        outline        : var(--b-grid-cell-focused-outline-width) solid var(--b-grid-cell-focused-outline-color);
+        outline-offset : calc(var(--b-grid-cell-focused-outline-width) * -1);
+    }
+
+    &.b-depth-0 {
+        width            : 0; /* Flex trick to get small widths correct */
+
+        padding-inline   : var(--b-grid-header-padding);
+        border-block-end : var(--b-grid-header-container-border-width) solid var(--b-grid-header-border-color);
+    }
+
+    .b-fill-last-column &.b-last-leaf:not(.b-drop-placeholder) {
+        border-inline-end : none;
+    }
+
+    /* Hide empty text content element if we have a widget, to not get additional gap */
+    &:has(.b-widget) .b-grid-header-text-content:empty {
+        display : none;
+    }
+}
+
+.b-grid-header-parent {
+    border-inline-end : none;
+    flex-basis        : auto;
+    padding-inline    : 0;
+
+    > .b-grid-header-text {
+        flex    : 1 1 auto;
+
+        padding : var(--b-grid-header-padding);
+    }
+
+    &:where(:not(.b-last-parent)) > .b-grid-header-text {
+        transition        : background-color var(--b-default-transition-duration), border var(--b-default-transition-duration);
+
+        border-inline-end : var(--b-grid-header-border-width) solid var(--b-grid-header-border-color);
+    }
+}
+
+/* When not a leaf, there's a top border */
+/* and the child columns are arranged in a row. */
+.b-grid-header-children {
+    display    : flex;
+    flex-flow  : row nowrap;
+    flex       : 1 1 auto;
+    transition : border var(--b-default-transition-duration);
+
+    border-top : var(--b-grid-header-border-width) solid var(--b-grid-header-border-color);
+
+    /* Allow the column flexbox to width the children */
+    > * {
+        width : inherit;
+    }
+}
+
+.b-grid-header-text {
+    display       : flex;
+    align-items   : center;
+
+    padding-block : var(--b-grid-header-padding);
+
+    &:has(.b-widget) {
+        /* Some air around header widgets if present */
+        gap : var(--b-grid-header-gap);
+    }
+}
+
+.b-grid-header-text-content {
+    flex          : 1;
+    overflow      : clip;
+    text-overflow : ellipsis;
+    white-space   : nowrap;
+    width         : 0;
+
+    text-align    : var(--b-grid-header-text-align);
+
+    &.b-has-text > * {
+        margin-inline-end : var(--b-grid-header-gap);
+    }
+}
+
+/* Use start and end to be LTR/RTL neutral */
+.b-grid-header-align-right,
+.b-grid-header-align-end {
+    --b-grid-header-text-align : end;
+}
+
+.b-grid-header-align-center {
+    --b-grid-header-text-align : center;
+}
+
+.b-writing-mode-sideways-lr,
+.b-writing-mode-sideways-rl,
+.b-writing-mode-vertical-lr,
+.b-writing-mode-vertical-rl {
+    .b-grid-header-text-content {
+        display     : flex;
+        text-align  : start;
+        align-items : var(--b-grid-header-text-align);
+    }
+}
+
+.b-writing-mode-sideways-lr .b-grid-header-text-content {
+    writing-mode : sideways-lr;
+}
+
+.b-writing-mode-sideways-rl .b-grid-header-text-content {
+    writing-mode : sideways-rl;
+}
+
+.b-writing-mode-horizontal-tb .b-grid-header-text-content {
+    writing-mode : horizontal-tb;
+}
+
+.b-writing-mode-vertical-lr .b-grid-header-text-content {
+    writing-mode : vertical-lr;
+}
+
+.b-writing-mode-vertical-rl .b-grid-header-text-content {
+    writing-mode : vertical-rl;
+}
+
+/* region Collapsing */
+
+/* Make collapse button fit and be positioned nicely */
+.b-grid-header.b-collapsible > .b-grid-header-text {
+    /* padding-block      : calc(var(--b-grid-header-padding) / 2); */
+    /* padding-inline-end : 0; */
+}
+
+.b-grid-header-collapse-button {
+    background                 : transparent;
+
+    --b-button-height          : 1em;
+    --b-button-type-text-color : var(--b-neutral-60);
+
+    &:hover {
+        --b-button-color : var(--b-grid-header-color);
+    }
+}
+
+/* endregion */

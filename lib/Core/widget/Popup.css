@@ -1,0 +1,136 @@
+/* @after Core/widget/Panel.css */
+
+:root, :host {
+    /**
+     * Popup border-radius
+     */
+    --b-popup-border-radius : var(--b-widget-border-radius);
+
+    /**
+     * Popup width for text popups
+     */
+    --b-popup-text-popup-width      : 25em;
+
+    /**
+     * Content for the close icon pseudo element (font icon)
+     */
+    --b-popup-close-icon-content    : "\f00d";
+
+    /**
+     * Content for the close icon pseudo element (font icon)
+     */
+    --b-popup-maximize-icon-content : "\f065";
+
+    /**
+     * Popup padding
+     */
+    --b-popup-padding               : var(--b-widget-padding-large);
+
+    /**
+     * Popup background-color
+     */
+    --b-popup-background            : var(--b-panel-background);
+
+    /**
+     * Popup mask background-color (for modal popups)
+     */
+    --b-modal-mask-background       : var(--b-mask-background);
+
+    /**
+     * Popup border
+     */
+    --b-popup-border                : null;
+
+    /**
+     * Modal mask z-index
+     */
+    --b-modal-mask-z-index          : 1;
+}
+
+/* More specific than panel to override it no matter import order */
+.b-popup.b-panel {
+    --b-panel-background : var(--b-popup-background);
+    --b-panel-padding    : var(--b-popup-padding);
+
+    /* Not setting the Panel rule, in case we contain a Panel */
+    border               : var(--b-popup-border);
+}
+
+.b-popup {
+    border-radius : var(--b-popup-border-radius);
+
+    .b-panel-body-wrap {
+        border-radius : inherit;
+
+        > .b-bottom-toolbar {
+            background : transparent;
+        }
+    }
+
+    &.b-header-dock-top .b-panel-body-wrap {
+        border-start-start-radius : 0;
+        border-start-end-radius   : 0;
+    }
+
+    /* Anchor pointer element must be visible outside Popup's element bounds */
+    &:where(.b-anchored) {
+        overflow : visible;
+    }
+}
+
+/* If the Popup is not widthed, and is displaying purely text content (has no child components) */
+/* then constrain the width so that the text wraps inside a visually pleasing width. */
+.b-text-popup {
+    max-width     : var(--b-popup-text-popup-width);
+
+    --b-panel-gap : 0;
+
+    .b-popup-content {
+        display        : flex;
+        flex-direction : column;
+    }
+}
+
+/* Popup close tool */
+.b-popup-close::before {
+    content : var(--b-popup-close-icon-content);
+}
+
+/* Popup maximize tool */
+.b-popup-expand::before {
+    content : var(--b-popup-maximize-icon-content);
+}
+
+.b-tooltip-loading .b-icon {
+    display           : inline-block;
+    margin-inline-end : .5em;
+}
+
+/* Constrain popups to screen width for small screens */
+@media (max-width : 480px) {
+    .b-popup {
+        max-width : 100% !important;
+    }
+}
+
+/* region Modal mask */
+
+/* .b-bryntum { */
+    /*--b-modal-mask-color : var(--b-primary);*/
+/* } */
+
+.b-modal-mask {
+    position       : fixed;
+    inset          : 0;
+    pointer-events : all;
+    z-index        : var(--b-modal-mask-z-index);
+
+    background     : var(--b-modal-mask-background);
+    color          : var(--b-modal-mask-color, var(--b-primary));
+
+    &.b-modal-transparent {
+        --b-modal-mask-background : transparent;
+    }
+}
+
+/* endregion */

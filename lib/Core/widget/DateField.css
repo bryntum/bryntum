@@ -1,0 +1,26 @@
+/* @after Core/widget/TextField.css */
+
+.b-date-field {
+    &.b-no-steppers .b-step-trigger {
+        display : none;
+    }
+
+    /*[data-ref="expand"] {*/
+    /*    display     : grid;*/
+    /*    place-items : center;*/
+
+    /*    &::before,*/
+    /*    &::after {*/
+    /*        grid-column : 1 / 1;*/
+    /*        grid-row    : 1 / 1;*/
+    /*    }*/
+
+    /*    !* Date in icon *!*/
+    /*    &::after {*/
+    /*        content     : attr(data-date);*/
+    /*        color       : #fff;*/
+    /*        font-size   : 0.45em;*/
+    /*        padding-top : 0.7em;*/
+    /*    }*/
+    /*}*/
+}

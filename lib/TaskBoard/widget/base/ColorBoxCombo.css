@@ -1,0 +1,9 @@
+.b-color-box-picker {
+    .b-color-box {
+        /* Align with Combo color box */
+        margin-inline : .2em 0;
+        width         : 1.5em;
+
+        border-radius : var(--b-color-picker-color-border-radius);
+    }
+}
