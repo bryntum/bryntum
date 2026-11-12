@@ -106,9 +106,12 @@ export class GanttCoreEvent extends Mixin([SchedulerCoreEvent], (base : AnyConst
                         durationMs = duration ? me.dateHelper.as('ms', duration, me.durationUnit) : 0
                     }
 
+                    // The delay is measured by calculateDuration, so is applied the inverse way
+                    const newStartDate = me.calculateXDateByDuration(parentStartDate, delayFromParentMs, TimeUnit.Millisecond)
+
                     return [
-                        new Date(parentStartDate.getTime() + delayFromParentMs),
-                        new Date(parentStartDate.getTime() + delayFromParentMs + durationMs)
+                        newStartDate,
+                        new Date(newStartDate.getTime() + durationMs)
                     ];
                 }
             }
@@ -123,7 +126,7 @@ export class GanttCoreEvent extends Mixin([SchedulerCoreEvent], (base : AnyConst
             let result = dateHelper.diff(startDate, endDate, Millisecond);
 
             if (adjustDurationToDST) {
-                const dstDiff = startDate.getTimezoneOffset() - endDate.getTimezoneOffset();
+                const dstDiff = dateHelper.getTimezoneOffset(startDate) - dateHelper.getTimezoneOffset(endDate);
                 result += dstDiff * 60000;
             }
 
@@ -131,10 +134,12 @@ export class GanttCoreEvent extends Mixin([SchedulerCoreEvent], (base : AnyConst
         }
 
         calculateXDateByDuration(baseDate : Date, duration : Duration, unit : TimeUnit, isForward : boolean = true) {
-            const result = this.dateHelper.add(baseDate, (isForward ? 1 : -1) * duration, unit)
+            const
+                { dateHelper } = this,
+                result         = dateHelper.add(baseDate, (isForward ? 1 : -1) * duration, unit)
 
             if (this.getProject()?.adjustDurationToDST) {
-                const dstDiff = baseDate.getTimezoneOffset() - result.getTimezoneOffset()
+                const dstDiff = dateHelper.getTimezoneOffset(baseDate) - dateHelper.getTimezoneOffset(result)
                 result.setTime(result.getTime() - dstDiff * 60000)
             }
 

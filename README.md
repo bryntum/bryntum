@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@bryntum/grid-community"><img src="https://img.shields.io/npm/v/@bryntum/grid-community?style=flat-square&label=npm&color=0b7bff" alt="npm version"></a>
-  <a href="#community-business-and-enterprise"><img src="https://img.shields.io/badge/license-MIT_Community-22c55e?style=flat-square" alt="MIT license for the Community edition"></a>
+  <a href="#community-core-and-enterprise-tiers"><img src="https://img.shields.io/badge/license-MIT_Community-22c55e?style=flat-square" alt="MIT license for the Community edition"></a>
   <img src="https://img.shields.io/badge/TypeScript-typings%20included-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript typings included">
   <a href="https://github.com/bryntum/bryntum"><img src="https://img.shields.io/github/stars/bryntum/bryntum?style=flat-square&color=eab308" alt="GitHub stars"></a>
   <br>
@@ -35,7 +35,7 @@
   <b><a href="#products">Products</a></b> ·
   <b><a href="#quick-start">Quick start</a></b> ·
   <b><a href="#why-bryntum">Why Bryntum</a></b> ·
-  <b><a href="#community-business-and-enterprise">Editions</a></b> ·
+  <b><a href="#community-core-and-enterprise-tiers">Editions</a></b> ·
   <b><a href="#about-this-repository">This repository</a></b> ·
   <b><a href="#support-and-community">Support</a></b>
 </p>
@@ -204,8 +204,8 @@ new Grid({
 | Task Board | `@bryntum/taskboard-community` | `@bryntum/taskboard-react-community`, `-angular-community`, `-vue-community` |
 | Grid | `@bryntum/grid-community` | `@bryntum/grid-react-community`, `-angular-community`, `-vue-community` |
 
-Naming: `@bryntum/<product>-<tier>` for the core and `@bryntum/<product>-<wrapper>-<tier>` for wrappers. The Business and Enterprise
-editions use `business` and `enterprise` as the tier.
+Naming: `@bryntum/<product>-<tier>` for the core and `@bryntum/<product>-<wrapper>-<tier>` for wrappers. The Core and
+Enterprise tiers use `core` and `enterprise` as the tier.
 
 </details>
 
@@ -228,17 +228,17 @@ Built-in themes, including light and dark, that you can switch at runtime and cu
   <img alt="Bryntum themes: switching between light, dark and other built-in themes" src=".github/assets/theme-changing.gif" width="50%">
 </p>
 
-## Community, Business and Enterprise
+## Community, Core and Enterprise tiers
 
 Every product ships in three editions from one codebase. Each edition includes everything in the one before it.
 
-|  | Community | Business | Enterprise |
+|  | Community | Core     | Enterprise |
 |:--|:-:|:-:|:-:|
 | **Price** | Free | Paid | Paid |
 | **License** | MIT | Commercial | Commercial |
 | **License key** | Not needed | 14-day trial without one | 14-day trial without one |
 | **Salesforce version** | – | – | ✓ |
-| **npm package** | `-community` | `-business` | `-enterprise` |
+| **npm package** | `-community` | `-core` | `-enterprise` |
 
 Which features sit in which edition differs per product, see the feature availability guide in the
 [docs](https://bryntum.com/docs/). Pricing: [bryntum.com/store](https://bryntum.com/store).
@@ -324,7 +324,7 @@ If Bryntum is useful to you, a ⭐ on this repository helps others find it.
 
 The Community edition in this repository is released under the [MIT license](./LICENSE).
 
-The Business and Enterprise editions are commercial, see the [Bryntum license terms](https://bryntum.com/licensing/).
+The Core and Enterprise tiers are commercial, see the [Bryntum license terms](https://bryntum.com/licensing/).
 
 <p align="center">
   <sub>© Bryntum AB · <a href="https://bryntum.com">bryntum.com</a></sub>

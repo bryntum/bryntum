@@ -286,9 +286,7 @@
     }
 
     .b-cal-event-desc {
-        /* Event block must not be stretched by unbroken text */
-        overflow-wrap : anywhere;
-        line-height   : var(--b-day-view-event-desc-line-height);
+        line-height : var(--b-day-view-event-desc-line-height);
     }
 
     .b-event-action-buttons {
@@ -461,7 +459,9 @@
 
         /* These need to be overflow:clip to allow the .b-cal-event-body-content to be sticky */
         .b-cal-event-body,.b-cal-event {
-            overflow : clip;
+            overflow  : clip;
+            /* Unlike hidden, clip keeps min-width:auto, so unbroken text would stretch the event */
+            min-width : 0;
         }
 
         .b-cal-event-body-content {

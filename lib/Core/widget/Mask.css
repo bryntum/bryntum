@@ -42,9 +42,16 @@
     --b-mask-transition-duration : .5s;
 
     /**
-     * Mask z-index
+     * Mask z-index. The masked target is a stacking context of its own, so this only competes with the target's
+     * descendants and is set above every overlay a widget places inside itself (splitters, drag proxies, canvases)
      */
-    --b-mask-z-index             : 100;
+    --b-mask-z-index             : 100000;
+
+    /**
+     * Document mask z-index. A mask on `document.body` stays below the float root by default, so floating widgets -
+     * toasts, dialogs, tooltips - remain usable above a page-level mask
+     */
+    --b-document-mask-z-index    : calc(var(--b-float-root-z-index) - 1);
 }
 
 .b-mask {
@@ -70,6 +77,10 @@
 
     @starting-style {
         opacity : 0;
+    }
+
+    body > & {
+        z-index : var(--b-document-mask-z-index);
     }
 }
 
@@ -114,5 +125,9 @@
 
 .b-masked {
     /* Required to make sure masked Element can contain the Mask (which is absolute positioned) */
-    position : relative;
+    position  : relative;
+    /* The Mask's z-index must only compete with the target's own content. Without a stacking context on the target */
+    /* it is resolved against the nearest ancestor context - the page itself on hosts like Salesforce - and the Mask */
+    /* then paints over unrelated elements in other DOM branches, such as a navigation dropdown */
+    isolation : isolate;
 }

@@ -107,10 +107,11 @@ export class CalendarIntervalMixin extends Mixin(
         recurrentEndDate                : string
 
         /**
-         * A timezone in which [[recurrentStartDate]] and [[recurrentEndDate]] rules are specified.
-         * If not provided the local machine timezone is used for the dates.
-         * Can be provided either as a IANA time zone (i.e. `Europe/Stockholm`)
-         * or a UTC offset in minutes (i.e. `-120`).
+         * A time zone in which [[recurrentStartDate]] and [[recurrentEndDate]] rules are specified, as an IANA time zone
+         * (i.e. `Europe/Stockholm`). If not provided, the rules are specified in the project's time zone, or in the
+         * local time zone when the project has none.
+         *
+         * A UTC offset in minutes (i.e. `-120`) is only supported in the legacy time zone mode.
          */
         recurrentDatesTimeZone          : string | number
 

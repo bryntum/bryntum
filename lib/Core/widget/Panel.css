@@ -465,6 +465,11 @@
         min-height : var(--b-drawer-size);
         height     : auto;
         inset      : 0 0 auto 0;
+
+        /* Collapsed, the panel has no height, so the overlay must be anchored to the docked edge */
+        &.b-panel-collapsible-overlay > .b-panel-collapse-size-locker {
+            inset-block-start : 0;
+        }
     }
 
     &.b-panel-collapse-right {
@@ -476,6 +481,10 @@
         min-height : var(--b-drawer-size);
         height     : auto;
         inset      : auto 0 0 0;
+
+        &.b-panel-collapsible-overlay > .b-panel-collapse-size-locker {
+            inset-block-end : 0;
+        }
     }
 
     &.b-panel-collapse-left {
