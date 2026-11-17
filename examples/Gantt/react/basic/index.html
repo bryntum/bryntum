@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme: light dark">
+
+<head>
+	<meta name="bryntum-demo-tier" content="community"/>
+	<meta name="description" content="This demo contains the React Gantt chart wrapper and the demo is written in TypeScript"/>
+	<meta charset="UTF-8">
+	<title>Bryntum Gantt - Basic setup (React + Vite)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="stylesheet" data-bryntum-theme/>
+</head>
+
+<body>
+<div id="root"></div>
+<script>
+	// This script is for internal Bryntum examples browser functionality. Should be removed
+	if (window.location.pathname.includes('/examples/') && !/examples\/.*\/dist/.test(window.location.pathname)) {
+		window.location.href = 'dist/' + window.location.search;
+	}
+	else {
+		document.querySelector('link[data-bryntum-theme=""]').href = "themes/svalbard.css";
+	}
+</script>
+<script type="module" src="src/main.tsx"></script>
+</body>
+
+</html>

@@ -263,8 +263,20 @@ flowchart LR
 ```text
 bryntum/
 ├── lib/                     Source of each product as ES modules (lib/Core, lib/Grid, ...)
+├── examples/                Demos for Angular, React and Vue (examples/<Product>/<framework>/<demo>)
 ├── tsconfig.json            Compiles the scheduling engine, see below
 └── LICENSE                  MIT
+```
+
+### Running an example
+
+Each demo in `examples/<Product>/<framework>/<demo>` is a standalone app that installs the Community edition from
+npm, for example:
+
+```bash
+cd examples/Scheduler/react/basic
+npm install
+npm start
 ```
 
 ### Compiling Engine

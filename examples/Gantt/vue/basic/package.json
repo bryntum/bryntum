@@ -1,0 +1,46 @@
+{
+  "name": "basic",
+  "description": "Basic setup (Vue + Vite)",
+  "version": "8.0.2",
+  "author": {
+    "name": "Bryntum",
+    "url": "https://bryntum.com",
+    "email": "info@bryntum.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build --force",
+    "postinstall": "postinstall",
+    "start": "vite"
+  },
+  "postinstall": {
+    "node_modules/@bryntum/demo-resources/images/favicon.png": "copy public/favicon.png",
+    "node_modules/@bryntum/core-community/fontawesome/**": "copy public/themes/fontawesome/",
+    "node_modules/@bryntum/gantt-community/*.css*": "copy public/themes/"
+  },
+  "dependencies": {
+    "@bryntum/demo-resources": "8.0.2",
+    "@bryntum/gantt-vue-community": "8.0.2",
+    "vue": "3.5.33"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "20.1.9",
+    "@types/node": "25.6.0",
+    "@vitejs/plugin-vue": "6.0.6",
+    "@vue/tsconfig": "0.9.1",
+    "npm-run-all2": "8.0.4",
+    "postinstall": "0.7.4",
+    "sass": "1.99.0",
+    "typescript": "6.0.3",
+    "vite": "8.0.10",
+    "vue-tsc": "2.2.12"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module"
+}

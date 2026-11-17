@@ -1,0 +1,626 @@
+{
+  "success" : true,
+  "project" : {
+    "calendar"  : "general",
+    "startDate" : "2026-01-12",
+    "endDate"   : "2026-03-18"
+  },
+  "calendars" : {
+    "rows" : [
+      {
+        "id"        : "general",
+        "name"      : "General",
+        "intervals" : [
+          {
+            "recurrentStartDate" : "on Sat",
+            "recurrentEndDate"   : "on Mon",
+            "isWorking"          : false
+          }
+        ]
+      }
+    ]
+  },
+  "tasks" : {
+    "rows" : [
+      {
+        "id"        : 1000,
+        "name"      : "Adopt Agentic AI Workflow",
+        "startDate" : "2026-01-12",
+        "endDate"   : "2026-03-18",
+        "duration"  : 63,
+        "expanded"  : true,
+        "children"  : [
+          {
+            "id"        : 1,
+            "name"      : "Foundations & tooling",
+            "duration"  : 7,
+            "startDate" : "2026-01-12",
+            "endDate"   : "2026-01-21",
+            "expanded"  : true,
+            "children"  : [
+              {
+                "id"         : 11,
+                "name"       : "Evaluate AI coding agents",
+                "complexity" : "Medium",
+                "startDate"  : "2026-01-12",
+                "duration"   : 3,
+                "endDate"    : "2026-01-15"
+              },
+              {
+                "id"         : 12,
+                "name"       : "Set up LLM API accounts & billing",
+                "complexity" : "Low",
+                "startDate"  : "2026-01-12",
+                "duration"   : 3,
+                "endDate"    : "2026-01-15"
+              },
+              {
+                "id"         : 13,
+                "name"       : "Provision sandboxed agent environments",
+                "complexity" : "High",
+                "startDate"  : "2026-01-12",
+                "duration"   : 3,
+                "endDate"    : "2026-01-15"
+              },
+              {
+                "id"         : 14,
+                "name"       : "Draft AI usage policy",
+                "complexity" : "Low",
+                "startDate"  : "2026-01-12",
+                "duration"   : 1,
+                "endDate"    : "2026-01-13"
+              },
+              {
+                "id"         : 15,
+                "name"       : "Run pilot: agent fixes a real bug",
+                "complexity" : "Medium",
+                "startDate"  : "2026-01-19",
+                "duration"   : 2,
+                "endDate"    : "2026-01-21"
+              }
+            ]
+          },
+          {
+            "id"        : 2,
+            "name"      : "Workflow design",
+            "startDate" : "2026-01-21",
+            "endDate"   : "2026-02-11",
+            "duration"  : 15,
+            "expanded"  : true,
+            "children"  : [
+              {
+                "id"         : 21,
+                "name"       : "Map current development process",
+                "complexity" : "Medium",
+                "startDate"  : "2026-01-21",
+                "duration"   : 5,
+                "endDate"    : "2026-01-28"
+              },
+              {
+                "id"         : 22,
+                "name"       : "Identify agent-suitable task types",
+                "complexity" : "Low",
+                "startDate"  : "2026-01-28",
+                "duration"   : 1,
+                "endDate"    : "2026-01-29"
+              },
+              {
+                "id"         : 23,
+                "name"       : "Design human-in-the-loop review gates",
+                "complexity" : "High",
+                "startDate"  : "2026-01-29",
+                "duration"   : 2,
+                "endDate"    : "2026-01-31"
+              },
+              {
+                "id"         : 24,
+                "name"       : "Present workflow blueprint to management",
+                "complexity" : "Low",
+                "startDate"  : "2026-01-31",
+                "endDate"    : "2026-01-31",
+                "duration"   : 0
+              },
+              {
+                "id"         : 25,
+                "name"       : "Write agent playbooks & prompt library",
+                "complexity" : "High",
+                "startDate"  : "2026-02-02",
+                "duration"   : 7,
+                "endDate"    : "2026-02-11"
+              }
+            ]
+          },
+          {
+            "id"        : 3,
+            "name"      : "Guardrails & evaluation",
+            "startDate" : "2026-01-12",
+            "expanded"  : true,
+            "children"  : [
+              {
+                "id"         : 31,
+                "name"       : "Hire AI enablement lead",
+                "complexity" : "Medium",
+                "startDate"  : "2026-01-12",
+                "duration"   : 5,
+                "endDate"    : "2026-01-17"
+              },
+              {
+                "id"        : 33,
+                "name"      : "Build evaluation harness",
+                "duration"  : 10,
+                "startDate" : "2026-01-19",
+                "expanded"  : true,
+                "children"  : [
+                  {
+                    "id"         : 331,
+                    "name"       : "Automated code review checks",
+                    "complexity" : "High",
+                    "startDate"  : "2026-01-19",
+                    "duration"   : 10,
+                    "endDate"    : "2026-01-31"
+                  },
+                  {
+                    "id"         : 332,
+                    "name"       : "Agent output quality benchmarks",
+                    "complexity" : "Medium",
+                    "startDate"  : "2026-01-19",
+                    "duration"   : 5,
+                    "endDate"    : "2026-01-24"
+                  },
+                  {
+                    "id"         : 333,
+                    "name"       : "Regression suite for agent PRs",
+                    "complexity" : "High",
+                    "startDate"  : "2026-01-19",
+                    "duration"   : 10,
+                    "endDate"    : "2026-01-31"
+                  },
+                  {
+                    "id"         : 334,
+                    "name"       : "Prompt injection red-teaming",
+                    "complexity" : "High",
+                    "startDate"  : "2026-01-19",
+                    "duration"   : 1,
+                    "endDate"    : "2026-01-20"
+                  }
+                ],
+                "endDate" : "2026-01-31"
+              }
+            ],
+            "endDate"  : "2026-01-31",
+            "duration" : 15
+          },
+          {
+            "id"        : 4,
+            "name"      : "Rollout",
+            "startDate" : "2026-02-02",
+            "duration"  : 42,
+            "expanded"  : true,
+            "children"  : [
+              {
+                "id"       : 400,
+                "name"     : "Pilot team",
+                "expanded" : true,
+                "duration" : 7,
+                "children" : [
+                  {
+                    "id"         : 41,
+                    "name"       : "Onboard pilot team",
+                    "complexity" : "Low",
+                    "duration"   : 5,
+                    "startDate"  : "2026-02-02",
+                    "endDate"    : "2026-02-07"
+                  },
+                  {
+                    "id"         : 42,
+                    "name"       : "Connect agents to issue tracker",
+                    "complexity" : "Medium",
+                    "duration"   : 3,
+                    "startDate"  : "2026-02-02",
+                    "endDate"    : "2026-02-05"
+                  },
+                  {
+                    "id"         : 43,
+                    "name"       : "Agents draft first pull requests",
+                    "complexity" : "Medium",
+                    "duration"   : 4,
+                    "startDate"  : "2026-02-02",
+                    "endDate"    : "2026-02-06"
+                  },
+                  {
+                    "id"         : 44,
+                    "name"       : "Human review of agent PRs",
+                    "complexity" : "High",
+                    "cls"        : "important",
+                    "duration"   : 3,
+                    "startDate"  : "2026-02-02",
+                    "endDate"    : "2026-02-05"
+                  },
+                  {
+                    "id"         : 45,
+                    "name"       : "Measure velocity & code quality",
+                    "complexity" : "Medium",
+                    "duration"   : 2,
+                    "startDate"  : "2026-02-09",
+                    "endDate"    : "2026-02-11"
+                  },
+                  {
+                    "id"         : 46,
+                    "name"       : "Pilot go/no-go decision",
+                    "complexity" : "Low",
+                    "duration"   : 0,
+                    "startDate"  : "2026-02-11",
+                    "endDate"    : "2026-02-11"
+                  }
+                ],
+                "startDate" : "2026-02-02",
+                "endDate"   : "2026-02-11"
+              },
+              {
+                "id"       : 401,
+                "name"     : "Company-wide rollout",
+                "expanded" : true,
+                "duration" : 21,
+                "children" : [
+                  {
+                    "id"         : 4011,
+                    "name"       : "Onboard remaining teams",
+                    "complexity" : "Medium",
+                    "duration"   : 15,
+                    "startDate"  : "2026-02-11",
+                    "endDate"    : "2026-03-04"
+                  },
+                  {
+                    "id"         : 4012,
+                    "name"       : "Integrate agents with CI pipeline",
+                    "complexity" : "High",
+                    "duration"   : 5,
+                    "startDate"  : "2026-02-11",
+                    "endDate"    : "2026-02-18"
+                  },
+                  {
+                    "id"         : 4013,
+                    "name"       : "Automate ticket-to-PR workflow",
+                    "complexity" : "High",
+                    "startDate"  : "2026-02-11",
+                    "endDate"    : "2026-03-12",
+                    "duration"   : 21
+                  },
+                  {
+                    "id"         : 4014,
+                    "name"       : "Track agent success metrics",
+                    "complexity" : "Medium",
+                    "startDate"  : "2026-02-11",
+                    "endDate"    : "2026-03-11",
+                    "duration"   : 20
+                  },
+                  {
+                    "id"         : 4015,
+                    "name"       : "Tune prompts & guardrails",
+                    "complexity" : "Medium",
+                    "duration"   : 4,
+                    "startDate"  : "2026-02-11",
+                    "endDate"    : "2026-02-17"
+                  }
+                ],
+                "startDate" : "2026-02-11",
+                "endDate"   : "2026-03-12"
+              },
+              {
+                "id"       : 402,
+                "name"     : "Evaluation phase",
+                "expanded" : true,
+                "children" : [
+                  {
+                    "id"         : 4031,
+                    "name"       : "Agent-assisted bug bash",
+                    "complexity" : "Medium",
+                    "duration"   : 3,
+                    "startDate"  : "2026-03-12",
+                    "endDate"    : "2026-03-17"
+                  },
+                  {
+                    "id"         : 4032,
+                    "name"       : "Audit agent-written code",
+                    "complexity" : "High",
+                    "duration"   : 2,
+                    "startDate"  : "2026-03-12",
+                    "endDate"    : "2026-03-14"
+                  },
+                  {
+                    "id"         : 4033,
+                    "name"       : "Security & compliance review",
+                    "complexity" : "High",
+                    "duration"   : 4,
+                    "startDate"  : "2026-03-12",
+                    "endDate"    : "2026-03-18"
+                  },
+                  {
+                    "id"         : 4034,
+                    "name"       : "Compile adoption report",
+                    "complexity" : "Low",
+                    "duration"   : 3,
+                    "startDate"  : "2026-03-12",
+                    "endDate"    : "2026-03-17"
+                  },
+                  {
+                    "id"         : 4035,
+                    "name"       : "Announce rollout company-wide",
+                    "complexity" : "Low",
+                    "duration"   : 0,
+                    "startDate"  : "2026-03-17",
+                    "endDate"    : "2026-03-17"
+                  },
+                  {
+                    "id"         : 4036,
+                    "name"       : "Celebrate the AI-powered team",
+                    "complexity" : "Low",
+                    "iconCls"    : "fa fa-glass-cheers",
+                    "duration"   : 1,
+                    "startDate"  : "2026-03-17",
+                    "endDate"    : "2026-03-18"
+                  }
+                ],
+                "startDate" : "2026-03-12",
+                "endDate"   : "2026-03-18",
+                "duration"  : 4
+              }
+            ],
+            "endDate" : "2026-03-18"
+          }
+        ]
+      }
+    ]
+  },
+  "dependencies" : {
+    "rows" : [
+      {
+        "id"       : 1,
+        "fromTask" : 11,
+        "toTask"   : 15,
+        "lag"      : 2
+      },
+      {
+        "id"       : 2,
+        "fromTask" : 12,
+        "toTask"   : 15
+      },
+      {
+        "id"       : 3,
+        "fromTask" : 13,
+        "toTask"   : 15
+      },
+      {
+        "id"       : 4,
+        "fromTask" : 14,
+        "toTask"   : 15
+      },
+      {
+        "id"       : 5,
+        "fromTask" : 15,
+        "toTask"   : 21
+      },
+      {
+        "id"       : 7,
+        "fromTask" : 21,
+        "toTask"   : 22
+      },
+      {
+        "id"       : 8,
+        "fromTask" : 22,
+        "toTask"   : 23
+      },
+      {
+        "id"       : 9,
+        "fromTask" : 23,
+        "toTask"   : 24
+      },
+      {
+        "id"       : 10,
+        "fromTask" : 24,
+        "toTask"   : 25
+      },
+      {
+        "id"       : 11,
+        "fromTask" : 31,
+        "toTask"   : 331
+      },
+      {
+        "id"       : 111,
+        "fromTask" : 31,
+        "toTask"   : 332
+      },
+      {
+        "id"       : 112,
+        "fromTask" : 31,
+        "toTask"   : 333
+      },
+      {
+        "id"       : 113,
+        "fromTask" : 31,
+        "toTask"   : 334
+      },
+      {
+        "id"       : 12,
+        "fromTask" : 400,
+        "toTask"   : 401
+      },
+      {
+        "id"       : 13,
+        "fromTask" : 401,
+        "toTask"   : 402
+      },
+      {
+        "id"       : 15,
+        "fromTask" : 3,
+        "toTask"   : 4
+      },
+      {
+        "id"       : 16,
+        "fromTask" : 41,
+        "toTask"   : 45
+      },
+      {
+        "id"       : 17,
+        "fromTask" : 42,
+        "toTask"   : 45
+      },
+      {
+        "id"       : 18,
+        "fromTask" : 43,
+        "toTask"   : 45
+      },
+      {
+        "id"       : 19,
+        "fromTask" : 44,
+        "toTask"   : 45
+      },
+      {
+        "id"       : 20,
+        "fromTask" : 4034,
+        "toTask"   : 4035
+      },
+      {
+        "id"       : 21,
+        "fromTask" : 4035,
+        "toTask"   : 4036
+      },
+      {
+        "id"       : 22,
+        "fromTask" : 45,
+        "toTask"   : 46
+      }
+    ]
+  },
+  "resources" : {
+    "rows" : [
+      {
+        "id"       : 1,
+        "name"     : "Celia",
+        "city"     : "Barcelona",
+        "calendar" : null
+      },
+      {
+        "id"   : 2,
+        "name" : "Lee",
+        "city" : "London"
+      },
+      {
+        "id"   : 3,
+        "name" : "Macy",
+        "city" : "New York"
+      },
+      {
+        "id"   : 4,
+        "name" : "Madison",
+        "city" : "Barcelona"
+      },
+      {
+        "id"   : 5,
+        "name" : "Rob",
+        "city" : "Rome"
+      },
+      {
+        "id"   : 6,
+        "name" : "Dave",
+        "city" : "Barcelona"
+      },
+      {
+        "id"   : 7,
+        "name" : "Dan",
+        "city" : "London"
+      },
+      {
+        "id"   : 8,
+        "name" : "George",
+        "city" : "New York"
+      },
+      {
+        "id"   : 9,
+        "name" : "Gloria",
+        "city" : "Rome"
+      },
+      {
+        "id"   : 10,
+        "name" : "Henrik",
+        "city" : "London"
+      }
+    ]
+  },
+  "assignments" : {
+    "rows" : [
+      {
+        "id"       : 1,
+        "event"    : 11,
+        "resource" : 1
+      },
+      {
+        "id"       : 2,
+        "event"    : 4033,
+        "resource" : 1
+      },
+      {
+        "id"       : 3,
+        "event"    : 12,
+        "resource" : 9
+      },
+      {
+        "id"       : 4,
+        "event"    : 13,
+        "resource" : 2
+      },
+      {
+        "id"       : 5,
+        "event"    : 13,
+        "resource" : 3
+      },
+      {
+        "id"       : 6,
+        "event"    : 13,
+        "resource" : 6
+      },
+      {
+        "id"       : 7,
+        "event"    : 13,
+        "resource" : 7
+      },
+      {
+        "id"       : 8,
+        "event"    : 13,
+        "resource" : 8
+      },
+      {
+        "id"       : 9,
+        "event"    : 21,
+        "resource" : 5
+      },
+      {
+        "id"       : 10,
+        "event"    : 21,
+        "resource" : 9
+      },
+      {
+        "id"       : 11,
+        "event"    : 22,
+        "resource" : 8
+      },
+      {
+        "id"       : 12,
+        "event"    : 25,
+        "resource" : 3
+      }
+    ]
+  },
+  "timeRanges" : {
+    "rows" : [
+      {
+        "id"           : 1,
+        "name"         : "Steering group review",
+        "startDate"    : "2026-01-28",
+        "duration"     : 0,
+        "durationUnit" : "d",
+        "cls"          : "fa fa-diamond"
+      }
+    ]
+  }
+}

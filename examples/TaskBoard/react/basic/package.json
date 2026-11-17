@@ -1,0 +1,44 @@
+{
+  "name": "basic",
+  "description": "Basic setup (React + Vite)",
+  "version": "8.0.2",
+  "author": {
+    "name": "Bryntum",
+    "url": "https://bryntum.com",
+    "email": "info@bryntum.com"
+  },
+  "license": "MIT",
+  "homepage": "./",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "postinstall": "postinstall",
+    "start": "vite"
+  },
+  "postinstall": {
+    "node_modules/@bryntum/demo-resources/images/transparent-users/*": "copy public/users/",
+    "node_modules/@bryntum/demo-resources/images/favicon.png": "copy public/favicon.png",
+    "node_modules/@bryntum/taskboard-community/*.css*": "copy public/themes/",
+    "node_modules/@bryntum/core-community/fontawesome/**": "copy public/themes/fontawesome/"
+  },
+  "dependencies": {
+    "@bryntum/demo-resources": "8.0.2",
+    "@bryntum/taskboard-react-community": "8.0.2",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "postinstall": "0.7.4",
+    "sass": "1.104.1",
+    "typescript": "6.0.3",
+    "vite": "8.3.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "type": "module"
+}

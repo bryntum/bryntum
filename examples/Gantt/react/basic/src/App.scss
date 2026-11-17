@@ -1,0 +1,23 @@
+/* FontAwesome is not built-in, but used for icons */
+@use "@bryntum/core-community/fontawesome/css/fontawesome.css";
+@use "@bryntum/core-community/fontawesome/css/solid.css";
+
+/* Bryntum structural CSS */
+@use "@bryntum/gantt-community/gantt.css";
+
+/* Bryntum theme is included in index.html to enable runtime theme switching. To bundle a single theme here instead, set build.cssTarget in vite.config so production builds keep the theme colors (see the quick start guide) */
+/* @use "@bryntum/gantt-community/svalbard.css"; */
+
+/* Bryntum shared demo styling, not needed in your app */
+@use "@bryntum/demo-resources/scss/example.scss";
+
+.small-text {
+    font-size : .7em;
+}
+
+.yes-button,
+.no-button {
+    flex    : 1;
+    border  : none;
+    outline : none;
+}

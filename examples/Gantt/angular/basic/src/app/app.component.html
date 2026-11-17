@@ -1,0 +1,15 @@
+<!-- BryntumDemoHeader component is used for Bryntum example styling only and can be removed -->
+<bryntum-demo-header></bryntum-demo-header>
+
+<bryntum-gantt-project-model
+    #ganttProject
+    [loadUrl]="projectProps.loadUrl"
+    [autoLoad]="projectProps.autoLoad"
+></bryntum-gantt-project-model>
+<bryntum-gantt
+    #gantt
+    [tier]="ganttProps.tier"
+    [tickSize]="ganttProps.tickSize"
+    [columns]="ganttProps.columns"
+    [project]="ganttProject"
+></bryntum-gantt>

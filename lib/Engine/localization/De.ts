@@ -98,7 +98,7 @@ const locale = {
         startDateDescriptionTpl : 'Aufgabe "{2}" {3} {0} Einschränkung',
         endDateDescriptionTpl   : 'Aufgabe "{2}" {3} {1} Einschränkung',
         constraintTypeTpl       : {
-            startnoearlierthan  : 'Darf nicht fürher als (starten)',
+            startnoearlierthan  : 'Darf nicht früher starten als',
             finishnoearlierthan : 'Nicht früher als (enden)',
             muststarton         : 'Muss starten am',
             mustfinishon        : 'Muss fertig sein am',

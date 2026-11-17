@@ -1,0 +1,26 @@
+/* FontAwesome is not built-in, but used for icons */
+@use "@bryntum/core-community/fontawesome/css/fontawesome.css";
+@use "@bryntum/core-community/fontawesome/css/solid.css";
+
+/* Bryntum structural CSS */
+@use "@bryntum/scheduler-community/scheduler.css";
+
+/* Bryntum theme is included in index.html to enable runtime theme switching. To bundle a single theme here instead, set build.cssTarget in vite.config so production builds keep the theme colors (see the quick start guide) */
+/* @use "@bryntum/scheduler-community/svalbard.css"; */
+
+/* Bryntum shared demo styling, not needed in your app */
+@use "@bryntum/demo-resources/scss/example.scss";
+
+body,
+html {
+    margin         : 0;
+    display        : flex;
+    flex-direction : column;
+    height         : 100vh;
+    font-family    : sans-serif;
+    font-size      : 14px;
+}
+
+#app {
+  flex : 1 1 100%;
+}

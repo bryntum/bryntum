@@ -110,7 +110,7 @@
         transition : height 0.2s ease-in-out;
     }
 
-    &.b-adding-item.b-prevent-scroll {
+    &.b-prevent-scroll {
         overflow : clip !important;
     }
 }
@@ -123,7 +123,8 @@
     opacity        : 1;
     transition     : opacity .2s linear, translate .2s ease-in, max-width .2s, background .2s;
     translate      : 0 0;
-    max-width      : 15em;
+    /* Never wider than the chip view, so the close icon stays visible */
+    max-width      : min(15em, 100%);
     align-items    : center;
     line-height    : 1.2em;
 

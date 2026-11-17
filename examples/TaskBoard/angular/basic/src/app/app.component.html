@@ -1,0 +1,17 @@
+<!-- BryntumDemoHeader component is used for Bryntum example styling only and can be removed -->
+<bryntum-demo-header></bryntum-demo-header>
+
+<bryntum-task-board-project-model
+    #project
+    [loadUrl] = "projectProps.loadUrl"
+    [autoLoad] = "projectProps.autoLoad"
+></bryntum-task-board-project-model>
+<bryntum-task-board
+    #taskboard
+    [tier] = "taskBoardProps.tier"
+    [project] = "project"
+    [resourceImagePath] = "taskBoardProps.resourceImagePath"
+    [useDomTransition] = "taskBoardProps.useDomTransition"
+    [columns] = "taskBoardProps.columns"
+    [columnField] = "taskBoardProps.columnField"
+></bryntum-task-board>

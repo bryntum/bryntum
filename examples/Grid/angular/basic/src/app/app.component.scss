@@ -1,0 +1,64 @@
+/* FontAwesome is not built-in, but used for icons */
+@use "@bryntum/core-community/fontawesome/css/fontawesome.css";
+@use "@bryntum/core-community/fontawesome/css/solid.css";
+
+/* Bryntum structural CSS */
+@use "@bryntum/grid-community/grid.css";
+
+/* Bryntum theme is included in index.html to enable runtime theme switching, but it could instead be included here if you want to use a single theme */
+/* @use "@bryntum/grid-community/material3.css"; */
+
+/* Bryntum shared demo styling, not needed in your app */
+@use "@bryntum/demo-resources/scss/example-webpack.scss";
+
+// Want some top and bottom padding for notes column to look nice
+.notes {
+    padding-top    : 1em;
+    padding-bottom : 1em;
+}
+
+// Initials in a colored circle
+.initials {
+    display          : flex;
+    justify-content  : center;
+    align-items      : center;
+
+    width            : 3em;
+    height           : 3em;
+    border-radius    : 50%;
+    margin-block     : .5em;
+    margin-inline    : 0 .5em;
+
+    background-color : lightskyblue;
+    color            : #fff;
+}
+
+// Name slightly larger
+.name {
+    font-size : 1.1em;
+}
+
+// Membership smaller
+.membership {
+    font-size  : .9em;
+    margin-top : .2em;
+}
+
+// City fills width, to have globe icon on the right
+.city {
+    a {
+        display         : flex;
+        flex            : 1;
+        align-items     : center;
+        text-decoration : none;
+
+        span {
+            flex            : 1;
+            text-decoration : underline;
+        }
+
+        i {
+            font-size : 1.5em;
+        }
+    }
+}

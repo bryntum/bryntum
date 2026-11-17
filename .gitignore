@@ -1,3 +1,11 @@
 # Compiled from the TypeScript sources with `npx -p typescript@3.8 tsc`
 lib/Engine/**/*.js
 lib/ChronoGraph/**/*.js
+
+# Installs and builds of the demos in examples/
+node_modules/
+examples/**/dist/
+examples/**/.angular/
+examples/**/public/themes/
+examples/**/public/users/
+examples/**/public/favicon.png

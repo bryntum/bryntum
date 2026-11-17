@@ -107,6 +107,8 @@
     color                        : inherit;
     flex                         : 1;
     align-self                   : stretch;
+    /* Do not grow to chip content while overflow is clipped during add transitions */
+    min-width                    : 0;
 
     padding-top                  : var(--b-combo-chip-view-padding-top);
     min-height                   : var(--b-combo-chip-view-min-height);
