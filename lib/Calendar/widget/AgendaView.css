@@ -223,8 +223,14 @@
                 background : var(--b-agenda-view-non-working-day-background);
             }
 
-            &:focus-within {
+            &:focus-within:not(:focus-visible) {
                 outline : 0 none !important;
+            }
+
+            /* Cells never get b-focused because CalendarNavigation handles focus, so show the Grid cell focus outline */
+            &:focus-visible {
+                outline        : var(--b-grid-cell-focused-outline-width) solid var(--b-grid-cell-focused-outline-color);
+                outline-offset : var(--b-grid-cell-focused-outline-offset, calc(var(--b-grid-cell-focused-outline-width) * -1));
             }
 
             .b-agenda-view-with-day-selector & {

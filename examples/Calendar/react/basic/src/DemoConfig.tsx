@@ -12,9 +12,6 @@ export const projectProps : BryntumCalendarProjectModelProps = {
 };
 
 export const calendarProps : BryntumCalendarProps = {
-
-    tier : 'community',
-
     // Start life looking at this date
     date : new Date(2020, 9, 12),
 

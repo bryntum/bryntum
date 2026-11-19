@@ -1,7 +1,7 @@
 {
   "name": "basic",
   "description": "Basic setup in TypeScript (React + Vite)",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "author": {
     "name": "Bryntum",
     "url": "https://bryntum.com",
@@ -23,8 +23,8 @@
     "node_modules/@bryntum/scheduler-community/*.css*": "copy public/themes/"
   },
   "dependencies": {
-    "@bryntum/demo-resources": "8.0.2",
-    "@bryntum/scheduler-react-community": "8.0.2",
+    "@bryntum/demo-resources": "8.0.3",
+    "@bryntum/scheduler-react-community": "8.0.3",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

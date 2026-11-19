@@ -6,7 +6,6 @@ export const projectProps = {
 } satisfies BryntumTaskBoardProjectModelProps;
 
 export const taskBoardProps = {
-    tier              : 'community',
     resourceImagePath : 'assets/users/',
 
     // Experimental, transition moving cards using the editor

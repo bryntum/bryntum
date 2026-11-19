@@ -370,6 +370,11 @@
             }
         }
     }
+
+    /* Body never scrolls vertically, so let wheel/touch scrolling chain to the page */
+    &.b-auto-height > .b-grid-body-container {
+        overscroll-behavior-y : auto;
+    }
 }
 
 .b-grid-base {

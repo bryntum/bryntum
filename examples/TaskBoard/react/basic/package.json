@@ -1,7 +1,7 @@
 {
   "name": "basic",
   "description": "Basic setup (React + Vite)",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "author": {
     "name": "Bryntum",
     "url": "https://bryntum.com",
@@ -23,8 +23,8 @@
     "node_modules/@bryntum/core-community/fontawesome/**": "copy public/themes/fontawesome/"
   },
   "dependencies": {
-    "@bryntum/demo-resources": "8.0.2",
-    "@bryntum/taskboard-react-community": "8.0.2",
+    "@bryntum/demo-resources": "8.0.3",
+    "@bryntum/taskboard-react-community": "8.0.3",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

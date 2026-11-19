@@ -78,7 +78,7 @@ const events : EventModelConfig[] = [
 
 
 export const schedulerProps = {
-    tier : 'community',
+
 
     resources,
     events,

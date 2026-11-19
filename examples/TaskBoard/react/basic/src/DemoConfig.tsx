@@ -8,9 +8,6 @@ export const projectProps : BryntumTaskBoardProjectModelProps = {
 };
 
 export const taskBoardProps : BryntumTaskBoardProps = {
-
-    tier : 'community',
-
     // Url for resource avatar images
     resourceImagePath : 'users/',
 

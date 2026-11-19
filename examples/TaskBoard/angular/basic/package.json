@@ -1,7 +1,7 @@
 {
   "name": "basic",
   "description": "Basic setup (Angular)",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "author": {
     "name": "Bryntum",
     "url": "https://bryntum.com",
@@ -24,8 +24,8 @@
     "@angular/platform-browser": "19.2.20",
     "@angular/platform-browser-dynamic": "19.2.20",
     "@angular/router": "19.2.20",
-    "@bryntum/demo-resources": "8.0.2",
-    "@bryntum/taskboard-angular-community": "8.0.2",
+    "@bryntum/demo-resources": "8.0.3",
+    "@bryntum/taskboard-angular-community": "8.0.3",
     "rxjs": "7.8.1",
     "tslib": "2.5.3",
     "zone.js": "0.15.0"

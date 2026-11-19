@@ -6,7 +6,6 @@ export const projectProps = {
 } satisfies BryntumGanttProjectModelProps;
 
 export const ganttProps = {
-    tier     : 'community',
     tickSize : 45,
 
     columns : [

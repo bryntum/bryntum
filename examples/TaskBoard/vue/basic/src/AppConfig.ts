@@ -2,7 +2,6 @@ import type { TaskModel } from '@bryntum/taskboard-community';
 import { type BryntumTaskBoardProps } from '@bryntum/taskboard-vue-community';
 
 export const taskBoardProps : BryntumTaskBoardProps = {
-    tier              : 'community',
     resourceImagePath : 'users/',
 
     // Experimental, transition moving cards using the editor

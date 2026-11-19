@@ -5,8 +5,6 @@ import { BryntumCalendarProps } from '@bryntum/calendar-angular-community';
  */
 
 export const calendarProps = {
-    tier : 'community',
-
     // Start life looking at this date
     date : new Date(2020, 9, 12),
 

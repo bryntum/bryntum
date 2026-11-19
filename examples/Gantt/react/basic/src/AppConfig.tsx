@@ -5,7 +5,6 @@ import DemoEditor from './components/DemoEditor';
 
 export const useGanttProps = (handleEditClick : (record : TaskModel, grid : Gantt) => void) : BryntumGanttProps => {
     return {
-        tier     : 'community',
         tickSize : 45,
 
         project : {

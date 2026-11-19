@@ -1,5 +1,5 @@
 :root, :host {
-    --bryntum-version                     : "8.0.2";
+    --bryntum-version                     : "8.0.3";
 
     /* TODO Defined here since shared between checkbox & list */
     --b-checkbox-checked-check-content    : "\f00c";

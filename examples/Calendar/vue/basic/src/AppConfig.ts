@@ -1,8 +1,6 @@
 import { type BryntumCalendarProps } from '@bryntum/calendar-vue-community';
 
 export const calendarProps : BryntumCalendarProps = {
-    tier : 'community',
-
     // Start life looking at this date
     date : new Date(2024, 7, 11),
 

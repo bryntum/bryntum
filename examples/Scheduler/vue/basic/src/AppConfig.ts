@@ -1,7 +1,7 @@
 import { type BryntumSchedulerProps } from '@bryntum/scheduler-vue-community';
 
 export const schedulerProps : BryntumSchedulerProps = {
-    tier              : 'community',
+
     startDate         : new Date(2024, 0, 1, 6),
     endDate           : new Date(2024, 0, 1, 20),
     viewPreset        : 'hourAndDay',

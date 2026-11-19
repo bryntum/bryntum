@@ -1,7 +1,7 @@
 {
   "name": "basic",
   "description": "Basic setup (Vue + Vite)",
-  "version": "8.0.2",
+  "version": "8.0.3",
   "author": {
     "name": "Bryntum",
     "url": "https://bryntum.com",
@@ -23,8 +23,8 @@
     "node_modules/@bryntum/gantt-community/*.css*": "copy public/themes/"
   },
   "dependencies": {
-    "@bryntum/demo-resources": "8.0.2",
-    "@bryntum/gantt-vue-community": "8.0.2",
+    "@bryntum/demo-resources": "8.0.3",
+    "@bryntum/gantt-vue-community": "8.0.3",
     "vue": "3.5.33"
   },
   "devDependencies": {
