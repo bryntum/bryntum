@@ -152,9 +152,7 @@ export class AbstractPartOfProjectStoreMixin extends Mixin(
         // Override to postpone auto commits to after project commit, makes sure records are unmodified after commit
         async doAutoCommit () {
             if (this.suspendCount <= 0 && this.project && !this.project.isEngineReady()) {
-                // <remove-on-release>
-                // TODO: Ask nick about this, I could not get mixin order correct for this to work
-                // </remove-on-release>
+
                 // @ts-ignore
                 await this.project.commitAsync()
             }

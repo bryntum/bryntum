@@ -42,9 +42,7 @@ export class CoreDependencyMixin extends Mixin(
             superProto.setChanged.call(this, field, value, invalidate, true)
 
             if (update && !this.project.isPerformingCommit && !this.dependencyStore?.isLoadingData) {
-                // <remove-on-release>
-                // TODO: Improve Collection indexing to handle smaller updates
-                // </remove-on-release>
+
                 this.dependencyStore?.invalidateIndices()
             }
         }

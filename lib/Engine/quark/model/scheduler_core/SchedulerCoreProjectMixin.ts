@@ -231,9 +231,7 @@ export class SchedulerCoreProjectMixin extends Mixin(
         $calendar                   : CoreCalendarMixin
 
 
-        // <remove-on-release>
-        // TODO: Add actual field
-        // </remove-on-release>
+
         /**
          * This property is used when instantiating the default calendar of the project. This calendar will have no availability intervals,
          * so this setting will either turn the whole timespan into working time or non-working.

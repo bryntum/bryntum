@@ -11,9 +11,7 @@ export type SortedMapEntry<K, V> = {
     value   : V
 }
 
-// <remove-on-release>
-// TODO: store keys and values in a single array of "entries"? less memory movement during insert/delete in theory
-// </remove-on-release>
+
 
 export class SortedMap<KeyType = number, ValueType = any> {
 

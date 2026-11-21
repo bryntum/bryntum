@@ -146,9 +146,7 @@ export class AbstractCalendarMixin extends Mixin(
             return false
         }
 
-        // <remove-on-release>
-        // TODO: move to Model?
-        // </remove-on-release>
+
         getDepth () : number {
             return this.childLevel + 1
         }
@@ -528,9 +526,7 @@ export class AbstractCalendarMixin extends Mixin(
             return intervals
         }
 
-        // <remove-on-release>
-        // TODO: tests
-        // </remove-on-release>
+
         getDailyHolidaysRanges (startDate : Date, endDate : Date) : { startDate : Date, endDate : Date }[] {
             const
                 result = [],

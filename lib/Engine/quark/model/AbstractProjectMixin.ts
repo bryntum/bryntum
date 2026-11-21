@@ -113,13 +113,13 @@ export class AbstractProjectMixin extends Mixin(
         /**
          * IANA timezone identifier for the project. In legacy mode (`useLegacyTimeZoneMode = true`), setting this
          * mutates record dates. In temporal mode (default), setting this makes the project a tz-cascade owner without
-         * mutating dates.
+         * mutating dates, and it can only be set when the project is configured (not changed at runtime).
          */
         timeZone                  : string | number
 
         /**
-         * Selects the timezone implementation. `false` (default) = legacy mutation; `true` =
-         * Temporal-based projection without mutating record dates.
+         * Selects the timezone implementation. `false` (default) = Temporal-based projection without mutating record
+         * dates; `true` = deprecated legacy mutation.
          */
         useLegacyTimeZoneMode       : boolean
 
@@ -129,11 +129,7 @@ export class AbstractProjectMixin extends Mixin(
          */
         dateHelper                : any
 
-        // <remove-on-release>
-        // TODO: this flag is set, when we are "restoring" the data from the rejected transaction and stm is disabled
-        //  this involves removing the records added in that transaction (and adding removed records back)
-        //  normally, stm is used for that, however, it might be disabled
-        // </remove-on-release>
+
         isRestoringData             : boolean   = false
 
         /**
@@ -167,9 +163,7 @@ export class AbstractProjectMixin extends Mixin(
             this.hasLoadedDataToCommit      = false
 
             const silenceInitialCommit      = ('silenceInitialCommit' in config) ? config.silenceInitialCommit : true
-            // <remove-on-release>
-            // TODO: change this to false in master
-            // </remove-on-release>
+
             const preventSilencingOnIssueResolve = ('preventSilencingOnIssueResolve' in config) ? config.preventSilencingOnIssueResolve : true
             const adjustDurationToDST       = ('adjustDurationToDST' in config) ? config.adjustDurationToDST : false
 

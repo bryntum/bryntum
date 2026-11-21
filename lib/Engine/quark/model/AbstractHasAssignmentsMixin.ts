@@ -48,10 +48,7 @@ export class AbstractHasAssignmentsMixin extends Mixin(
              * A method which assigns a resource to the current event
              */
             async assign (resource : InstanceType<this[ 'project' ][ 'resourceModelClass' ]>) : Promise<any> {
-                //<debug>
-                // Preconditions:
-                if (this.getAssignmentFor(resource)) throw new Error('Resource can\'t be assigned twice to the same task')
-                //</debug>
+
 
                 const assignmentCls = this.project.assignmentStore.modelClass as any
 
@@ -70,9 +67,7 @@ export class AbstractHasAssignmentsMixin extends Mixin(
             async unassign (resource : InstanceType<this[ 'project' ][ 'resourceModelClass' ]>) : Promise<any> {
                 const assignment        = this.getAssignmentFor(resource)
 
-                //<debug>
-                if (!assignment) throw new Error(`Can't unassign resource \`${resource}\` from task \`${this}\` - resource is not assigned to the task!`)
-                //</debug>
+
 
                 this.removeAssignment(assignment)
 

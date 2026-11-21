@@ -65,9 +65,7 @@ export class AbstractResourceStoreMixin extends Mixin(
 
 
         afterResourceRemoval () {
-            // <remove-on-release>
-            // TODO: Ask nick, have tried making it get correct type by changing AbstractProjectMixin. But no luck
-            // </remove-on-release>
+
             const assignmentStore   = this.getAssignmentStore() as AbstractAssignmentStoreMixin
 
             if (assignmentStore && !assignmentStore.allAssignmentsForRemoval) {
@@ -87,9 +85,7 @@ export class AbstractResourceStoreMixin extends Mixin(
             // When repopulating, the replica is about to be rebuilt and assignments will resolve their resource by id.
             // Writing the not yet joined record into the old replica fails resolution and leaves `resource` null
             if (isReplacing && !this.project?.isRepopulatingStores) {
-                // <remove-on-release>
-                // TODO: There is no ResourceMixin at the lowest level, cannot type correctly without it
-                // </remove-on-release>
+
                 //@ts-ignore
                 for (const assignment of existingRecord.assigned || []) {
                     assignment.resource    = resourceRecord

@@ -29,10 +29,7 @@ export class AbstractEventStoreMixin extends Mixin(
 
         assignmentsForRemoval   : Set<InstanceType<this[ 'project' ][ 'assignmentModelClass' ]>>    = new Set()
 
-        // <remove-on-release>
-        // TODO: It seems this property is no longer used
-        //  need to remove and probably do the same for `assignmentsForRemoval`
-        // </remove-on-release>
+
         dependenciesForRemoval  : Set<InstanceType<this[ 'project' ][ 'dependencyModelClass' ]>>    = new Set()
 
 
@@ -126,9 +123,7 @@ export class AbstractEventStoreMixin extends Mixin(
 
                 //@ts-ignore
                 if (isReplacing && existingRecord.assigned) {
-                    // <remove-on-release>
-                    // TODO: Type
-                    // </remove-on-release>
+
                     //@ts-ignore
                     for (const assignment of existingRecord.assigned) {
                         assignment.event = eventRecord
