@@ -211,12 +211,6 @@ body:not(.b-siesta-testing) {
         position : absolute;
     }
 
-    .b-aria-desc-element {
-        position  : absolute;
-        clip-path : polygon(0 0);
-        contain   : strict;
-    }
-
     &.b-floating,
     &.b-positioned {
         box-shadow : var(--b-widget-floating-box-shadow);
